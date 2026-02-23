@@ -1,16 +1,19 @@
-// Animation au scroll
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-        }
-    });
-}, { threshold: 0.1 });
+document.addEventListener('DOMContentLoaded', () => {
+    // Reveal Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('reveal-visible');
+        });
+    }, { threshold: 0.1 });
 
-document.querySelectorAll('.feature-card, .member-card-elite, .price-box').forEach(el => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(20px)";
-    el.style.transition = "0.6s ease-out";
-    observer.observe(el);
+    document.querySelectorAll('.bento-item, .pricing-card, .member-card, .form-wrapper, .hero-inner').forEach(el => {
+        el.classList.add('reveal-hidden');
+        observer.observe(el);
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('.navbar');
+        nav.style.padding = window.scrollY > 50 ? '0.8rem 0' : '1.5rem 0';
+    });
 });
