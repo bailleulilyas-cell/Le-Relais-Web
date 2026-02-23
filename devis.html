@@ -3,60 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Démarrer mon Projet | Le Relais Web</title>
+    <title>Configuration Projet | Le Relais Web</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body class="bg-soft">
 
     <header class="main-header">
         <nav class="container">
             <a href="index.html" class="logo-container">
                 <img src="Logo_Le_Relais_Web.png" alt="Le Relais Web" class="logo-img">
             </a>
-            <a href="index.html" class="btn-link">← Retour à l'accueil</a>
+            <a href="index.html" class="btn-back">← Retour au site</a>
         </nav>
     </header>
 
-    <section class="onboarding container">
-        <div class="onboarding-wrapper" style="max-width: 750px; margin: 60px auto;">
-            <div class="onboarding-header" style="text-align: center; margin-bottom: 50px;">
-                <span class="promo-badge">🎁 Promo de lancement activée</span>
-                <h1 style="font-size: 2.5rem;">C'est parti !</h1>
-                <p style="color: var(--text-muted); font-size: 1.1rem;">Racontez-nous votre projet en 1 minute. Vos <strong>7 jours d'essai gratuit</strong> démarrent dès l'envoi du formulaire.</p>
+    <section class="onboarding">
+        <div class="container-small">
+            <div class="form-card">
+                <div class="form-head">
+                    <span class="step-tag">Étape 1 sur 2</span>
+                    <h1>Parlons de votre projet</h1>
+                    <p>Précisez vos besoins pour activer votre essai gratuit. Vous serez ensuite redirigé vers Stripe pour valider la période d'essai.</p>
+                </div>
+
+                <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="main-form">
+                    <input type="hidden" name="_next" value="https://checkout.stripe.com/PAYMENT_LINK_PLACEHOLDER">
+                    <input type="hidden" name="_captcha" value="false">
+                    
+                    <div class="input-grid">
+                        <div class="field">
+                            <label>Nom de l'entreprise</label>
+                            <input type="text" name="entreprise" placeholder="Ex: Café de Lyon" required>
+                        </div>
+                        <div class="field">
+                            <label>Secteur d'activité</label>
+                            <input type="text" name="secteur" placeholder="Ex: Restauration" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Email de contact professionnel</label>
+                        <input type="email" name="email" placeholder="directeur@entreprise.fr" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Décrivez votre vision (Design, pages, objectifs...)</label>
+                        <textarea name="vision" rows="5" placeholder="Dites-nous ce qui rend votre commerce unique..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary full large">Continuer vers le paiement sécurisé →</button>
+                    <p class="form-info">En cliquant, vous acceptez de recevoir une proposition basée sur vos données.</p>
+                </form>
             </div>
-
-            <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="form-relais" style="background: white; padding: 50px; border-radius: 35px; box-shadow: var(--card-shadow);">
-                <input type="hidden" name="_subject" value="URGENT : Nouveau Projet - Le Relais Web">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://checkout.stripe.com/PAYMENT_LINK_PLACEHOLDER">
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px;">
-                    <div class="form-group">
-                        <label style="font-weight: 700; margin-bottom: 10px; display: block;">Commerce / Enseigne</label>
-                        <input type="text" name="nom_commerce" placeholder="Ex: Boulangerie Dupont" required style="width: 100%; padding: 18px; border: 2px solid #f1f5f9; border-radius: 15px; background: #f8fafc;">
-                    </div>
-                    <div class="form-group">
-                        <label style="font-weight: 700; margin-bottom: 10px; display: block;">Secteur</label>
-                        <input type="text" name="type_activite" placeholder="Ex: Restaurant, Coiffeur..." required style="width: 100%; padding: 18px; border: 2px solid #f1f5f9; border-radius: 15px; background: #f8fafc;">
-                    </div>
-                </div>
-
-                <div class="form-group" style="margin-bottom: 25px;">
-                    <label style="font-weight: 700; margin-bottom: 10px; display: block;">Votre Email Professionnel</label>
-                    <input type="email" name="email" placeholder="nom@exemple.com" required style="width: 100%; padding: 18px; border: 2px solid #f1f5f9; border-radius: 15px; background: #f8fafc;">
-                </div>
-
-                <div class="form-group" style="margin-bottom: 40px;">
-                    <label style="font-weight: 700; margin-bottom: 10px; display: block;">Description de votre besoin</label>
-                    <textarea name="message" placeholder="Quels sont vos objectifs principaux ?" rows="5" required style="width: 100%; padding: 18px; border: 2px solid #f1f5f9; border-radius: 15px; background: #f8fafc; font-family: inherit; resize: none;"></textarea>
-                </div>
-
-                <button type="submit" class="btn-main" style="width: 100%; font-size: 1.2rem;">Suivant : Configurer le paiement →</button>
-                <p style="text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--text-muted);">🔒 Aucun prélèvement immédiat. Sécurisé par Stripe.</p>
-            </form>
         </div>
     </section>
 
 </body>
 </html>
+
+</body>
+</html>
+
