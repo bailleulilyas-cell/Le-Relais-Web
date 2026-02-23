@@ -3,65 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuration Projet | Le Relais Web</title>
+    <title>Démarrer mon projet | Le Relais Web</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body class="bg-soft">
-
-    <header class="main-header">
-        <nav class="container">
-            <a href="index.html" class="logo-container">
-                <img src="Logo_Le_Relais_Web.png" alt="Le Relais Web" class="logo-img">
-            </a>
-            <a href="index.html" class="btn-back">← Retour au site</a>
-        </nav>
+    <header class="navbar">
+        <div class="container nav-wrapper">
+            <a href="index.html" class="brand"><img src="Logo_Le_Relais_Web.png" class="logo"></a>
+            <a href="index.html" class="link">← Retour au site</a>
+        </div>
     </header>
 
-    <section class="onboarding">
-        <div class="container-small">
-            <div class="form-card">
-                <div class="form-head">
-                    <span class="step-tag">Étape 1 sur 2</span>
-                    <h1>Parlons de votre projet</h1>
-                    <p>Précisez vos besoins pour activer votre essai gratuit. Vous serez ensuite redirigé vers Stripe pour valider la période d'essai.</p>
-                </div>
-
-                <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="main-form">
-                    <input type="hidden" name="_next" value="https://checkout.stripe.com/PAYMENT_LINK_PLACEHOLDER">
-                    <input type="hidden" name="_captcha" value="false">
-                    
-                    <div class="input-grid">
-                        <div class="field">
-                            <label>Nom de l'entreprise</label>
-                            <input type="text" name="entreprise" placeholder="Ex: Café de Lyon" required>
-                        </div>
-                        <div class="field">
-                            <label>Secteur d'activité</label>
-                            <input type="text" name="secteur" placeholder="Ex: Restauration" required>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <label>Email de contact professionnel</label>
-                        <input type="email" name="email" placeholder="directeur@entreprise.fr" required>
-                    </div>
-
-                    <div class="field">
-                        <label>Décrivez votre vision (Design, pages, objectifs...)</label>
-                        <textarea name="vision" rows="5" placeholder="Dites-nous ce qui rend votre commerce unique..." required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-primary full large">Continuer vers le paiement sécurisé →</button>
-                    <p class="form-info">En cliquant, vous acceptez de recevoir une proposition basée sur vos données.</p>
-                </form>
+    <section class="onboarding-master container">
+        <div class="form-wrapper reveal-hidden">
+            <div class="form-header">
+                <span class="promo-pill">🎁 Offre de lancement activée</span>
+                <h1>Commençons votre relais.</h1>
+                <p>Répondez à ces questions pour activer vos 7 jours d'essai gratuit.</p>
             </div>
+
+            <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="premium-form">
+                <input type="hidden" name="_next" value="https://checkout.stripe.com/PAYMENT_LINK_PLACEHOLDER">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>Nom de l'entreprise</label>
+                        <input type="text" name="commerce" placeholder="Boulangerie Dupont" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Secteur d'activité</label>
+                        <input type="text" name="secteur" placeholder="Restauration, Artisanat..." required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Email professionnel</label>
+                    <input type="email" name="email" placeholder="contact@votrecommerce.fr" required>
+                </div>
+                <div class="input-group">
+                    <label>Décrivez votre vision</label>
+                    <textarea name="message" rows="4" placeholder="Objectifs, couleurs, pages souhaitées..." required></textarea>
+                </div>
+                <button type="submit" class="btn-main-dark full large">Activer l'essai et configurer le paiement →</button>
+                <p class="secure-note">🔒 Sécurisé par Stripe. Aucun prélèvement avant le 8ème jour.</p>
+            </form>
         </div>
     </section>
-
+    <script src="script.js"></script>
 </body>
 </html>
-
-</body>
-</html>
-
