@@ -16,10 +16,12 @@
                 <p>Garantie 100% satisfait ou remboursé pendant 7 jours.</p>
             </div>
             
-            <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="main-form">
+            <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="main-form" id="relais-form">
                 
-                <input type="hidden" name="_next" value="https://checkout.stripe.com/PAYMENT_LINK_PLACEHOLDER">
+                <input type="hidden" name="_next" id="next-link" value="https://buy.stripe.com/6oUaEY9TH0RPg8K2za1VK00">
+                
                 <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="Nouveau Projet - Le Relais Web">
 
                 <div class="field">
                     <label>Nom de l'enseigne</label>
@@ -45,6 +47,23 @@
             </form>
         </div>
     </div>
+
+    <script>
+        // Ce petit script assure la redirection même si le navigateur bloque
+        const form = document.getElementById('relais-form');
+        const stripeLink = document.getElementById('next-link').value;
+
+        form.onsubmit = function() {
+            if(stripeLink.includes("PAYMENT_LINK_PLACEHOLDER")) {
+                alert("Erreur : Tu as oublié d'insérer ton lien Stripe dans le code !");
+                return false;
+            }
+            // On laisse 1.5s à FormSubmit pour envoyer le mail avant de forcer la sortie vers Stripe
+            setTimeout(() => {
+                window.location.href = stripeLink;
+            }, 1500);
+        };
+    </script>
 </body>
 </html>
 
