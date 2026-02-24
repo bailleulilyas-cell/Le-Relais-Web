@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Relais Web | Performance Radicale</title>
+    <title>L'Équipe | Le Relais Web</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --dark:#0A0F1C; --primary:#002B5B; --accent:#00E676; --gray:#F8FAFC; --text:#1E293B; --text-light:#64748B; --white:#FFFFFF; --border:#E2E8F0; --success:#059669; }
+        :root{--dark:#0A0F1C;--primary:#002B5B;--accent:#00E676;--gray:#F8FAFC;--text:#1E293B;--text-light:#64748B;--white:#FFFFFF;--border:#E2E8F0;--success:#059669;}
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
         html{scroll-behavior:smooth;}
-        body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+        body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--gray);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
         a{text-decoration:none;transition:.2s;}
         .container{width:100%;max-width:1200px;margin:0 auto;padding:0 1.5rem;}
         .reveal{opacity:0;transform:translateY(24px);transition:opacity .55s ease,transform .55s ease;}
@@ -39,88 +39,51 @@
         .mobile-menu a:hover{color:var(--accent);}
         .mobile-menu-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:white;font-size:2rem;cursor:pointer;}
 
-        /* HERO */
-        .hero-master{padding:7rem 0 5rem;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(0,230,118,.07) 0%,transparent 70%);}
-        .hero-label{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;background:var(--gray);border:1px solid rgba(0,230,118,.3);border-radius:100px;font-weight:800;font-size:.7rem;color:var(--success);margin-bottom:1.8rem;}
-        .pulse{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;flex-shrink:0;}
-        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-        h1{font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:900;line-height:1.07;letter-spacing:-2px;color:var(--dark);}
+        /* TEAM PAGE */
+        .team-page{padding:5rem 0;}
         .gradient-text{background:linear-gradient(110deg,var(--primary) 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-        .hero-lead{font-size:1.1rem;color:var(--text-light);margin:1.5rem auto 2.5rem;max-width:540px;line-height:1.65;}
-        .hero-cta-group{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;}
-        .hero-trust{margin-top:3.5rem;display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;}
-        .trust-item{display:flex;align-items:center;gap:.45rem;font-size:.8rem;font-weight:700;color:var(--text-light);}
+        .giant-title{font-size:clamp(2rem,5vw,3rem);font-weight:900;margin-bottom:3rem;letter-spacing:-1px;line-height:1.15;text-align:center;}
+        .team-showcase{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:3rem;}
+        .profile-card{background:white;padding:2rem 1.5rem;border-radius:24px;text-align:left;border:1px solid var(--border);transition:transform .25s,box-shadow .25s;}
+        .profile-card:hover{transform:translateY(-5px);box-shadow:0 10px 32px rgba(0,0,0,.09);}
+        .profile-avatar{width:50px;height:50px;border-radius:50%;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:900;font-size:1rem;margin-bottom:1rem;}
+        .tag{font-size:.68rem;font-weight:800;color:var(--success);text-transform:uppercase;letter-spacing:.5px;}
+        .profile-card h3{font-size:1.1rem;font-weight:800;margin:.4rem 0 .5rem;}
+        .profile-card p{font-size:.85rem;color:var(--text-light);line-height:1.55;}
+        .defect-box{margin-top:1.2rem;font-size:.75rem;color:#94A3B8;border-top:1px solid var(--border);padding-top:1rem;font-style:italic;}
 
-        /* SPOTLIGHT */
-        .performance-spotlight{margin:4rem auto 0;}
-        .spotlight-card{background:var(--dark);color:white;padding:3.5rem 4rem;border-radius:36px;display:flex;align-items:center;gap:3.5rem;border:1px solid rgba(255,255,255,.07);box-shadow:0 30px 80px rgba(0,0,0,.2);position:relative;overflow:hidden;}
-        .spotlight-card::before{content:'';position:absolute;top:-100px;right:-100px;width:350px;height:350px;background:radial-gradient(circle,rgba(0,230,118,.15) 0%,transparent 65%);pointer-events:none;}
-        .spotlight-icon{font-size:3.5rem;background:rgba(0,230,118,.1);width:130px;height:130px;display:flex;align-items:center;justify-content:center;border-radius:26px;border:1px solid rgba(0,230,118,.2);flex-shrink:0;}
-        .spotlight-text h2{font-size:2.1rem;font-weight:900;margin-bottom:1rem;color:var(--accent);letter-spacing:-.5px;}
-        .spotlight-text p{font-size:.97rem;line-height:1.7;opacity:.78;margin-bottom:.7rem;}
-        .spotlight-stats{display:flex;gap:2.5rem;margin-top:1.5rem;}
-        .stat-num{font-size:2rem;font-weight:900;color:var(--accent);line-height:1;}
-        .stat-label{font-size:.7rem;opacity:.55;margin-top:.2rem;font-weight:600;letter-spacing:.4px;}
+        /* STORY */
+        .story-vibe{background:var(--dark);color:white;padding:3rem 2.5rem;border-radius:28px;text-align:left;position:relative;overflow:hidden;}
+        .story-vibe::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(0,230,118,.1) 0%,transparent 70%);}
+        .story-vibe h2{font-size:1.8rem;font-weight:900;margin-bottom:2rem;color:var(--accent);letter-spacing:-.5px;}
+        .story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+        .story-label{display:block;font-size:.85rem;font-weight:900;color:var(--accent);margin-bottom:.4rem;}
+        .story-item p{opacity:.75;font-size:.9rem;line-height:1.65;}
 
-        /* FEATURES */
-        .features-section{padding:6rem 0;background:var(--gray);}
-        .section-header{text-align:center;margin-bottom:3rem;}
-        .section-title{font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:900;letter-spacing:-.5px;margin-bottom:.6rem;}
-        .section-lead{color:var(--text-light);font-size:1rem;line-height:1.6;max-width:500px;margin:0 auto;}
-        .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
-        .feature-card{background:white;padding:2rem 1.75rem;border-radius:20px;border:1px solid var(--border);transition:transform .25s,box-shadow .25s;}
-        .feature-card:hover{transform:translateY(-5px);box-shadow:0 10px 32px rgba(0,0,0,.09);}
-        .feature-icon{font-size:2rem;margin-bottom:1rem;display:block;}
-        .feature-card h3{font-size:1.05rem;font-weight:800;margin-bottom:.5rem;}
-        .feature-card p{font-size:.87rem;color:var(--text-light);line-height:1.6;}
-
-        /* PRICING */
-        .pricing-vault{padding:6rem 0 7rem;background:var(--dark);}
-        .pricing-header{text-align:center;margin-bottom:3rem;}
-        .pricing-header h2{font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:900;color:white;letter-spacing:-.5px;margin-bottom:.5rem;}
-        .pricing-header p{color:rgba(255,255,255,.45);font-size:.92rem;}
-        .pricing-card{max-width:460px;margin:0 auto;background:white;border-radius:28px;padding:2.5rem 2.2rem;text-align:center;box-shadow:0 40px 100px rgba(0,0,0,.35);}
-        .pricing-badge{display:inline-block;background:var(--accent);color:var(--dark);font-weight:900;font-size:.68rem;padding:.3rem .85rem;border-radius:100px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:1.2rem;}
-        .pricing-card h2{font-size:1.55rem;font-weight:900;letter-spacing:-.5px;margin-bottom:.3rem;}
-        .price-container{margin:1.5rem 0;}
-        .old-monthly{text-decoration:line-through;opacity:.3;font-weight:700;font-size:.95rem;}
-        .price-main{display:flex;justify-content:center;align-items:baseline;gap:4px;}
-        .amount{font-size:4.5rem;font-weight:900;letter-spacing:-3px;color:var(--dark);line-height:1;}
-        .period{font-size:1.1rem;font-weight:700;color:var(--text-light);}
-        .setup-box{background:var(--gray);padding:1rem 1.2rem;border-radius:12px;margin:1.5rem 0;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.9rem;}
-        .setup-values{display:flex;align-items:center;gap:.6rem;}
-        .s-old{text-decoration:line-through;opacity:.3;font-size:.82rem;}
-        .s-new{color:var(--success);font-size:1.2rem;font-weight:900;}
-        .benefit-list{list-style:none;text-align:left;margin-bottom:2rem;font-size:.9rem;display:flex;flex-direction:column;gap:.65rem;}
-        .benefit-list li{display:flex;align-items:flex-start;gap:.5rem;line-height:1.45;}
-        .benefit-list li::before{content:"✓";color:var(--success);font-weight:900;flex-shrink:0;margin-top:1px;}
-        .pricing-guarantee{margin-top:1.3rem;font-size:.76rem;color:var(--text-light);font-weight:600;}
-
-        /* BUTTONS */
-        .btn-main-dark{background:var(--dark);color:white;padding:.95rem 2rem;border-radius:12px;font-weight:800;font-family:inherit;font-size:.9rem;border:none;cursor:pointer;display:inline-block;transition:transform .2s,box-shadow .2s;}
-        .btn-main-dark:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,15,28,.25);}
-        .btn-main-dark.full{width:100%;text-align:center;font-size:1rem;}
-        .btn-ghost{padding:.95rem 2rem;border-radius:12px;border:1.5px solid var(--border);font-weight:700;font-size:.9rem;color:var(--dark);transition:border-color .2s,background .2s;}
-        .btn-ghost:hover{border-color:var(--dark);background:var(--gray);}
+        /* CTA */
+        .cta-band{margin-top:4rem;background:var(--dark);border-radius:28px;padding:3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;}
+        .cta-band h3{font-size:1.6rem;font-weight:900;color:white;letter-spacing:-.5px;}
+        .cta-band p{color:rgba(255,255,255,.55);font-size:.9rem;margin-top:.3rem;}
+        .btn-accent{background:var(--accent);color:var(--dark);padding:.95rem 2rem;border-radius:12px;font-weight:900;font-size:.9rem;white-space:nowrap;transition:transform .2s,box-shadow .2s;}
+        .btn-accent:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,230,118,.3);}
 
         /* FOOTER */
-        .main-footer{padding:2.5rem;text-align:center;border-top:1px solid var(--border);}
+        .main-footer{padding:2.5rem;text-align:center;border-top:1px solid var(--border);background:white;margin-top:4rem;}
         .footer-links{display:flex;gap:1.5rem;justify-content:center;margin-bottom:.6rem;}
         .footer-links a{font-size:.8rem;color:var(--text-light);font-weight:600;}
         .footer-links a:hover{color:var(--dark);}
         .footer-copy{font-size:.76rem;opacity:.4;}
 
+        /* BUTTONS */
+        .btn-main-dark{background:var(--dark);color:white;padding:.95rem 2rem;border-radius:12px;font-weight:800;font-family:inherit;font-size:.9rem;border:none;cursor:pointer;display:inline-block;transition:transform .2s,box-shadow .2s;}
+        .btn-main-dark:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,15,28,.25);}
+
         @media(max-width:768px){
             .nav-menu{display:none;} .nav-right{display:flex;}
-            .hero-master{padding:5rem 0 3.5rem;}
-            .hero-cta-group{flex-direction:column;}
-            .btn-main-dark,.btn-ghost{width:100%;text-align:center;}
-            .hero-trust{gap:1rem;}
-            .spotlight-card{flex-direction:column;padding:2.5rem 1.5rem;text-align:center;}
-            .spotlight-icon{width:100px;height:100px;font-size:3rem;}
-            .spotlight-stats{justify-content:center;}
-            .features-grid{grid-template-columns:1fr;}
-            .amount{font-size:3.5rem;}
+            .team-showcase{grid-template-columns:1fr;}
+            .story-grid{grid-template-columns:1fr;}
+            .cta-band{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
+            .btn-accent{width:100%;text-align:center;}
         }
 
         /* COOKIE BANNER */
@@ -149,95 +112,74 @@
 
     <header class="navbar" id="navbar">
         <div class="container nav-wrapper">
-            <a href="index.html" class="brand-logo"><div class="brand-logo-icon">⚡</div>Le Relais Web</a>
+            <a href="index.html" class="brand-logo">
+                <img src="Logo_Le_Relais_Web.png" alt="Le Relais Web" style="height:38px;">
+            </a>
             <div class="nav-right">
                 <a href="devis.html" class="btn-nav-mobile">Démarrer</a>
                 <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
             </div>
             <ul class="nav-menu">
-                <li><a href="index.html" class="active">Concept</a></li>
-                <li><a href="equipe.html">L'Équipe</a></li>
+                <li><a href="index.html">Concept</a></li>
+                <li><a href="equipe.html" class="active">L'Équipe</a></li>
                 <li><a href="devis.html" class="btn-nav">Lancer un projet</a></li>
             </ul>
         </div>
     </header>
 
-    <section class="hero-master">
-        <div class="container">
-            <div class="hero-label"><div class="pulse"></div>Disponible : 3 projets ce mois</div>
-            <h1>Le pont entre votre<br><span class="gradient-text">savoir-faire</span> et vos clients.</h1>
-            <p class="hero-lead">Nous forgeons des sites ultra-rapides en code pur pour les artisans locaux. Finis les sites lents qui vous coûtent des clients.</p>
-            <div class="hero-cta-group">
-                <a href="devis.html" class="btn-main-dark">Lancer sans risque →</a>
-                <a href="equipe.html" class="btn-ghost">Notre agence</a>
+    <main class="container team-page">
+        <h1 class="giant-title reveal">Trois esprits.<br><span class="gradient-text">Une vision.</span></h1>
+
+        <div class="team-showcase">
+            <div class="profile-card reveal">
+                <div class="profile-avatar">IB</div>
+                <span class="tag">Design & Développement</span>
+                <h3>Ilyas Bailleul</h3>
+                <p>Architecte du code pur. Chaque pixel est optimisé pour la performance et la conversion.</p>
+                <div class="defect-box">Obsession : La perfection ou rien.</div>
             </div>
-            <div class="hero-trust">
-                <div class="trust-item">⚡ Moins d'1s de chargement</div>
-                <div class="trust-item">🛡️ Garantie 7 jours</div>
-                <div class="trust-item">📈 +40% de conversions</div>
+            <div class="profile-card reveal">
+                <div class="profile-avatar">AG</div>
+                <span class="tag">Marketing & Conversion</span>
+                <h3>Adam Gheribi</h3>
+                <p>Le pont entre votre métier et la technologie. Expert en stratégie de conversion en ligne.</p>
+                <div class="defect-box">Énergie : Ne s'arrête jamais.</div>
+            </div>
+            <div class="profile-card reveal">
+                <div class="profile-avatar">MB</div>
+                <span class="tag">Stratégie & SEO</span>
+                <h3>Mohamed-Ilyes Belkhelfa</h3>
+                <p>Analyse les algorithmes pour vous placer en tête des recherches Google de votre secteur.</p>
+                <div class="defect-box">Précision : Esprit purement data.</div>
             </div>
         </div>
-    </section>
 
-    <section class="performance-spotlight container reveal">
-        <div class="spotlight-card">
-            <div class="spotlight-icon">⚡</div>
-            <div class="spotlight-text">
-                <h2>Vitesse Absolue</h2>
-                <p>Fini les temps de chargement interminables. Grâce au <strong>Code Pur</strong>, nous supprimons les milliers de lignes inutiles des sites classiques (WordPress, Wix).</p>
-                <p>Votre site s'affiche en moins d'une seconde, offrant une expérience fluide qui booste vos ventes.</p>
-                <div class="spotlight-stats">
-                    <div><div class="stat-num">&lt;1s</div><div class="stat-label">CHARGEMENT</div></div>
-                    <div><div class="stat-num">100</div><div class="stat-label">SCORE GOOGLE</div></div>
-                    <div><div class="stat-num">+40%</div><div class="stat-label">CONVERSIONS</div></div>
+        <section class="story-vibe reveal">
+            <h2>Notre Histoire</h2>
+            <div class="story-grid">
+                <div class="story-item">
+                    <span class="story-label">L'Origine</span>
+                    <p>Trois amis de 17 ans qui ont décidé de redonner le pouvoir numérique aux artisans locaux face aux géants du web.</p>
+                </div>
+                <div class="story-item">
+                    <span class="story-label">La Mission</span>
+                    <p>Utiliser le <strong>Code Pur</strong> pour offrir une performance d'élite à l'économie de proximité. Sans compromis.</p>
+                </div>
+                <div class="story-item">
+                    <span class="story-label">L'Engagement</span>
+                    <p>Un interlocuteur unique, une communication directe. Vous parlez aux créateurs de votre site.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="features-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Tout ce dont vous avez besoin.</h2>
-                <p class="section-lead">Une offre claire, sans surprise, pensée pour les artisans et commerçants locaux.</p>
+        <div class="cta-band reveal">
+            <div>
+                <h3>Prêt à travailler avec nous ?</h3>
+                <p>Rejoignez les artisans qui ont fait confiance au Code Pur.</p>
             </div>
-            <div class="features-grid">
-                <div class="feature-card reveal"><span class="feature-icon">🎯</span><h3>Sur-Mesure</h3><p>Votre site est unique, conçu pour votre activité, vos couleurs et votre clientèle.</p></div>
-                <div class="feature-card reveal"><span class="feature-icon">🔍</span><h3>SEO Intégré</h3><p>Optimisé pour apparaître en tête de Google dans votre ville dès le lancement.</p></div>
-                <div class="feature-card reveal"><span class="feature-icon">📱</span><h3>100% Mobile</h3><p>Plus de 70% de vos clients vous cherchent depuis leur téléphone.</p></div>
-            </div>
+            <a href="devis.html" class="btn-accent">Lancer mon projet →</a>
         </div>
-    </section>
-
-    <section id="tarifs" class="pricing-vault">
-        <div class="container">
-            <div class="pricing-header">
-                <h2>Une offre. Transparente.</h2>
-                <p>Pas de surprise, pas de contrat longue durée.</p>
-            </div>
-            <div class="pricing-card reveal">
-                <div class="pricing-badge">🔥 Offre de lancement</div>
-                <h2>Pack Visibilité</h2>
-                <div class="price-container">
-                    <div class="old-monthly">50€/mois</div>
-                    <div class="price-main"><span class="amount">25€</span><span class="period">/mois</span></div>
-                </div>
-                <div class="setup-box">
-                    <span>Mise en service</span>
-                    <div class="setup-values"><span class="s-old">800€</span><span class="s-new">150€</span></div>
-                </div>
-                <ul class="benefit-list">
-                    <li>Site vitrine sur-mesure en Code Pur</li>
-                    <li>Hébergement & nom de domaine inclus</li>
-                    <li>Maintenance & mises à jour illimitées</li>
-                    <li>Référencement local Google (SEO)</li>
-                    <li><strong>Garantie satisfait ou remboursé 7 jours</strong></li>
-                </ul>
-                <a href="devis.html" class="btn-main-dark full">Sécuriser ma commande →</a>
-                <p class="pricing-guarantee">🛡️ Sans engagement · Remboursé en 7j si insatisfait</p>
-            </div>
-        </div>
-    </section>
+    </main>
 
     <footer class="main-footer">
         <div class="footer-links">
