@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (relaisForm) {
         relaisForm.addEventListener('submit', function(e) {
             // Ton lien Stripe exact
-            const stripeUrl = "https://buy.stripe.com/TON_LIEN_ICI"; 
+            const stripeUrl = "https://buy.stripe.com/6oUaEY9TH0RPg8K2za1VK00"; 
 
             // On change le texte du bouton pour montrer que c'est en cours
             const btn = document.getElementById('submit-btn');
@@ -46,3 +46,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
