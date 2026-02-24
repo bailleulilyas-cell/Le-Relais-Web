@@ -1,19 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Reveal Observer
+    // Reveal Observer (Apparition au scroll)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('reveal-visible');
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15 });
 
-    document.querySelectorAll('.bento-item, .pricing-card, .member-card, .form-wrapper, .hero-inner').forEach(el => {
-        el.classList.add('reveal-hidden');
-        observer.observe(el);
+    const targets = document.querySelectorAll('.bento-item, .pricing-card, .profile-card, .story-item, .form-container');
+    targets.forEach(t => {
+        t.classList.add('reveal');
+        observer.observe(t);
     });
 
-    // Header scroll effect
+    // Header Scroll Effect
     window.addEventListener('scroll', () => {
         const nav = document.querySelector('.navbar');
         nav.style.padding = window.scrollY > 50 ? '0.8rem 0' : '1.5rem 0';
+        nav.style.background = window.scrollY > 50 ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.8)';
     });
 });
