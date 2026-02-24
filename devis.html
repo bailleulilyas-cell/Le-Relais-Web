@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Devis | Le Relais Web</title>
+    <title>Démarrer mon projet | Le Relais Web</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
@@ -11,27 +11,40 @@
     <div class="container onboarding-page">
         <div class="form-container">
             <div class="form-header">
-                <a href="index.html"><img src="Logo_Le_Relais_Web.png" class="logo-small"></a>
+                <a href="index.html"><img src="Logo_Le_Relais_Web.png" class="logo-small" alt="Logo"></a>
                 <h1>Commençons.</h1>
-                <p>Activez vos 7 jours d'essai gratuit.</p>
+                <p>Répondez à ces questions pour activer vos 7 jours d'essai gratuit.</p>
             </div>
             
             <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="main-form">
+                
+                <input type="hidden" name="_next" value="https://checkout.stripe.com/PAYMENT_LINK_PLACEHOLDER">
+                
+                <input type="hidden" name="_captcha" value="false">
+
                 <div class="field">
-                    <label>Enseigne</label>
-                    <input type="text" name="commerce" placeholder="Nom de votre commerce" required>
+                    <label>Nom de l'enseigne</label>
+                    <input type="text" name="commerce" placeholder="Boulangerie Dupont" required>
                 </div>
+
                 <div class="field">
-                    <label>Email Pro</label>
-                    <input type="email" name="email" placeholder="contact@votre-boutique.com" required>
+                    <label>Email professionnel</label>
+                    <input type="email" name="email" placeholder="contact@votrecommerce.fr" required>
                 </div>
+
                 <div class="field">
-                    <label>Vision & Objectifs</label>
-                    <textarea name="vision" rows="4" placeholder="Pages, couleurs, message..." required></textarea>
+                    <label>Décrivez votre vision</label>
+                    <textarea name="vision" rows="4" placeholder="Objectifs, couleurs, pages souhaitées..." required></textarea>
                 </div>
-                <button type="submit" class="btn-main-dark full">Lancer l'essai gratuit →</button>
+
+                <button type="submit" class="btn-main-dark full">Activer mon essai de 7 jours →</button>
+                
+                <p class="form-footer">
+                    🔒 Validation sécurisée via Stripe.<br>
+                    Aucun prélèvement avant le 8ème jour.
+                </p>
             </form>
-        </div>
+            </div>
     </div>
 </body>
 </html>
