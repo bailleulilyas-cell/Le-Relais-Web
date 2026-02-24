@@ -16,10 +16,13 @@
                 <p>Garantie 100% satisfait ou remboursé pendant 7 jours.</p>
             </div>
             
-            <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="main-form" id="relais-form">
+            <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="main-form">
+                
+                <input type="hidden" name="_next" value="https://buy.stripe.com/TON_LIEN_STRIPE_ICI">
                 
                 <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_subject" value="Nouveau Projet - Le Relais Web">
+                
+                <input type="hidden" name="_subject" value="Nouveau Projet Client - Le Relais Web">
 
                 <div class="field">
                     <label>Nom de l'enseigne</label>
@@ -33,10 +36,10 @@
 
                 <div class="field">
                     <label>Décrivez vos besoins</label>
-                    <textarea name="vision" rows="4" placeholder="Quels sont vos objectifs principaux (pages, couleurs, message) ?" required></textarea>
+                    <textarea name="vision" rows="4" placeholder="Objectifs, couleurs, nombre de pages..." required></textarea>
                 </div>
 
-                <button type="submit" id="submit-btn" class="btn-main-dark full">Sécuriser ma commande →</button>
+                <button type="submit" class="btn-main-dark full">Sécuriser ma commande →</button>
                 
                 <div class="guarantee-badge">
                     <span class="shield-icon">🛡️</span>
@@ -45,8 +48,6 @@
             </form>
         </div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
 
