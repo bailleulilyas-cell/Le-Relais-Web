@@ -5,49 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Démarrer mon projet | Le Relais Web</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body class="bg-soft">
-    <header class="navbar">
-        <div class="container nav-wrapper">
-            <a href="index.html" class="brand"><img src="Logo_Le_Relais_Web.png" class="logo"></a>
-            <a href="index.html" class="link">← Retour au site</a>
-        </div>
-    </header>
-
-    <section class="onboarding-master container">
-        <div class="form-wrapper reveal-hidden">
+    <div class="onboarding-page container">
+        <div class="form-container">
             <div class="form-header">
-                <span class="promo-pill">🎁 Offre de lancement activée</span>
-                <h1>Commençons votre relais.</h1>
-                <p>Répondez à ces questions pour activer vos 7 jours d'essai gratuit.</p>
+                <a href="index.html"><img src="Logo_Le_Relais_Web.png" class="logo-small"></a>
+                <h1>Commençons.</h1>
+                <p>Activez vos 7 jours d'essai gratuit en complétant votre profil projet.</p>
             </div>
-
-            <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="premium-form">
+            
+            <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="main-form">
                 <input type="hidden" name="_next" value="https://checkout.stripe.com/PAYMENT_LINK_PLACEHOLDER">
-                <div class="form-grid">
-                    <div class="input-group">
-                        <label>Nom de l'entreprise</label>
-                        <input type="text" name="commerce" placeholder="Boulangerie Dupont" required>
+                
+                <div class="input-grid">
+                    <div class="field">
+                        <label>Nom de l'enseigne</label>
+                        <input type="text" name="commerce" placeholder="Boulangerie Parisienne" required>
                     </div>
-                    <div class="input-group">
-                        <label>Secteur d'activité</label>
-                        <input type="text" name="secteur" placeholder="Restauration, Artisanat..." required>
+                    <div class="field">
+                        <label>Type d'activité</label>
+                        <input type="text" name="activite" placeholder="Artisanat, Restauration..." required>
                     </div>
                 </div>
-                <div class="input-group">
+
+                <div class="field">
                     <label>Email professionnel</label>
-                    <input type="email" name="email" placeholder="contact@votrecommerce.fr" required>
+                    <input type="email" name="email" placeholder="contact@votrecommerce.com" required>
                 </div>
-                <div class="input-group">
-                    <label>Décrivez votre vision</label>
-                    <textarea name="message" rows="4" placeholder="Objectifs, couleurs, pages souhaitées..." required></textarea>
+
+                <div class="field">
+                    <label>Décrivez votre vision (pages, couleurs, objectifs)</label>
+                    <textarea name="vision" rows="4" placeholder="Dites-nous ce qui rend votre commerce unique..." required></textarea>
                 </div>
-                <button type="submit" class="btn-main-dark full large">Activer l'essai et configurer le paiement →</button>
-                <p class="secure-note">🔒 Sécurisé par Stripe. Aucun prélèvement avant le 8ème jour.</p>
+
+                <button type="submit" class="btn-main-dark full">Activer l'essai et passer au paiement sécurisé →</button>
+                <p class="form-footer">🔒 Aucun prélèvement ne sera effectué avant la fin de l'essai.</p>
             </form>
         </div>
-    </section>
-    <script src="script.js"></script>
+    </div>
 </body>
 </html>
+
