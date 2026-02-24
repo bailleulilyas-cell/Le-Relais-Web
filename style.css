@@ -78,3 +78,5 @@ input, textarea { width: 100%; padding: 1.2rem; border-radius: 12px; border: 1px
     .bento-container, .team-showcase, .history-grid, .input-grid { grid-template-columns: 1fr; }
     .main-feature { grid-column: auto; }
 }
+.reveal { opacity: 0; transform: translateY(30px); transition: 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.visible { opacity: 1; transform: translateY(0); }
