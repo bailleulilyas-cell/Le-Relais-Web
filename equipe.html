@@ -4,55 +4,217 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L'Équipe | Le Relais Web</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root{--dark:#0A0F1C;--primary:#002B5B;--accent:#00E676;--gray:#F8FAFC;--text:#1E293B;--text-light:#64748B;--white:#FFFFFF;--border:#E2E8F0;--success:#059669;}
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--gray);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+        a{text-decoration:none;transition:.2s;}
+        .container{width:100%;max-width:1200px;margin:0 auto;padding:0 1.5rem;}
+        .reveal{opacity:0;transform:translateY(24px);transition:opacity .55s ease,transform .55s ease;}
+        .reveal.visible{opacity:1;transform:translateY(0);}
+
+        /* NAV */
+        .navbar{padding:1.1rem 0;position:sticky;top:0;background:rgba(255,255,255,.93);backdrop-filter:blur(14px);z-index:1000;border-bottom:1px solid rgba(0,0,0,.06);transition:all .25s;}
+        .navbar.scrolled{padding:.75rem 0;box-shadow:0 2px 12px rgba(0,0,0,.07);}
+        .nav-wrapper{display:flex;justify-content:space-between;align-items:center;}
+        .brand-logo{display:flex;align-items:center;gap:.6rem;font-weight:900;font-size:1.1rem;color:var(--dark);}
+        .brand-logo-icon{width:36px;height:36px;background:var(--dark);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.1rem;}
+        .nav-menu{display:flex;list-style:none;gap:2rem;align-items:center;}
+        .nav-menu a{color:var(--dark);font-weight:700;font-size:.875rem;position:relative;}
+        .nav-menu a:not(.btn-nav)::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:2px;background:var(--accent);border-radius:2px;transition:.2s;}
+        .nav-menu a:not(.btn-nav):hover::after,.nav-menu a.active::after{width:100%;}
+        .btn-nav{background:var(--dark)!important;color:white!important;padding:.6rem 1.3rem;border-radius:10px;}
+        .nav-right{display:none;align-items:center;gap:.75rem;}
+        .btn-nav-mobile{background:var(--dark);color:white!important;padding:.5rem 1rem;border-radius:8px;font-weight:800;font-size:.8rem;}
+        .hamburger{display:flex;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+        .hamburger span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px;transition:.2s;}
+        .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        .hamburger.open span:nth-child(2){opacity:0;}
+        .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+        .mobile-menu{display:none;position:fixed;inset:0;background:var(--dark);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;}
+        .mobile-menu.open{display:flex;}
+        .mobile-menu a{color:white;font-size:1.6rem;font-weight:800;}
+        .mobile-menu a:hover{color:var(--accent);}
+        .mobile-menu-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:white;font-size:2rem;cursor:pointer;}
+
+        /* TEAM PAGE */
+        .team-page{padding:5rem 0;}
+        .gradient-text{background:linear-gradient(110deg,var(--primary) 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+        .giant-title{font-size:clamp(2rem,5vw,3rem);font-weight:900;margin-bottom:3rem;letter-spacing:-1px;line-height:1.15;text-align:center;}
+        .team-showcase{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:3rem;}
+        .profile-card{background:white;padding:2rem 1.5rem;border-radius:24px;text-align:left;border:1px solid var(--border);transition:transform .25s,box-shadow .25s;}
+        .profile-card:hover{transform:translateY(-5px);box-shadow:0 10px 32px rgba(0,0,0,.09);}
+        .profile-avatar{width:50px;height:50px;border-radius:50%;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:900;font-size:1rem;margin-bottom:1rem;}
+        .tag{font-size:.68rem;font-weight:800;color:var(--success);text-transform:uppercase;letter-spacing:.5px;}
+        .profile-card h3{font-size:1.1rem;font-weight:800;margin:.4rem 0 .5rem;}
+        .profile-card p{font-size:.85rem;color:var(--text-light);line-height:1.55;}
+        .defect-box{margin-top:1.2rem;font-size:.75rem;color:#94A3B8;border-top:1px solid var(--border);padding-top:1rem;font-style:italic;}
+
+        /* STORY */
+        .story-vibe{background:var(--dark);color:white;padding:3rem 2.5rem;border-radius:28px;text-align:left;position:relative;overflow:hidden;}
+        .story-vibe::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(0,230,118,.1) 0%,transparent 70%);}
+        .story-vibe h2{font-size:1.8rem;font-weight:900;margin-bottom:2rem;color:var(--accent);letter-spacing:-.5px;}
+        .story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+        .story-label{display:block;font-size:.85rem;font-weight:900;color:var(--accent);margin-bottom:.4rem;}
+        .story-item p{opacity:.75;font-size:.9rem;line-height:1.65;}
+
+        /* CTA */
+        .cta-band{margin-top:4rem;background:var(--dark);border-radius:28px;padding:3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;}
+        .cta-band h3{font-size:1.6rem;font-weight:900;color:white;letter-spacing:-.5px;}
+        .cta-band p{color:rgba(255,255,255,.55);font-size:.9rem;margin-top:.3rem;}
+        .btn-accent{background:var(--accent);color:var(--dark);padding:.95rem 2rem;border-radius:12px;font-weight:900;font-size:.9rem;white-space:nowrap;transition:transform .2s,box-shadow .2s;}
+        .btn-accent:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,230,118,.3);}
+
+        /* FOOTER */
+        .main-footer{padding:2.5rem;text-align:center;border-top:1px solid var(--border);background:white;margin-top:4rem;}
+        .footer-links{display:flex;gap:1.5rem;justify-content:center;margin-bottom:.6rem;}
+        .footer-links a{font-size:.8rem;color:var(--text-light);font-weight:600;}
+        .footer-links a:hover{color:var(--dark);}
+        .footer-copy{font-size:.76rem;opacity:.4;}
+
+        /* BUTTONS */
+        .btn-main-dark{background:var(--dark);color:white;padding:.95rem 2rem;border-radius:12px;font-weight:800;font-family:inherit;font-size:.9rem;border:none;cursor:pointer;display:inline-block;transition:transform .2s,box-shadow .2s;}
+        .btn-main-dark:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,15,28,.25);}
+
+        @media(max-width:768px){
+            .nav-menu{display:none;} .nav-right{display:flex;}
+            .team-showcase{grid-template-columns:1fr;}
+            .story-grid{grid-template-columns:1fr;}
+            .cta-band{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
+            .btn-accent{width:100%;text-align:center;}
+        }
+
+        /* COOKIE BANNER */
+        .cookie-banner{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);width:calc(100% - 3rem);max-width:680px;background:var(--dark);color:white;border-radius:20px;padding:1.4rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1.2rem;z-index:9999;box-shadow:0 20px 60px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);animation:slideUp .4s ease;}
+        @keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+        .cookie-banner.hidden{display:none;}
+        .cookie-text{font-size:.82rem;line-height:1.5;opacity:.85;flex:1;}
+        .cookie-text strong{color:var(--accent);}
+        .cookie-text a{color:var(--accent);text-decoration:underline;}
+        .cookie-actions{display:flex;gap:.6rem;flex-shrink:0;}
+        .btn-cookie-accept{background:var(--accent);color:var(--dark);padding:.55rem 1.1rem;border-radius:8px;font-weight:900;font-size:.8rem;border:none;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s;}
+        .btn-cookie-accept:hover{opacity:.85;}
+        .btn-cookie-refuse{background:rgba(255,255,255,.1);color:white;padding:.55rem 1.1rem;border-radius:8px;font-weight:700;font-size:.8rem;border:1px solid rgba(255,255,255,.2);cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s;}
+        .btn-cookie-refuse:hover{background:rgba(255,255,255,.18);}
+        @media(max-width:580px){.cookie-banner{flex-direction:column;align-items:flex-start;bottom:0;left:0;right:0;transform:none;width:100%;border-radius:20px 20px 0 0;} .cookie-actions{width:100%;} .btn-cookie-accept,.btn-cookie-refuse{flex:1;text-align:center;}}
+    </style>
 </head>
-<body class="bg-soft">
-    <header class="navbar">
+<body>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">✕</button>
+        <a href="index.html">Concept</a>
+        <a href="equipe.html">L'Équipe</a>
+        <a href="devis.html">Lancer un projet</a>
+    </div>
+
+    <header class="navbar" id="navbar">
         <div class="container nav-wrapper">
-            <a href="index.html" class="brand"><img src="Logo_Le_Relais_Web.png" class="logo"></a>
-            <a href="devis.html" class="btn-nav-mobile">Démarrer</a>
+            <a href="index.html" class="brand-logo"><div class="brand-logo-icon">⚡</div>Le Relais Web</a>
+            <div class="nav-right">
+                <a href="devis.html" class="btn-nav-mobile">Démarrer</a>
+                <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Concept</a></li>
+                <li><a href="equipe.html" class="active">L'Équipe</a></li>
+                <li><a href="devis.html" class="btn-nav">Lancer un projet</a></li>
+            </ul>
         </div>
     </header>
 
     <main class="container team-page">
-        <h1 class="giant-title">Trois esprits.<br><span class="gradient-text">Une vision.</span></h1>
+        <h1 class="giant-title reveal">Trois esprits.<br><span class="gradient-text">Une vision.</span></h1>
 
         <div class="team-showcase">
-            <div class="profile-card">
-                <span class="tag">Design & Dev</span>
+            <div class="profile-card reveal">
+                <div class="profile-avatar">IB</div>
+                <span class="tag">Design & Développement</span>
                 <h3>Ilyas Bailleul</h3>
-                <p>Architecte du code pur. Chaque pixel est optimisé pour la vitesse.</p>
+                <p>Architecte du code pur. Chaque pixel est optimisé pour la performance et la conversion.</p>
                 <div class="defect-box">Obsession : La perfection ou rien.</div>
             </div>
-            <div class="profile-card">
-                <span class="tag">Marketing</span>
+            <div class="profile-card reveal">
+                <div class="profile-avatar">AG</div>
+                <span class="tag">Marketing & Conversion</span>
                 <h3>Adam Gheribi</h3>
-                <p>Le pont entre votre métier et la technologie. Expert en conversion.</p>
+                <p>Le pont entre votre métier et la technologie. Expert en stratégie de conversion en ligne.</p>
                 <div class="defect-box">Énergie : Ne s'arrête jamais.</div>
             </div>
-            <div class="profile-card">
-                <span class="tag">Stratégie</span>
+            <div class="profile-card reveal">
+                <div class="profile-avatar">MB</div>
+                <span class="tag">Stratégie & SEO</span>
                 <h3>Mohamed-Ilyes Belkhelfa</h3>
-                <p>Analyse les algorithmes pour vous placer en tête des recherches.</p>
+                <p>Analyse les algorithmes pour vous placer en tête des recherches Google de votre secteur.</p>
                 <div class="defect-box">Précision : Esprit purement data.</div>
             </div>
         </div>
 
-        <section class="story-vibe">
+        <section class="story-vibe reveal">
             <h2>Notre Histoire</h2>
-            <div class="story-item">
-                <span class="story-label">L'Origine</span>
-                <p>Trois amis de 17 ans qui ont décidé de redonner le pouvoir numérique aux artisans locaux face aux géants du web.</p>
-            </div>
-            <div class="story-item">
-                <span class="story-label">La Mission</span>
-                <p>Utiliser le <strong>Code Pur</strong> pour offrir une performance d'élite à l'économie de proximité.</p>
+            <div class="story-grid">
+                <div class="story-item">
+                    <span class="story-label">L'Origine</span>
+                    <p>Trois amis de 17 ans qui ont décidé de redonner le pouvoir numérique aux artisans locaux face aux géants du web.</p>
+                </div>
+                <div class="story-item">
+                    <span class="story-label">La Mission</span>
+                    <p>Utiliser le <strong>Code Pur</strong> pour offrir une performance d'élite à l'économie de proximité. Sans compromis.</p>
+                </div>
+                <div class="story-item">
+                    <span class="story-label">L'Engagement</span>
+                    <p>Un interlocuteur unique, une communication directe. Vous parlez aux créateurs de votre site.</p>
+                </div>
             </div>
         </section>
+
+        <div class="cta-band reveal">
+            <div>
+                <h3>Prêt à travailler avec nous ?</h3>
+                <p>Rejoignez les artisans qui ont fait confiance au Code Pur.</p>
+            </div>
+            <a href="devis.html" class="btn-accent">Lancer mon projet →</a>
+        </div>
     </main>
 
-    <script src="script.js"></script>
+    <footer class="main-footer">
+        <div class="footer-links">
+            <a href="index.html">Concept</a>
+            <a href="equipe.html">L'Équipe</a>
+            <a href="devis.html">Démarrer</a>
+            <a href="politique-confidentialite.html">Confidentialité & Cookies</a>
+        </div>
+        <p class="footer-copy">© 2026 Le Relais Web. Tous droits réservés.</p>
+    </footer>
+
+    <!-- COOKIE BANNER -->
+    <div class="cookie-banner" id="cookieBanner">
+        <p class="cookie-text">🍪 <strong>Cookies</strong> — Ce site utilise des cookies pour assurer son bon fonctionnement (Google Fonts, FormSubmit, Stripe). En continuant, vous acceptez notre <a href="politique-confidentialite.html">politique de confidentialité</a>.</p>
+        <div class="cookie-actions">
+            <button class="btn-cookie-refuse" id="cookieRefuse">Refuser</button>
+            <button class="btn-cookie-accept" id="cookieAccept">Accepter ✓</button>
+        </div>
+    </div>
+
+    <script>
+        const obs=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*90);obs.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+        document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+        const nav=document.getElementById('navbar');
+        window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>50),{passive:true});
+        const hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu'),mc=document.getElementById('mobileClose');
+        if(hb)hb.addEventListener('click',()=>{hb.classList.add('open');mm.classList.add('open');document.body.style.overflow='hidden';});
+        if(mc)mc.addEventListener('click',()=>{hb.classList.remove('open');mm.classList.remove('open');document.body.style.overflow='';});
+        mm&&mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hb.classList.remove('open');mm.classList.remove('open');document.body.style.overflow='';}));
+        // Cookie consent
+        const banner=document.getElementById('cookieBanner');
+        if(localStorage.getItem('cookieConsent'))banner.classList.add('hidden');
+        document.getElementById('cookieAccept').addEventListener('click',()=>{localStorage.setItem('cookieConsent','accepted');banner.classList.add('hidden');});
+        document.getElementById('cookieRefuse').addEventListener('click',()=>{localStorage.setItem('cookieConsent','refused');banner.classList.add('hidden');});
+    </script>
 </body>
 </html>
+
+
 
