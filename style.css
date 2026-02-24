@@ -86,3 +86,31 @@ input, textarea { width: 100%; padding: 1rem; border-radius: 12px; border: 1px s
     .amount { font-size: 3.5rem; }
     .container { padding: 0 1rem; }
 }
+
+.guarantee-badge {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #F0FDF4; /* Vert très clair */
+    border: 1px solid #BBF7D0;
+    border-radius: 16px;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.guarantee-badge p {
+    font-size: 0.85rem;
+    color: #166534;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.shield-icon {
+    font-size: 1.5rem;
+}
+
+.form-header p {
+    color: #059669; /* Vert pour souligner la garantie */
+    font-weight: 700;
+}
