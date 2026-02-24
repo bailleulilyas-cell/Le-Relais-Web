@@ -1,40 +1,54 @@
-<form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" id="relais-form">
-    
-    <input type="hidden" name="_captcha" value="false">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Démarrer mon projet | Le Relais Web</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-soft">
+    <div class="container onboarding-page">
+        <div class="form-container">
+            <div class="form-header">
+                <a href="index.html"><img src="Logo_Le_Relais_Web.png" class="logo-small" alt="Logo"></a>
+                <h1>Lancez votre projet.</h1>
+                <p>Garantie 100% satisfait ou remboursé pendant 7 jours.</p>
+            </div>
+            
+            <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="main-form" id="relais-form">
+                
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="Nouveau Projet - Le Relais Web">
 
-    <div class="field">
-        <label>Nom de l'enseigne</label>
-        <input type="text" name="commerce" placeholder="Ex: Garage du Centre" required>
+                <div class="field">
+                    <label>Nom de l'enseigne</label>
+                    <input type="text" name="commerce" placeholder="Ex: Garage du Centre" required>
+                </div>
+
+                <div class="field">
+                    <label>Email professionnel</label>
+                    <input type="email" name="email" placeholder="contact@votrecommerce.fr" required>
+                </div>
+
+                <div class="field">
+                    <label>Décrivez vos besoins</label>
+                    <textarea name="vision" rows="4" placeholder="Quels sont vos objectifs principaux (pages, couleurs, message) ?" required></textarea>
+                </div>
+
+                <button type="submit" id="submit-btn" class="btn-main-dark full">Sécuriser ma commande →</button>
+                
+                <div class="guarantee-badge">
+                    <span class="shield-icon">🛡️</span>
+                    <p><strong>Garantie Sérénité :</strong> Si le résultat ne vous convient pas dans les 7 premiers jours, nous vous remboursons intégralement. Sans discussion.</p>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div class="field">
-        <label>Email professionnel</label>
-        <input type="email" name="email" placeholder="contact@votrecommerce.fr" required>
-    </div>
-
-    <div class="field">
-        <label>Décrivez vos besoins</label>
-        <textarea name="vision" rows="4" placeholder="Quels sont vos objectifs principaux ?" required></textarea>
-    </div>
-
-    <button type="submit" class="btn-main-dark full">Sécuriser ma commande →</button>
-    
-    <div class="guarantee-badge">
-        <span class="shield-icon">🛡️</span>
-        <p><strong>Garantie Sérénité :</strong> Si le résultat ne vous convient pas dans les 7 premiers jours, nous vous remboursons intégralement.</p>
-    </div>
-</form>
-
-<script>
-  const form = document.getElementById('relais-form');
-  form.addEventListener('submit', function(e) {
-    // On laisse le formulaire s'envoyer normalement vers FormSubmit
-    // Mais on déclenche la redirection vers Stripe manuellement après 1 seconde
-    setTimeout(() => {
-      window.location.href = "https://buy.stripe.com/6oUaEY9TH0RPg8K2za1VK00";
-    }, 1000);
-  });
-</script>
+    <script src="script.js"></script>
+</body>
+</html>
 
 
 
