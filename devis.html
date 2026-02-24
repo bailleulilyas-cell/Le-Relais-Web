@@ -12,19 +12,18 @@
         <div class="form-container">
             <div class="form-header">
                 <a href="index.html"><img src="Logo_Le_Relais_Web.png" class="logo-small" alt="Logo"></a>
-                <h1>Commençons.</h1>
-                <p>Répondez à ces questions pour activer vos 7 jours d'essai gratuit.</p>
+                <h1>Lancez votre projet.</h1>
+                <p>Garantie 100% satisfait ou remboursé pendant 7 jours.</p>
             </div>
             
             <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST" class="main-form">
                 
-                <input type="hidden" name="_next" value="https://buy.stripe.com/6oUaEY9TH0RPg8K2za1VK00">
-                
+                <input type="hidden" name="_next" value="https://checkout.stripe.com/PAYMENT_LINK_PLACEHOLDER">
                 <input type="hidden" name="_captcha" value="false">
 
                 <div class="field">
                     <label>Nom de l'enseigne</label>
-                    <input type="text" name="commerce" placeholder="Boulangerie Dupont" required>
+                    <input type="text" name="commerce" placeholder="Ex: Garage du Centre" required>
                 </div>
 
                 <div class="field">
@@ -33,18 +32,18 @@
                 </div>
 
                 <div class="field">
-                    <label>Décrivez votre vision</label>
-                    <textarea name="vision" rows="4" placeholder="Objectifs, couleurs, pages souhaitées..." required></textarea>
+                    <label>Décrivez vos besoins</label>
+                    <textarea name="vision" rows="4" placeholder="Quels sont vos objectifs principaux ?" required></textarea>
                 </div>
 
-                <button type="submit" class="btn-main-dark full">Activer mon essai de 7 jours →</button>
+                <button type="submit" class="btn-main-dark full">Sécuriser ma commande →</button>
                 
-                <p class="form-footer">
-                    🔒 Validation sécurisée via Stripe.<br>
-                    Aucun prélèvement avant le 8ème jour.
-                </p>
+                <div class="guarantee-badge">
+                    <span class="shield-icon">🛡️</span>
+                    <p><strong>Garantie Sérénité :</strong> Si le résultat ne vous convient pas dans les 7 premiers jours, nous vous remboursons intégralement. Sans discussion.</p>
+                </div>
             </form>
-            </div>
+        </div>
     </div>
 </body>
 </html>
