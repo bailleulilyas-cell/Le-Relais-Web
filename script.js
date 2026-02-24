@@ -22,28 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Gestion de la redirection sécurisée vers Stripe
-document.addEventListener('DOMContentLoaded', () => {
-    const relaisForm = document.getElementById('relais-form');
 
-    if (relaisForm) {
-        relaisForm.addEventListener('submit', function(e) {
-            // Ton lien Stripe exact
-            const stripeUrl = "https://buy.stripe.com/6oUaEY9TH0RPg8K2za1VK00"; 
 
-            // On change le texte du bouton pour montrer que c'est en cours
-            const btn = document.getElementById('submit-btn');
-            if(btn) {
-                btn.innerText = "Envoi en cours...";
-                btn.style.opacity = "0.7";
-            }
-
-            // On laisse 1.2 seconde à FormSubmit pour envoyer les données
-            // avant de rediriger de force vers Stripe
-            setTimeout(() => {
-                window.location.href = stripeUrl;
-            }, 1200);
-        });
-    }
-});
 
