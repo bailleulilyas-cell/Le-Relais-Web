@@ -3,180 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Démarrer mon projet | Le Relais Web</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Démarrer mon projet | Le Relais Web</title>
     <style>
-        :root{--dark:#0A0F1C;--primary:#002B5B;--accent:#00E676;--gray:#F8FAFC;--text:#1E293B;--text-light:#64748B;--white:#FFFFFF;--border:#E2E8F0;--success:#059669;}
+        :root{--dark:#0A0F1C;--primary:#002B5B;--accent:#00E676;--gray:#F8FAFC;--text:#1E293B;--muted:#64748B;--border:#E2E8F0;--ok:#059669;}
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--gray);min-height:100vh;-webkit-font-smoothing:antialiased;}
+        html{scroll-behavior:smooth;}
+        body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
         a{text-decoration:none;transition:.2s;}
         .container{width:100%;max-width:1200px;margin:0 auto;padding:0 1.5rem;}
+        .reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease;}
+        .reveal.visible{opacity:1;transform:none;}
+        .gradient-text{background:linear-gradient(110deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
-        /* NAV */
-        .navbar{padding:1.1rem 0;background:rgba(255,255,255,.93);backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,0,0,.06);}
-        .nav-wrapper{display:flex;justify-content:space-between;align-items:center;}
-        .brand-logo{display:flex;align-items:center;gap:.6rem;font-weight:900;font-size:1.1rem;color:var(--dark);}
-        .brand-logo-icon{width:36px;height:36px;background:var(--dark);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.1rem;}
+        /* ── NAVBAR ── */
+        .navbar{padding:1rem 0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:500;border-bottom:1px solid rgba(0,0,0,.07);transition:padding .2s,box-shadow .2s;}
+        .navbar.scrolled{padding:.65rem 0;box-shadow:0 2px 16px rgba(0,0,0,.08);}
+        .nav-wrapper{display:flex;align-items:center;justify-content:space-between;}
+        .brand-logo{display:flex;align-items:center;flex-shrink:0;}
+        .nav-desktop{display:flex;}
+        .nav-desktop ul{display:flex;list-style:none;align-items:center;gap:1.8rem;}
+        .nav-desktop a{font-weight:700;font-size:.875rem;color:var(--dark);position:relative;}
+        .nav-desktop a:not(.btn-nav)::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:2px;background:var(--accent);border-radius:2px;transition:width .2s;}
+        .nav-desktop a:not(.btn-nav):hover::after,.nav-desktop a.active::after{width:100%;}
+        .btn-nav{background:var(--dark)!important;color:#fff!important;padding:.55rem 1.2rem;border-radius:10px;font-weight:800!important;}
+        /* Mobile trigger */
+        .nav-mobile{display:none;align-items:center;gap:.6rem;}
+        .btn-nav-m{background:var(--dark);color:#fff;padding:.45rem .9rem;border-radius:8px;font-weight:800;font-size:.8rem;white-space:nowrap;}
+        .burger{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+        .burger span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px;transition:transform .25s,opacity .25s;}
+        .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        .burger.is-open span:nth-child(2){opacity:0;}
+        .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+        /* Mobile overlay */
+        #mobileOverlay{display:none;position:fixed;inset:0;background:var(--dark);z-index:9000;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;}
+        #mobileOverlay.is-open{display:flex;}
+        #mobileOverlay a{color:#fff;font-size:1.5rem;font-weight:900;-webkit-tap-highlight-color:transparent;padding:.4rem 1.5rem;}
+        #mobileOverlay a:active{color:var(--accent);}
+        #closeBtn{position:absolute;top:1.2rem;right:1.2rem;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:1.5rem;line-height:1;width:44px;height:44px;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+        #closeBtn:active{background:rgba(255,255,255,.25);}
 
-        /* FORM PAGE */
-        .onboarding-page{padding:3.5rem 1.5rem 5rem;display:flex;justify-content:center;}
-        .form-wrap{width:100%;max-width:580px;}
-        .back-link{display:inline-flex;align-items:center;gap:.4rem;color:var(--text-light);font-size:.82rem;font-weight:700;margin-bottom:1.5rem;}
-        .back-link:hover{color:var(--dark);}
+        /* ── FOOTER ── */
+        .main-footer{padding:2.5rem 1.5rem;text-align:center;border-top:1px solid var(--border);}
+        .footer-links{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-bottom:.6rem;}
+        .footer-links a{font-size:.8rem;color:var(--muted);font-weight:600;}
+        .footer-links a:hover{color:var(--dark);}
+        .footer-copy{font-size:.75rem;opacity:.4;}
 
-        .form-container{background:white;padding:2.8rem 2.2rem;border-radius:28px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,.07);}
-        .form-header{margin-bottom:1.8rem;}
-        .form-logo{display:flex;align-items:center;gap:.6rem;font-weight:900;font-size:1.1rem;color:var(--dark);margin-bottom:1.4rem;}
-        .form-logo-icon{width:36px;height:36px;background:var(--dark);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--accent);}
-        .form-header h1{font-size:1.75rem;font-weight:900;letter-spacing:-.5px;margin-bottom:.3rem;}
-        .form-header p{display:flex;align-items:center;gap:.3rem;color:var(--success);font-weight:700;font-size:.88rem;}
+        /* ── COOKIE ── */
+        .ck-bar{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);width:calc(100% - 2rem);max-width:660px;background:var(--dark);color:#fff;border-radius:16px;padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;z-index:9999;box-shadow:0 16px 48px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);}
+        .ck-bar.hidden{display:none;}
+        .ck-text{font-size:.8rem;line-height:1.55;opacity:.85;flex:1;}
+        .ck-text strong{color:var(--accent);}
+        .ck-text a{color:var(--accent);text-decoration:underline;}
+        .ck-btns{display:flex;gap:.5rem;flex-shrink:0;}
+        .ck-yes{background:var(--accent);color:var(--dark);border:none;padding:.5rem 1rem;border-radius:8px;font-weight:900;font-size:.78rem;cursor:pointer;font-family:inherit;}
+        .ck-no{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);padding:.5rem 1rem;border-radius:8px;font-weight:700;font-size:.78rem;cursor:pointer;font-family:inherit;}
 
-        .field{margin-bottom:1.2rem;}
-        .field label{display:block;font-weight:800;font-size:.75rem;text-transform:uppercase;letter-spacing:.3px;margin-bottom:.45rem;color:var(--text);}
-        input,textarea,select{width:100%;padding:.9rem 1rem;border-radius:12px;border:1.5px solid var(--border);background:var(--gray);font-family:inherit;font-size:.95rem;color:var(--text);transition:border-color .2s,box-shadow .2s;appearance:none;}
-        input:focus,textarea:focus,select:focus{outline:none;border-color:var(--primary);background:white;box-shadow:0 0 0 3px rgba(0,43,91,.08);}
-        input::placeholder,textarea::placeholder{color:#94A3B8;}
-        textarea{resize:vertical;min-height:110px;}
-
-        .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-
-        .btn-submit{width:100%;background:var(--dark);color:white;padding:1rem;border-radius:12px;font-weight:800;font-family:inherit;font-size:1rem;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:.5rem;}
-        .btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,15,28,.25);}
-
-        .guarantee-badge{margin-top:1.3rem;padding:1.1rem 1.3rem;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;display:flex;gap:.8rem;align-items:flex-start;}
-        .shield-icon{font-size:1.3rem;flex-shrink:0;}
-        .guarantee-badge p{font-size:.8rem;color:#166534;line-height:1.5;margin:0;}
-
-        /* TRUST ITEMS */
-        .trust-row{display:flex;gap:1rem;margin-top:2rem;}
-        .trust-badge{flex:1;background:white;border:1px solid var(--border);border-radius:12px;padding:.9rem 1rem;text-align:center;}
-        .trust-badge-icon{font-size:1.2rem;margin-bottom:.3rem;}
-        .trust-badge p{font-size:.72rem;font-weight:700;color:var(--text-light);line-height:1.3;}
-
-        @media(max-width:640px){
-            .onboarding-page{padding:2rem 1rem 3rem;}
-            .form-container{padding:2rem 1.5rem;}
-            .field-row{grid-template-columns:1fr;}
-            .trust-row{flex-direction:column;}
+        /* ── RESPONSIVE NAVS ── */
+        @media(max-width:768px){.nav-desktop{display:none;}.nav-mobile{display:flex;}}
+        @media(max-width:560px){
+            .ck-bar{bottom:0;left:0;right:0;transform:none;width:100%;border-radius:16px 16px 0 0;flex-direction:column;align-items:flex-start;}
+            .ck-btns{width:100%;}
+            .ck-yes,.ck-no{flex:1;text-align:center;}
         }
-
-        /* COOKIE BANNER */
-        .cookie-banner{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);width:calc(100% - 3rem);max-width:680px;background:var(--dark);color:white;border-radius:20px;padding:1.4rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1.2rem;z-index:9999;box-shadow:0 20px 60px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);animation:slideUp .4s ease;}
-        @keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-        .cookie-banner.hidden{display:none;}
-        .cookie-text{font-size:.82rem;line-height:1.5;opacity:.85;flex:1;}
-        .cookie-text strong{color:var(--accent);}
-        .cookie-text a{color:var(--accent);text-decoration:underline;}
-        .cookie-actions{display:flex;gap:.6rem;flex-shrink:0;}
-        .btn-cookie-accept{background:var(--accent);color:var(--dark);padding:.55rem 1.1rem;border-radius:8px;font-weight:900;font-size:.8rem;border:none;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s;}
-        .btn-cookie-accept:hover{opacity:.85;}
-        .btn-cookie-refuse{background:rgba(255,255,255,.1);color:white;padding:.55rem 1.1rem;border-radius:8px;font-weight:700;font-size:.8rem;border:1px solid rgba(255,255,255,.2);cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s;}
-        .btn-cookie-refuse:hover{background:rgba(255,255,255,.18);}
-        @media(max-width:580px){.cookie-banner{flex-direction:column;align-items:flex-start;bottom:0;left:0;right:0;transform:none;width:100%;border-radius:20px 20px 0 0;} .cookie-actions{width:100%;} .btn-cookie-accept,.btn-cookie-refuse{flex:1;text-align:center;}}
+        .form-page{min-height:100vh;padding:3rem 0 5rem;background:var(--gray);}
+        .form-wrap{max-width:600px;margin:0 auto;}
+        .back-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:1.5rem;}
+        .back-link:hover{color:var(--dark);}
+        .form-box{background:#fff;border-radius:24px;border:1px solid var(--border);padding:2.5rem;box-shadow:0 8px 40px rgba(0,0,0,.06);}
+        .form-logo{text-align:center;margin-bottom:1.5rem;}
+        .form-box h1{font-size:1.7rem;font-weight:900;letter-spacing:-.5px;margin-bottom:.4rem;}
+        .form-box > .subtitle{color:var(--muted);font-size:.9rem;margin-bottom:2rem;}
+        .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+        .field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem;}
+        .field label{font-size:.8rem;font-weight:800;color:var(--dark);}
+        .field input,.field select,.field textarea{padding:.75rem 1rem;border-radius:10px;border:1.5px solid var(--border);font-family:inherit;font-size:.88rem;color:var(--text);transition:border-color .2s;}
+        .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);}
+        .field textarea{resize:vertical;min-height:100px;}
+        .btn-submit{width:100%;padding:1rem;background:var(--dark);color:#fff;border:none;border-radius:12px;font-weight:900;font-size:1rem;cursor:pointer;font-family:inherit;margin-top:.5rem;transition:transform .2s,box-shadow .2s;}
+        .btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,15,28,.25);}
+        .form-guarantee{text-align:center;font-size:.78rem;color:var(--muted);margin-top:1rem;}
+        .trust-badges{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem;}
+        .trust-badge{text-align:center;padding:1rem .8rem;background:#fff;border-radius:14px;border:1px solid var(--border);}
+        .trust-badge .tb-icon{font-size:1.4rem;margin-bottom:.4rem;}
+        .trust-badge .tb-title{font-size:.75rem;font-weight:900;margin-bottom:.2rem;}
+        .trust-badge .tb-desc{font-size:.68rem;color:var(--muted);}
+        @media(max-width:768px){
+            .field-row{grid-template-columns:1fr;}
+            .form-box{padding:2rem 1.2rem;border-radius:20px;}
+            .trust-badges{grid-template-columns:1fr;}
+        }
+        @media(max-width:480px){.container{padding:0 1rem;}}
     </style>
 </head>
 <body>
-
-    <header class="navbar">
+    <!-- MOBILE OVERLAY -->
+    <div id="mobileOverlay">
+        <button id="closeBtn">&#x2715;</button>
+        <a href="index.html">Concept</a>
+        <a href="realisations.html">Réalisations</a>
+        <a href="equipe.html">L'Équipe</a>
+        <a href="devis.html">Lancer un projet</a>
+    </div>
+    <header class="navbar" id="navBar">
         <div class="container nav-wrapper">
-            <a href="index.html" class="brand-logo">
-                <img src="Logo_Le_Relais_Web.png" alt="Le Relais Web" style="height:38px;">
-            </a>
+            <a href="index.html" class="brand-logo"><img src="Logo_Le_Relais_Web.png" alt="Le Relais Web" style="height:38px;"></a>
+            <div class="nav-desktop">
+                <ul>
+                    <li><a href="index.html">Concept</a></li>
+                    <li><a href="realisations.html">Réalisations</a></li>
+                    <li><a href="equipe.html">L'Équipe</a></li>
+                    <li><a href="devis.html" class="btn-nav">Lancer un projet</a></li>
+                </ul>
+            </div>
+            <div class="nav-mobile">
+                <a href="devis.html" class="btn-nav-m">Démarrer</a>
+                <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+            </div>
         </div>
     </header>
-
-    <div class="onboarding-page">
-        <div class="form-wrap">
-            <a href="index.html" class="back-link">← Retour à l'accueil</a>
-
-            <div class="form-container">
-                <div class="form-header">
-                    <div class="form-logo">
-                        <img src="Logo_Le_Relais_Web.png" alt="Le Relais Web" style="height:35px;margin-bottom:1.4rem;">
-                    </div>
+    <div class="form-page">
+        <div class="container">
+            <div class="form-wrap">
+                <a href="index.html" class="back-link">← Retour à l'accueil</a>
+                <div class="form-box">
+                    <div class="form-logo"><img src="Logo_Le_Relais_Web.png" alt="Le Relais Web" style="height:36px;"></div>
                     <h1>Lancez votre projet.</h1>
-                    <p>🛡️ Garantie 100% satisfait ou remboursé 7 jours.</p>
+                    <p class="subtitle">🛡️ Garantie 100% satisfait ou remboursé 7 jours.</p>
+                    <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST">
+                        <input type="hidden" name="_subject" value="Nouvelle demande de devis — Le Relais Web">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" value="https://buy.stripe.com/cNi3cw8PD5855u60r21VK01">
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="enseigne">Nom de votre enseigne *</label>
+                                <input type="text" id="enseigne" name="enseigne" placeholder="Ex: Boulangerie Martin" required>
+                            </div>
+                            <div class="field">
+                                <label for="tel">Téléphone</label>
+                                <input type="tel" id="tel" name="telephone" placeholder="06 XX XX XX XX">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="email">Email professionnel *</label>
+                            <input type="email" id="email" name="email" placeholder="vous@votreactivite.fr" required>
+                        </div>
+                        <div class="field">
+                            <label for="secteur">Secteur d'activité *</label>
+                            <select id="secteur" name="secteur" required>
+                                <option value="" disabled selected>Sélectionnez votre secteur</option>
+                                <option>Boulangerie / Pâtisserie</option>
+                                <option>Coiffure / Esthétique</option>
+                                <option>Restauration / Traiteur</option>
+                                <option>Plomberie / Chauffage</option>
+                                <option>Électricité</option>
+                                <option>Maçonnerie / BTP</option>
+                                <option>Auto / Mécanique</option>
+                                <option>Commerce de détail</option>
+                                <option>Autre</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="besoins">Décrivez votre projet *</label>
+                            <textarea id="besoins" name="besoins" placeholder="Ex: Je suis plombier, j'ai besoin d'un site pour présenter mes services et recevoir des devis..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Envoyer ma demande →</button>
+                    </form>
+                    <p class="form-guarantee">🔒 Paiement sécurisé · Réponse sous 24h · Sans engagement</p>
                 </div>
-
-                <form action="https://formsubmit.co/bailleulilyas@gmail.com" method="POST">
-                    <input type="hidden" name="_next" value="https://buy.stripe.com/cNi3cw8PD5855u60r21VK01">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_subject" value="🚀 Nouveau Projet Client - Le Relais Web">
-
-                    <div class="field-row">
-                        <div class="field">
-                            <label for="commerce">Nom de l'enseigne *</label>
-                            <input type="text" id="commerce" name="commerce" placeholder="Garage du Centre" required>
-                        </div>
-                        <div class="field">
-                            <label for="telephone">Téléphone</label>
-                            <input type="tel" id="telephone" name="telephone" placeholder="06 XX XX XX XX">
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <label for="email">Email professionnel *</label>
-                        <input type="email" id="email" name="email" placeholder="contact@votrecommerce.fr" required>
-                    </div>
-
-                    <div class="field">
-                        <label for="secteur">Secteur d'activité *</label>
-                        <select id="secteur" name="secteur" required>
-                            <option value="" disabled selected>Choisissez votre secteur</option>
-                            <option>Artisan (plombier, électricien, maçon...)</option>
-                            <option>Restauration & alimentation</option>
-                            <option>Commerce de proximité</option>
-                            <option>Santé & bien-être</option>
-                            <option>Beauté & coiffure</option>
-                            <option>Auto & moto</option>
-                            <option>Autre</option>
-                        </select>
-                    </div>
-
-                    <div class="field">
-                        <label for="vision">Décrivez vos besoins *</label>
-                        <textarea id="vision" name="vision" rows="4" placeholder="Vos objectifs, couleurs souhaitées, nombre de pages, fonctionnalités..." required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-submit">Sécuriser ma commande →</button>
-
-                    <div class="guarantee-badge">
-                        <span class="shield-icon">🛡️</span>
-                        <p><strong>Garantie Sérénité :</strong> Si le résultat ne vous convient pas dans les 7 premiers jours, nous vous remboursons intégralement. Sans discussion, sans condition.</p>
-                    </div>
-                </form>
-            </div>
-
-            <div class="trust-row">
-                <div class="trust-badge"><div class="trust-badge-icon">⚡</div><p>Site livré en moins de 7 jours</p></div>
-                <div class="trust-badge"><div class="trust-badge-icon">💬</div><p>Réponse sous 24h garantie</p></div>
-                <div class="trust-badge"><div class="trust-badge-icon">🔒</div><p>Paiement 100% sécurisé</p></div>
+                <div class="trust-badges">
+                    <div class="trust-badge"><div class="tb-icon">🚀</div><div class="tb-title">Livraison 7 jours</div><div class="tb-desc">Votre site en ligne en une semaine</div></div>
+                    <div class="trust-badge"><div class="tb-icon">💬</div><div class="tb-title">Réponse 24h</div><div class="tb-desc">On vous répond le jour même</div></div>
+                    <div class="trust-badge"><div class="tb-icon">🛡️</div><div class="tb-title">Garantie 7j</div><div class="tb-desc">Remboursé si insatisfait</div></div>
+                </div>
             </div>
         </div>
     </div>
-
-    <footer style="padding:2rem;text-align:center;border-top:1px solid var(--border);margin-top:1rem;">
-        <div style="display:flex;gap:1.5rem;justify-content:center;margin-bottom:.5rem;">
-            <a href="index.html" style="font-size:.8rem;color:var(--text-light);font-weight:600;">Accueil</a>
-            <a href="equipe.html" style="font-size:.8rem;color:var(--text-light);font-weight:600;">L'Équipe</a>
-            <a href="politique-confidentialite.html" style="font-size:.8rem;color:var(--text-light);font-weight:600;">Confidentialité & Cookies</a>
+    <footer class="main-footer">
+        <div class="footer-links">
+            <a href="index.html">Concept</a>
+            <a href="realisations.html">Réalisations</a>
+            <a href="equipe.html">L'Équipe</a>
+            <a href="devis.html">Démarrer</a>
+            <a href="cgv.html">CGV</a>
+            <a href="politique-confidentialite.html">Confidentialité</a>
         </div>
-        <p style="font-size:.76rem;opacity:.4;">© 2026 Le Relais Web. Tous droits réservés.</p>
+        <p class="footer-copy">© 2026 Le Relais Web — SIRET 101 586 428 00019</p>
     </footer>
-
-    <!-- COOKIE BANNER -->    <div class="cookie-banner" id="cookieBanner">
-        <p class="cookie-text">🍪 <strong>Cookies</strong> — Ce site utilise des cookies pour assurer son bon fonctionnement (Google Fonts, FormSubmit, Stripe). En continuant, vous acceptez notre <a href="politique-confidentialite.html">politique de confidentialité</a>.</p>
-        <div class="cookie-actions">
-            <button class="btn-cookie-refuse" id="cookieRefuse">Refuser</button>
-            <button class="btn-cookie-accept" id="cookieAccept">Accepter ✓</button>
+    <div class="ck-bar" id="ckBar">
+        <p class="ck-text">🍪 <strong>Cookies</strong> — Ce site utilise des cookies (Google Fonts, Stripe, FormSubmit). <a href="politique-confidentialite.html">En savoir plus</a>.</p>
+        <div class="ck-btns">
+            <button class="ck-no" id="ckNo">Refuser</button>
+            <button class="ck-yes" id="ckYes">Accepter ✓</button>
         </div>
     </div>
-
     <script>
-        const banner=document.getElementById('cookieBanner');
-        if(localStorage.getItem('cookieConsent'))banner.classList.add('hidden');
-        document.getElementById('cookieAccept').addEventListener('click',()=>{localStorage.setItem('cookieConsent','accepted');banner.classList.add('hidden');});
-        document.getElementById('cookieRefuse').addEventListener('click',()=>{localStorage.setItem('cookieConsent','refused');banner.classList.add('hidden');});
+        (function(){
+            /* ── MOBILE MENU ── */
+            var overlay  = document.getElementById('mobileOverlay');
+            var burgerBtn = document.getElementById('burgerBtn');
+            var closeBtn  = document.getElementById('closeBtn');
+
+            function openMenu(){
+                overlay.classList.add('is-open');
+                burgerBtn.classList.add('is-open');
+                document.body.style.overflow='hidden';
+            }
+            function closeMenu(){
+                overlay.classList.remove('is-open');
+                burgerBtn.classList.remove('is-open');
+                document.body.style.overflow='';
+            }
+
+            burgerBtn.addEventListener('click', openMenu);
+            closeBtn.addEventListener('click', closeMenu);
+            overlay.querySelectorAll('a').forEach(function(a){
+                a.addEventListener('click', closeMenu);
+            });
+
+            /* ── NAVBAR SCROLL ── */
+            var navBar = document.getElementById('navBar');
+            window.addEventListener('scroll', function(){
+                navBar.classList.toggle('scrolled', window.scrollY > 50);
+            },{passive:true});
+
+            /* ── COOKIES ── */
+            var ckBar = document.getElementById('ckBar');
+            var ckYes = document.getElementById('ckYes');
+            var ckNo  = document.getElementById('ckNo');
+            if(localStorage.getItem('ck')) ckBar.classList.add('hidden');
+            ckYes.addEventListener('click', function(){ localStorage.setItem('ck','y'); ckBar.classList.add('hidden'); });
+            ckNo.addEventListener('click',  function(){ localStorage.setItem('ck','n'); ckBar.classList.add('hidden'); });
+        })();
     </script>
 </body>
 </html>
