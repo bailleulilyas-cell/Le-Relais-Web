@@ -3,217 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'Équipe | Le Relais Web</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <title>L'Équipe | Le Relais Web</title>
     <style>
-        :root{--dark:#0A0F1C;--primary:#002B5B;--accent:#00E676;--gray:#F8FAFC;--text:#1E293B;--text-light:#64748B;--white:#FFFFFF;--border:#E2E8F0;--success:#059669;}
+        :root{--dark:#0A0F1C;--primary:#002B5B;--accent:#00E676;--gray:#F8FAFC;--text:#1E293B;--muted:#64748B;--border:#E2E8F0;--ok:#059669;}
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
         html{scroll-behavior:smooth;}
-        body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:var(--gray);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+        body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
         a{text-decoration:none;transition:.2s;}
         .container{width:100%;max-width:1200px;margin:0 auto;padding:0 1.5rem;}
-        .reveal{opacity:0;transform:translateY(24px);transition:opacity .55s ease,transform .55s ease;}
-        .reveal.visible{opacity:1;transform:translateY(0);}
+        .reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease;}
+        .reveal.visible{opacity:1;transform:none;}
+        .gradient-text{background:linear-gradient(110deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
-        /* NAV */
-        .navbar{padding:1.1rem 0;position:sticky;top:0;background:rgba(255,255,255,.93);backdrop-filter:blur(14px);z-index:1000;border-bottom:1px solid rgba(0,0,0,.06);transition:all .25s;}
-        .navbar.scrolled{padding:.75rem 0;box-shadow:0 2px 12px rgba(0,0,0,.07);}
-        .nav-wrapper{display:flex;justify-content:space-between;align-items:center;}
-        .brand-logo{display:flex;align-items:center;gap:.6rem;font-weight:900;font-size:1.1rem;color:var(--dark);}
-        .brand-logo-icon{width:36px;height:36px;background:var(--dark);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.1rem;}
-        .nav-menu{display:flex;list-style:none;gap:2rem;align-items:center;}
-        .nav-menu a{color:var(--dark);font-weight:700;font-size:.875rem;position:relative;}
-        .nav-menu a:not(.btn-nav)::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:2px;background:var(--accent);border-radius:2px;transition:.2s;}
-        .nav-menu a:not(.btn-nav):hover::after,.nav-menu a.active::after{width:100%;}
-        .btn-nav{background:var(--dark)!important;color:white!important;padding:.6rem 1.3rem;border-radius:10px;}
-        .nav-right{display:none;align-items:center;gap:.75rem;}
-        .btn-nav-mobile{background:var(--dark);color:white!important;padding:.5rem 1rem;border-radius:8px;font-weight:800;font-size:.8rem;}
-        .hamburger{display:flex;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
-        .hamburger span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px;transition:.2s;}
-        .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-        .hamburger.open span:nth-child(2){opacity:0;}
-        .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-        .mobile-menu{display:none;position:fixed;inset:0;background:var(--dark);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;}
-        .mobile-menu.open{display:flex;}
-        .mobile-menu a{color:white;font-size:1.6rem;font-weight:800;}
-        .mobile-menu a:hover{color:var(--accent);}
-        .mobile-menu-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:white;font-size:2rem;cursor:pointer;}
+        /* ── NAVBAR ── */
+        .navbar{padding:1rem 0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:500;border-bottom:1px solid rgba(0,0,0,.07);transition:padding .2s,box-shadow .2s;}
+        .navbar.scrolled{padding:.65rem 0;box-shadow:0 2px 16px rgba(0,0,0,.08);}
+        .nav-wrapper{display:flex;align-items:center;justify-content:space-between;}
+        .brand-logo{display:flex;align-items:center;flex-shrink:0;}
+        .nav-desktop{display:flex;}
+        .nav-desktop ul{display:flex;list-style:none;align-items:center;gap:1.8rem;}
+        .nav-desktop a{font-weight:700;font-size:.875rem;color:var(--dark);position:relative;}
+        .nav-desktop a:not(.btn-nav)::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:2px;background:var(--accent);border-radius:2px;transition:width .2s;}
+        .nav-desktop a:not(.btn-nav):hover::after,.nav-desktop a.active::after{width:100%;}
+        .btn-nav{background:var(--dark)!important;color:#fff!important;padding:.55rem 1.2rem;border-radius:10px;font-weight:800!important;}
+        /* Mobile trigger */
+        .nav-mobile{display:none;align-items:center;gap:.6rem;}
+        .btn-nav-m{background:var(--dark);color:#fff;padding:.45rem .9rem;border-radius:8px;font-weight:800;font-size:.8rem;white-space:nowrap;}
+        .burger{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+        .burger span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px;transition:transform .25s,opacity .25s;}
+        .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        .burger.is-open span:nth-child(2){opacity:0;}
+        .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+        /* Mobile overlay */
+        #mobileOverlay{display:none;position:fixed;inset:0;background:var(--dark);z-index:9000;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;}
+        #mobileOverlay.is-open{display:flex;}
+        #mobileOverlay a{color:#fff;font-size:1.5rem;font-weight:900;-webkit-tap-highlight-color:transparent;padding:.4rem 1.5rem;}
+        #mobileOverlay a:active{color:var(--accent);}
+        #closeBtn{position:absolute;top:1.2rem;right:1.2rem;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:1.5rem;line-height:1;width:44px;height:44px;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+        #closeBtn:active{background:rgba(255,255,255,.25);}
 
-        /* TEAM PAGE */
-        .team-page{padding:5rem 0;}
-        .gradient-text{background:linear-gradient(110deg,var(--primary) 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-        .giant-title{font-size:clamp(2rem,5vw,3rem);font-weight:900;margin-bottom:3rem;letter-spacing:-1px;line-height:1.15;text-align:center;}
-        .team-showcase{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-bottom:3rem;}
-        .profile-card{background:white;padding:2rem 1.5rem;border-radius:24px;text-align:left;border:1px solid var(--border);transition:transform .25s,box-shadow .25s;}
-        .profile-card:hover{transform:translateY(-5px);box-shadow:0 10px 32px rgba(0,0,0,.09);}
-        .profile-avatar{width:50px;height:50px;border-radius:50%;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:900;font-size:1rem;margin-bottom:1rem;}
-        .tag{font-size:.68rem;font-weight:800;color:var(--success);text-transform:uppercase;letter-spacing:.5px;}
-        .profile-card h3{font-size:1.1rem;font-weight:800;margin:.4rem 0 .5rem;}
-        .profile-card p{font-size:.85rem;color:var(--text-light);line-height:1.55;}
-        .defect-box{margin-top:1.2rem;font-size:.75rem;color:#94A3B8;border-top:1px solid var(--border);padding-top:1rem;font-style:italic;}
-
-        /* STORY */
-        .story-vibe{background:var(--dark);color:white;padding:3rem 2.5rem;border-radius:28px;text-align:left;position:relative;overflow:hidden;}
-        .story-vibe::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(0,230,118,.1) 0%,transparent 70%);}
-        .story-vibe h2{font-size:1.8rem;font-weight:900;margin-bottom:2rem;color:var(--accent);letter-spacing:-.5px;}
-        .story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
-        .story-label{display:block;font-size:.85rem;font-weight:900;color:var(--accent);margin-bottom:.4rem;}
-        .story-item p{opacity:.75;font-size:.9rem;line-height:1.65;}
-
-        /* CTA */
-        .cta-band{margin-top:4rem;background:var(--dark);border-radius:28px;padding:3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;}
-        .cta-band h3{font-size:1.6rem;font-weight:900;color:white;letter-spacing:-.5px;}
-        .cta-band p{color:rgba(255,255,255,.55);font-size:.9rem;margin-top:.3rem;}
-        .btn-accent{background:var(--accent);color:var(--dark);padding:.95rem 2rem;border-radius:12px;font-weight:900;font-size:.9rem;white-space:nowrap;transition:transform .2s,box-shadow .2s;}
-        .btn-accent:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,230,118,.3);}
-
-        /* FOOTER */
-        .main-footer{padding:2.5rem;text-align:center;border-top:1px solid var(--border);background:white;margin-top:4rem;}
-        .footer-links{display:flex;gap:1.5rem;justify-content:center;margin-bottom:.6rem;}
-        .footer-links a{font-size:.8rem;color:var(--text-light);font-weight:600;}
+        /* ── FOOTER ── */
+        .main-footer{padding:2.5rem 1.5rem;text-align:center;border-top:1px solid var(--border);}
+        .footer-links{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-bottom:.6rem;}
+        .footer-links a{font-size:.8rem;color:var(--muted);font-weight:600;}
         .footer-links a:hover{color:var(--dark);}
-        .footer-copy{font-size:.76rem;opacity:.4;}
+        .footer-copy{font-size:.75rem;opacity:.4;}
 
-        /* BUTTONS */
-        .btn-main-dark{background:var(--dark);color:white;padding:.95rem 2rem;border-radius:12px;font-weight:800;font-family:inherit;font-size:.9rem;border:none;cursor:pointer;display:inline-block;transition:transform .2s,box-shadow .2s;}
-        .btn-main-dark:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,15,28,.25);}
+        /* ── COOKIE ── */
+        .ck-bar{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);width:calc(100% - 2rem);max-width:660px;background:var(--dark);color:#fff;border-radius:16px;padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;z-index:9999;box-shadow:0 16px 48px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);}
+        .ck-bar.hidden{display:none;}
+        .ck-text{font-size:.8rem;line-height:1.55;opacity:.85;flex:1;}
+        .ck-text strong{color:var(--accent);}
+        .ck-text a{color:var(--accent);text-decoration:underline;}
+        .ck-btns{display:flex;gap:.5rem;flex-shrink:0;}
+        .ck-yes{background:var(--accent);color:var(--dark);border:none;padding:.5rem 1rem;border-radius:8px;font-weight:900;font-size:.78rem;cursor:pointer;font-family:inherit;}
+        .ck-no{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);padding:.5rem 1rem;border-radius:8px;font-weight:700;font-size:.78rem;cursor:pointer;font-family:inherit;}
 
-        @media(max-width:768px){
-            .nav-menu{display:none;} .nav-right{display:flex;}
-            .team-showcase{grid-template-columns:1fr;}
-            .story-grid{grid-template-columns:1fr;}
-            .cta-band{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
-            .btn-accent{width:100%;text-align:center;}
+        /* ── RESPONSIVE NAVS ── */
+        @media(max-width:768px){.nav-desktop{display:none;}.nav-mobile{display:flex;}}
+        @media(max-width:560px){
+            .ck-bar{bottom:0;left:0;right:0;transform:none;width:100%;border-radius:16px 16px 0 0;flex-direction:column;align-items:flex-start;}
+            .ck-btns{width:100%;}
+            .ck-yes,.ck-no{flex:1;text-align:center;}
         }
-
-        /* COOKIE BANNER */
-        .cookie-banner{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);width:calc(100% - 3rem);max-width:680px;background:var(--dark);color:white;border-radius:20px;padding:1.4rem 1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1.2rem;z-index:9999;box-shadow:0 20px 60px rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);animation:slideUp .4s ease;}
-        @keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-        .cookie-banner.hidden{display:none;}
-        .cookie-text{font-size:.82rem;line-height:1.5;opacity:.85;flex:1;}
-        .cookie-text strong{color:var(--accent);}
-        .cookie-text a{color:var(--accent);text-decoration:underline;}
-        .cookie-actions{display:flex;gap:.6rem;flex-shrink:0;}
-        .btn-cookie-accept{background:var(--accent);color:var(--dark);padding:.55rem 1.1rem;border-radius:8px;font-weight:900;font-size:.8rem;border:none;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s;}
-        .btn-cookie-accept:hover{opacity:.85;}
-        .btn-cookie-refuse{background:rgba(255,255,255,.1);color:white;padding:.55rem 1.1rem;border-radius:8px;font-weight:700;font-size:.8rem;border:1px solid rgba(255,255,255,.2);cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s;}
-        .btn-cookie-refuse:hover{background:rgba(255,255,255,.18);}
-        @media(max-width:580px){.cookie-banner{flex-direction:column;align-items:flex-start;bottom:0;left:0;right:0;transform:none;width:100%;border-radius:20px 20px 0 0;} .cookie-actions{width:100%;} .btn-cookie-accept,.btn-cookie-refuse{flex:1;text-align:center;}}
+        .team-page{padding:5rem 0;}
+        .giant-title{font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.1;letter-spacing:-1.5px;margin-bottom:3rem;}
+        .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:4rem;}
+        .member-card{background:var(--gray);border-radius:24px;padding:2rem;border:1px solid var(--border);}
+        .member-avatar{width:70px;height:70px;border-radius:18px;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:1.2rem;}
+        .member-name{font-size:1.1rem;font-weight:900;margin-bottom:.2rem;}
+        .member-role{font-size:.75rem;font-weight:800;color:var(--accent);background:rgba(0,230,118,.1);padding:.2rem .6rem;border-radius:6px;display:inline-block;margin-bottom:.8rem;}
+        .member-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.8rem;}
+        .tag{font-size:.7rem;font-weight:700;color:var(--muted);background:var(--border);padding:.2rem .5rem;border-radius:6px;}
+        .member-desc{font-size:.85rem;color:var(--muted);line-height:1.6;}
+        .story-card{background:var(--dark);border-radius:24px;padding:3rem;margin-bottom:3rem;}
+        .story-card h2{font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:.6rem;letter-spacing:-.5px;}
+        .story-card > p{color:rgba(255,255,255,.55);font-size:.9rem;margin-bottom:2rem;}
+        .story-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+        .story-col h4{font-size:.7rem;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);margin-bottom:.6rem;}
+        .story-col p{font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.65;}
+        .cta-band{background:var(--gray);border-radius:20px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;border:1px solid var(--border);}
+        .cta-band h3{font-size:1.4rem;font-weight:900;letter-spacing:-.5px;}
+        .cta-band p{color:var(--muted);font-size:.9rem;margin-top:.3rem;}
+        .btn-green{background:var(--accent);color:var(--dark);padding:.9rem 2rem;border-radius:12px;font-weight:900;font-size:.95rem;display:inline-block;white-space:nowrap;transition:transform .2s,box-shadow .2s;}
+        .btn-green:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,230,118,.3);}
+        @media(max-width:768px){
+            .team-grid{grid-template-columns:1fr;}
+            .story-cols{grid-template-columns:1fr;gap:1.2rem;}
+            .story-card{padding:2rem 1.2rem;}
+            .cta-band{flex-direction:column;text-align:center;}
+            .btn-green{width:100%;text-align:center;}
+        }
+        @media(max-width:480px){.container{padding:0 1rem;}}
     </style>
 </head>
 <body>
-
-    <div class="mobile-menu" id="mobileMenu">
-        <button class="mobile-menu-close" id="mobileClose">✕</button>
+    <!-- MOBILE OVERLAY -->
+    <div id="mobileOverlay">
+        <button id="closeBtn">&#x2715;</button>
         <a href="index.html">Concept</a>
+        <a href="realisations.html">Réalisations</a>
         <a href="equipe.html">L'Équipe</a>
         <a href="devis.html">Lancer un projet</a>
     </div>
-
-    <header class="navbar" id="navbar">
+    <header class="navbar" id="navBar">
         <div class="container nav-wrapper">
-            <a href="index.html" class="brand-logo">
-                <img src="Logo_Le_Relais_Web.png" alt="Le Relais Web" style="height:38px;">
-            </a>
-            <div class="nav-right">
-                <a href="devis.html" class="btn-nav-mobile">Démarrer</a>
-                <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+            <a href="index.html" class="brand-logo"><img src="Logo_Le_Relais_Web.png" alt="Le Relais Web" style="height:38px;"></a>
+            <div class="nav-desktop">
+                <ul>
+                    <li><a href="index.html">Concept</a></li>
+                    <li><a href="realisations.html">Réalisations</a></li>
+                    <li><a href="equipe.html" class="active">L'Équipe</a></li>
+                    <li><a href="devis.html" class="btn-nav">Lancer un projet</a></li>
+                </ul>
             </div>
-            <ul class="nav-menu">
-                <li><a href="index.html">Concept</a></li>
-                <li><a href="equipe.html" class="active">L'Équipe</a></li>
-                <li><a href="devis.html" class="btn-nav">Lancer un projet</a></li>
-            </ul>
+            <div class="nav-mobile">
+                <a href="devis.html" class="btn-nav-m">Démarrer</a>
+                <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+            </div>
         </div>
     </header>
-
-    <main class="container team-page">
-        <h1 class="giant-title reveal">Trois esprits.<br><span class="gradient-text">Une vision.</span></h1>
-
-        <div class="team-showcase">
-            <div class="profile-card reveal">
-                <div class="profile-avatar">IB</div>
-                <span class="tag">Design & Développement</span>
-                <h3>Ilyas Bailleul</h3>
-                <p>Architecte du code pur. Chaque pixel est optimisé pour la performance et la conversion.</p>
-                <div class="defect-box">Obsession : La perfection ou rien.</div>
+    <main class="team-page container">
+        <h1 class="giant-title">Trois esprits.<br><span class="gradient-text">Une vision.</span></h1>
+        <div class="team-grid">
+            <div class="member-card reveal">
+                <div class="member-avatar">🧠</div>
+                <div class="member-name">Ilyas Bailleul</div>
+                <div class="member-role">Fondateur & Dev Lead</div>
+                <div class="member-tags"><span class="tag">HTML/CSS</span><span class="tag">JS</span><span class="tag">SEO</span></div>
+                <p class="member-desc">Obsédé par la performance web. Il croit que chaque milliseconde compte et que le code propre est la meilleure publicité qu'un artisan puisse avoir.</p>
             </div>
-            <div class="profile-card reveal">
-                <div class="profile-avatar">AG</div>
-                <span class="tag">Marketing & Conversion</span>
-                <h3>Adam Gheribi</h3>
-                <p>Le pont entre votre métier et la technologie. Expert en stratégie de conversion en ligne.</p>
-                <div class="defect-box">Énergie : Ne s'arrête jamais.</div>
+            <div class="member-card reveal">
+                <div class="member-avatar">⚡</div>
+                <div class="member-name">Adam Gheribi</div>
+                <div class="member-role">Design & UX</div>
+                <div class="member-tags"><span class="tag">Design</span><span class="tag">Figma</span><span class="tag">Mobile</span></div>
+                <p class="member-desc">Il transforme une idée brute en interface que les clients adorent. Son mantra : si c'est beau ET rapide, le client achète.</p>
             </div>
-            <div class="profile-card reveal">
-                <div class="profile-avatar">MB</div>
-                <span class="tag">Stratégie & SEO</span>
-                <h3>Mohamed-Ilyes Belkhelfa</h3>
-                <p>Analyse les algorithmes pour vous placer en tête des recherches Google de votre secteur.</p>
-                <div class="defect-box">Précision : Esprit purement data.</div>
+            <div class="member-card reveal">
+                <div class="member-avatar">🔍</div>
+                <div class="member-name">Mohamed-Ilyes Belkhelfa</div>
+                <div class="member-role">SEO & Stratégie</div>
+                <div class="member-tags"><span class="tag">Google</span><span class="tag">Analytics</span><span class="tag">Local SEO</span></div>
+                <p class="member-desc">Il sait exactement ce que Google veut voir. Il positionne nos sites sur les recherches locales pour que les clients trouvent le bon artisan au bon moment.</p>
             </div>
         </div>
-
-        <section class="story-vibe reveal">
-            <h2>Notre Histoire</h2>
-            <div class="story-grid">
-                <div class="story-item">
-                    <span class="story-label">L'Origine</span>
-                    <p>Trois amis de 17 ans qui ont décidé de redonner le pouvoir numérique aux artisans locaux face aux géants du web.</p>
-                </div>
-                <div class="story-item">
-                    <span class="story-label">La Mission</span>
-                    <p>Utiliser le <strong>Code Pur</strong> pour offrir une performance d'élite à l'économie de proximité. Sans compromis.</p>
-                </div>
-                <div class="story-item">
-                    <span class="story-label">L'Engagement</span>
-                    <p>Un interlocuteur unique, une communication directe. Vous parlez aux créateurs de votre site.</p>
-                </div>
+        <div class="story-card reveal">
+            <h2>Pourquoi Le Relais Web ?</h2>
+            <p>Pas une agence de plus. Un relais entre les artisans et leurs futurs clients.</p>
+            <div class="story-cols">
+                <div class="story-col"><h4>L'Origine</h4><p>On a vu des artisans talentueux perdre des clients face à des concurrents avec un site WordPress lent et générique. On a décidé de changer ça.</p></div>
+                <div class="story-col"><h4>La Mission</h4><p>Donner aux commerces locaux les mêmes outils que les grandes enseignes : vitesse, design, visibilité — à un prix accessible.</p></div>
+                <div class="story-col"><h4>L'Engagement</h4><p>Chaque site est unique, livré en 7 jours, avec une garantie remboursement. Si vous n'êtes pas satisfait, vous ne payez pas.</p></div>
             </div>
-        </section>
-
+        </div>
         <div class="cta-band reveal">
             <div>
-                <h3>Prêt à travailler avec nous ?</h3>
-                <p>Rejoignez les artisans qui ont fait confiance au Code Pur.</p>
+                <h3>Prêt à travailler ensemble ?</h3>
+                <p>Dites-nous votre projet. On vous répond en 24h.</p>
             </div>
-            <a href="devis.html" class="btn-accent">Lancer mon projet →</a>
+            <a href="devis.html" class="btn-green">Lancer mon projet →</a>
         </div>
     </main>
-
     <footer class="main-footer">
         <div class="footer-links">
             <a href="index.html">Concept</a>
+            <a href="realisations.html">Réalisations</a>
             <a href="equipe.html">L'Équipe</a>
             <a href="devis.html">Démarrer</a>
-            <a href="politique-confidentialite.html">Confidentialité & Cookies</a>
+            <a href="cgv.html">CGV</a>
+            <a href="politique-confidentialite.html">Confidentialité</a>
         </div>
-        <p class="footer-copy">© 2026 Le Relais Web. Tous droits réservés.</p>
+        <p class="footer-copy">© 2026 Le Relais Web — SIRET 101 586 428 00019</p>
     </footer>
-
-    <!-- COOKIE BANNER -->
-    <div class="cookie-banner" id="cookieBanner">
-        <p class="cookie-text">🍪 <strong>Cookies</strong> — Ce site utilise des cookies pour assurer son bon fonctionnement (Google Fonts, FormSubmit, Stripe). En continuant, vous acceptez notre <a href="politique-confidentialite.html">politique de confidentialité</a>.</p>
-        <div class="cookie-actions">
-            <button class="btn-cookie-refuse" id="cookieRefuse">Refuser</button>
-            <button class="btn-cookie-accept" id="cookieAccept">Accepter ✓</button>
+    <div class="ck-bar" id="ckBar">
+        <p class="ck-text">🍪 <strong>Cookies</strong> — Ce site utilise des cookies (Google Fonts, Stripe, FormSubmit). <a href="politique-confidentialite.html">En savoir plus</a>.</p>
+        <div class="ck-btns">
+            <button class="ck-no" id="ckNo">Refuser</button>
+            <button class="ck-yes" id="ckYes">Accepter ✓</button>
         </div>
     </div>
-
     <script>
-        const obs=new IntersectionObserver((entries)=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*90);obs.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -30px 0px'});
-        document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-        const nav=document.getElementById('navbar');
-        window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>50),{passive:true});
-        const hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu'),mc=document.getElementById('mobileClose');
-        if(hb)hb.addEventListener('click',()=>{hb.classList.add('open');mm.classList.add('open');document.body.style.overflow='hidden';});
-        if(mc)mc.addEventListener('click',()=>{hb.classList.remove('open');mm.classList.remove('open');document.body.style.overflow='';});
-        mm&&mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hb.classList.remove('open');mm.classList.remove('open');document.body.style.overflow='';}));
-        // Cookie consent
-        const banner=document.getElementById('cookieBanner');
-        if(localStorage.getItem('cookieConsent'))banner.classList.add('hidden');
-        document.getElementById('cookieAccept').addEventListener('click',()=>{localStorage.setItem('cookieConsent','accepted');banner.classList.add('hidden');});
-        document.getElementById('cookieRefuse').addEventListener('click',()=>{localStorage.setItem('cookieConsent','refused');banner.classList.add('hidden');});
+        (function(){
+            /* ── MOBILE MENU ── */
+            var overlay  = document.getElementById('mobileOverlay');
+            var burgerBtn = document.getElementById('burgerBtn');
+            var closeBtn  = document.getElementById('closeBtn');
+
+            function openMenu(){
+                overlay.classList.add('is-open');
+                burgerBtn.classList.add('is-open');
+                document.body.style.overflow='hidden';
+            }
+            function closeMenu(){
+                overlay.classList.remove('is-open');
+                burgerBtn.classList.remove('is-open');
+                document.body.style.overflow='';
+            }
+
+            burgerBtn.addEventListener('click', openMenu);
+            closeBtn.addEventListener('click', closeMenu);
+            overlay.querySelectorAll('a').forEach(function(a){
+                a.addEventListener('click', closeMenu);
+            });
+
+            /* ── NAVBAR SCROLL ── */
+            var navBar = document.getElementById('navBar');
+            window.addEventListener('scroll', function(){
+                navBar.classList.toggle('scrolled', window.scrollY > 50);
+            },{passive:true});
+
+            /* ── COOKIES ── */
+            var ckBar = document.getElementById('ckBar');
+            var ckYes = document.getElementById('ckYes');
+            var ckNo  = document.getElementById('ckNo');
+            if(localStorage.getItem('ck')) ckBar.classList.add('hidden');
+            ckYes.addEventListener('click', function(){ localStorage.setItem('ck','y'); ckBar.classList.add('hidden'); });
+            ckNo.addEventListener('click',  function(){ localStorage.setItem('ck','n'); ckBar.classList.add('hidden'); });
+
+            /* ── REVEAL ── */
+            var obs = new IntersectionObserver(function(entries){
+                entries.forEach(function(e,i){
+                    if(e.isIntersecting){ setTimeout(function(){ e.target.classList.add('visible'); }, i*90); obs.unobserve(e.target); }
+                });
+            },{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+            document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+        })();
     </script>
 </body>
 </html>
