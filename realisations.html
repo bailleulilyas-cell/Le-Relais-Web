@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Nos Réalisations | Le Relais Web</title>
+    <style>
+        :root{--dark:#0A0F1C;--primary:#002B5B;--accent:#00E676;--gray:#F8FAFC;--text:#1E293B;--muted:#64748B;--border:#E2E8F0;--ok:#059669;}
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+        a{text-decoration:none;transition:.2s;}
+        .container{width:100%;max-width:1200px;margin:0 auto;padding:0 1.5rem;}
+        .reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease;}
+        .reveal.visible{opacity:1;transform:none;}
+        .gradient-text{background:linear-gradient(110deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+        /* ── NAVBAR ── */
+        .navbar{padding:1rem 0;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:500;border-bottom:1px solid rgba(0,0,0,.07);transition:padding .2s,box-shadow .2s;}
+        .navbar.scrolled{padding:.65rem 0;box-shadow:0 2px 16px rgba(0,0,0,.08);}
+        .nav-wrapper{display:flex;align-items:center;justify-content:space-between;}
+        .brand-logo{display:flex;align-items:center;flex-shrink:0;}
+        .nav-desktop{display:flex;}
+        .nav-desktop ul{display:flex;list-style:none;align-items:center;gap:1.8rem;}
+        .nav-desktop a{font-weight:700;font-size:.875rem;color:var(--dark);position:relative;}
+        .nav-desktop a:not(.btn-nav)::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:2px;background:var(--accent);border-radius:2px;transition:width .2s;}
+        .nav-desktop a:not(.btn-nav):hover::after,.nav-desktop a.active::after{width:100%;}
+        .btn-nav{background:var(--dark)!important;color:#fff!important;padding:.55rem 1.2rem;border-radius:10px;font-weight:800!important;}
+        /* Mobile trigger */
+        .nav-mobile{display:none;align-items:center;gap:.6rem;}
+        .btn-nav-m{background:var(--dark);color:#fff;padding:.45rem .9rem;border-radius:8px;font-weight:800;font-size:.8rem;white-space:nowrap;}
+        .burger{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+        .burger span{display:block;width:22px;height:2px;background:var(--dark);border-radius:2px;transition:transform .25s,opacity .25s;}
+        .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+        .burger.is-open span:nth-child(2){opacity:0;}
+        .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+        /* Mobile overlay */
+        #mobileOverlay{display:none;position:fixed;inset:0;background:var(--dark);z-index:9000;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;}
+        #mobileOverlay.is-open{display:flex;}
+        #mobileOverlay a{color:#fff;font-size:1.5rem;font-weight:900;-webkit-tap-highlight-color:transparent;padding:.4rem 1.5rem;}
+        #mobileOverlay a:active{color:var(--accent);}
+        #closeBtn{position:absolute;top:1.2rem;right:1.2rem;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:1.5rem;line-height:1;width:44px;height:44px;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+        #closeBtn:active{background:rgba(255,255,255,.25);}
+
+        /* ── FOOTER ── */
+        .main-footer{padding:2.5rem 1.5rem;text-align:center;border-top:1px solid var(--border);}
+        .footer-links{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;margin-bottom:.6rem;}
+        .footer-links a{font-size:.8rem;color:var(--muted);font-weight:600;}
+        .footer-links a:hover{color:var(--dark);}
+        .footer-copy{font-size:.75rem;opacity:.4;}
+
+        /* ── COOKIE ── */
+        .ck-bar{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);width:calc(100% - 2rem);max-width:660px;background:var(--dark);color:#fff;border-radius:16px;padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;z-index:9999;box-shadow:0 16px 48px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1);}
+        .ck-bar.hidden{display:none;}
+        .ck-text{font-size:.8rem;line-height:1.55;opacity:.85;flex:1;}
+        .ck-text strong{color:var(--accent);}
+        .ck-text a{color:var(--accent);text-decoration:underline;}
+        .ck-btns{display:flex;gap:.5rem;flex-shrink:0;}
+        .ck-yes{background:var(--accent);color:var(--dark);border:none;padding:.5rem 1rem;border-radius:8px;font-weight:900;font-size:.78rem;cursor:pointer;font-family:inherit;}
+        .ck-no{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);padding:.5rem 1rem;border-radius:8px;font-weight:700;font-size:.78rem;cursor:pointer;font-family:inherit;}
+
+        /* ── RESPONSIVE NAVS ── */
+        @media(max-width:768px){.nav-desktop{display:none;}.nav-mobile{display:flex;}}
+        @media(max-width:560px){
+            .ck-bar{bottom:0;left:0;right:0;transform:none;width:100%;border-radius:16px 16px 0 0;flex-direction:column;align-items:flex-start;}
+            .ck-btns{width:100%;}
+            .ck-yes,.ck-no{flex:1;text-align:center;}
+        }
+        .port-hero{padding:5.5rem 0 3.5rem;text-align:center;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(0,230,118,.07),transparent 70%);}
+        .hero-label{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;background:var(--gray);border:1px solid rgba(0,230,118,.3);border-radius:100px;font-weight:800;font-size:.72rem;color:var(--ok);margin-bottom:1.8rem;}
+        .pulse{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+        .port-hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;line-height:1.08;letter-spacing:-2px;margin-bottom:.9rem;}
+        .port-hero p{font-size:1rem;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.65;}
+        /* PROJECTS */
+        .projects{padding:4rem 0 6rem;}
+        .proj-block{margin-bottom:6rem;}
+        .proj-block:last-child{margin-bottom:0;}
+        .proj-layout{display:grid;grid-template-columns:1fr 340px;gap:2.5rem;align-items:start;}
+        .proj-layout.rev{grid-template-columns:340px 1fr;}
+        .proj-meta{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;}
+        .proj-num{width:38px;height:38px;background:var(--dark);color:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;}
+        .proj-tag{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--ok);background:#F0FDF4;padding:.2rem .6rem;border-radius:6px;}
+        .proj-title{font-size:1.7rem;font-weight:900;letter-spacing:-.5px;margin-bottom:.5rem;}
+        .proj-desc{font-size:.9rem;color:var(--muted);line-height:1.65;margin-bottom:1.2rem;}
+        .proj-feats{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem;}
+        .pf{font-size:.85rem;font-weight:700;display:flex;align-items:center;gap:.5rem;}
+        .pf::before{content:'✓';color:var(--ok);font-weight:900;flex-shrink:0;}
+        .btn-dark{background:var(--dark);color:#fff;padding:.85rem 1.8rem;border-radius:12px;font-weight:800;font-size:.88rem;display:inline-block;transition:transform .2s,box-shadow .2s;}
+        .btn-dark:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,15,28,.25);}
+        /* BROWSER */
+        .browser{background:#1C1C1E;border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.07);}
+        .brow-bar{background:#2C2C2E;padding:.65rem 1rem;display:flex;align-items:center;gap:.4rem;}
+        .brow-dots{display:flex;gap:.35rem;}
+        .brow-dots span{width:10px;height:10px;border-radius:50%;}
+        .brow-dots span:nth-child(1){background:#FF5F57;}
+        .brow-dots span:nth-child(2){background:#FFBD2E;}
+        .brow-dots span:nth-child(3){background:#28CA41;}
+        .brow-url{background:#3A3A3C;border-radius:5px;padding:.25rem .7rem;font-size:.7rem;color:rgba(255,255,255,.4);margin-left:.5rem;font-family:monospace;}
+        .site-preview{width:100%;}
+        /* BOULANGERIE */
+        .b{background:#FDF8F2;font-family:'Plus Jakarta Sans',sans-serif;}
+        .b-nav{background:#fff;padding:.8rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #F5E6D3;}
+        .b-logo{font-size:1rem;font-weight:900;color:#3D1F0D;}.b-logo span{color:#C8712A;}
+        .b-links{display:flex;gap:1.2rem;}.b-links a{font-size:.72rem;font-weight:700;color:#8B5E3C;text-decoration:none;}
+        .b-cta{background:#C8712A;color:#fff;padding:.35rem .8rem;border-radius:6px;font-size:.68rem;font-weight:800;text-decoration:none;}
+        .b-hero{background:linear-gradient(135deg,#3D1F0D,#7B3F1F);padding:2.5rem 1.5rem;display:flex;align-items:center;gap:1.5rem;}
+        .b-h-text h2{font-size:1.5rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:.4rem;}.b-h-text h2 span{color:#F5C842;}
+        .b-h-text p{font-size:.75rem;color:rgba(255,255,255,.65);margin-bottom:.8rem;line-height:1.45;}
+        .b-btn{display:inline-block;background:#F5C842;color:#3D1F0D;padding:.4rem 1rem;border-radius:7px;font-size:.72rem;font-weight:900;text-decoration:none;}
+        .b-emoji{font-size:3.5rem;flex-shrink:0;filter:drop-shadow(0 4px 10px rgba(0,0,0,.3));}
+        .b-prods{padding:1.2rem 1.5rem;}.b-prods h3{font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.5px;color:#C8712A;margin-bottom:.8rem;}
+        .b-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;}
+        .b-card{background:#fff;border-radius:8px;border:1px solid #F5E6D3;}
+        .b-cimg{height:55px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;}
+        .b-cbody{padding:.4rem .5rem;}.b-cname{font-size:.68rem;font-weight:800;color:#3D1F0D;}.b-cprice{font-size:.65rem;color:#C8712A;font-weight:700;}
+        .b-foot{background:#3D1F0D;padding:.65rem 1.5rem;display:flex;justify-content:space-between;align-items:center;}
+        .b-foot span{font-size:.65rem;color:rgba(255,255,255,.55);font-weight:600;}
+        .b-open{background:rgba(0,230,118,.2);color:#00E676;font-size:.62rem;font-weight:800;padding:.2rem .5rem;border-radius:4px;}
+        /* COIFFEUR */
+        .c{background:#0D0D0D;font-family:'Plus Jakarta Sans',sans-serif;color:#fff;}
+        .c-nav{padding:.9rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.07);}
+        .c-logo{font-size:.95rem;font-weight:900;letter-spacing:2px;text-transform:uppercase;}.c-logo span{color:#D4AF37;}
+        .c-links{display:flex;gap:1.2rem;}.c-links a{font-size:.68rem;font-weight:600;color:rgba(255,255,255,.45);text-decoration:none;letter-spacing:.4px;text-transform:uppercase;}
+        .c-cta{border:1px solid #D4AF37;color:#D4AF37;padding:.35rem .8rem;border-radius:4px;font-size:.65rem;font-weight:800;letter-spacing:.5px;}
+        .c-hero{padding:2rem 1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:center;}
+        .c-ey{font-size:.62rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#D4AF37;margin-bottom:.6rem;}
+        .c-hero h2{font-size:1.4rem;font-weight:900;line-height:1.1;margin-bottom:.5rem;}
+        .c-hero p{font-size:.72rem;color:rgba(255,255,255,.45);line-height:1.5;margin-bottom:.8rem;}
+        .c-btn{display:inline-block;background:#D4AF37;color:#0D0D0D;padding:.4rem 1rem;border-radius:4px;font-size:.7rem;font-weight:900;text-decoration:none;}
+        .c-vis{background:linear-gradient(135deg,#1A1A1A,#2A2A2A);border-radius:10px;height:90px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;border:1px solid rgba(212,175,55,.2);}
+        .c-servs{padding:1.2rem 1.5rem;background:#111;}
+        .c-st{font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:#D4AF37;margin-bottom:.8rem;}
+        .c-row{display:flex;flex-direction:column;gap:.4rem;}
+        .c-item{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.05);}
+        .c-iname{font-size:.75rem;font-weight:700;}.c-iprice{font-size:.75rem;font-weight:800;color:#D4AF37;}
+        .c-foot{background:#D4AF37;padding:.65rem 1.5rem;display:flex;justify-content:space-between;}
+        .c-foot span{font-size:.65rem;color:#0D0D0D;font-weight:700;}
+        /* KEBAB */
+        .k{background:#1A0A00;font-family:'Plus Jakarta Sans',sans-serif;color:#fff;}
+        .k-nav{background:#FF4500;padding:.7rem 1.5rem;display:flex;justify-content:space-between;align-items:center;}
+        .k-logo{font-size:1rem;font-weight:900;}.k-logo span{color:#FFD700;}
+        .k-nr{display:flex;align-items:center;gap:.8rem;}
+        .k-links{display:flex;gap:.8rem;}.k-links a{font-size:.68rem;font-weight:700;color:rgba(255,255,255,.85);text-decoration:none;}
+        .k-ob{background:#FFD700;color:#1A0A00;padding:.3rem .7rem;border-radius:6px;font-size:.68rem;font-weight:900;text-decoration:none;}
+        .k-hero{background:linear-gradient(135deg,#1A0A00,#3D1500);padding:2.2rem 1.5rem;display:flex;align-items:center;gap:1.5rem;}
+        .k-badge{display:inline-flex;align-items:center;gap:.3rem;background:rgba(255,69,0,.2);border:1px solid rgba(255,69,0,.4);border-radius:100px;padding:.2rem .6rem;font-size:.62rem;font-weight:800;color:#FF6B35;margin-bottom:.6rem;}
+        .k-hero h2{font-size:1.4rem;font-weight:900;line-height:1.1;margin-bottom:.4rem;}.k-hero h2 span{color:#FFD700;}
+        .k-hero p{font-size:.72rem;color:rgba(255,255,255,.55);line-height:1.45;margin-bottom:.8rem;}
+        .k-btns{display:flex;gap:.5rem;}
+        .k-b1{background:#FF4500;color:#fff;padding:.4rem .8rem;border-radius:7px;font-size:.7rem;font-weight:900;text-decoration:none;}
+        .k-b2{background:rgba(255,255,255,.08);color:#fff;padding:.4rem .8rem;border-radius:7px;font-size:.7rem;font-weight:700;border:1px solid rgba(255,255,255,.15);text-decoration:none;}
+        .k-emoji{font-size:3.8rem;flex-shrink:0;filter:drop-shadow(0 6px 16px rgba(255,69,0,.4));}
+        .k-menu{padding:1.2rem 1.5rem;background:#1F0D00;}
+        .k-mt{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:#FF4500;margin-bottom:.8rem;}
+        .k-items{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;}
+        .k-item{background:rgba(255,255,255,.04);border-radius:8px;padding:.7rem;border:1px solid rgba(255,255,255,.05);}
+        .k-ie{font-size:1.3rem;margin-bottom:.3rem;}.k-in{font-size:.7rem;font-weight:800;margin-bottom:.15rem;}.k-ip{font-size:.68rem;color:#FFD700;font-weight:700;}
+        .k-foot{background:#FF4500;padding:.65rem 1.5rem;display:flex;justify-content:space-between;}
+        .k-foot span{font-size:.65rem;color:rgba(255,255,255,.85);font-weight:700;}
+        .k-del{background:rgba(0,0,0,.2);padding:.2rem .5rem;border-radius:4px;font-size:.62rem;font-weight:800;}
+        /* BOTTOM CTA */
+        .bottom-cta{background:var(--dark);border-radius:28px;padding:3.5rem 2.5rem;text-align:center;margin:4rem 0 5rem;position:relative;overflow:hidden;}
+        .bottom-cta::before{content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:300px;background:radial-gradient(circle,rgba(0,230,118,.1),transparent 65%);pointer-events:none;}
+        .bottom-cta h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:.7rem;}
+        .bottom-cta p{color:rgba(255,255,255,.5);font-size:.95rem;max-width:480px;margin:0 auto 2rem;line-height:1.6;}
+        .btn-accent{display:inline-block;background:var(--accent);color:var(--dark);padding:1rem 2.2rem;border-radius:14px;font-weight:900;font-size:1rem;transition:transform .2s,box-shadow .2s;}
+        .btn-accent:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,230,118,.35);}
+        .cta-trust{margin-top:1.2rem;color:rgba(255,255,255,.3);font-size:.78rem;font-weight:600;}
+        @media(max-width:900px){
+            .proj-layout,.proj-layout.rev{grid-template-columns:1fr;}
+            .proj-layout.rev .proj-info{order:-1;}
+            .b-grid{grid-template-columns:repeat(2,1fr);}
+            .c-hero{grid-template-columns:1fr;}.c-vis{display:none;}
+            .k-items{grid-template-columns:repeat(2,1fr);}
+            .b-links,.c-links,.k-links{display:none;}
+            .bottom-cta{padding:2.5rem 1.5rem;border-radius:20px;}
+        }
+        @media(max-width:480px){.container{padding:0 1rem;}.brow-url{display:none;}}
+    </style>
+</head>
+<body>
+    <!-- MOBILE OVERLAY -->
+    <div id="mobileOverlay">
+        <button id="closeBtn">&#x2715;</button>
+        <a href="index.html">Concept</a>
+        <a href="realisations.html">Réalisations</a>
+        <a href="equipe.html">L'Équipe</a>
+        <a href="devis.html">Lancer un projet</a>
+    </div>
+    <header class="navbar" id="navBar">
+        <div class="container nav-wrapper">
+            <a href="index.html" class="brand-logo"><img src="Logo_Le_Relais_Web.png" alt="Le Relais Web" style="height:38px;"></a>
+            <div class="nav-desktop">
+                <ul>
+                    <li><a href="index.html">Concept</a></li>
+                    <li><a href="realisations.html" class="active">Réalisations</a></li>
+                    <li><a href="equipe.html">L'Équipe</a></li>
+                    <li><a href="devis.html" class="btn-nav">Lancer un projet</a></li>
+                </ul>
+            </div>
+            <div class="nav-mobile">
+                <a href="devis.html" class="btn-nav-m">Démarrer</a>
+                <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+    <section class="port-hero">
+        <div class="container">
+            <div class="hero-label"><div class="pulse"></div>Sites créés en Code Pur</div>
+            <h1>Ce qu'on crée pour<br><span class="gradient-text">des commerçants comme vous.</span></h1>
+            <p>Chaque site est unique, conçu sur-mesure et optimisé pour transformer vos visiteurs en clients.</p>
+        </div>
+    </section>
+    <section class="projects">
+        <div class="container">
+            <!-- BOULANGERIE -->
+            <div class="proj-block reveal">
+                <div class="proj-layout">
+                    <div class="browser-col">
+                        <div class="browser">
+                            <div class="brow-bar"><div class="brow-dots"><span></span><span></span><span></span></div><div class="brow-url">boulangerie-dumont.fr</div></div>
+                            <div class="site-preview"><div class="b">
+                                <div class="b-nav"><div class="b-logo">La <span>Boulangerie</span> Dumont</div><div class="b-links"><a href="#">Nos pains</a><a href="#">Contact</a></div><a href="#" class="b-cta">Nous trouver</a></div>
+                                <div class="b-hero"><div class="b-h-text"><h2>Le pain artisanal<br><span>depuis 1987</span></h2><p>Farine bio, levain naturel, cuisson au four à bois.</p><a href="#" class="b-btn">Voir nos créations</a></div><div class="b-emoji">🍞</div></div>
+                                <div class="b-prods"><h3>Nos incontournables</h3><div class="b-grid"><div class="b-card"><div class="b-cimg">🥖</div><div class="b-cbody"><div class="b-cname">Baguette Tradition</div><div class="b-cprice">1,20 €</div></div></div><div class="b-card"><div class="b-cimg">🥐</div><div class="b-cbody"><div class="b-cname">Croissant beurre</div><div class="b-cprice">1,50 €</div></div></div><div class="b-card"><div class="b-cimg">🍰</div><div class="b-cbody"><div class="b-cname">Tarte aux pommes</div><div class="b-cprice">3,80 €</div></div></div><div class="b-card"><div class="b-cimg">🫓</div><div class="b-cbody"><div class="b-cname">Pain de campagne</div><div class="b-cprice">4,50 €</div></div></div></div></div>
+                                <div class="b-foot"><span>📍 12 rue du Marché, Pontoise</span><span>📞 01 34 XX XX XX</span><span class="b-open">● Ouvert</span></div>
+                            </div></div>
+                        </div>
+                    </div>
+                    <div class="proj-info">
+                        <div class="proj-meta"><div class="proj-num">01</div><span class="proj-tag">Boulangerie · Artisan</span></div>
+                        <div class="proj-title">La Boulangerie Dumont</div>
+                        <p class="proj-desc">Un site chaleureux qui reflète le savoir-faire artisanal. Les clients trouvent les horaires, la carte et l'adresse en 2 secondes depuis leur téléphone.</p>
+                        <div class="proj-feats">
+                            <div class="pf">Design sur-mesure aux couleurs de la boutique</div>
+                            <div class="pf">Carte produits avec photos et prix</div>
+                            <div class="pf">Carte Google Maps intégrée</div>
+                            <div class="pf">100% optimisé mobile</div>
+                            <div class="pf">Livré en 7 jours ouvrés</div>
+                        </div>
+                        <a href="devis.html" class="btn-dark">Je veux un site comme celui-ci →</a>
+                    </div>
+                </div>
+            </div>
+            <!-- COIFFEUR -->
+            <div class="proj-block reveal">
+                <div class="proj-layout rev">
+                    <div class="proj-info">
+                        <div class="proj-meta"><div class="proj-num">02</div><span class="proj-tag">Salon de coiffure · Premium</span></div>
+                        <div class="proj-title">Studio Élise – Coiffure</div>
+                        <p class="proj-desc">Un univers haut de gamme pour attirer une clientèle exigeante. Le noir et l'or inspirent confiance et prestige dès la première seconde.</p>
+                        <div class="proj-feats">
+                            <div class="pf">Esthétique luxe noir & or</div>
+                            <div class="pf">Grille tarifaire claire et lisible</div>
+                            <div class="pf">Bouton prise de rendez-vous direct</div>
+                            <div class="pf">Optimisé "coiffeur [ville]" sur Google</div>
+                            <div class="pf">100% responsive mobile</div>
+                        </div>
+                        <a href="devis.html" class="btn-dark">Je veux un site comme celui-ci →</a>
+                    </div>
+                    <div class="browser-col">
+                        <div class="browser">
+                            <div class="brow-bar"><div class="brow-dots"><span></span><span></span><span></span></div><div class="brow-url">studio-elise-coiffure.fr</div></div>
+                            <div class="site-preview"><div class="c">
+                                <div class="c-nav"><div class="c-logo">STUDIO <span>ÉLISE</span></div><div class="c-links"><a href="#">Prestations</a><a href="#">Contact</a></div><a href="#" class="c-cta">Réserver</a></div>
+                                <div class="c-hero"><div><div class="c-ey">Coiffure d'excellence</div><h2>L'art de sublimer votre style</h2><p>Coupes, colorations, soins premium. Chaque visite est unique.</p><a href="#" class="c-btn">Prendre rendez-vous</a></div><div class="c-vis">✂️</div></div>
+                                <div class="c-servs"><div class="c-st">Nos prestations</div><div class="c-row"><div class="c-item"><span class="c-iname">Coupe + Brushing Femme</span><span class="c-iprice">55 €</span></div><div class="c-item"><span class="c-iname">Coloration complète</span><span class="c-iprice">85 €</span></div><div class="c-item"><span class="c-iname">Balayage & Mèches</span><span class="c-iprice">95 €</span></div></div></div>
+                                <div class="c-foot"><span>📍 8 av. Victor Hugo, Ermont (95)</span><span>Lun–Sam · 9h–19h</span></div>
+                            </div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- KEBAB -->
+            <div class="proj-block reveal">
+                <div class="proj-layout">
+                    <div class="browser-col">
+                        <div class="browser">
+                            <div class="brow-bar"><div class="brow-dots"><span></span><span></span><span></span></div><div class="brow-url">istanbul-grill-pontoise.fr</div></div>
+                            <div class="site-preview"><div class="k">
+                                <div class="k-nav"><div class="k-logo">ISTANBUL <span>GRILL</span></div><div class="k-nr"><div class="k-links"><a href="#">Menu</a><a href="#">Livraison</a></div><a href="#" class="k-ob">Commander</a></div></div>
+                                <div class="k-hero"><div><div class="k-badge">🔥 Livraison offerte dès 20€</div><h2>Le vrai goût du <span>kebab artisanal</span></h2><p>Viande halal, sauce maison, livré en 30 min.</p><div class="k-btns"><a href="#" class="k-b1">Commander</a><a href="#" class="k-b2">Menu</a></div></div><div class="k-emoji">🌯</div></div>
+                                <div class="k-menu"><div class="k-mt">Nos best-sellers</div><div class="k-items"><div class="k-item"><div class="k-ie">🥙</div><div class="k-in">Kebab Maison</div><div class="k-ip">7,50 €</div></div><div class="k-item"><div class="k-ie">🍟</div><div class="k-in">Assiette mixte</div><div class="k-ip">12,00 €</div></div><div class="k-item"><div class="k-ie">🥗</div><div class="k-in">Wrap falafel</div><div class="k-ip">6,50 €</div></div></div></div>
+                                <div class="k-foot"><span>📍 Pontoise (95) · 7j/7</span><span class="k-del">🛵 30 min</span></div>
+                            </div></div>
+                        </div>
+                    </div>
+                    <div class="proj-info">
+                        <div class="proj-meta"><div class="proj-num">03</div><span class="proj-tag">Restauration rapide · Livraison</span></div>
+                        <div class="proj-title">Istanbul Grill</div>
+                        <p class="proj-desc">Un site qui donne faim. Les clients voient le menu, commandent en ligne et reçoivent leur commande en 30 minutes.</p>
+                        <div class="proj-feats">
+                            <div class="pf">Menu en ligne clair avec prix</div>
+                            <div class="pf">Bouton de commande en ligne</div>
+                            <div class="pf">Design qui donne envie d'acheter</div>
+                            <div class="pf">Référencé "kebab [ville]" sur Google</div>
+                            <div class="pf">Chargement ultra-rapide</div>
+                        </div>
+                        <a href="devis.html" class="btn-dark">Je veux un site comme celui-ci →</a>
+                    </div>
+                </div>
+            </div>
+            <!-- BOTTOM CTA -->
+            <div class="bottom-cta reveal">
+                <h2>Votre secteur. Votre site.<br><span class="gradient-text">Notre Code Pur.</span></h2>
+                <p>Peu importe votre activité, on crée un site qui vous ressemble et qui convertit. Résultat garanti ou remboursé.</p>
+                <a href="devis.html" class="btn-accent">Lancer mon projet maintenant →</a>
+                <div class="cta-trust">🛡️ Garantie 7 jours · ⚡ Livraison en 7j · 💳 Paiement sécurisé Stripe</div>
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+        <div class="footer-links">
+            <a href="index.html">Concept</a>
+            <a href="realisations.html">Réalisations</a>
+            <a href="equipe.html">L'Équipe</a>
+            <a href="devis.html">Démarrer</a>
+            <a href="cgv.html">CGV</a>
+            <a href="politique-confidentialite.html">Confidentialité</a>
+        </div>
+        <p class="footer-copy">© 2026 Le Relais Web — SIRET 101 586 428 00019</p>
+    </footer>
+    <div class="ck-bar" id="ckBar">
+        <p class="ck-text">🍪 <strong>Cookies</strong> — Ce site utilise des cookies (Google Fonts, Stripe, FormSubmit). <a href="politique-confidentialite.html">En savoir plus</a>.</p>
+        <div class="ck-btns">
+            <button class="ck-no" id="ckNo">Refuser</button>
+            <button class="ck-yes" id="ckYes">Accepter ✓</button>
+        </div>
+    </div>
+    <script>
+        (function(){
+            /* ── MOBILE MENU ── */
+            var overlay  = document.getElementById('mobileOverlay');
+            var burgerBtn = document.getElementById('burgerBtn');
+            var closeBtn  = document.getElementById('closeBtn');
+
+            function openMenu(){
+                overlay.classList.add('is-open');
+                burgerBtn.classList.add('is-open');
+                document.body.style.overflow='hidden';
+            }
+            function closeMenu(){
+                overlay.classList.remove('is-open');
+                burgerBtn.classList.remove('is-open');
+                document.body.style.overflow='';
+            }
+
+            burgerBtn.addEventListener('click', openMenu);
+            closeBtn.addEventListener('click', closeMenu);
+            overlay.querySelectorAll('a').forEach(function(a){
+                a.addEventListener('click', closeMenu);
+            });
+
+            /* ── NAVBAR SCROLL ── */
+            var navBar = document.getElementById('navBar');
+            window.addEventListener('scroll', function(){
+                navBar.classList.toggle('scrolled', window.scrollY > 50);
+            },{passive:true});
+
+            /* ── COOKIES ── */
+            var ckBar = document.getElementById('ckBar');
+            var ckYes = document.getElementById('ckYes');
+            var ckNo  = document.getElementById('ckNo');
+            if(localStorage.getItem('ck')) ckBar.classList.add('hidden');
+            ckYes.addEventListener('click', function(){ localStorage.setItem('ck','y'); ckBar.classList.add('hidden'); });
+            ckNo.addEventListener('click',  function(){ localStorage.setItem('ck','n'); ckBar.classList.add('hidden'); });
+
+            /* ── REVEAL ── */
+            var obs = new IntersectionObserver(function(entries){
+                entries.forEach(function(e,i){
+                    if(e.isIntersecting){ setTimeout(function(){ e.target.classList.add('visible'); }, i*90); obs.unobserve(e.target); }
+                });
+            },{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+            document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+        })();
+    </script>
+</body>
+</html>
