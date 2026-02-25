@@ -92,8 +92,26 @@
         .ck-table td{padding:.6rem .8rem;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top;}
         .ck-table tr:last-child td{border-bottom:none;}
         .badge-req{background:#DCFCE7;color:#166534;display:inline-block;padding:.1rem .4rem;border-radius:5px;font-size:.68rem;font-weight:800;}
-        @media(max-width:900px){.doc-wrap{grid-template-columns:1fr;}.toc{display:none;}.doc-sec{padding:1.5rem 1.2rem;}.ck-table{font-size:.75rem;}}
-        @media(max-width:480px){.container{padding:0 1rem;}.ck-table th,.ck-table td{padding:.4rem .5rem;}}
+        @media(max-width:900px){
+            body{background:var(--gray);}
+            .doc-wrap{grid-template-columns:1fr;padding:2rem 0 4rem;}
+            .toc{display:none;}
+            .doc-sec{padding:1.4rem 1.1rem;border-radius:16px;}
+            .doc-sec h2{font-size:1rem;}
+            .page-hero{padding:2.5rem 0;}
+            .page-hero h1{font-size:1.6rem;letter-spacing:-.5px;}
+            /* Table : scroll horizontal */
+            .ck-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid var(--border);}
+            .ck-table{font-size:.78rem;min-width:480px;margin:0;}
+            .ck-table th,.ck-table td{padding:.55rem .7rem;}
+        }
+        @media(max-width:480px){
+            .container{padding:0 .9rem;}
+            .doc-sections{gap:1.2rem;}
+            .doc-sec p,.doc-sec ul li{font-size:.84rem;}
+            .page-hero p{font-size:.82rem;}
+            .footer-links{gap:.8rem;}
+        }
     </style>
 </head>
 <body>
@@ -144,7 +162,7 @@
         <div class="doc-sections">
             <div class="doc-sec" id="s1"><h2><span class="sec-num">1</span>Qui sommes-nous ?</h2>
                 <p><strong>Le Relais Web</strong> est une agence web spécialisée dans la création de sites en code pur pour artisans et commerçants locaux.</p>
-                <p><strong>Responsable du traitement :</strong> Thierry Bailleul<br><strong>Nom commercial :</strong> Le Relais Web<br><strong>Statut :</strong> Micro-entrepreneur individuel<br><strong>SIREN :</strong> 101 586 428 · <strong>SIRET :</strong> 101 586 428 00019<br><strong>Code APE :</strong> 6201Z — Programmation informatique<br><strong>Immatriculé le :</strong> 23/02/2026<br><strong>Email :</strong> <a href="mailto:bailleulilyas@gmail.com" style="color:var(--accent)">bailleulilyas@gmail.com</a></p>
+                <p><strong>Responsable du traitement :</strong> Thierry Bailleul<br><strong>Nom commercial :</strong> Le Relais Web<br><strong>Statut :</strong> Micro-entrepreneur individuel<br><strong>SIREN :</strong> 101 586 428 · <strong>SIRET :</strong> 101 586 428 00019<br><strong>Code APE :</strong> 6201Z — Programmation informatique<br><strong>Immatriculé le :</strong> 23/02/2026<br><strong>Email :</strong> <a href="/cdn-cgi/l/email-protection#284a494144444d5d44414451495b684f45494144064b4745" style="color:var(--accent)"><span class="__cf_email__" data-cfemail="c8aaa9a1a4a4adbda4a1a4b1a9bb88afa5a9a1a4e6aba7a5">[email&#160;protected]</span></a></p>
             </div>
             <div class="doc-sec" id="s2"><h2><span class="sec-num">2</span>Données collectées</h2>
                 <p>Via notre formulaire de contact, nous collectons uniquement :</p>
@@ -157,6 +175,7 @@
                 <p>Base légale : <strong>exécution d'un contrat</strong> (art. 6.1.b RGPD) et <strong>consentement</strong> (art. 6.1.a). Nous ne vendons ni ne partageons jamais vos données.</p>
             </div>
             <div class="doc-sec" id="s4"><h2><span class="sec-num">4</span>Cookies</h2>
+                <div class="ck-table-wrap">
                 <table class="ck-table">
                     <thead><tr><th>Cookie</th><th>Source</th><th>Finalité</th><th>Durée</th></tr></thead>
                     <tbody>
@@ -166,6 +185,7 @@
                         <tr><td><strong>FormSubmit</strong></td><td>FormSubmit.co</td><td>Acheminement du formulaire</td><td>Session</td></tr>
                     </tbody>
                 </table>
+                </div>
                 <p>Vous pouvez modifier vos préférences à tout moment en effaçant les cookies de votre navigateur.</p>
             </div>
             <div class="doc-sec" id="s5"><h2><span class="sec-num">5</span>Services tiers</h2>
@@ -179,14 +199,14 @@
                 <ul><li><strong>Demandes de devis</strong> — 3 ans à compter du dernier contact</li><li><strong>Données de paiement</strong> — gérées par Stripe selon leurs propres règles</li><li><strong>Cookies</strong> — durées indiquées dans le tableau ci-dessus</li></ul>
             </div>
             <div class="doc-sec" id="s7"><h2><span class="sec-num">7</span>Vos droits (RGPD)</h2>
-                <p>Vous disposez des droits d'accès, rectification, effacement, limitation, portabilité et opposition. Pour les exercer : <a href="mailto:bailleulilyas@gmail.com" style="color:var(--accent)">bailleulilyas@gmail.com</a>. Réponse sous 1 mois.</p>
+                <p>Vous disposez des droits d'accès, rectification, effacement, limitation, portabilité et opposition. Pour les exercer : <a href="/cdn-cgi/l/email-protection#5f3d3e3633333a2a333633263e2c1f38323e3633713c3032" style="color:var(--accent)"><span class="__cf_email__" data-cfemail="e587848c89898090898c899c8496a58288848c89cb868a88">[email&#160;protected]</span></a>. Réponse sous 1 mois.</p>
                 <p>Vous pouvez également saisir la <strong>CNIL</strong> : <a href="https://www.cnil.fr" target="_blank" style="color:var(--accent)">www.cnil.fr</a></p>
             </div>
             <div class="doc-sec" id="s8"><h2><span class="sec-num">8</span>Sécurité</h2>
                 <ul><li>Transmission via protocole <strong>HTTPS</strong> (SSL/TLS)</li><li>Paiements via <strong>Stripe</strong>, certifié PCI DSS niveau 1</li><li>Accès aux données restreint aux seules personnes habilitées</li><li>Aucune donnée sensible stockée sur nos serveurs</li></ul>
             </div>
             <div class="doc-sec" id="s9"><h2><span class="sec-num">9</span>Contact & modifications</h2>
-                <p><strong>Le Relais Web</strong> — <a href="mailto:bailleulilyas@gmail.com" style="color:var(--accent)">bailleulilyas@gmail.com</a></p>
+                <p><strong>Le Relais Web</strong> — <a href="/cdn-cgi/l/email-protection#96f4f7fffafaf3e3fafffaeff7e5d6f1fbf7fffab8f5f9fb" style="color:var(--accent)"><span class="__cf_email__" data-cfemail="3755565e5b5b52425b5e5b4e564477505a565e5b1954585a">[email&#160;protected]</span></a></p>
                 <div class="hl">Cette politique peut être modifiée. La date de mise à jour est toujours affichée en haut de page. Dernière mise à jour : <strong>Février 2026</strong>.</div>
             </div>
         </div>
@@ -209,7 +229,7 @@
             <button class="ck-yes" id="ckYes">Accepter ✓</button>
         </div>
     </div>
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         (function(){
             /* ── MOBILE MENU ── */
             var overlay  = document.getElementById('mobileOverlay');
@@ -245,16 +265,4 @@
             var ckNo  = document.getElementById('ckNo');
             if(localStorage.getItem('ck')) ckBar.classList.add('hidden');
             ckYes.addEventListener('click', function(){ localStorage.setItem('ck','y'); ckBar.classList.add('hidden'); });
-            ckNo.addEventListener('click',  function(){ localStorage.setItem('ck','n'); ckBar.classList.add('hidden'); });
-
-            var secs = document.querySelectorAll('.doc-sec');
-            var tocLinks = document.querySelectorAll('.toc a');
-            window.addEventListener('scroll', function(){
-                var cur='';
-                secs.forEach(function(s){ if(window.scrollY >= s.offsetTop-120) cur=s.id; });
-                tocLinks.forEach(function(l){ l.classList.toggle('active', l.getAttribute('href')==='#'+cur); });
-            },{passive:true});
-        })();
-    </script>
-</body>
-</html>
+            ckNo.addEventListener('click',  function(){ localStorage.setItem('ck'
