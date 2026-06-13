@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const items = [
   {
@@ -39,18 +39,13 @@ const items = [
 
 function Item({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
-  const ansRef = useRef<HTMLDivElement>(null);
   return (
     <div className={`faq-item${open ? " open" : ""}`}>
       <button className="faq-q" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
         {q}
         <span className="chev">+</span>
       </button>
-      <div
-        className="faq-a"
-        ref={ansRef}
-        style={{ maxHeight: open && ansRef.current ? ansRef.current.scrollHeight : 0 }}
-      >
+      <div className="faq-a">
         <p>{a}</p>
       </div>
     </div>

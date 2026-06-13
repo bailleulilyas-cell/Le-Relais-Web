@@ -195,10 +195,29 @@ export default function Home() {
               <span className="eyebrow">Des exemples concrets</span>
               <h2 className="sec-title">À quoi ressemble un site Le Relais Web.</h2>
               <p className="sec-sub">
-                Cliquez sur une démo : ce sont de vraies pages, rapides et soignées, comme celles qu&apos;on
-                crée pour nos clients.
+                Un de nos sites est déjà en ligne, à Ermont. Et voici les modèles qu&apos;on livre
+                selon votre métier.
               </p>
             </div>
+
+            <a
+              href="/realisations"
+              className="live-client reveal"
+              aria-label="Voir la réalisation AME-JUDO"
+            >
+              <span className="live-client-badge">
+                <span className="live-client-dot" /> Client en ligne · Ermont
+              </span>
+              <span className="live-client-body">
+                <strong>AME-JUDO — Arts Martiaux Ermontois</strong>
+                <span>
+                  Le club de judo d&apos;Ermont met à jour ses actualités lui-même, depuis son
+                  espace d&apos;administration sur-mesure.
+                </span>
+              </span>
+              <span className="live-client-link">Voir la réalisation →</span>
+            </a>
+
             <div className="proof-grid">
               {demos.map((d) => (
                 <a href={d.href} className="demo-card reveal" key={d.name}>
@@ -207,7 +226,7 @@ export default function Home() {
                     <span className="demo-cat">{d.cat}</span>
                     <h3>{d.name}</h3>
                     <p>{d.desc}</p>
-                    <span className="demo-link">Voir la démo →</span>
+                    <span className="demo-link">Voir le modèle →</span>
                   </div>
                 </a>
               ))}

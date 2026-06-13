@@ -141,6 +141,45 @@ a{text-decoration:none;transition:.2s;color:inherit;}
 .demo-body p{font-size:.82rem;color:var(--muted);}
 .demo-link{display:inline-flex;align-items:center;gap:.35rem;font-size:.82rem;font-weight:700;color:var(--ink);margin-top:.7rem;}
 
+/* ── Réalisation phare (AME-JUDO) ── */
+.flagship{display:grid;grid-template-columns:1.05fr .95fr;gap:2.4rem;align-items:center;background:var(--paper-2);border:1px solid var(--line);border-radius:22px;padding:2.4rem;}
+.flagship-tag{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--emerald-d);font-weight:800;background:rgba(11,110,79,.1);padding:.35rem .8rem;border-radius:100px;}
+.flagship-dot{width:7px;height:7px;border-radius:50%;background:var(--emerald);animation:pulse 1.8s infinite;}
+.flagship-text h2{font-family:var(--serif);font-weight:600;font-size:clamp(1.5rem,2.6vw,2.1rem);letter-spacing:-.02em;color:var(--ink);margin:1rem 0 .9rem;line-height:1.15;}
+.flagship-desc{font-size:.96rem;color:var(--muted);line-height:1.75;margin-bottom:1.1rem;}
+.flagship-desc strong{color:var(--ink);font-weight:700;}
+.flagship-points{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.5rem;}
+.flagship-points li{position:relative;padding-left:1.6rem;font-size:.9rem;font-weight:600;color:var(--ink);line-height:1.5;}
+.flagship-points li::before{content:'✓';position:absolute;left:0;top:0;color:var(--emerald);font-weight:900;}
+.flagship-stats{display:flex;gap:1.8rem;margin-bottom:1.7rem;padding-top:1.3rem;border-top:1px solid var(--line);}
+.flagship-stat{display:flex;flex-direction:column;}
+.fs-num{font-family:var(--serif);font-weight:600;font-size:1.7rem;letter-spacing:-.02em;color:var(--emerald-d);line-height:1;}
+.fs-lbl{font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-top:.35rem;}
+.flagship-cta{justify-content:center;}
+.flagship-window{display:block;background:var(--panel);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 24px 60px rgba(12,26,46,.22);transition:transform .25s,box-shadow .25s;}
+.flagship-window:hover{transform:translateY(-4px);box-shadow:0 30px 70px rgba(12,26,46,.3);}
+.fw-bar{display:flex;align-items:center;gap:.45rem;padding:.7rem 1rem;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.08);}
+.fw-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.2);}
+.fw-url{margin-left:.6rem;font-family:var(--mono);font-size:.78rem;color:rgba(255,255,255,.6);background:rgba(255,255,255,.06);padding:.25rem .8rem;border-radius:7px;flex:1;}
+.fw-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3.2rem 1.5rem;background:radial-gradient(circle at 50% 30%,rgba(11,110,79,.25),transparent 65%);min-height:300px;}
+.fw-kanji{font-family:var(--serif);font-size:3.4rem;color:var(--signal);line-height:1;margin-bottom:1.1rem;}
+.fw-club{font-family:var(--serif);font-weight:600;font-size:1.6rem;color:#fff;letter-spacing:.02em;}
+.fw-sub{font-size:.82rem;color:rgba(255,255,255,.55);margin-top:.5rem;}
+.fw-open{margin-top:1.6rem;font-size:.82rem;font-weight:800;color:var(--signal);background:rgba(61,214,140,.12);padding:.5rem 1.1rem;border-radius:100px;}
+@media(max-width:860px){.flagship{grid-template-columns:1fr;gap:1.8rem;padding:1.6rem;}.flagship-window{order:-1;}.flagship-stats{gap:1.3rem;}}
+@media(max-width:480px){.flagship{padding:1.3rem;border-radius:18px;}.flagship-stats{flex-wrap:wrap;gap:1rem 1.6rem;}.fw-screen{padding:2.4rem 1rem;min-height:240px;}.fw-kanji{font-size:2.6rem;}}
+
+/* ── Encart client en ligne (accueil) ── */
+.live-client{display:flex;align-items:center;gap:1.3rem;background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:1.3rem 1.6rem;margin:0 auto 1.6rem;max-width:880px;transition:transform .2s,box-shadow .2s;}
+.live-client:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(12,26,46,.22);}
+.live-client-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);font-weight:800;white-space:nowrap;flex-shrink:0;}
+.live-client-dot{width:7px;height:7px;border-radius:50%;background:var(--signal);animation:pulse 1.8s infinite;}
+.live-client-body{flex:1;display:flex;flex-direction:column;gap:.2rem;min-width:0;}
+.live-client-body strong{font-family:var(--serif);font-weight:600;font-size:1.02rem;color:#fff;}
+.live-client-body span{font-size:.84rem;color:rgba(255,255,255,.6);line-height:1.5;}
+.live-client-link{font-size:.84rem;font-weight:800;color:var(--signal);white-space:nowrap;flex-shrink:0;}
+@media(max-width:720px){.live-client{flex-direction:column;align-items:flex-start;gap:.8rem;}.live-client-link{align-self:flex-start;}}
+
 .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:880px;margin:0 auto;align-items:stretch;}
 .price-card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:2rem;display:flex;flex-direction:column;position:relative;transition:transform .22s,box-shadow .22s,border-color .22s;}
 .price-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(20,36,59,.1);border-color:rgba(11,110,79,.45);}
@@ -207,7 +246,8 @@ a{text-decoration:none;transition:.2s;color:inherit;}
 .faq-q:hover{color:var(--emerald-d);}
 .faq-q .chev{color:var(--emerald);font-size:1.3rem;transition:transform .25s;flex-shrink:0;line-height:1;}
 .faq-item.open .chev{transform:rotate(45deg);}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.faq-item.open .faq-a{max-height:400px;}
 .faq-a p{padding:0 0 1.3rem;color:var(--muted);font-size:.95rem;line-height:1.7;}
 
 .cta-final{background:var(--panel);border-radius:24px;padding:3.2rem 2rem;text-align:center;color:#fff;}
