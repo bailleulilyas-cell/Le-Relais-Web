@@ -5,6 +5,33 @@ export const metadata: Metadata = {
   description:
     "AME-JUDO Ermont et nos modèles par secteur : sites web rapides pour artisans, commerçants et associations du Val-d'Oise. Score Google 99/100, livraison 7 jours.",
   alternates: { canonical: "/realisations" },
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    url: "https://www.lerelaisweb.com/realisations",
+    title: "Nos Réalisations — Sites Web Val-d'Oise | Le Relais Web",
+    description:
+      "AME-JUDO Ermont, un vrai site client en ligne, et nos modèles par secteur. Score Google 99/100.",
+    images: ["/logo.webp"],
+  },
+};
+
+const realisationsSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Création de site web",
+  provider: { "@type": "LocalBusiness", name: "Le Relais Web", "@id": "https://www.lerelaisweb.com/#business" },
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Val-d'Oise" },
+    { "@type": "AdministrativeArea", name: "Île-de-France" },
+  ],
+  hasPart: {
+    "@type": "WebSite",
+    name: "AME-JUDO — Arts Martiaux Ermontois",
+    url: "https://ame-judo.fr",
+    description:
+      "Site du club de judo d'Ermont réalisé par Le Relais Web : 9 pages sur-mesure, adhésion en ligne et actualités gérées par le club.",
+  },
 };
 
 const demos = [
@@ -21,6 +48,7 @@ const AME_URL = "https://ame-judo.fr";
 export default function RealisationsPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(realisationsSchema) }} />
       <div className="page-hero">
         <div className="container">
           <span className="eyebrow">Nos réalisations</span>

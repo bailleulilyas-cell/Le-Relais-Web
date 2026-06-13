@@ -1,19 +1,30 @@
 import PerfPanel from "@/components/PerfPanel";
 import EspaceClientScreen from "@/components/EspaceClientScreen";
 import Faq from "@/components/Faq";
+import { faqItems } from "@/lib/faq-data";
+
+const SITE = "https://www.lerelaisweb.com";
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "https://www.lerelaisweb.com/",
+  "@id": `${SITE}/#business`,
   name: "Le Relais Web",
+  legalName: "Le Relais Web — Thierry Bailleul",
   description:
-    "Agence de création de sites web rapides pour artisans et commerçants en Val-d'Oise. Site livré en 7 jours, hébergement et maintenance inclus.",
-  url: "https://www.lerelaisweb.com/",
+    "Agence de création de sites web rapides pour artisans, commerçants et associations en Val-d'Oise. Site livré en 7 jours, hébergement et maintenance inclus.",
+  url: `${SITE}/`,
   telephone: "+33695382157",
   email: "contact@lerelaisweb.com",
-  image: "https://www.lerelaisweb.com/logo.webp",
+  image: `${SITE}/logo.webp`,
+  logo: `${SITE}/logo.webp`,
   priceRange: "€€",
+  currenciesAccepted: "EUR",
+  paymentAccepted: "Carte bancaire",
+  vatID: "FR",
+  taxID: "10158642800019",
+  knowsLanguage: "fr-FR",
+  slogan: "On crée votre site. Vous, vous gardez votre métier.",
   address: {
     "@type": "PostalAddress",
     streetAddress: "Ermont",
@@ -40,6 +51,56 @@ const schema = {
     opens: "09:00",
     closes: "19:00",
   },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Création de site web",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        name: "Pack Présence — site vitrine",
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: "25.00",
+          priceCurrency: "EUR",
+          unitText: "MONTH",
+        },
+        description:
+          "Site vitrine professionnel, hébergement, maintenance et SEO local. 400 € de mise en service puis 25 €/mois, sans engagement.",
+      },
+      {
+        "@type": "Offer",
+        name: "Pack Pro — site avec espace d'administration",
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: "40.00",
+          priceCurrency: "EUR",
+          unitText: "MONTH",
+        },
+        description:
+          "Site sur-mesure avec un espace d'administration : le client modifie son contenu lui-même. À partir de 40 €/mois.",
+      },
+    ],
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((it) => ({
+    "@type": "Question",
+    name: it.q,
+    acceptedAnswer: { "@type": "Answer", text: it.a },
+  })),
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE}/#website`,
+  url: `${SITE}/`,
+  name: "Le Relais Web",
+  inLanguage: "fr-FR",
+  publisher: { "@id": `${SITE}/#business` },
 };
 
 const demos = [
@@ -52,6 +113,8 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
 
       <div className="trust-strip">
         <div className="trust-strip-inner">

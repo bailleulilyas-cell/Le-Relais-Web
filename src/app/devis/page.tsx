@@ -6,6 +6,15 @@ export const metadata: Metadata = {
   description:
     "Demandez votre devis gratuit pour un site vitrine artisan à Ermont, Val-d'Oise. Réponse sous 24h, livraison 7 jours, dès 25€/mois tout inclus.",
   alternates: { canonical: "/devis" },
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    url: "https://www.lerelaisweb.com/devis",
+    title: "Devis Gratuit — Site Internet Artisan Val-d'Oise | Le Relais Web",
+    description:
+      "Votre devis gratuit pour un site rapide à Ermont et dans le Val-d'Oise. Réponse sous 24h, livraison 7 jours.",
+    images: ["/logo.webp"],
+  },
 };
 
 export default function DevisPage() {

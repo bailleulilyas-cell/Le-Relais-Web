@@ -5,6 +5,15 @@ export const metadata: Metadata = {
   description:
     "Le Relais Web, une agence web locale à Ermont. On écrit chaque site à la main pour les commerçants du Val-d'Oise. Proximité, honnêteté, rapidité.",
   alternates: { canonical: "/equipe" },
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    url: "https://www.lerelaisweb.com/equipe",
+    title: "À propos — Agence Web Locale à Ermont | Le Relais Web",
+    description:
+      "Une agence web locale à Ermont. Proximité, honnêteté, rapidité. On se déplace dans tout le Val-d'Oise.",
+    images: ["/logo.webp"],
+  },
 };
 
 const values = [
