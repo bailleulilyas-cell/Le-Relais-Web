@@ -20,6 +20,14 @@ Préparer ces valeurs (on les colle dans Vercel à l'étape 2, **jamais dans le 
 | `STRIPE_SECRET_KEY` | la **nouvelle** clé `sk_live_...` |
 | `STRIPE_WEBHOOK_SECRET` | `whsec_...` (obtenu à l'étape 4) |
 | `APP_URL` | `https://www.lerelaisweb.com` |
+| `SMTP_HOST` | `smtp.hostinger.com` |
+| `SMTP_PORT` | `465` |
+| `SMTP_USER` | `noreply@lerelaisweb.com` |
+| `SMTP_PASS` | mot de passe du compte email (hPanel > Emails) |
+| `SMTP_FROM` | `Le Relais Web <noreply@lerelaisweb.com>` |
+
+> 💡 Sans `SMTP_PASS`, le site fonctionne mais n'envoie aucun email (bienvenue,
+> réinitialisation de mot de passe, notification de devis sont alors désactivés proprement).
 
 ---
 

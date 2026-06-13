@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function AuthForm() {
   const router = useRouter();
@@ -111,7 +112,9 @@ export default function AuthForm() {
         <p className="form-reassure">
           {tab === "login" ? (
             <>
-              Mot de passe oublié&nbsp;? <b>Écrivez-nous sur WhatsApp.</b>
+              <Link href="/mot-de-passe-oublie" style={{ color: "var(--emerald)", fontWeight: 700 }}>
+                Mot de passe oublié&nbsp;?
+              </Link>
             </>
           ) : (
             <>

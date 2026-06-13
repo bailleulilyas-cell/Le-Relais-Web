@@ -24,6 +24,15 @@ export default function DevisForm() {
     const secteur = String(f.get("secteur") || "");
     const email = String(f.get("email") || "");
     const desc = String(f.get("description") || "");
+
+    // Capture serveur (email à l'équipe) — le prospect n'est pas perdu même
+    // si le message WhatsApp n'est finalement pas envoyé. Best-effort.
+    fetch("/api/devis", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ enseigne, ville, secteur, email, description: desc }),
+    }).catch(() => {});
+
     const txt =
       `Bonjour, je souhaite un devis pour mon site web.%0A%0A` +
       `Enseigne : ${enseigne}%0A` +

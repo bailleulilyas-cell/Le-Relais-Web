@@ -4,6 +4,7 @@ import { getDb } from "@/lib/db";
 import { utilisateurs } from "@/lib/schema";
 import { hashPassword } from "@/lib/password";
 import { createSession } from "@/lib/session";
+import { sendMail, emailLayout } from "@/lib/mail";
 
 export const runtime = "nodejs";
 
@@ -46,6 +47,20 @@ export async function POST(req: Request) {
     const insertId = Number((result as unknown as [{ insertId: number }])[0].insertId);
 
     await createSession({ userId: insertId, role: "client", prenom });
+
+    // Email de bienvenue — best-effort, ne bloque pas l'inscription.
+    sendMail({
+      to: email,
+      subject: "Bienvenue chez Le Relais Web 👋",
+      html: emailLayout(
+        `Bienvenue ${prenom} !`,
+        `<p style="font-size:15px;line-height:1.7;color:#5C6470;">Votre espace client est créé. Vous pourrez y suivre l'avancement de votre site, vos factures et vos demandes, en un coup d'œil.</p>
+         <p style="font-size:15px;line-height:1.7;color:#5C6470;">Pour lancer votre projet, dites-nous tout — par message, c'est le plus simple :</p>
+         <p style="text-align:center;margin:24px 0;"><a href="https://wa.me/33695382157" style="background:#0B6E4F;color:#fff;text-decoration:none;padding:13px 26px;border-radius:11px;font-weight:bold;display:inline-block;">Nous écrire sur WhatsApp</a></p>
+         <p style="font-size:13px;line-height:1.6;color:#9b958a;">À très vite — l'équipe Le Relais Web, Ermont.</p>`
+      ),
+    }).catch(() => {});
+
     return NextResponse.json({ ok: true, role: "client" });
   } catch (e) {
     console.error("inscription:", e);

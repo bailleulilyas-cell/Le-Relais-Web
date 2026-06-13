@@ -20,12 +20,12 @@ export default function PublicChrome({
   const pathname = usePathname();
   const bare = pathname.startsWith("/espace-client") || pathname.startsWith("/admin");
 
-  if (bare) return <>{children}</>;
+  if (bare) return <main id="contenu">{children}</main>;
 
   return (
     <>
       <Navbar />
-      {children}
+      <main id="contenu">{children}</main>
       {footer}
       <Fab />
       <CookieBar />

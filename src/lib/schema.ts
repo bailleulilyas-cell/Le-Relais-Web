@@ -22,6 +22,8 @@ export const utilisateurs = mysqlTable("utilisateurs", {
   descriptionProjet: text("description_projet"),
   role: mysqlEnum("role", ["client", "admin"]).default("client").notNull(),
   paiementConfirme: boolean("paiement_confirme").default(false).notNull(),
+  resetToken: varchar("reset_token", { length: 64 }),
+  resetTokenExpiry: datetime("reset_token_expiry"),
   dateInscription: timestamp("date_inscription").defaultNow().notNull(),
 });
 

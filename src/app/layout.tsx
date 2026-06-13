@@ -41,7 +41,12 @@ export const metadata: Metadata = {
     description:
       "On crée et on gère votre site web. Rapide, trouvé sur Google, livré en 7 jours. On s'occupe de tout.",
   },
-  icons: { icon: "/logo.webp" },
+  icons: { icon: "/logo.webp", apple: "/logo.webp" },
+  manifest: "/manifest.webmanifest",
+};
+
+export const viewport = {
+  themeColor: "#0B6E4F",
 };
 
 export default function RootLayout({
@@ -50,6 +55,9 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${fraunces.variable} ${jakarta.variable}`}>
       <body>
+        <a href="#contenu" className="skip-link">
+          Aller au contenu
+        </a>
         <PublicChrome footer={<Footer />}>{children}</PublicChrome>
         <RevealInit />
       </body>
