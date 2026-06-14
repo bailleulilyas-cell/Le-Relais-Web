@@ -108,9 +108,14 @@ export default function RealisationsPage() {
                 <span className="fw-url">ame-judo.fr</span>
               </div>
               <div className="fw-screen">
-                <span className="fw-kanji">柔道</span>
-                <span className="fw-club">AME-JUDO</span>
-                <span className="fw-sub">Arts Martiaux Ermontois · depuis 1978</span>
+                <img
+                  src="/ame-judo.png"
+                  alt="Aperçu du site ame-judo.fr — club de judo AME-JUDO à Ermont"
+                  width={1200}
+                  height={630}
+                  loading="lazy"
+                  decoding="async"
+                />
                 <span className="fw-open">Ouvrir le site →</span>
               </div>
             </a>
