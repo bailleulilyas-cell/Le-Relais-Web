@@ -32,6 +32,11 @@ export default function DevisPage() {
       </div>
       <section className="section">
         <div className="container">
+          <div className="price-guarantee reveal" style={{ marginTop: 0, marginBottom: "2rem" }}>
+            <span><span className="pg-ic">✓</span> Réponse sous 24h, par message</span>
+            <span><span className="pg-ic">✓</span> On se déplace chez vous, en Île-de-France</span>
+            <span><span className="pg-ic">✓</span> Sans engagement · Satisfait ou remboursé 30 j</span>
+          </div>
           <DevisForm />
         </div>
       </section>

@@ -90,6 +90,10 @@ a{text-decoration:none;transition:.2s;color:inherit;}
 .hero-trust{display:flex;gap:1.3rem;flex-wrap:wrap;font-size:.8rem;color:var(--muted-2);font-weight:600;}
 .hero-trust span{display:inline-flex;align-items:center;gap:.4rem;}
 .ht-ic{color:var(--emerald);font-weight:900;}
+.hero-proof{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.3rem;font-size:.84rem;font-weight:600;color:var(--muted);background:var(--paper-2);border:1px solid var(--line);padding:.5rem .9rem;border-radius:100px;transition:border-color .2s,transform .2s;}
+.hero-proof:hover{border-color:var(--emerald);transform:translateY(-1px);}
+.hero-proof b{color:var(--ink);font-weight:700;}
+.hero-proof-dot{width:7px;height:7px;border-radius:50%;background:var(--signal);flex-shrink:0;animation:pulse 1.8s infinite;}
 
 .perf-panel{background:var(--panel);border-radius:18px;padding:1.6rem;color:#fff;border:1px solid rgba(255,255,255,.07);transition:border-color .25s,box-shadow .25s;}
 .perf-panel:hover{border-color:rgba(61,214,140,.35);box-shadow:0 14px 40px rgba(12,26,46,.25);}
@@ -266,6 +270,21 @@ a{text-decoration:none;transition:.2s;color:inherit;}
 .cta-final .btn-primary{background:var(--signal);color:#06281b;}
 .cta-final .btn-primary:hover{background:#34c47e;}
 .cta-final-sub{font-size:.82rem;color:rgba(255,255,255,.45);margin-top:1.1rem;}
+
+/* CTA intermédiaire (band) */
+.section-cta-band{padding:1.6rem 0;}
+.cta-band{max-width:880px;margin:0 auto;background:linear-gradient(110deg,var(--navy),var(--emerald-d));border-radius:18px;padding:1.6rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;}
+.cta-band-text{display:flex;flex-direction:column;gap:.2rem;}
+.cta-band-text strong{font-family:var(--serif);font-weight:600;font-size:1.25rem;color:#fff;}
+.cta-band-text span{font-size:.9rem;color:rgba(255,255,255,.7);}
+.cta-band .btn-primary{background:var(--signal);color:#06281b;white-space:nowrap;flex-shrink:0;}
+.cta-band .btn-primary:hover{background:#34c47e;}
+
+/* Réassurance sous les tarifs */
+.price-guarantee{max-width:880px;margin:1.6rem auto 0;display:flex;justify-content:center;gap:1.3rem 2rem;flex-wrap:wrap;font-size:.85rem;font-weight:600;color:var(--emerald-d);}
+.price-guarantee span{display:inline-flex;align-items:center;gap:.45rem;}
+.pg-ic{color:var(--emerald);font-weight:900;}
+@media(max-width:600px){.cta-band{flex-direction:column;align-items:flex-start;}.cta-band .btn-primary{width:100%;justify-content:center;}.price-guarantee{flex-direction:column;gap:.6rem;align-items:flex-start;max-width:340px;}}
 
 .footer-sep{height:1px;background:linear-gradient(90deg,transparent,var(--emerald),transparent);}
 .main-footer{background:var(--panel);color:#fff;padding:3rem 0 0;}

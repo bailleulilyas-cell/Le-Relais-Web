@@ -144,9 +144,9 @@ export default function Home() {
                   On crée votre site. Vous, vous gardez <span className="ital">votre métier.</span>
                 </h1>
                 <p className="hero-lead">
-                  Pour les commerçants d&apos;Ermont, Argenteuil et du Val-d&apos;Oise. On s&apos;occupe de
-                  tout — votre site s&apos;ouvre en moins d&apos;une seconde, et vos clients vous trouvent
-                  sur Google. Vous n&apos;avez rien à gérer.
+                  Pour les commerçants d&apos;Ermont, Argenteuil et du Val-d&apos;Oise. On crée votre
+                  site, on le met sur Google, et on s&apos;occupe de tout ensuite. Vous, vous n&apos;avez
+                  rien à gérer.
                 </p>
                 <div className="cta-group">
                   <a href="/devis" className="btn-primary">
@@ -158,15 +158,19 @@ export default function Home() {
                 </div>
                 <div className="hero-trust">
                   <span>
-                    <span className="ht-ic">✓</span> Moins d&apos;une seconde
+                    <span className="ht-ic">✓</span> Livré en 7 jours
                   </span>
                   <span>
-                    <span className="ht-ic">✓</span> On vient chez vous
+                    <span className="ht-ic">✓</span> Dès 25 €/mois, tout compris
                   </span>
                   <span>
-                    <span className="ht-ic">✓</span> Garantie 30 jours
+                    <span className="ht-ic">✓</span> Satisfait ou remboursé 30 j
                   </span>
                 </div>
+                <a href="/realisations" className="hero-proof">
+                  <span className="hero-proof-dot" aria-hidden="true" />
+                  Déjà en ligne&nbsp;: <b>le club AME-JUDO, à Ermont</b> →
+                </a>
               </div>
               <PerfPanel />
             </div>
@@ -248,6 +252,20 @@ export default function Home() {
                 <p>Hébergement, mises à jour, petites modifications, pannes : tout est compris dans l&apos;abonnement. Si quelque chose casse, on répare. Vous, vous faites votre métier.</p>
                 <div className="step-line" />
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-cta-band">
+          <div className="container">
+            <div className="cta-band reveal">
+              <div className="cta-band-text">
+                <strong>Votre site en ligne dans 7 jours.</strong>
+                <span>On s&apos;occupe de tout — vous validez avant la mise en ligne.</span>
+              </div>
+              <a href="/devis" className="btn-primary">
+                Demander mon devis gratuit →
+              </a>
             </div>
           </div>
         </section>
@@ -365,6 +383,12 @@ export default function Home() {
               </div>
             </div>
 
+            <div className="price-guarantee reveal">
+              <span><span className="pg-ic">✓</span> Satisfait ou remboursé 30 jours</span>
+              <span><span className="pg-ic">✓</span> Sans engagement, vous partez quand vous voulez</span>
+              <span><span className="pg-ic">✓</span> Le code de votre site vous appartient</span>
+            </div>
+
             <div className="price-compare reveal">
               <div className="pc-row pc-head">
                 <div className="pc-label"></div>
@@ -477,15 +501,16 @@ export default function Home() {
         <section className="section">
           <div className="container">
             <div className="cta-final reveal">
-              <h2>Parlons de votre projet.</h2>
+              <h2>Et si vos clients vous trouvaient enfin&nbsp;?</h2>
               <p>
-                Un message, une rencontre près de chez vous, et on s&apos;occupe du reste. Sans engagement, et
-                sans la moindre pression.
+                400 € une fois, 25 €/mois, livré en 7 jours. On vient vous rencontrer près de chez vous,
+                on s&apos;occupe de tout — et si le résultat ne vous plaît pas, on vous rembourse.
+                Vous ne prenez aucun risque.
               </p>
               <a href="/devis" className="btn-primary">
                 Demander mon devis gratuit →
               </a>
-              <p className="cta-final-sub">Réponse sous 24h · Par message WhatsApp · Zéro spam</p>
+              <p className="cta-final-sub">Réponse sous 24h · Par message WhatsApp · Sans engagement · Zéro spam</p>
             </div>
           </div>
         </section>
