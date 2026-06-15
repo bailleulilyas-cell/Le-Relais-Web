@@ -2,35 +2,23 @@
 // Sert à l'affichage (Faq.tsx) et au schema FAQPage SEO (page.tsx).
 export const faqItems = [
   {
-    q: "Et si je suis nul en informatique ?",
-    a: "C'est exactement pour ça qu'on est là. Vous faites votre métier, nous on fait le site. Vous n'avez aucun logiciel à apprendre, aucun mot de passe à retenir. Avec le Pack Présence, vous ne touchez à rien.",
+    q: "Pourquoi pas Wix, ou le faire moi-même ?",
+    a: "Wix promet un site en quelques minutes — mais derrière la simplicité, deux problèmes pour un commerce qui veut se développer. D'abord la vitesse : un site Wix s'ouvre lentement, et Google le pénalise, alors qu'on vous livre une note de 95 à 100 sur 100. Ensuite la propriété : sur Wix, vous n'êtes jamais vraiment chez vous — si un jour vous voulez partir, vous repartez de zéro. Avec nous, le site est à vous, point.",
   },
   {
-    q: "400 €, ce n'est pas trop cher ?",
-    a: "C'est le prix de deux mois de publicité sur les réseaux. Sauf que votre site, lui, travaille pour vous pendant des années — jour et nuit, sans qu'on le relance. Et il n'y a rien de caché : 400 € une fois, 25 € par mois, c'est tout.",
+    q: "Est-ce que je reste propriétaire de mon site ?",
+    a: "Oui, à 100 %. Beaucoup d'agences louent le site sans le dire clairement : le client ne peut jamais partir avec. Chez nous, c'est l'inverse — le code vous est remis, et le nom de domaine est à votre nom. Vous pouvez le confier à qui vous voulez, quand vous voulez. Vous n'êtes jamais coincé.",
   },
   {
-    q: "J'ai peur d'être bloqué avec vous.",
-    a: "Sans engagement. Vous partez quand vous voulez, sans pénalité. Et le code de votre site vous appartient : vous pouvez le confier à n'importe qui. On garde nos clients parce qu'on est utiles, pas parce qu'ils sont coincés.",
+    q: "Combien de temps ça prend ?",
+    a: "En général, une agence met une dizaine de jours pour un site vitrine. Nous, c'est 7 jours ouvrés — une fois que vous nous avez envoyé vos informations et vos photos. Plus vous êtes réactif là-dessus, plus c'est rapide : le délai dépend surtout de ça.",
   },
   {
-    q: "Et si le résultat ne me plaît pas ?",
-    a: "Garantie 30 jours. Si le site ne vous convient pas, on vous rembourse les 400 € de mise en service. Vous ne prenez aucun risque à essayer.",
+    q: "Et si je veux modifier mon site après ?",
+    a: "Pas besoin de nous rappeler pour chaque virgule. Avec le Pack Présence, les modifications courantes (textes, horaires, photos, prix) sont comprises dans l'abonnement : vous nous envoyez un message, on le fait. Et si vous préférez tout gérer vous-même, le Pack Pro vous donne un espace pour modifier votre contenu en quelques clics.",
   },
   {
-    q: "C'est quoi la différence avec WordPress ou Wix ?",
-    a: "Ces outils empilent des milliers de lignes inutiles : le site devient lent, et Google le pénalise. Nous, on écrit le site à la main, sans superflu. Résultat : il s'ouvre en moins d'une seconde, et vos clients ne partent pas avant qu'il s'affiche.",
-  },
-  {
-    q: "Et si vous fermez boutique un jour ?",
-    a: "Le code source de votre site vous appartient entièrement. Si un jour vous voulez le reprendre ou le confier à quelqu'un d'autre, c'est possible à tout moment. Vous n'êtes jamais dépendant de nous.",
-  },
-  {
-    q: "En combien de temps mon site est-il prêt ?",
-    a: "7 jours ouvrés pour un Pack Présence, une fois qu'on a vos informations et vos photos. Pour un Pack Pro avec espace d'administration, comptez deux à trois semaines, le temps de tout mettre en place et de vous former.",
-  },
-  {
-    q: "Vous travaillez dans ma ville ?",
-    a: "On est basés à Ermont et on se déplace dans tout le Val-d'Oise et l'Île-de-France : Argenteuil, Sannois, Eaubonne, Franconville, Enghien-les-Bains, Taverny… On connaît le tissu commercial local, et on préfère le contact en vrai.",
+    q: "Combien ça coûte vraiment — il n'y a pas de frais cachés ?",
+    a: "En France, un site vitrine fait par une agence coûte en général entre 1 500 et 3 500 € à la création, plus 80 à 200 € par mois. Nous, c'est 550 € puis 25 €/mois, tout compris : nom de domaine, hébergement, mises à jour, dépannage. Rien de caché, rien en plus.",
   },
 ];

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     url: "https://www.lerelaisweb.com/services",
     title: "Nos offres — Création de site web | Le Relais Web",
     description: "Deux formules claires pour votre site web. Livré en 7 jours, tout compris.",
-    images: ["/logo.webp"],
+    images: ["/logo-relais.webp"],
   },
 };
 
@@ -26,6 +26,15 @@ const serviceSchema = {
     { "@type": "AdministrativeArea", name: "Île-de-France" },
   ],
 };
+
+const inclus = [
+  ["Nom de domaine & hébergement", "Votre adresse .fr et la mise en ligne, gérés par nous."],
+  ["Vitesse maximale", "Note Google 95-100. Le site s'ouvre en moins d'une seconde."],
+  ["Référencement local", "Vos clients vous trouvent sur Google, près de chez eux."],
+  ["Parfait sur téléphone", "Impeccable sur mobile, là où vos clients regardent."],
+  ["Sécurité & maintenance", "Connexion sécurisée, mises à jour et dépannage compris."],
+  ["Votre espace client", "Suivez l'avancement, vos factures et vos demandes."],
+];
 
 export default function ServicesPage() {
   return (
@@ -43,81 +52,100 @@ export default function ServicesPage() {
         </div>
       </div>
 
+      {/* ── Comment ça se passe ── */}
       <section className="section-sm">
         <div className="container">
-          {/* ── Pack Présence ── */}
+          <div className="sec-head center">
+            <span className="eyebrow">Comment ça se passe</span>
+            <h2>De la première rencontre à la mise en ligne.</h2>
+          </div>
+          <div className="steps-grid">
+            <div className="step-card reveal">
+              <div className="step-num">1</div>
+              <h3>On se rencontre</h3>
+              <p>On vient chez vous, en Île-de-France. On comprend votre métier, vos clients, ce qui vous distingue.</p>
+            </div>
+            <div className="step-card reveal">
+              <div className="step-num">2</div>
+              <h3>On crée &amp; vous validez</h3>
+              <p>On conçoit votre site à votre image. Vous le relisez et le validez avant la mise en ligne — rien ne passe sans votre accord.</p>
+            </div>
+            <div className="step-card reveal">
+              <div className="step-num">3</div>
+              <h3>On reste à vos côtés</h3>
+              <p>Une fois en ligne, on continue de gérer l&apos;hébergement, la sécurité et les mises à jour. Vous n&apos;êtes jamais seul.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Les deux packs ── */}
+      <section className="section-sm">
+        <div className="container">
           <div className="svc-block">
             <aside className="svc-aside">
               <div className="price-name">Présence</div>
               <div className="price-tagline">On s&apos;occupe de tout.</div>
-              <div className="price-amount">
-                <span className="n">25 €</span><span className="per">/mois</span>
-              </div>
+              <div className="price-amount"><span className="n">25 €</span><span className="per">/mois</span></div>
               <div className="price-setup">+ <b>550 €</b> à la création</div>
               <Link href="/contact" className="btn-primary">Demander un devis</Link>
             </aside>
             <div className="svc-detail">
               <h3>Pour qui&nbsp;?</h3>
               <p>
-                Pour le commerçant ou l&apos;artisan dont le contenu bouge peu : coiffeur, plombier,
-                électricien, fleuriste… Vous voulez être visible et joignable, sans rien avoir à gérer.
+                Pour vous si le contenu de votre site bouge peu — vos informations, vos services, vos
+                coordonnées restent globalement les mêmes au fil de l&apos;année. Vous voulez être
+                visible et joignable, sans rien avoir à gérer vous-même.
               </p>
               <h3>Comment ça marche</h3>
               <p>
                 On vient vous rencontrer, vous nous donnez vos infos et vos photos une fois, et 7 jours
-                plus tard votre site est en ligne. Besoin d&apos;un changement&nbsp;? Vous nous envoyez un
-                message, on le fait.
+                plus tard votre site est en ligne. Un changement à faire&nbsp;? Vous nous envoyez un
+                message, on s&apos;en occupe.
               </p>
-              <h3>Ce qui est compris</h3>
+              <h3>Ce que vous avez</h3>
               <ul>
                 <li>Site vitrine sur-mesure, 4 à 6 pages</li>
-                <li>Nom de domaine &amp; hébergement inclus</li>
-                <li>Référencement local : vous apparaissez sur Google près de chez vos clients</li>
-                <li>Site ultra-rapide, parfait sur téléphone</li>
                 <li>Toutes les modifications faites par nous, à la demande</li>
-                <li>Maintenance, sécurité et dépannage compris</li>
-                <li>Un espace client pour suivre votre projet et vos factures</li>
+                <li>Tout ce qui est compris dans nos sites (ci-dessous)</li>
               </ul>
             </div>
           </div>
 
-          {/* ── Pack Pro ── */}
           <div className="svc-block">
             <aside className="svc-aside">
               <div className="price-name">Pro</div>
               <div className="price-tagline">Vous gérez vous-même.</div>
-              <div className="price-amount">
-                <span className="n">40 €</span><span className="per">/mois</span>
-              </div>
+              <div className="price-amount"><span className="n">40 €</span><span className="per">/mois</span></div>
               <div className="price-setup">+ <b>1 200 €</b> à la création</div>
               <Link href="/contact" className="btn-primary">Demander un devis</Link>
             </aside>
             <div className="svc-detail">
               <h3>Pour qui&nbsp;?</h3>
               <p>
-                Pour celui dont le contenu change souvent : boucherie, restaurant, club, association…
-                Vous voulez la main sur vos produits, vos photos, vos menus ou vos actualités, sans nous
-                solliciter à chaque fois.
+                Pour vous si votre contenu change souvent et que vous voulez en garder la main —
+                modifier vos produits, vos photos, vos prix ou vos actualités quand vous le décidez,
+                sans avoir à nous solliciter à chaque fois.
               </p>
               <h3>Ce que vous avez en plus</h3>
               <p>
-                Un véritable <b>espace d&apos;administration sur-mesure</b> : une application sécurisée, à
-                vous, où vous modifiez votre contenu en quelques clics. C&apos;est exactement ce qu&apos;on
-                a livré au club AME-JUDO d&apos;Ermont, qui gère ses actualités tout seul.
+                Un véritable <b>espace d&apos;administration sur-mesure</b>&nbsp;: une application
+                sécurisée, à vous, où vous modifiez votre contenu en quelques clics. C&apos;est ce type
+                d&apos;outil qu&apos;on a livré au club AME-JUDO d&apos;Ermont, qui gère ses actualités
+                tout seul.
               </p>
-              <h3>Ce qui est compris</h3>
+              <h3>Ce que vous avez</h3>
               <ul>
-                <li>Tout ce qui est dans le Pack Présence</li>
-                <li>Espace d&apos;administration : vous modifiez tout vous-même</li>
-                <li>Gérez produits, photos, horaires, menus, actualités</li>
+                <li>Tout le Pack Présence</li>
+                <li>Votre espace pour tout modifier vous-même</li>
                 <li>Formation simple à l&apos;outil incluse</li>
                 <li>Accompagnement prioritaire</li>
               </ul>
               <h3>Pourquoi 1 200 € et non 550 €&nbsp;?</h3>
               <p>
-                Le Pack Pro ne comprend pas qu&apos;un site : il inclut un outil de gestion complet, avec
-                sa propre base de données sécurisée. C&apos;est plusieurs semaines de travail en plus —
-                vous ne payez pas une page de plus, vous payez un outil que vous gardez.
+                Le Pack Pro ne comprend pas qu&apos;un site&nbsp;: il inclut un outil de gestion complet,
+                avec sa propre base de données sécurisée. C&apos;est plusieurs semaines de travail en
+                plus — vous ne payez pas une page de plus, vous payez un outil que vous gardez.
               </p>
             </div>
           </div>
@@ -130,7 +158,53 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      {/* ── Inclus dans tous nos sites ── */}
+      <section className="section-sm">
+        <div className="container">
+          <div className="incl reveal">
+            <div className="incl-title">Compris dans les deux formules, sans supplément</div>
+            <div className="incl-grid">
+              {inclus.map(([t, d]) => (
+                <div className="incl-item" key={t}>
+                  <span className="incl-ic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </span>
+                  <div><strong>{t}</strong><span>{d}</span></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Comparatif marché ── */}
+      <section className="section-sm">
+        <div className="container">
+          <div className="sec-head center">
+            <span className="eyebrow">Le vrai prix d&apos;un site</span>
+            <h2>Moins cher qu&apos;une agence classique.</h2>
+            <p>À qualité égale, voire supérieure sur la vitesse. Et sans frais cachés.</p>
+          </div>
+          <div className="compare-market">
+            <div className="cm-card them">
+              <div className="cm-tag">Agence classique</div>
+              <div className="cm-price">1 500 – 3 500 €</div>
+              <div className="cm-sub">à la création</div>
+              <p className="cm-note">+ 80 à 200 €/mois de frais récurrents. Et bien souvent, vous n&apos;êtes pas propriétaire de votre site.</p>
+            </div>
+            <div className="cm-card us">
+              <div className="cm-tag">Le Relais Web</div>
+              <div className="cm-price">550 €</div>
+              <div className="cm-sub">à la création, puis 25 €/mois</div>
+              <p className="cm-note">Tout compris : domaine, hébergement, mises à jour, dépannage. Le site et le code sont à vous.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: "24px" }}>
         <div className="container">
           <div className="cta-final reveal">
             <h2>Pas sûr de la formule&nbsp;?</h2>

@@ -8,11 +8,11 @@ export default function manifest(): MetadataRoute.Manifest {
       "Création de sites web rapides pour artisans, commerçants et associations en Val-d'Oise.",
     start_url: "/",
     display: "standalone",
-    background_color: "#F6F1E7",
-    theme_color: "#0B6E4F",
+    background_color: "#F8F7F4",
+    theme_color: "#2563EB",
     lang: "fr-FR",
     icons: [
-      { src: "/logo.webp", sizes: "any", type: "image/webp", purpose: "any" },
+      { src: "/logo-relais.webp", sizes: "any", type: "image/webp", purpose: "any" },
     ],
   };
 }

@@ -15,8 +15,8 @@ const localBusiness = {
   url: `${SITE}/`,
   telephone: "+33695382157",
   email: "contact@lerelaisweb.com",
-  image: `${SITE}/logo.webp`,
-  logo: `${SITE}/logo.webp`,
+  image: `${SITE}/logo-relais.webp`,
+  logo: `${SITE}/logo-relais.webp`,
   priceRange: "€€",
   slogan: "Votre partenaire digital local.",
   address: {
@@ -185,6 +185,34 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── 2 bis. COMMENT ÇA MARCHE ── */}
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className="sec-head center">
+            <span className="eyebrow">Simple, du début à la fin</span>
+            <h2>Vous nous parlez. On s&apos;occupe du reste.</h2>
+            <p>Pas de jargon, pas de logiciel à apprendre. Trois étapes, et votre site travaille pour vous.</p>
+          </div>
+          <div className="steps-grid">
+            <div className="step-card reveal">
+              <div className="step-num">1</div>
+              <h3>On se rencontre</h3>
+              <p>On vient chez vous, en Île-de-France. On comprend votre métier et vos clients — une vraie discussion, pas un questionnaire.</p>
+            </div>
+            <div className="step-card reveal">
+              <div className="step-num">2</div>
+              <h3>On crée votre site</h3>
+              <p>En 7 jours, on conçoit un site rapide et soigné, à votre image. Vous le validez avant qu&apos;il soit mis en ligne.</p>
+            </div>
+            <div className="step-card reveal">
+              <div className="step-num">3</div>
+              <h3>On s&apos;occupe de tout</h3>
+              <p>Hébergement, sécurité, mises à jour, dépannage : c&apos;est compris. Si quelque chose casse, on répare. Vous, vous faites votre métier.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── 3. PREUVES ── */}
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
@@ -279,9 +307,9 @@ export default function Home() {
               <ul className="price-feats">
                 <li>Tout ce qui est dans le Pack Présence</li>
                 <li><b>Espace d&apos;administration</b> : modifiez tout vous-même</li>
-                <li>Produits, photos, horaires, actualités</li>
-                <li>Formation simple incluse</li>
-                <li>Idéal boucherie, restaurant, club, association</li>
+                <li>Produits, photos, horaires, menus, actualités</li>
+                <li>Formation simple à l&apos;outil incluse</li>
+                <li>Pour un contenu qui change souvent</li>
               </ul>
               <Link href="/contact" className="btn-primary">Demander un devis</Link>
             </div>
@@ -295,6 +323,36 @@ export default function Home() {
             Vous hésitez entre les deux&nbsp;? <b>On en parle, sans engagement</b> — quitte à vous
             déconseiller le plus cher. <Link href="/services" className="link-accent">Voir le détail des offres →</Link>
           </p>
+
+          <div className="incl reveal" style={{ marginTop: "3rem" }}>
+            <div className="incl-title">Compris dans les deux formules</div>
+            <div className="incl-grid">
+              <div className="incl-item">
+                <span className="incl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg></span>
+                <div><strong>Nom de domaine &amp; hébergement</strong><span>Votre adresse .fr et la mise en ligne, gérés par nous.</span></div>
+              </div>
+              <div className="incl-item">
+                <span className="incl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+                <div><strong>Vitesse maximale</strong><span>Note Google 95-100. Votre site s&apos;ouvre en moins d&apos;une seconde.</span></div>
+              </div>
+              <div className="incl-item">
+                <span className="incl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+                <div><strong>Référencement local</strong><span>Vos clients vous trouvent sur Google, près de chez eux.</span></div>
+              </div>
+              <div className="incl-item">
+                <span className="incl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg></span>
+                <div><strong>Parfait sur téléphone</strong><span>Impeccable sur mobile, là où vos clients regardent vraiment.</span></div>
+              </div>
+              <div className="incl-item">
+                <span className="incl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                <div><strong>Sécurité &amp; maintenance</strong><span>Connexion sécurisée, mises à jour et dépannage compris.</span></div>
+              </div>
+              <div className="incl-item">
+                <span className="incl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg></span>
+                <div><strong>Votre espace client</strong><span>Suivez l&apos;avancement, vos factures et vos demandes en un coup d&apos;œil.</span></div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

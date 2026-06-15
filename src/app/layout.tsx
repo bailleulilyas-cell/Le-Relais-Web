@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     title: "Création Site Web Artisan Ermont & Val-d'Oise | Le Relais Web",
     description:
       "On crée et on gère votre site web. Rapide, trouvé sur Google, livré en 7 jours. On s'occupe de tout.",
-    images: ["/logo.webp"],
+    images: ["/logo-relais.webp"],
   },
   twitter: {
     card: "summary_large_image",
@@ -41,12 +41,12 @@ export const metadata: Metadata = {
     description:
       "On crée et on gère votre site web. Rapide, trouvé sur Google, livré en 7 jours. On s'occupe de tout.",
   },
-  icons: { icon: "/logo.webp", apple: "/logo.webp" },
+  icons: { icon: "/logo-relais.webp", apple: "/logo-relais.webp" },
   manifest: "/manifest.webmanifest",
 };
 
 export const viewport = {
-  themeColor: "#0B6E4F",
+  themeColor: "#2563EB",
 };
 
 export default function RootLayout({
