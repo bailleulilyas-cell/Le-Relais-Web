@@ -779,7 +779,15 @@ function FacturesCard({
               </div>
               <span className={`adm-tag ${f.statut === "paid" ? "perf" : "update"}`}>
                 {f.statut === "paid" ? "Payé" : "En attente"}
-              </span>
+              </span>{" "}
+              <a
+                className="adm-pdf-link"
+                href={`/api/facture/${f.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                PDF ↓
+              </a>
             </div>
             <button
               className="adm-btn-x"

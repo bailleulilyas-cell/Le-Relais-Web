@@ -31,12 +31,12 @@ export type DashIntervention = {
   date: string;
 };
 export type DashFacture = {
+  id: number;
   numero: string;
   description: string;
   montant: string;
   date: string;
   statut: "paid" | "pending";
-  pdf: string | null;
 };
 export type DashDemande = {
   typeDemande: string;
@@ -915,17 +915,15 @@ function FacturationTab({
                   <span className={`dash-fact-stat ${f.statut}`}>
                     {f.statut === "paid" ? "Payé" : "En attente"}
                   </span>
-                  {f.pdf && (
-                    <a
-                      className="dash-fact-pdf"
-                      href={f.pdf}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Télécharger la facture ${f.numero}`}
-                    >
-                      PDF ↓
-                    </a>
-                  )}
+                  <a
+                    className="dash-fact-pdf"
+                    href={`/api/facture/${f.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Télécharger la facture ${f.numero} en PDF`}
+                  >
+                    PDF ↓
+                  </a>
                 </div>
               </div>
             ))

@@ -63,12 +63,12 @@ export default async function EspaceClientPage() {
       date: isoDate(iv.dateIntervention) ?? "",
     })),
     factures: data.factures.map((f) => ({
+      id: f.id,
       numero: f.numero,
       description: f.description,
       montant: String(f.montant),
       date: isoDate(f.dateFacture) ?? "",
       statut: f.statut ?? "pending",
-      pdf: f.facturePdf ?? null,
     })),
     demandes: data.demandes.map((d) => ({
       typeDemande: d.typeDemande ?? "autre",
