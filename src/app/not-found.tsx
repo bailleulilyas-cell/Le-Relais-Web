@@ -22,7 +22,7 @@ export default function NotFound() {
           <Link href="/" className="btn-primary">
             Retour à l&apos;accueil
           </Link>
-          <Link href="/devis" className="btn-secondary">
+          <Link href="/contact" className="btn-secondary">
             Demander un devis
           </Link>
         </div>

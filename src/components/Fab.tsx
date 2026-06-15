@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const WA =
   "https://wa.me/33695382157?text=Bonjour%2C%20je%20souhaite%20un%20devis%20pour%20mon%20site%20web.";
 
-const HIDDEN = ["/devis", "/compte"];
+const HIDDEN = ["/contact", "/compte"];
 
 export default function Fab() {
   const [scrolled, setScrolled] = useState(false);
@@ -19,7 +19,7 @@ export default function Fab() {
   if (HIDDEN.includes(pathname)) return null;
   return (
     <div className={`fab-bar${scrolled ? " scrolled" : ""}`}>
-      <a href="/devis" className="fab-devis">
+      <a href="/contact" className="fab-devis">
         Demander un devis →
       </a>
       <a

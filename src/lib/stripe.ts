@@ -22,6 +22,10 @@ export function appUrl(): string {
   return (process.env.APP_URL ?? "http://localhost:3001").replace(/\/$/, "");
 }
 
-/** Tarifs (en centimes) — source unique de vérité. */
-export const PRIX_MISE_EN_SERVICE = 40000; // 400 €
+/** Tarifs (en centimes) — source unique de vérité.
+ *  Pack Présence par défaut. TODO Phase Stripe : paramétrer par pack
+ *  (Pro = 120000 mise en service + 4000/mois). */
+export const PRIX_MISE_EN_SERVICE = 55000; // 550 €
 export const PRIX_ABONNEMENT_MENSUEL = 2500; // 25 €/mois
+export const PRIX_PRO_MISE_EN_SERVICE = 120000; // 1 200 €
+export const PRIX_PRO_ABONNEMENT_MENSUEL = 4000; // 40 €/mois

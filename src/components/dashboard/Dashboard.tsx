@@ -495,7 +495,7 @@ function PaiementCard() {
       <div className="dash-pay-ic">💳</div>
       <h2>Finaliser votre commande</h2>
       <p>
-        <strong>400 €</strong> mise en service + <strong>25 €/mois</strong> abonnement.
+        <strong>550 €</strong> mise en service + <strong>25 €/mois</strong> abonnement.
         <br />
         <span>Sans engagement · Satisfait ou remboursé 30 jours</span>
       </p>
@@ -520,10 +520,10 @@ function PromoBlock({ onGo }: { onGo: (t: Tab) => void }) {
           </p>
         </div>
         <div className="dash-promo-cta">
-          <a href="/devis" className="btn-primary">
+          <a href="/contact" className="btn-primary">
             Démarrer mon projet →
           </a>
-          <span>À partir de 25 €/mois · 400 € à la mise en service</span>
+          <span>À partir de 25 €/mois · 550 € à la mise en service</span>
         </div>
       </div>
       <div className="dash-promo-feats">
@@ -944,7 +944,7 @@ function FacturationTab({
             </div>
             <p className="dash-resil-text">
               Vous pouvez résilier à tout moment. Votre site restera en ligne jusqu’à la fin de la
-              période en cours. Seuls les 400 € de mise en service sont remboursables (garantie 30
+              période en cours. Seuls les 550 € de mise en service sont remboursables (garantie 30
               jours).
             </p>
             <button

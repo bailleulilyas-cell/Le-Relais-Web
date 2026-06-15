@@ -41,10 +41,10 @@ const sections: { id: string; num: string; title: string; html: string }[] = [
     title: "Tarifs & Paiement",
     html: `
       <div class="price-box">
-        <div class="pi"><div class="pi-am">400€</div><div class="pi-lb">MISE EN SERVICE</div><div class="pi-nt">Payable à la commande</div></div>
+        <div class="pi"><div class="pi-am">550€</div><div class="pi-lb">MISE EN SERVICE</div><div class="pi-nt">Payable à la commande</div></div>
         <div class="pi"><div class="pi-am">25€</div><div class="pi-lb">ABONNEMENT / MOIS</div><div class="pi-nt">Prélevé via Stripe</div></div>
       </div>
-      <p>Les frais de <strong>mise en service (400 €)</strong> sont dus intégralement à la commande via la plateforme sécurisée <strong>Stripe</strong>. L'<strong>abonnement mensuel (25 €/mois)</strong> couvre l'hébergement, le nom de domaine, la maintenance et le support. Le Pack Pro avec espace d'administration est proposé à 1 200 € de mise en service et 40 €/mois.</p>
+      <p>Les frais de <strong>mise en service (550 €)</strong> sont dus intégralement à la commande via la plateforme sécurisée <strong>Stripe</strong>. L'<strong>abonnement mensuel (25 €/mois)</strong> couvre l'hébergement, le nom de domaine, la maintenance et le support. Le Pack Pro avec espace d'administration est proposé à 1 200 € de mise en service et 40 €/mois.</p>
       <div class="hl"><strong>Exonération de TVA</strong> — En application de l'article 293 B du CGI, Le Relais Web n'est pas assujetti à la TVA. Les prix affichés sont nets de taxe.</div>
       <p>Le transfert de propriété des éléments créés n'intervient qu'après le <strong>paiement intégral des factures</strong> dues.</p>`,
   },
@@ -81,7 +81,7 @@ const sections: { id: string; num: string; title: string; html: string }[] = [
     title: "Résiliation & Garantie",
     html: `
       <p><strong>Garantie « Satisfait ou remboursé 30 jours » :</strong> Le client dispose de <strong>30 jours calendaires</strong> à compter de la mise en ligne pour demander le remboursement des frais de mise en service, par email à <a href="mailto:contact@lerelaisweb.com">contact@lerelaisweb.com</a>.</p>
-      <p>Le remboursement porte sur les <strong>400 € de mise en service</strong> uniquement. L'éventuel abonnement mensuel déjà prélevé n'est pas concerné par cette garantie. Les frais techniques engagés pour le compte du client et non récupérables (notamment l'achat du nom de domaine auprès de l'hébergeur) seront <strong>déduits du montant remboursé</strong>.</p>
+      <p>Le remboursement porte sur les <strong>550 € de mise en service</strong> uniquement. L'éventuel abonnement mensuel déjà prélevé n'est pas concerné par cette garantie. Les frais techniques engagés pour le compte du client et non récupérables (notamment l'achat du nom de domaine auprès de l'hébergeur) seront <strong>déduits du montant remboursé</strong>.</p>
       <p><strong>Résiliation :</strong> Le client peut résilier à tout moment, soit directement depuis son espace client (bouton « Résilier mon abonnement »), soit par email à <a href="mailto:contact@lerelaisweb.com">contact@lerelaisweb.com</a>. La résiliation prend effet à la fin de la période mensuelle en cours.</p>
       <div class="warn">L'arrêt de l'abonnement entraîne la suppression du site sous 30 jours. Toute période mensuelle entamée est intégralement due, sans remboursement au prorata.</div>`,
   },
@@ -91,7 +91,7 @@ const sections: { id: string; num: string; title: string; html: string }[] = [
     title: "Propriété intellectuelle",
     html: `
       <p><strong>Contenus du client :</strong> Textes, photos et éléments fournis par le client restent sa propriété exclusive.</p>
-      <p><strong>Éléments créés :</strong> Une fois les 400 € réglés, le client acquiert la propriété des éléments créés. Cette propriété est subordonnée à l'absence d'impayé.</p>
+      <p><strong>Éléments créés :</strong> Une fois les 550 € réglés, le client acquiert la propriété des éléments créés. Cette propriété est subordonnée à l'absence d'impayé.</p>
       <div class="hl"><strong>Code source :</strong> Le code source demeure la propriété intellectuelle de Le Relais Web. Le client bénéficie d'une licence d'utilisation exclusive tant qu'il règle l'abonnement. En cas de résiliation, cette licence prend fin.</div>`,
   },
   {
@@ -175,7 +175,7 @@ export default function CgvPage() {
           <div className="cta-end">
             <h3>Prêt à démarrer ?</h3>
             <p>Sans engagement · Satisfait ou remboursé 30 jours · Livraison en 7 jours ouvrés.</p>
-            <a href="/devis" className="btn-primary" style={{ background: "var(--signal)", color: "#06281b" }}>
+            <a href="/contact" className="btn-primary">
               Lancer mon projet →
             </a>
           </div>
