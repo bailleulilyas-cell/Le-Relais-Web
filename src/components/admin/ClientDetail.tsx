@@ -712,12 +712,21 @@ function FacturesCard({
   const [montant, setMontant] = useState("");
   const [date, setDate] = useState(today());
   const [statut, setStatut] = useState("paid");
+  const [showForm, setShowForm] = useState(false);
 
   return (
     <div className="adm-card">
       <div className="adm-card-h">
         <span className="adm-card-t">Factures</span>
+        <button className="adm-btn-ghost" onClick={() => setShowForm((v) => !v)}>
+          {showForm ? "Fermer" : "+ Ajouter manuellement"}
+        </button>
       </div>
+      <p className="adm-muted" style={{ marginBottom: showForm ? "1rem" : ".4rem" }}>
+        Les factures se créent automatiquement à chaque paiement Stripe. L’ajout manuel ne sert
+        qu’aux cas particuliers (paiement en espèces/virement, régularisation).
+      </p>
+      {showForm && (
       <div className="adm-subform">
         <div className="adm-subform-t">+ Nouvelle facture</div>
         <div className="adm-grid2">
@@ -765,6 +774,7 @@ function FacturesCard({
           Ajouter →
         </button>
       </div>
+      )}
 
       {factures.length === 0 ? (
         <p className="adm-empty-mini">Aucune facture enregistrée.</p>
