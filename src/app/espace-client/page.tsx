@@ -29,6 +29,7 @@ export default async function EspaceClientPage() {
       prenom: data.utilisateur.prenom,
       nomEnseigne: data.utilisateur.nomEnseigne,
       paiementConfirme: data.utilisateur.paiementConfirme,
+      descriptionProjet: data.utilisateur.descriptionProjet ?? null,
     },
     projet: data.projet
       ? {

@@ -33,8 +33,8 @@ export default function ContactPage() {
           <span className="eyebrow">Devis gratuit</span>
           <h1>Parlons de votre projet.</h1>
           <p>
-            Quelques infos et c&apos;est parti. On vous répond sous 24h, par message, sans engagement
-            et sans la moindre pression.
+            Remplissez ce formulaire&nbsp;: votre espace client est créé aussitôt, et on revient vers
+            vous sous 24h. Sans engagement, sans la moindre pression.
           </p>
         </div>
       </div>

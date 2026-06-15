@@ -7,6 +7,7 @@ export type DashUser = {
   prenom: string;
   nomEnseigne: string;
   paiementConfirme: boolean;
+  descriptionProjet: string | null;
 };
 export type DashProjet = {
   nomSite: string | null;
@@ -312,6 +313,20 @@ function DashboardTab({
           {user.nomEnseigne} · {frDate(new Date().toISOString())}
         </p>
       </div>
+
+      {!projet && user.descriptionProjet && (
+        <div className="dash-card" style={{ marginBottom: "1.4rem", borderLeft: "3px solid var(--emerald)" }}>
+          <div className="dash-card-h">
+            <span className="dash-card-t">✓ Votre demande a bien été reçue</span>
+          </div>
+          <p style={{ fontSize: ".88rem", color: "var(--muted)", lineHeight: 1.7, whiteSpace: "pre-line" }}>
+            {user.descriptionProjet}
+          </p>
+          <p style={{ fontSize: ".8rem", color: "var(--muted)", marginTop: ".8rem" }}>
+            On revient vers vous sous 24h ouvrées. En attendant, vous pouvez tout suivre ici.
+          </p>
+        </div>
+      )}
 
       {!user.paiementConfirme && <PaiementCard />}
 

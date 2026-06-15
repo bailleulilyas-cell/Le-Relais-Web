@@ -8,6 +8,14 @@ import { sendMail, emailLayout } from "@/lib/mail";
 
 export const runtime = "nodejs";
 
+const esc = (s: string) =>
+  s.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" })[c] as string);
+
+/**
+ * Inscription unifiée = création de compte + demande de devis.
+ * Un prospect crée son espace ET envoie son projet en une seule action.
+ * Champs : prenom, enseigne, email, password (obligatoires) ; ville, secteur, description (devis).
+ */
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -15,6 +23,9 @@ export async function POST(req: Request) {
     const nomEnseigne = String(body.enseigne || "").trim().slice(0, 120);
     const email = String(body.email || "").trim().toLowerCase().slice(0, 190);
     const password = String(body.password || "");
+    const ville = String(body.ville || "").trim().slice(0, 100);
+    const secteur = String(body.secteur || "").trim().slice(0, 120);
+    const description = String(body.description || "").trim().slice(0, 2000);
 
     if (!prenom || !nomEnseigne || !email || password.length < 8) {
       return NextResponse.json({ ok: false, error: "Champs invalides." }, { status: 400 });
@@ -32,10 +43,16 @@ export async function POST(req: Request) {
 
     if (existing.length > 0) {
       return NextResponse.json(
-        { ok: false, error: "Un compte existe déjà avec cet email." },
+        { ok: false, error: "Un compte existe déjà avec cet email.", exists: true },
         { status: 409 }
       );
     }
+
+    // La ville est consignée en tête de la description (pas de colonne dédiée).
+    const descStored = [ville ? `Ville : ${ville}` : "", description]
+      .filter(Boolean)
+      .join("\n\n")
+      .slice(0, 2000);
 
     const hash = await hashPassword(password);
     const result = await db.insert(utilisateurs).values({
@@ -43,20 +60,40 @@ export async function POST(req: Request) {
       nomEnseigne,
       email,
       motDePasse: hash,
+      secteurActivite: secteur || null,
+      descriptionProjet: descStored || null,
     });
     const insertId = Number((result as unknown as [{ insertId: number }])[0].insertId);
 
     await createSession({ userId: insertId, role: "client", prenom });
 
-    // Email de bienvenue — best-effort, ne bloque pas l'inscription.
+    // Notification équipe (nouvelle demande de devis) — best-effort.
+    sendMail({
+      to: "projet@lerelaisweb.com",
+      replyTo: email,
+      subject: `Nouveau devis + compte — ${nomEnseigne}${ville ? ` (${ville})` : ""}`,
+      html: emailLayout(
+        "Nouveau compte client + demande de devis",
+        `<table style="font-size:14px;line-height:1.7;color:#14243B;">
+          <tr><td style="color:#9b958a;padding-right:12px;">Prénom</td><td><b>${esc(prenom)}</b></td></tr>
+          <tr><td style="color:#9b958a;padding-right:12px;">Enseigne</td><td><b>${esc(nomEnseigne)}</b></td></tr>
+          <tr><td style="color:#9b958a;padding-right:12px;">Ville</td><td>${esc(ville) || "—"}</td></tr>
+          <tr><td style="color:#9b958a;padding-right:12px;">Secteur</td><td>${esc(secteur) || "—"}</td></tr>
+          <tr><td style="color:#9b958a;padding-right:12px;">Email</td><td><a href="mailto:${esc(email)}">${esc(email)}</a></td></tr>
+        </table>
+        <p style="font-size:14px;line-height:1.7;color:#5C6470;margin-top:16px;"><b>Projet :</b><br>${esc(description || "(non précisé)").replace(/\n/g, "<br>")}</p>`
+      ),
+    }).catch(() => {});
+
+    // Email de bienvenue au client — best-effort.
     sendMail({
       to: email,
-      subject: "Bienvenue chez Le Relais Web 👋",
+      subject: "Votre demande est bien reçue — Le Relais Web",
       html: emailLayout(
-        `Bienvenue ${prenom} !`,
-        `<p style="font-size:15px;line-height:1.7;color:#5C6470;">Votre espace client est créé. Vous pourrez y suivre l'avancement de votre site, vos factures et vos demandes, en un coup d'œil.</p>
-         <p style="font-size:15px;line-height:1.7;color:#5C6470;">Pour lancer votre projet, dites-nous tout — par message, c'est le plus simple :</p>
-         <p style="text-align:center;margin:24px 0;"><a href="https://wa.me/33695382157" style="background:#0B6E4F;color:#fff;text-decoration:none;padding:13px 26px;border-radius:11px;font-weight:bold;display:inline-block;">Nous écrire sur WhatsApp</a></p>
+        `Merci ${prenom} !`,
+        `<p style="font-size:15px;line-height:1.7;color:#5C6470;">Votre espace client est créé et votre demande nous est bien parvenue. On revient vers vous sous 24h.</p>
+         <p style="font-size:15px;line-height:1.7;color:#5C6470;">Vous pouvez suivre l'avancement, vos factures et vos demandes depuis votre espace, à tout moment.</p>
+         <p style="text-align:center;margin:24px 0;"><a href="https://wa.me/33695382157" style="background:#2563EB;color:#fff;text-decoration:none;padding:13px 26px;border-radius:11px;font-weight:bold;display:inline-block;">Nous écrire sur WhatsApp</a></p>
          <p style="font-size:13px;line-height:1.6;color:#9b958a;">À très vite — l'équipe Le Relais Web, Ermont.</p>`
       ),
     }).catch(() => {});

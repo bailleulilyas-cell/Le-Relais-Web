@@ -15,7 +15,7 @@ export default function ComptePage() {
       <div className="page-hero">
         <div className="container">
           <span className="eyebrow">Espace client</span>
-          <h1>Votre tableau de bord, rien que pour vous.</h1>
+          <h1>Connexion à votre espace.</h1>
           <p>Suivi de projet, factures, interventions et support — disponible jour et nuit.</p>
         </div>
       </div>
