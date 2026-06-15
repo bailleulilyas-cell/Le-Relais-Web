@@ -19,7 +19,7 @@ export default function Navbar() {
     <header className={`nav${scrolled ? " scrolled" : ""}`}>
       <div className="nav-inner">
         <Link href="/" className="nav-logo" aria-label="Le Relais Web — accueil">
-          <img src="/logo-relais-nav.webp" alt="Le Relais Web" width={113} height={49} />
+          <img src="/logo-relais-nav.webp" alt="Le Relais Web" width={90} height={50} />
         </Link>
         <nav className="nav-links" aria-label="Navigation principale">
           <Link href="/services" className={pathname === "/services" ? "active" : undefined}>
