@@ -1,4 +1,4 @@
-import { eq, desc, asc, and } from "drizzle-orm";
+import { eq, desc, asc, and, ne } from "drizzle-orm";
 import { getDb } from "./db";
 import {
   utilisateurs,
@@ -92,16 +92,17 @@ export async function getClientData(userId: number): Promise<ClientData | null> 
         db
           .select()
           .from(demandes)
-          .where(eq(demandes.userId, userId))
+          .where(and(eq(demandes.userId, userId), ne(demandes.typeDemande, "systeme")))
           .orderBy(desc(demandes.createdAt))
           .limit(20),
       ]);
   } else {
     // Même sans projet, on récupère les demandes (le client peut écrire avant la mise en service)
+    // Les notifications "systeme" (internes, destinées à l'admin) ne sont jamais affichées au client.
     demandesRows = await db
       .select()
       .from(demandes)
-      .where(eq(demandes.userId, userId))
+      .where(and(eq(demandes.userId, userId), ne(demandes.typeDemande, "systeme")))
       .orderBy(desc(demandes.createdAt))
       .limit(20);
   }

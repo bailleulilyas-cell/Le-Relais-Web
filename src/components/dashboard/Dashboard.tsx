@@ -944,10 +944,13 @@ function FacturationTab({
           </div>
 
           <div className="dash-paycard">
-            <div className="dash-paycard-l">Total facturé à ce jour</div>
-            <div className="dash-paycard-d">{eur(data.totalPaye)} €</div>
+            <div className="dash-paycard-l">Votre compte</div>
+            <div className="dash-paycard-d">À jour ✓</div>
             <div className="dash-paycard-a">
-              Paiements confirmés — <strong>Tout à jour ✓</strong>
+              {(() => {
+                const n = data.factures.filter((f) => f.statut === "paid").length;
+                return `${n} facture${n > 1 ? "s" : ""} réglée${n > 1 ? "s" : ""} sans incident`;
+              })()}
             </div>
           </div>
 

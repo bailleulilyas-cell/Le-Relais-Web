@@ -85,7 +85,7 @@ export async function POST(req: Request) {
             const nom = `${u[0].prenom} ${u[0].nomFamille ?? ""}`.trim();
             await tx.insert(demandes).values({
               userId: uid,
-              typeDemande: "autre",
+              typeDemande: "systeme",
               description: `Paiement Stripe reçu : ${amount.toFixed(2)} € — ${nom} (${email})${subscriptionId ? ` — Abo: ${subscriptionId}` : ""}`.slice(0, 500),
               statut: "new",
               createdAt: new Date(),
@@ -96,7 +96,7 @@ export async function POST(req: Request) {
           // Client non trouvé → notifier l'admin (user_id 1 par convention)
           await db.insert(demandes).values({
             userId: 1,
-            typeDemande: "autre",
+            typeDemande: "systeme",
             description: `Paiement Stripe de ${email} (${amount.toFixed(2)} €) — client non trouvé en BDD. À traiter manuellement.`.slice(0, 500),
             statut: "new",
             createdAt: new Date(),
@@ -203,7 +203,7 @@ export async function POST(req: Request) {
         if (row.length > 0) {
           await db.insert(demandes).values({
             userId: row[0].userId,
-            typeDemande: "autre",
+            typeDemande: "systeme",
             description: `ÉCHEC paiement mensuel pour ${row[0].prenom} (${row[0].email}) — tentative ${inv.attempt_count ?? "?"}. Vérifier avec le client.`.slice(0, 500),
             statut: "new",
             createdAt: new Date(),
@@ -227,7 +227,7 @@ export async function POST(req: Request) {
         if (row.length > 0) {
           await db.insert(demandes).values({
             userId: row[0].userId,
-            typeDemande: "autre",
+            typeDemande: "systeme",
             description: `Abonnement résilié pour ${row[0].prenom} (${row[0].email}). Projet passé en suspendu.`.slice(0, 500),
             statut: "new",
             createdAt: new Date(),

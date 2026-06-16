@@ -28,6 +28,7 @@ const TYPE_LABEL: Record<string, string> = {
   photo: "Photo",
   bug: "Problème technique",
   autre: "Autre",
+  systeme: "Notification système",
 };
 
 export default async function AdminDashboard() {

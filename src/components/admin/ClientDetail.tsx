@@ -30,6 +30,7 @@ const TYPE_DEMANDE_LABEL: Record<string, string> = {
   photo: "Photo",
   bug: "Problème technique",
   autre: "Autre",
+  systeme: "Notification système",
 };
 const today = () => new Date().toISOString().slice(0, 10);
 

@@ -87,7 +87,9 @@ export const factures = mysqlTable("factures", {
 export const demandes = mysqlTable("demandes", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("user_id").notNull(),
-  typeDemande: mysqlEnum("type_demande", ["modification", "prix", "photo", "bug", "autre"]),
+  // "systeme" = notification interne générée automatiquement (paiement, échec, résiliation
+  // Stripe...) : jamais affichée au client, uniquement visible côté admin.
+  typeDemande: mysqlEnum("type_demande", ["modification", "prix", "photo", "bug", "autre", "systeme"]),
   description: text("description"),
   statut: mysqlEnum("statut", ["new", "in_progress", "done"]).default("new"),
   createdAt: datetime("created_at"),
