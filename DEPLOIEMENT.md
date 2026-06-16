@@ -50,8 +50,10 @@ git push -u origin master
 
 1. vercel.com → **Add New → Project** → importer le dépôt GitHub.
 2. Framework détecté automatiquement : **Next.js** (ne rien changer).
-3. **Environment Variables** : ajouter les 5 variables du tableau de l'étape 0
+3. **Environment Variables** : ajouter **toutes** les variables du tableau de l'étape 0
    (pour les 3 environnements : Production, Preview, Development).
+   > Pour le **premier test Stripe**, mets d'abord les clés de **test** (`sk_test_...` +
+   > `whsec_...` du endpoint de test). Une fois le paiement validé, tu remplaces par les clés **live**.
 4. **Deploy**. Au bout d'~1 min, le site est accessible sur une URL `*.vercel.app`.
 5. Tester cette URL : page d'accueil, `/compte` (connexion), `/admin` (avec le compte admin).
 
@@ -88,18 +90,18 @@ git push -u origin master
 
 ---
 
-## 5. Factures PDF — réglage Stripe (une fois)
+## 5. Factures PDF
 
-Pour que les PDF générés par Stripe soient des factures légalement valides :
+Les factures PDF téléchargeables dans l'espace client sont **générées par le site**
+(`/api/facture/[id]`, avec SIRET + « TVA non applicable, art. 293 B du CGI ») — elles
+fonctionnent dès qu'une facture existe, sans dépendre de Stripe.
 
-dashboard.stripe.com → **Paramètres → Facturation → Modèle de facture** :
-- Nom : **Le Relais Web — Thierry Bailleul**
-- Adresse : Ermont (95120)
-- **SIRET : 101 586 428 00019**
-- Pied de page / mention légale : **« TVA non applicable, art. 293 B du CGI »**
+Optionnel — pour que les **emails de reçu envoyés par Stripe** soient eux aussi propres :
+dashboard.stripe.com → **Paramètres → Facturation → Modèle de facture** : renseigner nom,
+adresse Ermont (95120), **SIRET 101 586 428 00019** et la mention TVA.
 
-Les factures (mise en service + chaque mensualité) sont alors générées et téléchargeables
-automatiquement depuis l'espace client.
+Les factures (mise en service + chaque mensualité) sont créées **automatiquement** par le
+webhook à chaque paiement, et téléchargeables depuis l'espace client et l'admin.
 
 ---
 
@@ -114,7 +116,8 @@ automatiquement depuis l'espace client.
       avant de communiquer le site → vérifier que la facture PDF remonte dans l'espace client
 - [ ] `sitemap.xml` et `robots.txt` accessibles (`/sitemap.xml`, `/robots.txt`)
 - [ ] Soumettre le sitemap dans Google Search Console
-- [ ] Récupérer le **vrai logo PNG haute résolution** (actuellement seul `logo.webp` est en local)
+- [ ] Une demande de devis crée bien un compte + l'envoie en notification (vérifier `SMTP_PASS`)
+- [ ] Brancher la tarification par pack au checkout (550€ Présence / 1 200€ Pro) avant d'encaisser du réel
 
 ---
 
