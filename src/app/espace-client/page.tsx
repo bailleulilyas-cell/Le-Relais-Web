@@ -44,6 +44,7 @@ export default async function EspaceClientPage() {
           scoreSeo: data.projet.scoreSeo,
           scoreDate: isoDate(data.projet.scoreDate),
           hasStripe: !!data.projet.stripeSubscriptionId,
+          urlAdminClient: data.projet.urlAdminClient ?? null,
         }
       : null,
     etapes: data.etapes.map((e) => ({

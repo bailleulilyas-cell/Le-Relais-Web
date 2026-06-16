@@ -35,16 +35,23 @@ function clamp100(n: number): number {
   return Math.min(100, Math.max(0, Math.round(n || 0)));
 }
 
+const PACKS_PRIX = {
+  presence: { setup: "550.00", mensuel: "25.00" },
+  pro: { setup: "1200.00", mensuel: "40.00" },
+} as const;
+
 /* ── Initialiser un client : projet + 5 étapes + 5 documents par défaut ── */
 export async function initClient(
   userId: number,
   urlSite: string,
-  abonnementDebut: string
+  abonnementDebut: string,
+  pack: "presence" | "pro" = "presence"
 ): Promise<ActionResult> {
   if (!(await requireAdmin())) return { ok: false, error: "Non autorisé." };
   const db = getDb();
   const url = urlSite.trim().slice(0, 500);
   const debut = validDate(abonnementDebut);
+  const prix = PACKS_PRIX[pack] ?? PACKS_PRIX.presence;
 
   try {
     await db.transaction(async (tx) => {
@@ -55,6 +62,8 @@ export async function initClient(
         statut: "en_cours",
         progression: 0,
         abonnementDebut: debut,
+        montantSetup: prix.setup,
+        montantMensuel: prix.mensuel,
       });
 
       await tx.delete(etapes).where(eq(etapes.userId, userId));
@@ -95,7 +104,8 @@ export async function updateProjet(
   statut: string,
   progression: number,
   urlSite: string,
-  stripeSubscriptionId: string
+  stripeSubscriptionId: string,
+  urlAdminClient: string = ""
 ): Promise<ActionResult> {
   if (!(await requireAdmin())) return { ok: false, error: "Non autorisé." };
   if (!STATUTS_PROJET.includes(statut as (typeof STATUTS_PROJET)[number]))
@@ -111,6 +121,7 @@ export async function updateProjet(
         progression: clamp100(progression),
         urlSite: urlSite.trim().slice(0, 500),
         stripeSubscriptionId: sub || null,
+        urlAdminClient: urlAdminClient.trim().slice(0, 500) || null,
       })
       .where(eq(projets.userId, userId));
     revalidatePath("/admin", "layout");

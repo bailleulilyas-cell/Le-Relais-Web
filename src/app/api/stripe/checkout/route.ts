@@ -1,20 +1,19 @@
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { getDb } from "@/lib/db";
-import { utilisateurs } from "@/lib/schema";
+import { utilisateurs, projets } from "@/lib/schema";
 import { getSession } from "@/lib/session";
-import {
-  getStripe,
-  appUrl,
-  PRIX_MISE_EN_SERVICE,
-  PRIX_ABONNEMENT_MENSUEL,
-} from "@/lib/stripe";
+import { getStripe, appUrl, PRIX_MISE_EN_SERVICE, PRIX_ABONNEMENT_MENSUEL } from "@/lib/stripe";
 
 export const runtime = "nodejs";
 
 /**
  * Crée une session Stripe Checkout (mode abonnement).
- * Première facture = 400 € mise en service + 25 €/mois.
+ * Le montant facturé est celui défini sur le PROJET du client (montant_setup /
+ * montant_mensuel) — fixé par l'admin à l'initialisation selon le pack choisi
+ * (Présence ou Pro). Jamais de prix fixe en dur : chaque client peut avoir un
+ * montant différent. Si aucun projet n'existe encore, on retombe sur le tarif
+ * Présence par défaut.
  * Accessible par l'admin (pour n'importe quel client) ou par un client (pour son propre compte).
  */
 export async function POST(req: Request) {
@@ -50,6 +49,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "Client introuvable." }, { status: 404 });
     }
 
+    // Tarif réel du projet (fixé par l'admin selon le pack). Fallback Présence si pas encore de projet.
+    const projetRows = await db
+      .select({ montantSetup: projets.montantSetup, montantMensuel: projets.montantMensuel })
+      .from(projets)
+      .where(eq(projets.userId, targetUserId))
+      .limit(1);
+    const setupCents = projetRows[0]?.montantSetup
+      ? Math.round(Number(projetRows[0].montantSetup) * 100)
+      : PRIX_MISE_EN_SERVICE;
+    const mensuelCents = projetRows[0]?.montantMensuel
+      ? Math.round(Number(projetRows[0].montantMensuel) * 100)
+      : PRIX_ABONNEMENT_MENSUEL;
+
     const checkout = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
@@ -59,7 +71,7 @@ export async function POST(req: Request) {
           price_data: {
             currency: "eur",
             product_data: { name: "Frais de mise en service" },
-            unit_amount: PRIX_MISE_EN_SERVICE,
+            unit_amount: setupCents,
           },
           quantity: 1,
         },
@@ -67,7 +79,7 @@ export async function POST(req: Request) {
           price_data: {
             currency: "eur",
             product_data: { name: "Maintenance du site web" },
-            unit_amount: PRIX_ABONNEMENT_MENSUEL,
+            unit_amount: mensuelCents,
             recurring: { interval: "month" },
           },
           quantity: 1,

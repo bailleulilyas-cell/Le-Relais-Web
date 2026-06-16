@@ -11,6 +11,13 @@ export const runtime = "nodejs";
 const esc = (s: string) =>
   s.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" })[c] as string);
 
+const PACKS_VALIDES = ["presence", "pro", "indecis"] as const;
+const PACK_LABEL: Record<string, string> = {
+  presence: "Présence (550 € + 25 €/mois)",
+  pro: "Pro (1 200 € + 40 €/mois)",
+  indecis: "Indécis — à discuter",
+};
+
 /**
  * Inscription unifiée = création de compte + demande de devis.
  * Un prospect crée son espace ET envoie son projet en une seule action.
@@ -26,6 +33,10 @@ export async function POST(req: Request) {
     const ville = String(body.ville || "").trim().slice(0, 100);
     const secteur = String(body.secteur || "").trim().slice(0, 120);
     const description = String(body.description || "").trim().slice(0, 2000);
+    const packRaw = String(body.pack || "");
+    const pack = PACKS_VALIDES.includes(packRaw as (typeof PACKS_VALIDES)[number])
+      ? (packRaw as (typeof PACKS_VALIDES)[number])
+      : null;
 
     if (!prenom || !nomEnseigne || !email || password.length < 8) {
       return NextResponse.json({ ok: false, error: "Champs invalides." }, { status: 400 });
@@ -61,6 +72,7 @@ export async function POST(req: Request) {
       email,
       motDePasse: hash,
       secteurActivite: secteur || null,
+      packSouhaite: pack,
       descriptionProjet: descStored || null,
     });
     const insertId = Number((result as unknown as [{ insertId: number }])[0].insertId);
@@ -79,6 +91,7 @@ export async function POST(req: Request) {
           <tr><td style="color:#9b958a;padding-right:12px;">Enseigne</td><td><b>${esc(nomEnseigne)}</b></td></tr>
           <tr><td style="color:#9b958a;padding-right:12px;">Ville</td><td>${esc(ville) || "—"}</td></tr>
           <tr><td style="color:#9b958a;padding-right:12px;">Secteur</td><td>${esc(secteur) || "—"}</td></tr>
+          <tr><td style="color:#9b958a;padding-right:12px;">Formule souhaitée</td><td><b>${esc(pack ? PACK_LABEL[pack] : "—")}</b></td></tr>
           <tr><td style="color:#9b958a;padding-right:12px;">Email</td><td><a href="mailto:${esc(email)}">${esc(email)}</a></td></tr>
         </table>
         <p style="font-size:14px;line-height:1.7;color:#5C6470;margin-top:16px;"><b>Projet :</b><br>${esc(description || "(non précisé)").replace(/\n/g, "<br>")}</p>`

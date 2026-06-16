@@ -148,6 +148,13 @@ function ProspectView({
   const [showInit, setShowInit] = useState(false);
   const [url, setUrl] = useState("");
   const [debut, setDebut] = useState(today());
+  const [pack, setPack] = useState<"presence" | "pro">(u.packSouhaite === "pro" ? "pro" : "presence");
+
+  const PACK_SOUHAITE_LABEL: Record<string, string> = {
+    presence: "Présence (550 € + 25 €/mois)",
+    pro: "Pro (1 200 € + 40 €/mois)",
+    indecis: "Indécis — à discuter avec le client",
+  };
 
   return (
     <>
@@ -160,6 +167,12 @@ function ProspectView({
             <div className="adm-field-static">
               <span className="adm-field-k">Secteur</span>
               <span className="adm-field-v">{u.secteurActivite}</span>
+            </div>
+          )}
+          {u.packSouhaite && (
+            <div className="adm-field-static">
+              <span className="adm-field-k">Formule souhaitée</span>
+              <span className="adm-field-v adm-pack-badge">{PACK_SOUHAITE_LABEL[u.packSouhaite]}</span>
             </div>
           )}
           {u.descriptionProjet ? (
@@ -179,8 +192,9 @@ function ProspectView({
           {!u.paiementConfirme ? (
             <>
               <p className="adm-muted">
-                Ce client n’a pas encore payé. Confirme quand Stripe valide les <strong>400 €</strong>{" "}
-                de mise en service + l’abonnement <strong>25 €/mois</strong>.
+                Ce client n’a pas encore payé. Confirme quand Stripe valide le paiement de mise en
+                service et l’abonnement
+                {u.packSouhaite ? <> ({PACK_SOUHAITE_LABEL[u.packSouhaite]})</> : null}.
               </p>
               <button
                 className="adm-btn-dark full"
@@ -199,7 +213,7 @@ function ProspectView({
             <>
               <div className="adm-paid-ok">
                 <strong>Paiement confirmé</strong>
-                <span>400 € + 25 €/mois</span>
+                <span>Mise en service + abonnement</span>
               </div>
               <button
                 className="adm-btn-ghost full"
@@ -234,6 +248,18 @@ function ProspectView({
         ) : (
           <div className="adm-init-form">
             <div className="adm-field">
+              <label>Formule facturée</label>
+              <select value={pack} onChange={(e) => setPack(e.target.value as "presence" | "pro")}>
+                <option value="presence">Présence — 550 € + 25 €/mois</option>
+                <option value="pro">Pro — 1 200 € + 40 €/mois</option>
+              </select>
+              {u.packSouhaite && (
+                <p className="adm-hint" style={{ marginTop: ".4rem" }}>
+                  Le client a indiqué vouloir : {PACK_SOUHAITE_LABEL[u.packSouhaite]}
+                </p>
+              )}
+            </div>
+            <div className="adm-field">
               <label>URL du site</label>
               <input
                 type="text"
@@ -250,7 +276,7 @@ function ProspectView({
               className="adm-btn-dark"
               onClick={() =>
                 startTransition(async () => {
-                  const r = await initClient(u.id, url, debut);
+                  const r = await initClient(u.id, url, debut, pack);
                   r.ok ? showToast("Client initialisé !") : showToast(r.error || "Erreur.", false);
                 })
               }
@@ -339,16 +365,23 @@ function ProjetCard({
   const [url, setUrl] = useState(projet.urlSite ?? "");
   const [debut] = useState(projet.abonnementDebut ?? "");
   const [stripe, setStripe] = useState(projet.stripeSubscriptionId ?? "");
+  const [urlAdmin, setUrlAdmin] = useState(projet.urlAdminClient ?? "");
+  const isPro = Number(projet.montantMensuel) >= 40;
 
   return (
     <div className="adm-card">
       <div className="adm-card-h">
-        <span className="adm-card-t">Projet — statut & abonnement</span>
+        <span className="adm-card-t">
+          Projet — statut & abonnement
+          <span className="adm-pack-badge" style={{ marginLeft: ".6rem" }}>
+            {isPro ? "Pack Pro" : "Pack Présence"} — {projet.montantSetup} € + {projet.montantMensuel} €/mois
+          </span>
+        </span>
         <button
           className="adm-btn-dark sm"
           onClick={() =>
             startTransition(async () => {
-              const r = await updateProjet(userId, statut, projet.progression ?? 0, url, stripe);
+              const r = await updateProjet(userId, statut, projet.progression ?? 0, url, stripe, urlAdmin);
               r.ok ? showToast("Projet mis à jour.") : showToast(r.error || "Erreur.", false);
             })
           }
@@ -375,6 +408,20 @@ function ProjetCard({
               placeholder="sub_xxxxxxxx"
             />
           </div>
+          {isPro && (
+            <div className="adm-field">
+              <label>Lien de l’espace d’administration du client (Pack Pro)</label>
+              <input
+                type="text"
+                value={urlAdmin}
+                onChange={(e) => setUrlAdmin(e.target.value)}
+                placeholder="https://exemple.com/admin"
+              />
+              <p className="adm-hint" style={{ marginTop: ".3rem" }}>
+                Apparaît comme bouton « Gérer mon site » dans son espace client.
+              </p>
+            </div>
+          )}
         </div>
         <div>
           <div className="adm-field">

@@ -35,6 +35,7 @@ export default function DevisForm() {
       enseigne: String(f.get("enseigne") || ""),
       ville: String(f.get("ville") || ""),
       secteur: String(f.get("secteur") || ""),
+      pack: String(f.get("pack") || ""),
       email: String(f.get("email") || ""),
       password: String(f.get("password") || ""),
       description: String(f.get("description") || ""),
@@ -88,6 +89,15 @@ export default function DevisForm() {
               ))}
             </select>
           </div>
+        </div>
+        <div className="field">
+          <label htmlFor="pack">Quelle formule vous intéresse&nbsp;?</label>
+          <select id="pack" name="pack" required defaultValue="">
+            <option value="" disabled>Choisissez une option</option>
+            <option value="presence">Présence — 550 € puis 25 €/mois (on s'occupe de tout)</option>
+            <option value="pro">Pro — 1 200 € puis 40 €/mois (vous gérez vous-même)</option>
+            <option value="indecis">Je ne sais pas encore, on en discute</option>
+          </select>
         </div>
         <div className="field">
           <label htmlFor="email">Votre email</label>

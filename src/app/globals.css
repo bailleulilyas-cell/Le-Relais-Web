@@ -666,6 +666,8 @@ h3{font-size:1.25rem;}
 /* Cards */
 .adm-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;padding:1.5rem;margin-bottom:1.2rem;}
 .adm-card-systeme{background:var(--color-bg);border-style:dashed;}
+.adm-pack-badge{display:inline-flex;align-items:center;font-family:var(--font-body);font-size:.72rem;font-weight:700;color:var(--color-accent);background:rgba(37,99,235,.08);padding:.25rem .6rem;border-radius:7px;}
+.dash-manage-btn{justify-content:center;width:100%;margin-bottom:1.2rem;}
 .adm-card-h{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin-bottom:1.1rem;}
 .adm-card-t{font-family:var(--font-display);font-weight:600;font-size:1rem;color:var(--color-ink);}
 .adm-card-t.danger{color:#B91C1C;}

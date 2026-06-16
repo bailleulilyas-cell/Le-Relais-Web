@@ -19,6 +19,9 @@ export const utilisateurs = mysqlTable("utilisateurs", {
   email: varchar("email", { length: 190 }).notNull().unique(),
   motDePasse: varchar("mot_de_passe", { length: 255 }).notNull(),
   secteurActivite: varchar("secteur_activite", { length: 120 }),
+  // Formule souhaitée par le prospect à l'inscription (indicatif — le prix réel
+  // facturé est celui défini sur le projet par l'admin à l'initialisation).
+  packSouhaite: mysqlEnum("pack_souhaite", ["presence", "pro", "indecis"]),
   descriptionProjet: text("description_projet"),
   role: mysqlEnum("role", ["client", "admin"]).default("client").notNull(),
   paiementConfirme: boolean("paiement_confirme").default(false).notNull(),
@@ -32,6 +35,9 @@ export const projets = mysqlTable("projets", {
   userId: int("user_id").notNull(),
   nomSite: varchar("nom_site", { length: 255 }),
   urlSite: varchar("url_site", { length: 255 }),
+  // Pack Pro uniquement : lien vers l'espace d'administration sur-mesure du client
+  // (où il gère lui-même son contenu). Vide pour le Pack Présence.
+  urlAdminClient: varchar("url_admin_client", { length: 500 }),
   statut: mysqlEnum("statut", ["en_cours", "en_ligne", "suspendu"]).default("en_cours"),
   progression: int("progression").default(0),
   abonnementDebut: date("abonnement_debut", { mode: "string" }),

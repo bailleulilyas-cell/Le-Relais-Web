@@ -21,6 +21,7 @@ export type DashProjet = {
   scoreSeo: number | null;
   scoreDate: string | null;
   hasStripe: boolean;
+  urlAdminClient: string | null;
 } | null;
 export type DashEtape = { nom: string; progression: number; statutTexte: string };
 export type DashDocument = { nom: string; icone: string; statut: "missing" | "pending" | "ok" };
@@ -360,6 +361,17 @@ function DashboardTab({
               tone="ok"
             />
           </div>
+
+          {projet.urlAdminClient && (
+            <a
+              href={projet.urlAdminClient}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary dash-manage-btn"
+            >
+              Gérer mon site →
+            </a>
+          )}
 
           {/* Bandeau statut technique */}
           <div className="dash-statusbar">
