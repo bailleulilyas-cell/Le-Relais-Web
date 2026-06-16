@@ -819,7 +819,7 @@ function FacturesCard({
   );
 }
 
-/* ── Demandes support ── */
+/* ── Demandes support + notifications système (séparées) ── */
 function DemandesCard({
   demandes,
   showToast,
@@ -829,38 +829,68 @@ function DemandesCard({
   showToast: ToastFn;
   startTransition: StartT;
 }) {
+  const vraiesDemandes = demandes.filter((d) => d.typeDemande !== "systeme");
+  const notifsSysteme = demandes.filter((d) => d.typeDemande === "systeme");
+
+  const statusSelect = (d: ClientDetailData["demandes"][number]) => (
+    <select
+      className={`adm-dem-select ${d.statut}`}
+      defaultValue={d.statut}
+      onChange={(e) =>
+        startTransition(async () => {
+          const r = await updateDemande(d.id, e.target.value);
+          r.ok ? showToast("Statut mis à jour.") : showToast(r.error || "Erreur.", false);
+        })
+      }
+    >
+      <option value="new">🔴 Nouveau</option>
+      <option value="in_progress">🟡 En cours</option>
+      <option value="done">🟢 Traité</option>
+    </select>
+  );
+
   return (
-    <div className="adm-card">
-      <div className="adm-card-h">
-        <span className="adm-card-t">Demandes support du client</span>
-      </div>
-      {demandes.length === 0 ? (
-        <p className="adm-empty-mini">Aucune demande pour ce client.</p>
-      ) : (
-        demandes.map((d) => (
-          <div className="adm-cdem" key={d.id}>
-            <div className="adm-cdem-meta">
-              {TYPE_DEMANDE_LABEL[d.typeDemande] ?? d.typeDemande} ·{" "}
-              {new Date(d.createdAt).toLocaleDateString("fr-FR")}
+    <>
+      <div className="adm-card">
+        <div className="adm-card-h">
+          <span className="adm-card-t">Demandes support du client</span>
+        </div>
+        {vraiesDemandes.length === 0 ? (
+          <p className="adm-empty-mini">Aucune demande pour ce client.</p>
+        ) : (
+          vraiesDemandes.map((d) => (
+            <div className="adm-cdem" key={d.id}>
+              <div className="adm-cdem-meta">
+                {TYPE_DEMANDE_LABEL[d.typeDemande] ?? d.typeDemande} ·{" "}
+                {new Date(d.createdAt).toLocaleDateString("fr-FR")}
+              </div>
+              <div className="adm-cdem-desc">{d.description}</div>
+              {statusSelect(d)}
             </div>
-            <div className="adm-cdem-desc">{d.description}</div>
-            <select
-              className={`adm-dem-select ${d.statut}`}
-              defaultValue={d.statut}
-              onChange={(e) =>
-                startTransition(async () => {
-                  const r = await updateDemande(d.id, e.target.value);
-                  r.ok ? showToast("Statut mis à jour.") : showToast(r.error || "Erreur.", false);
-                })
-              }
-            >
-              <option value="new">🔴 Nouveau</option>
-              <option value="in_progress">🟡 En cours</option>
-              <option value="done">🟢 Traité</option>
-            </select>
+          ))
+        )}
+      </div>
+
+      {notifsSysteme.length > 0 && (
+        <div className="adm-card adm-card-systeme">
+          <div className="adm-card-h">
+            <span className="adm-card-t">Activité automatique (Stripe)</span>
           </div>
-        ))
+          <p className="adm-muted" style={{ marginBottom: "1rem" }}>
+            Notifications générées automatiquement (paiements, échecs, résiliations) — invisibles
+            pour le client.
+          </p>
+          {notifsSysteme.map((d) => (
+            <div className="adm-cdem" key={d.id}>
+              <div className="adm-cdem-meta">
+                {new Date(d.createdAt).toLocaleDateString("fr-FR")}
+              </div>
+              <div className="adm-cdem-desc">{d.description}</div>
+              {statusSelect(d)}
+            </div>
+          ))}
+        </div>
       )}
-    </div>
+    </>
   );
 }
