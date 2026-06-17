@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Horaires, adresse et formulaire de contact d'Istanbul Grill. Exemple de page contact restaurant par Le Relais Web, création site web Ermont.">
-  <link rel="icon" type="image/png" href="/logo.webp">
+  <link rel="icon" type="image/png" href="/icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="canonical" href="https://www.lerelaisweb.com/demos/demo-kebab-contact.html">
   <meta property="og:title" content="Démo Kebab — Contact | Le Relais Web">
@@ -267,6 +267,24 @@
     .ftxt{resize:vertical;min-height:100px;line-height:1.7}
     .frow2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 
+    /* Panier multi-produits */
+    .mpick{display:flex;flex-direction:column;gap:.45rem}
+    .mp-group{font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:.95rem 0 .15rem}
+    .mp-group:first-child{margin-top:0}
+    .mp-item{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#15100D;border:1px solid #2a1f17;border-radius:10px;padding:.65rem .8rem;transition:border-color .2s,background .2s}
+    .mp-item.active{border-color:var(--gold);background:#1d1510;box-shadow:0 4px 18px rgba(212,162,76,.12)}
+    .mp-info{display:flex;flex-direction:column;gap:.12rem;min-width:0}
+    .mp-name{font-size:.95rem;color:var(--cream);font-weight:500}
+    .mp-price{font-size:.8rem;color:var(--gold)}
+    .mp-qty{display:flex;align-items:center;gap:.25rem;flex-shrink:0}
+    .qbtn{width:40px;height:40px;border-radius:9px;border:1px solid var(--bdr);background:#0E0C10;color:var(--cream);font-size:1.3rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s,color .2s}
+    .qbtn:hover{border-color:var(--gold);color:var(--gold);background:#15100D}
+    .qval{min-width:24px;text-align:center;font-size:1.05rem;font-weight:700;color:var(--cream)}
+    .cart-bar{display:flex;align-items:center;justify-content:space-between;margin-top:1.1rem;padding:.85rem 1.1rem;background:linear-gradient(90deg,var(--red),var(--red2));border-radius:10px;color:#fff;border:1px solid rgba(212,162,76,.3);transition:box-shadow .25s}
+    .cart-bar.full{box-shadow:0 8px 26px rgba(196,40,24,.4)}
+    .cart-count{font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.9}
+    .cart-total{font-size:1.35rem;font-weight:700}
+
     .sbtn{
       display:block;width:100%;
       background:var(--red);color:#fff;
@@ -457,24 +475,24 @@
             <input type="text" class="finp" id="f-addr" placeholder="Numéro, rue, ville" autocomplete="street-address">
           </div>
           <div class="field">
-            <label class="flbl" for="f-cmd">Formule ou plat</label>
-            <select class="fsel" id="f-cmd">
-              <option value="">Choisissez une formule ou un plat…</option>
-              <optgroup label="— Formules">
-                <option>Formule Solo — 11,50€</option>
-                <option>Formule Duo — 22,00€</option>
-                <option>Formule Famille — 42,00€</option>
-              </optgroup>
-              <optgroup label="— À la carte">
-                <option>Kebab Maison — 7,50€</option>
-                <option>Kebab Harissa — 8,00€</option>
-                <option>Tacos Triple Viande — 9,00€</option>
-                <option>Assiette Mixte Royale — 13,50€</option>
-                <option>Wrap Falafel — 6,50€</option>
-                <option>Assiette Poulet Grillé — 11,00€</option>
-              </optgroup>
-              <option>Commande personnalisée (préciser ci-dessous)</option>
-            </select>
+            <label class="flbl">Votre commande — choisissez vos plats</label>
+            <div class="mpick" id="menuPick">
+              <div class="mp-group">Formules</div>
+              <div class="mp-item" data-name="Formule Solo" data-price="11.50"><div class="mp-info"><span class="mp-name">Formule Solo</span><span class="mp-price">11,50 €</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+              <div class="mp-item" data-name="Formule Duo" data-price="22.00"><div class="mp-info"><span class="mp-name">Formule Duo</span><span class="mp-price">22,00 €</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+              <div class="mp-item" data-name="Formule Famille" data-price="42.00"><div class="mp-info"><span class="mp-name">Formule Famille</span><span class="mp-price">42,00 €</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+              <div class="mp-group">À la carte</div>
+              <div class="mp-item" data-name="Kebab Maison" data-price="7.50"><div class="mp-info"><span class="mp-name">Kebab Maison</span><span class="mp-price">7,50 €</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+              <div class="mp-item" data-name="Kebab Harissa" data-price="8.00"><div class="mp-info"><span class="mp-name">Kebab Harissa</span><span class="mp-price">8,00 €</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+              <div class="mp-item" data-name="Tacos Triple Viande" data-price="9.00"><div class="mp-info"><span class="mp-name">Tacos Triple Viande</span><span class="mp-price">9,00 €</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+              <div class="mp-item" data-name="Assiette Mixte Royale" data-price="13.50"><div class="mp-info"><span class="mp-name">Assiette Mixte Royale</span><span class="mp-price">13,50 €</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+              <div class="mp-item" data-name="Wrap Falafel" data-price="6.50"><div class="mp-info"><span class="mp-name">Wrap Falafel</span><span class="mp-price">6,50 €</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+              <div class="mp-item" data-name="Assiette Poulet Grillé" data-price="11.00"><div class="mp-info"><span class="mp-name">Assiette Poulet Grillé</span><span class="mp-price">11,00 €</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+            </div>
+            <div class="cart-bar" id="cartBar">
+              <span class="cart-count" id="cartCount">0 article</span>
+              <span class="cart-total" id="cartTotal">0,00 €</span>
+            </div>
           </div>
           <div class="field">
             <label class="flbl" for="f-note">Précisions (optionnel)</label>
@@ -561,6 +579,36 @@
   });
 })();
 
+/* --- PANIER MULTI-PRODUITS --- */
+var menuCart = { count: 0, total: 0, items: [] };
+(function() {
+  var pick = document.getElementById('menuPick');
+  if (!pick) return;
+  function fmt(n) { return n.toFixed(2).replace('.', ',') + ' €'; }
+  function update() {
+    var total = 0, count = 0, items = [];
+    pick.querySelectorAll('.mp-item').forEach(function(it) {
+      var q = parseInt(it.querySelector('.qval').textContent, 10) || 0;
+      it.classList.toggle('active', q > 0);
+      if (q > 0) { total += q * parseFloat(it.dataset.price); count += q; items.push(q + '× ' + it.dataset.name); }
+    });
+    menuCart = { count: count, total: total, items: items };
+    document.getElementById('cartTotal').textContent = fmt(total);
+    document.getElementById('cartCount').textContent = count + (count > 1 ? ' articles' : ' article');
+    document.getElementById('cartBar').classList.toggle('full', count > 0);
+  }
+  pick.addEventListener('click', function(e) {
+    var b = e.target.closest('.qbtn');
+    if (!b) return;
+    var qv = b.parentNode.querySelector('.qval');
+    var q = (parseInt(qv.textContent, 10) || 0) + parseInt(b.dataset.d, 10);
+    if (q < 0) q = 0; if (q > 20) q = 20;
+    qv.textContent = q;
+    update();
+  });
+  update();
+})();
+
 function handleSubmit() {
   var p = document.getElementById('f-prenom').value.trim();
   var t = document.getElementById('f-tel').value.trim();
@@ -581,8 +629,19 @@ function handleSubmit() {
     }
   });
   if (hasError) return;
+  if (!menuCart.count) {
+    var cb = document.getElementById('cartBar');
+    cb.style.animation = 'shake .35s ease';
+    setTimeout(function() { cb.style.animation = ''; }, 450);
+    return;
+  }
   var wrap = document.getElementById('formWrap');
   var conf = document.getElementById('confirmState');
+  var csub = conf.querySelector('.csub');
+  if (csub) {
+    csub.textContent = menuCart.items.join(' · ') + ' — Total ' +
+      menuCart.total.toFixed(2).replace('.', ',') + ' €. Un SMS de confirmation vous sera envoyé sous 5 minutes.';
+  }
   wrap.style.cssText = 'opacity:0;transform:scale(.97);transition:opacity .3s,transform .3s';
   setTimeout(function() {
     wrap.style.display = 'none';

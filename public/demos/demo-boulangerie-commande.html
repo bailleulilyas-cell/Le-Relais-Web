@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Commandez vos pains et viennoiseries en ligne. Démo de formulaire de commande par Le Relais Web, création site artisan Ermont.">
-  <link rel="icon" type="image/png" href="/logo.webp">
+  <link rel="icon" type="image/png" href="/icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="canonical" href="https://www.lerelaisweb.com/demos/demo-boulangerie-commande.html">
   <meta property="og:title" content="Démo Boulangerie — Commande | Le Relais Web">
@@ -132,6 +132,25 @@
     .form-input::placeholder{color:rgba(122,101,82,.35)}
     .form-select{width:100%;background:transparent;border:none;border-bottom:1.5px solid var(--creme3);padding:.8rem 0;font-family:'Crimson Pro',serif;font-size:1.12rem;color:var(--brun);outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;transition:border-color .25s;min-height:48px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath d='M1 1l6 7 6-7' stroke='%239E8370' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .2rem center}
     .form-select:focus{border-color:var(--or)}
+
+    /* Panier multi-produits */
+    .mpick{display:flex;flex-direction:column;gap:.4rem}
+    .mp-group{font-family:'Jost',sans-serif;font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--ocre2);margin:.95rem 0 .15rem}
+    .mp-group:first-child{margin-top:0}
+    .mp-item{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:var(--fond-card);border:1px solid var(--creme3);border-radius:12px;padding:.55rem .85rem;transition:border-color .2s,box-shadow .2s}
+    .mp-item.active{border-color:var(--or);box-shadow:0 6px 18px rgba(196,154,74,.18)}
+    .mp-info{display:flex;flex-direction:column;gap:.05rem;min-width:0}
+    .mp-name{font-family:'Cormorant Garamond',serif;font-size:1.22rem;font-weight:600;color:var(--brun);line-height:1.1}
+    .mp-price{font-family:'Jost',sans-serif;font-size:.68rem;color:var(--ocre2);letter-spacing:.03em}
+    .mp-qty{display:flex;align-items:center;gap:.3rem;flex-shrink:0}
+    .qbtn{width:40px;height:40px;border-radius:10px;border:1.5px solid var(--creme3);background:var(--creme);color:var(--brun);font-size:1.3rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s,background .2s}
+    .qbtn:hover{border-color:var(--or);color:var(--ocre2);background:#fff}
+    .qval{min-width:24px;text-align:center;font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--brun)}
+    .cart-bar{display:flex;align-items:center;justify-content:space-between;margin-top:1.25rem;padding:.8rem 1.15rem;background:var(--brun);color:var(--creme);border-radius:12px;transition:box-shadow .25s,outline-color .2s;outline:2px solid transparent;outline-offset:2px}
+    .cart-bar.full{box-shadow:0 8px 24px rgba(46,26,14,.28)}
+    .cart-bar.warn{outline-color:var(--ocre)}
+    .cart-count{font-family:'Jost',sans-serif;font-size:.62rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;opacity:.82}
+    .cart-total{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:600;color:var(--or)}
     .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:1.65rem}
 
     /* Bouton submit */
@@ -305,28 +324,26 @@
       </div>
 
       <div class="form-row">
-        <label class="form-label" for="cmd-produit">Produit principal</label>
-        <select id="cmd-produit" class="form-select">
-          <option value="">Choisir un produit...</option>
-          <optgroup label="— Pains">
-            <option>Baguette Tradition × 1 — 1,20 €</option>
-            <option>Baguette Tradition × 2 — 2,40 €</option>
-            <option>Pain de Campagne (500g) — 3,80 €</option>
-            <option>Pain de Seigle — 4,50 €</option>
-            <option>Pain aux Céréales — 4,20 €</option>
-          </optgroup>
-          <optgroup label="— Viennoiseries">
-            <option>Croissant × 4 — 6,00 €</option>
-            <option>Pain au Chocolat × 4 — 6,40 €</option>
-            <option>Chausson aux Pommes × 2 — 3,60 €</option>
-          </optgroup>
-          <optgroup label="— Pâtisseries">
-            <option>Tarte aux Pommes (part) — 3,80 €</option>
-            <option>Éclair au Chocolat — 2,80 €</option>
-            <option>Millefeuille Vanille — 3,50 €</option>
-          </optgroup>
-          <option value="custom">Autre / Commande spéciale</option>
-        </select>
+        <label class="form-label">Ma commande — ajoutez vos produits</label>
+        <div class="mpick" id="menuPick">
+          <div class="mp-group">Pains</div>
+          <div class="mp-item" data-name="Baguette Tradition" data-price="1.20"><div class="mp-info"><span class="mp-name">Baguette Tradition</span><span class="mp-price">1,20 € / pièce</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+          <div class="mp-item" data-name="Pain de Campagne" data-price="3.80"><div class="mp-info"><span class="mp-name">Pain de Campagne</span><span class="mp-price">3,80 € / pièce</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+          <div class="mp-item" data-name="Pain de Seigle" data-price="4.50"><div class="mp-info"><span class="mp-name">Pain de Seigle</span><span class="mp-price">4,50 € / pièce</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+          <div class="mp-item" data-name="Pain aux Céréales" data-price="4.20"><div class="mp-info"><span class="mp-name">Pain aux Céréales</span><span class="mp-price">4,20 € / pièce</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+          <div class="mp-group">Viennoiseries</div>
+          <div class="mp-item" data-name="Croissant" data-price="1.50"><div class="mp-info"><span class="mp-name">Croissant Grand Beurre</span><span class="mp-price">1,50 € / pièce</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+          <div class="mp-item" data-name="Pain au Chocolat" data-price="1.60"><div class="mp-info"><span class="mp-name">Pain au Chocolat</span><span class="mp-price">1,60 € / pièce</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+          <div class="mp-item" data-name="Chausson aux Pommes" data-price="1.80"><div class="mp-info"><span class="mp-name">Chausson aux Pommes</span><span class="mp-price">1,80 € / pièce</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+          <div class="mp-group">Pâtisseries</div>
+          <div class="mp-item" data-name="Tarte aux Pommes" data-price="3.80"><div class="mp-info"><span class="mp-name">Tarte aux Pommes (part)</span><span class="mp-price">3,80 € / part</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+          <div class="mp-item" data-name="Éclair au Chocolat" data-price="2.80"><div class="mp-info"><span class="mp-name">Éclair au Chocolat</span><span class="mp-price">2,80 € / pièce</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+          <div class="mp-item" data-name="Millefeuille Vanille" data-price="3.50"><div class="mp-info"><span class="mp-name">Millefeuille Vanille</span><span class="mp-price">3,50 € / pièce</span></div><div class="mp-qty"><button type="button" class="qbtn" data-d="-1" aria-label="Retirer">−</button><span class="qval">0</span><button type="button" class="qbtn" data-d="1" aria-label="Ajouter">+</button></div></div>
+        </div>
+        <div class="cart-bar" id="cartBar">
+          <span class="cart-count" id="cartCount">Panier vide</span>
+          <span class="cart-total" id="cartTotal">0,00 €</span>
+        </div>
       </div>
 
       <div class="form-row">
@@ -409,10 +426,52 @@
     }
   });
 
+  // Panier multi-produits
+  var menuCart = { count: 0, total: 0, items: [] };
+  function fmtEur(n){ return n.toFixed(2).replace('.', ',') + ' €'; }
+  (function(){
+    var pick = document.getElementById('menuPick');
+    if(!pick) return;
+    function update(){
+      var total = 0, count = 0, items = [];
+      pick.querySelectorAll('.mp-item').forEach(function(it){
+        var q = parseInt(it.querySelector('.qval').textContent, 10) || 0;
+        it.classList.toggle('active', q > 0);
+        if(q > 0){ total += q * parseFloat(it.dataset.price); count += q; items.push(q + '× ' + it.dataset.name); }
+      });
+      menuCart = { count: count, total: total, items: items };
+      document.getElementById('cartTotal').textContent = fmtEur(total);
+      document.getElementById('cartCount').textContent = count ? (count + (count > 1 ? ' articles' : ' article')) : 'Panier vide';
+      document.getElementById('cartBar').classList.toggle('full', count > 0);
+    }
+    pick.addEventListener('click', function(e){
+      var b = e.target.closest('.qbtn');
+      if(!b) return;
+      var qv = b.parentNode.querySelector('.qval');
+      var q = (parseInt(qv.textContent, 10) || 0) + parseInt(b.dataset.d, 10);
+      if(q < 0) q = 0; if(q > 30) q = 30;
+      qv.textContent = q;
+      update();
+    });
+    update();
+  })();
+
   // Confirmation formulaire
   document.getElementById('btn-submit').onclick = function(){
+    if(!menuCart.count){
+      var cb = document.getElementById('cartBar');
+      cb.classList.add('warn');
+      cb.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      setTimeout(function(){ cb.classList.remove('warn'); }, 1200);
+      return;
+    }
     var fb = document.getElementById('formBox');
     var cf = document.getElementById('confirm');
+    var cp = cf.querySelector('.conf-p');
+    if(cp){
+      cp.innerHTML = '<strong>' + menuCart.items.join(' · ') + '</strong> — Total ' + fmtEur(menuCart.total) +
+        '<br>Vous recevrez une confirmation par SMS.<br>Votre commande sera prête dès 7h demain matin.<br><br><em>À demain, et bonne dégustation !</em>';
+    }
     fb.style.opacity = '0';
     fb.style.transition = 'opacity .3s';
     setTimeout(function(){ fb.style.display = 'none'; cf.classList.add('show'); }, 300);
