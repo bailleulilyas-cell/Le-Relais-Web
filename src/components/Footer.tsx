@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { VILLES } from "@/lib/villes";
 
 const WA =
   "https://wa.me/33695382157?text=Bonjour%2C%20je%20souhaite%20un%20devis%20pour%20mon%20site%20web.";
@@ -47,13 +46,7 @@ export default function Footer() {
         </div>
 
         <p className="footer-zones">
-          Création de sites web à{" "}
-          {VILLES.map((v, i) => (
-            <span key={v.slug}>
-              <Link href={`/creation-site-web/${v.slug}`}>{v.nom}</Link>
-              {i < VILLES.length - 1 ? " · " : ""}
-            </span>
-          ))}
+          Création de sites web à Ermont et dans tout le Val-d&apos;Oise · Île-de-France
         </p>
 
         <div className="footer-bottom">

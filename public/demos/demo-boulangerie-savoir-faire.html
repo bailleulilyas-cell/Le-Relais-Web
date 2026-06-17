@@ -208,6 +208,12 @@
       .sfh-h1{font-size:clamp(1.8rem,8vw,2.8rem)}
       .etapes-grid{grid-template-columns:1fr}
     }
+
+    /* Burger → croix (LRW fix) */
+    .burger span{transition:transform .3s ease,opacity .2s ease}
+    .burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .burger.open span:nth-child(2){opacity:0}
+    .burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
   </style>
 </head>
 <body>
@@ -392,6 +398,16 @@
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mob.classList.contains('open')){mob.classList.remove('open');document.body.style.overflow='';}});
   var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.07});
   document.querySelectorAll('.fade').forEach(function(el){io.observe(el);});
+})();
+</script>
+
+<script>
+(function(){
+  var brgr=document.getElementById('brgr'),mob=document.getElementById('mob');
+  if(!brgr||!mob)return;
+  function sync(){var o=mob.classList.contains('open');brgr.classList.toggle('open',o);brgr.setAttribute('aria-label',o?'Fermer le menu':'Ouvrir le menu');}
+  brgr.onclick=function(){var o=!mob.classList.contains('open');mob.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';sync();};
+  new MutationObserver(sync).observe(mob,{attributes:true,attributeFilter:['class']});
 })();
 </script>
 </body>

@@ -278,6 +278,12 @@
     .retour-bar:hover .r-arrow{transform:translateX(-3px)}
     .retour-bar .r-badge{background:var(--or);color:var(--brun);padding:.15rem .5rem;border-radius:4px;font-size:.6rem}
     @media(max-width:480px){.retour-bar{padding:.55rem .8rem;font-size:.62rem;gap:.4rem}.retour-bar .r-text{max-width:60vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+
+    /* Burger → croix (LRW fix) */
+    .burger span{transition:transform .3s ease,opacity .2s ease}
+    .burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .burger.open span:nth-child(2){opacity:0}
+    .burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
   </style>
 </head>
 <body>
@@ -478,6 +484,16 @@
   }
   var cio=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){countUp(x.target);cio.unobserve(x.target);}});},{threshold:.4});
   document.querySelectorAll('.hstat-n[data-count]').forEach(function(el){cio.observe(el);});
+})();
+</script>
+
+<script>
+(function(){
+  var brgr=document.getElementById('brgr'),mob=document.getElementById('mob');
+  if(!brgr||!mob)return;
+  function sync(){var o=mob.classList.contains('open');brgr.classList.toggle('open',o);brgr.setAttribute('aria-label',o?'Fermer le menu':'Ouvrir le menu');}
+  brgr.onclick=function(){var o=!mob.classList.contains('open');mob.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';sync();};
+  new MutationObserver(sync).observe(mob,{attributes:true,attributeFilter:['class']});
 })();
 </script>
 </body>

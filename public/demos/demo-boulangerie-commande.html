@@ -217,6 +217,12 @@
     @media(max-width:480px){
       .cmd-left::before{font-size:8rem;right:0;bottom:-1rem}
     }
+
+    /* Burger → croix (LRW fix) */
+    .burger span{transition:transform .3s ease,opacity .2s ease}
+    .burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .burger.open span:nth-child(2){opacity:0}
+    .burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
   </style>
 </head>
 <body>
@@ -488,6 +494,16 @@
   } else {
     document.querySelectorAll('.fade').forEach(function(el){ el.classList.add('in'); });
   }
+})();
+</script>
+
+<script>
+(function(){
+  var brgr=document.getElementById('brgr'),mob=document.getElementById('mob');
+  if(!brgr||!mob)return;
+  function sync(){var o=mob.classList.contains('open');brgr.classList.toggle('open',o);brgr.setAttribute('aria-label',o?'Fermer le menu':'Ouvrir le menu');}
+  brgr.onclick=function(){var o=!mob.classList.contains('open');mob.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';sync();};
+  new MutationObserver(sync).observe(mob,{attributes:true,attributeFilter:['class']});
 })();
 </script>
 </body>

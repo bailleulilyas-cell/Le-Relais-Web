@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { VILLES } from "@/lib/villes";
 import { GUIDES } from "@/lib/guides";
 
 const SITE = "https://www.lerelaisweb.com";
@@ -21,11 +20,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/cgv", priority: 0.3, changeFrequency: "yearly" },
     { path: "/politique-confidentialite", priority: 0.3, changeFrequency: "yearly" },
   ];
-
-  // Pages locales (SEO villes)
-  for (const v of VILLES) {
-    pages.push({ path: `/creation-site-web/${v.slug}`, priority: 0.8, changeFrequency: "monthly" });
-  }
 
   // Guides / blog
   for (const g of GUIDES) {

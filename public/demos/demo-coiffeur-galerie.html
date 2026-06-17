@@ -208,6 +208,23 @@
       .ft-bot{flex-direction:column}
       header{top:2rem}
     }
+
+    /* ── Correctifs menu / header (LRW) ── */
+    #nol{z-index:9999}                       /* couvre la barre retour, rien de caché */
+    #nol a{color:rgba(247,242,233,.82)}      /* lisible au toucher (pas de hover sur mobile) */
+    #nol a:hover{color:var(--creme)}
+    #ncl{border:1px solid rgba(247,242,233,.35);border-radius:6px}
+    /* Header clair quand le haut de page est sombre */
+    body.dark-head .logo{color:var(--creme)}
+    body.dark-head .logo em{color:var(--or)}
+    body.dark-head .burger span{background:var(--creme)}
+    body.dark-head nav a{color:rgba(247,242,233,.75)}
+    body.dark-head nav a:hover,body.dark-head nav a.active{color:var(--creme)}
+    body.dark-head header.scrolled .logo{color:var(--noir)}
+    body.dark-head header.scrolled .logo em{color:var(--bordeaux)}
+    body.dark-head header.scrolled .burger span{background:var(--noir)}
+    body.dark-head header.scrolled nav a{color:var(--gris)}
+    body.dark-head header.scrolled nav a:hover,body.dark-head header.scrolled nav a.active{color:var(--noir)}
   </style>
 </head>
 <body>
