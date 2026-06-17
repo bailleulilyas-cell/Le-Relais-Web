@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Horaires, adresse et formulaire de contact d'Istanbul Grill. Exemple de page contact restaurant par Le Relais Web, création site web Ermont.">
+  <link rel="icon" type="image/png" href="/logo.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://www.lerelaisweb.com/demos/demo-kebab-contact.html">
+  <meta property="og:title" content="Démo Kebab — Contact | Le Relais Web">
+  <meta property="og:description" content="Page contact de la démo kebab. Création de sites restaurants par Le Relais Web, Ermont.">
+  <meta property="og:image" content="https://www.lerelaisweb.com/logo.webp">
+  <meta property="og:url" content="https://www.lerelaisweb.com/demos/demo-kebab-contact.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <title>Contact — Istanbul Grill · Démo kebab | Le Relais Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#08070A;
+      --bg2:#0E0C10;
+      --bg3:#15121A;
+      --red:#C42818;
+      --red2:#A11F12;
+      --gold:#D4A24C;
+      --gold2:#B98935;
+      --cream:#EDE0C8;
+      --muted:rgba(237,224,200,.55);
+      --bdr:rgba(212,162,76,.14);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Outfit',sans-serif;
+      background:var(--bg);
+      color:var(--cream);
+      overflow-x:hidden;
+      background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(196,40,24,.04), transparent 55%),
+        radial-gradient(ellipse at 85% 90%, rgba(212,162,76,.035), transparent 60%),
+        linear-gradient(180deg, #08070A 0%, #0A0809 100%);
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+
+    /* Grain cuir */
+    body::before{
+      content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      opacity:.045;mix-blend-mode:overlay;
+    }
+
+    /* RETOUR BAR */
+    .retour-bar{
+      position:sticky;top:0;left:0;right:0;z-index:9998;
+      display:flex;align-items:center;justify-content:center;gap:.7rem;
+      width:100%;padding:.65rem 1rem;
+      background:linear-gradient(90deg,#08070A 0%,#1a0d09 100%);
+      color:#F4ECE0;
+      font-family:'Outfit',sans-serif;font-size:.7rem;font-weight:600;
+      letter-spacing:.16em;text-transform:uppercase;text-decoration:none;
+      border-bottom:1px solid var(--gold);
+      transition:background .25s;
+    }
+    .retour-bar:hover{background:linear-gradient(90deg,#C42818 0%,#08070A 100%)}
+    .retour-bar .r-arrow{font-size:.95rem;color:var(--gold);transition:transform .2s}
+    .retour-bar:hover .r-arrow{transform:translateX(-3px);color:#F4ECE0}
+    .retour-bar .r-badge{background:var(--gold);color:#08070A;padding:.15rem .5rem;border-radius:4px;font-size:.6rem;letter-spacing:.1em}
+    @media(max-width:480px){
+      .retour-bar{padding:.55rem .8rem;font-size:.6rem;gap:.45rem}
+      .retour-bar .r-text{max-width:58vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    }
+
+    /* HEADER */
+    header{position:sticky;top:2.45rem;left:0;right:0;z-index:200;transition:background .3s, border-color .3s;border-bottom:1px solid transparent}
+    header.scrolled{background:rgba(8,7,10,.94);backdrop-filter:blur(22px);border-bottom-color:var(--bdr)}
+    .hdi{max-width:1380px;margin:0 auto;padding:1.4rem 2.5rem;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase}
+    .logo em{color:var(--gold);font-style:italic;font-weight:500}
+    nav{display:flex;gap:2.5rem;align-items:center}
+    nav a{color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;position:relative;transition:color .25s}
+    nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .35s}
+    nav a:hover,nav a.active{color:var(--cream)}
+    nav a:hover::after,nav a.active::after{width:100%}
+    .ncta{background:var(--red)!important;color:#fff!important;padding:.65rem 1.55rem;border-radius:8px;border:1px solid rgba(212,162,76,.3);transition:background .25s,transform .25s!important}
+    .ncta::after{display:none!important}
+    .ncta:hover{background:var(--red2)!important;transform:translateY(-2px)!important}
+    .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:10px;min-width:44px;min-height:44px;align-items:center;justify-content:center}
+    .burger span{width:22px;height:1.5px;background:var(--cream)}
+
+    /* NAV OVERLAY */
+    #nol{display:none;position:fixed;inset:0;background:var(--bg);z-index:9000;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+    #nol.open{display:flex}
+    #nol a{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5.5vw,3.2rem);font-weight:500;font-style:italic;color:var(--cream);transition:color .25s,transform .3s;min-height:44px;display:inline-flex;align-items:center}
+    #nol a:hover{color:var(--gold);transform:translateX(12px)}
+    #ncl{position:absolute;top:1.5rem;right:1.5rem;background:none;border:1px solid var(--bdr);border-radius:8px;color:var(--cream);font-size:1.4rem;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;line-height:1}
+
+    /* TICKER */
+    .ticker{overflow:hidden;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:1rem 0;background:var(--bg2)}
+    .ttrack{display:flex;width:max-content;animation:tck 38s linear infinite}
+    .titem{white-space:nowrap;padding:0 2.5rem;font-size:.85rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:2rem;font-family:'Playfair Display',serif;font-style:italic}
+    .tdot{color:var(--gold);font-size:.55rem;font-style:normal}
+    @keyframes tck{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* PAGE HERO */
+    .phero{
+      padding:3rem 0 5rem;
+      position:relative;overflow:hidden;
+      border-bottom:1px solid var(--bdr);
+    }
+    .phero-glow{
+      position:absolute;inset:0;
+      background:
+        radial-gradient(ellipse 45% 50% at 80% 50%, rgba(196,40,24,.07), transparent 65%),
+        radial-gradient(ellipse 30% 40% at 10% 80%, rgba(212,162,76,.04), transparent 55%);
+      pointer-events:none;
+    }
+    .phero-watermark{
+      position:absolute;right:-1rem;top:50%;transform:translateY(-50%);
+      font-family:'Playfair Display',serif;
+      font-size:clamp(6rem,15vw,13rem);
+      font-weight:800;font-style:italic;
+      color:rgba(196,40,24,.04);
+      pointer-events:none;user-select:none;
+      line-height:1;white-space:nowrap;
+    }
+    .wrap{max-width:1380px;margin:0 auto;padding:0 2.5rem}
+    .seye{display:inline-flex;align-items:center;gap:.75rem;margin-bottom:1.4rem}
+    .eyln{width:36px;height:1px;background:var(--gold)}
+    .eylb{font-size:.65rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+    .ptit{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2.8rem,7vw,6rem);
+      font-weight:600;line-height:1.05;
+      letter-spacing:-.01em;
+    }
+    .ptit em{font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .psub{font-size:.95rem;color:var(--muted);line-height:1.85;max-width:480px;margin-top:1rem}
+
+    /* REVEAL */
+    .rev{opacity:0;transform:translateY(20px);transition:opacity .8s ease, transform .8s ease}
+    .rev.in{opacity:1;transform:none}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+    /* CONTACT SECTION */
+    .csec{padding:6rem 0 8rem}
+
+    /* Grille infos : 2 colonnes desktop, 1 mobile */
+    .info-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:1.5rem;
+      margin-bottom:4rem;
+    }
+
+    /* Cartes infos */
+    .info-card{
+      background:var(--bg2);
+      border:1px solid var(--bdr);
+      border-radius:8px;
+      padding:2rem 2.25rem;
+      transition:border-color .35s, transform .35s, box-shadow .35s;
+    }
+    .info-card:hover{
+      border-color:rgba(212,162,76,.35);
+      transform:translateY(-3px);
+      box-shadow:0 12px 32px rgba(0,0,0,.4);
+    }
+    .ic-label{
+      font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:.65rem;
+      display:flex;align-items:center;gap:.6rem;
+    }
+    .ic-label::before{content:'';width:22px;height:1px;background:var(--gold)}
+    .ic-val{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(1.05rem,2.5vw,1.35rem);
+      font-weight:600;color:var(--cream);line-height:1.45;
+    }
+    .ic-sub{font-size:.78rem;color:var(--muted);margin-top:.35rem;line-height:1.6}
+
+    /* Horaires */
+    .horaires-block{
+      background:var(--bg2);
+      border:1px solid var(--bdr);
+      border-radius:8px;
+      padding:2rem 2.25rem;
+      margin-bottom:4rem;
+    }
+    .htit{
+      font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:1.5rem;
+      display:flex;align-items:center;gap:.75rem;
+    }
+    .htit::after{content:'';flex:1;height:1px;background:var(--bdr)}
+    .hrow{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:.75rem 0;border-bottom:1px dashed rgba(212,162,76,.12);
+    }
+    .hrow:last-child{border-bottom:none}
+    .hday{font-size:.85rem;color:var(--muted)}
+    .htime{font-size:.85rem;font-weight:700;color:var(--cream)}
+    .htime.open{color:var(--gold)}
+
+    /* Formulaire */
+    .form-section-label{
+      display:flex;align-items:center;gap:.75rem;
+      font-size:.6rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:2.5rem;
+    }
+    .form-section-label::before,.form-section-label::after{content:'';flex:1;height:1px;background:var(--bdr)}
+    .form-section-label::before{max-width:40px}
+
+    .fwrap{
+      background:var(--bg2);
+      border:1px solid var(--bdr);
+      border-radius:8px;
+      overflow:hidden;
+    }
+    .fhead{
+      padding:1.75rem 2.25rem;
+      border-bottom:1px solid var(--bdr);
+      display:flex;align-items:center;gap:1rem;
+    }
+    .fhead-ico{
+      width:48px;height:48px;border-radius:8px;
+      background:rgba(196,40,24,.12);border:1px solid rgba(196,40,24,.2);
+      display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+      flex-shrink:0;
+    }
+    .fhead-txt h3{
+      font-family:'Playfair Display',serif;
+      font-size:1.15rem;font-weight:600;
+    }
+    .fhead-txt p{font-size:.75rem;color:var(--muted);margin-top:.2rem}
+
+    .fbody{padding:2.25rem}
+    .field{margin-bottom:1.5rem}
+    .flbl{
+      display:block;
+      font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+      color:var(--gold);margin-bottom:.65rem;
+    }
+    /* Inputs fond noir cuir, border-bottom uniquement */
+    .finp,.fsel,.ftxt{
+      width:100%;
+      background:#15100D;
+      border:none;
+      border-bottom:1px solid #2a1f17;
+      border-radius:0;
+      padding:.9rem 0;
+      color:var(--cream);
+      font-family:'Outfit',sans-serif;
+      font-size:1rem;       /* 16px — évite zoom iOS */
+      transition:border-color .25s, box-shadow .25s;
+      -webkit-appearance:none;appearance:none;
+    }
+    .finp:focus,.fsel:focus,.ftxt:focus{
+      outline:none;
+      border-bottom:2px solid var(--gold);
+      box-shadow:0 2px 0 -1px rgba(212,162,76,.18);
+    }
+    .finp::placeholder,.ftxt::placeholder{color:rgba(237,224,200,.22)}
+    .fsel{cursor:pointer}
+    .fsel option{background:#15100D;color:var(--cream)}
+    .ftxt{resize:vertical;min-height:100px;line-height:1.7}
+    .frow2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+
+    .sbtn{
+      display:block;width:100%;
+      background:var(--red);color:#fff;
+      border:none;
+      padding:1.1rem 2.5rem;
+      min-height:56px;
+      border-radius:8px;
+      border:1px solid rgba(212,162,76,.25);
+      font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:700;
+      letter-spacing:.16em;text-transform:uppercase;
+      text-align:center;
+      box-shadow:0 4px 24px rgba(196,40,24,.35);
+      transition:background .25s,transform .25s,box-shadow .25s;
+      cursor:pointer;
+    }
+    .sbtn:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 10px 32px rgba(196,40,24,.45)}
+    .sbtn:active{transform:translateY(0)}
+    .fnote{text-align:center;font-size:.7rem;color:var(--muted);margin-top:.9rem;line-height:1.7}
+
+    /* État confirmation */
+    .cstate{display:none;padding:3.5rem 2.25rem;text-align:center}
+    @keyframes bounceIn{0%{transform:scale(0)}80%{transform:scale(1.1)}100%{transform:scale(1)}}
+    .cico{font-size:3.5rem;margin-bottom:1.25rem;animation:bounceIn .5s cubic-bezier(.34,1.56,.64,1)}
+    .ctit{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:600;margin-bottom:.75rem}
+    .ctit em{font-style:italic;background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .csub{font-size:.88rem;color:var(--muted);line-height:1.85;margin-bottom:1.75rem}
+    .ctimer{
+      display:inline-flex;align-items:center;gap:.65rem;
+      background:rgba(196,40,24,.1);border:1px solid rgba(196,40,24,.2);
+      border-radius:8px;padding:.85rem 1.65rem;font-size:.82rem;font-weight:700;
+    }
+    .ctimer span{color:var(--gold)}
+
+    @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+
+    /* FOOTER */
+    footer{background:var(--bg2);border-top:1px solid var(--bdr);padding:5rem 0 2.5rem}
+    .fti{max-width:1380px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+    .ftlogo{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;display:block;margin-bottom:1rem}
+    .ftlogo em{color:var(--gold);font-style:italic;font-weight:500}
+    .ftdesc{font-size:.82rem;color:var(--muted);line-height:1.85}
+    .ftcol h4{font-size:.6rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:1.3rem}
+    .ftcol a{display:block;font-size:.82rem;color:var(--muted);margin-bottom:.7rem;transition:color .25s}
+    .ftcol a:hover{color:var(--cream)}
+    .ftbot{max-width:1380px;margin:0 auto;padding:2rem 2.5rem 0;border-top:1px solid var(--bdr);display:flex;justify-content:space-between;font-size:.7rem;color:rgba(237,224,200,.32);letter-spacing:.06em;flex-wrap:wrap;gap:.5rem}
+
+    /* RESPONSIVE */
+    @media(max-width:1024px){
+      nav{display:none}
+      .burger{display:flex}
+      .fti{grid-template-columns:1fr 1fr;gap:2.5rem}
+    }
+    @media(max-width:768px){
+      .info-grid{grid-template-columns:1fr}
+      .frow2{grid-template-columns:1fr}
+    }
+    @media(max-width:600px){
+      .wrap{padding:0 1.25rem}
+      .hdi{padding:1.2rem 1.25rem}
+      .phero{padding:2.5rem 0 3.5rem}
+      .csec{padding:4rem 0 6rem}
+      .fbody{padding:1.5rem}
+      .fhead{padding:1.25rem 1.5rem}
+      .fti{grid-template-columns:1fr}
+      .ftbot{padding-bottom:3rem}
+      .horaires-block{padding:1.5rem}
+    }
+
+    /* Reduced motion */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+      .rev{opacity:1;transform:none}
+    }
+  </style>
+</head>
+<body>
+
+<a href="/" class="retour-bar">
+  <span class="r-arrow">←</span>
+  <span class="r-text">Retour aux réalisations · Le Relais Web</span>
+  <span class="r-badge">DÉMO</span>
+</a>
+
+<div id="nol">
+  <button id="ncl" aria-label="Fermer le menu">✕</button>
+  <a href="demo-kebab.html">Accueil</a>
+  <a href="demo-kebab-menu.html">Menu</a>
+  <a href="demo-kebab-formules.html">Formules</a>
+  <a href="demo-kebab-livraison.html">Livraison</a>
+  <a href="demo-kebab-contact.html">Contact</a>
+</div>
+
+<header id="hdr">
+  <div class="hdi">
+    <a href="demo-kebab.html" class="logo">Istanbul <em>Grill</em></a>
+    <nav>
+      <a href="demo-kebab.html">Accueil</a>
+      <a href="demo-kebab-menu.html">Menu</a>
+      <a href="demo-kebab-formules.html">Formules</a>
+      <a href="demo-kebab-livraison.html">Livraison</a>
+      <a href="demo-kebab-contact.html" class="active">Contact</a>
+      <a href="demo-kebab-contact.html" class="ncta">Commander →</a>
+    </nav>
+    <button class="burger" id="brgr" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- PAGE HERO -->
+<section class="phero">
+  <div class="phero-glow"></div>
+  <div class="phero-watermark">Commander</div>
+  <div class="wrap">
+    <div class="seye rev"><span class="eyln"></span><span class="eylb">Passer commande</span></div>
+    <h1 class="ptit rev d1">On vous <em>régale</em></h1>
+    <p class="psub rev d2">Remplissez le formulaire et recevez une confirmation SMS sous 5 minutes. Livraison en 28 min sur Pontoise et alentours.</p>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ttrack">
+    <div class="titem">-10% sur votre 1ère commande <span class="tdot">✦</span> Confirmation SMS en 5 min <span class="tdot">✦</span> Livraison 28 min <span class="tdot">✦</span> Paiement à la livraison <span class="tdot">✦</span> 100% Halal certifié <span class="tdot">✦</span> 7j/7 · 11h – 23h <span class="tdot">✦</span></div>
+    <div class="titem">-10% sur votre 1ère commande <span class="tdot">✦</span> Confirmation SMS en 5 min <span class="tdot">✦</span> Livraison 28 min <span class="tdot">✦</span> Paiement à la livraison <span class="tdot">✦</span> 100% Halal certifié <span class="tdot">✦</span> 7j/7 · 11h – 23h <span class="tdot">✦</span></div>
+  </div>
+</div>
+
+<!-- SECTION PRINCIPALE -->
+<section class="csec">
+  <div class="wrap">
+
+    <!-- Infos pratiques : grille 2 cols -->
+    <div class="info-grid">
+      <div class="info-card rev">
+        <div class="ic-label">Téléphone</div>
+        <div class="ic-val"><a href="tel:0130000000" style="color:inherit">01 30 XX XX XX</a></div>
+        <div class="ic-sub">Du lundi au dimanche, 11h – 23h</div>
+      </div>
+      <div class="info-card rev d1">
+        <div class="ic-label">Adresse</div>
+        <div class="ic-val">45 rue de la Gare<br>95300 Pontoise</div>
+        <div class="ic-sub">RER C · Gare de Pontoise, 3 min à pied</div>
+      </div>
+      <div class="info-card rev d2">
+        <div class="ic-label">Livraison</div>
+        <div class="ic-val">28 min · Pontoise &amp; alentours</div>
+        <div class="ic-sub">Livraison offerte dès 20€ de commande</div>
+      </div>
+      <div class="info-card rev d3">
+        <div class="ic-label">Paiement</div>
+        <div class="ic-val">CB ou espèces</div>
+        <div class="ic-sub">Paiement à la livraison uniquement</div>
+      </div>
+    </div>
+
+    <!-- Horaires -->
+    <div class="horaires-block rev">
+      <div class="htit">Horaires d'ouverture</div>
+      <div class="hrow"><span class="hday">Lundi – Vendredi</span><span class="htime open">11h – 23h</span></div>
+      <div class="hrow"><span class="hday">Samedi</span><span class="htime open">11h – 23h30</span></div>
+      <div class="hrow"><span class="hday">Dimanche</span><span class="htime open">12h – 22h30</span></div>
+    </div>
+
+    <!-- Formulaire de commande -->
+    <div class="form-section-label rev">Votre commande en ligne</div>
+
+    <div class="rev d1">
+      <div class="fwrap" id="formWrap">
+        <div class="fhead">
+          <div class="fhead-ico">🛵</div>
+          <div class="fhead-txt">
+            <h3>Passer commande</h3>
+            <p>Réponse par SMS en moins de 5 minutes</p>
+          </div>
+        </div>
+        <div class="fbody">
+          <div class="frow2">
+            <div class="field">
+              <label class="flbl" for="f-prenom">Prénom</label>
+              <input type="text" class="finp" id="f-prenom" placeholder="Votre prénom" autocomplete="given-name">
+            </div>
+            <div class="field">
+              <label class="flbl" for="f-tel">Téléphone</label>
+              <input type="tel" class="finp" id="f-tel" placeholder="06 XX XX XX XX" autocomplete="tel">
+            </div>
+          </div>
+          <div class="field">
+            <label class="flbl" for="f-addr">Adresse de livraison</label>
+            <input type="text" class="finp" id="f-addr" placeholder="Numéro, rue, ville" autocomplete="street-address">
+          </div>
+          <div class="field">
+            <label class="flbl" for="f-cmd">Formule ou plat</label>
+            <select class="fsel" id="f-cmd">
+              <option value="">Choisissez une formule ou un plat…</option>
+              <optgroup label="— Formules">
+                <option>Formule Solo — 11,50€</option>
+                <option>Formule Duo — 22,00€</option>
+                <option>Formule Famille — 42,00€</option>
+              </optgroup>
+              <optgroup label="— À la carte">
+                <option>Kebab Maison — 7,50€</option>
+                <option>Kebab Harissa — 8,00€</option>
+                <option>Tacos Triple Viande — 9,00€</option>
+                <option>Assiette Mixte Royale — 13,50€</option>
+                <option>Wrap Falafel — 6,50€</option>
+                <option>Assiette Poulet Grillé — 11,00€</option>
+              </optgroup>
+              <option>Commande personnalisée (préciser ci-dessous)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="flbl" for="f-note">Précisions (optionnel)</label>
+            <textarea class="ftxt" id="f-note" placeholder="Sauce préférée, supplément, remarques particulières…"></textarea>
+          </div>
+          <button type="button" class="sbtn" onclick="handleSubmit()">🛵 Envoyer ma commande →</button>
+          <p class="fnote">Confirmation par SMS · Paiement à la livraison · Sans engagement</p>
+        </div>
+      </div>
+
+      <!-- État de confirmation -->
+      <div class="fwrap cstate" id="confirmState">
+        <div class="cico">✅</div>
+        <div class="ctit">Commande <em>reçue !</em></div>
+        <p class="csub">Nous avons bien reçu votre commande.<br>Un SMS de confirmation vous sera envoyé sous 5 minutes.</p>
+        <div class="ctimer">🛵 Livraison estimée : <span>28 min</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fti">
+    <div>
+      <a href="demo-kebab.html" class="ftlogo">Istanbul <em>Grill</em></a>
+      <p class="ftdesc">Kebab artisanal à Pontoise (95).<br>Halal, livraison rapide, ouvert 7j/7.</p>
+    </div>
+    <div class="ftcol">
+      <h4>Navigation</h4>
+      <a href="demo-kebab-menu.html">Menu</a>
+      <a href="demo-kebab-formules.html">Formules</a>
+      <a href="demo-kebab-livraison.html">Livraison</a>
+      <a href="demo-kebab-contact.html">Contact</a>
+    </div>
+    <div class="ftcol">
+      <h4>Infos</h4>
+      <a href="tel:0130000000">01 30 XX XX XX</a>
+      <a href="#">45 rue de la Gare, Pontoise</a>
+      <a href="#">Lun–Dim · 11h – 23h</a>
+    </div>
+    <div class="ftcol">
+      <h4>Commander</h4>
+      <a href="demo-kebab-contact.html">Formulaire en ligne</a>
+      <a href="tel:0130000000">Par téléphone</a>
+    </div>
+  </div>
+  <div class="ftbot">
+    <span>© 2026 Istanbul Grill · Pontoise</span>
+    <span>Site réalisé par <a href="https://www.lerelaisweb.com" target="_blank" rel="noopener noreferrer" style="color:rgba(212,162,76,.7);text-decoration:none">Le Relais Web</a></span>
+  </div>
+</footer>
+
+<script>
+(function() {
+  /* --- HEADER SCROLL --- */
+  var hdr = document.getElementById('hdr');
+  window.addEventListener('scroll', function() {
+    if (hdr) hdr.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  /* --- SCROLL REVEAL --- */
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(x) {
+      if (x.isIntersecting) { x.target.classList.add('in'); obs.unobserve(x.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.rev').forEach(function(el) { obs.observe(el); });
+
+  /* --- BURGER MENU --- */
+  var bg = document.getElementById('brgr');
+  var ol = document.getElementById('nol');
+  var cl = document.getElementById('ncl');
+  if (bg) bg.onclick = function() { if (ol) { ol.classList.add('open'); document.body.style.overflow = 'hidden'; } };
+  if (cl) cl.onclick = function() { if (ol) { ol.classList.remove('open'); document.body.style.overflow = ''; } };
+  if (ol) ol.querySelectorAll('a').forEach(function(a) {
+    a.onclick = function() { ol.classList.remove('open'); document.body.style.overflow = ''; };
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && ol && ol.classList.contains('open')) {
+      ol.classList.remove('open'); document.body.style.overflow = '';
+    }
+  });
+})();
+
+function handleSubmit() {
+  var p = document.getElementById('f-prenom').value.trim();
+  var t = document.getElementById('f-tel').value.trim();
+  var a = document.getElementById('f-addr').value.trim();
+  var required = ['f-prenom', 'f-tel', 'f-addr'];
+  var values = { 'f-prenom': p, 'f-tel': t, 'f-addr': a };
+  var hasError = false;
+  required.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el && !values[id]) {
+      hasError = true;
+      el.style.borderBottomColor = 'var(--red)';
+      el.style.animation = 'shake .35s ease';
+      setTimeout(function() {
+        el.style.animation = '';
+        el.style.borderBottomColor = '';
+      }, 450);
+    }
+  });
+  if (hasError) return;
+  var wrap = document.getElementById('formWrap');
+  var conf = document.getElementById('confirmState');
+  wrap.style.cssText = 'opacity:0;transform:scale(.97);transition:opacity .3s,transform .3s';
+  setTimeout(function() {
+    wrap.style.display = 'none';
+    conf.style.display = 'block';
+    conf.style.opacity = '0';
+    conf.style.transition = 'opacity .4s';
+    setTimeout(function() { conf.style.opacity = '1'; }, 50);
+  }, 300);
+}
+</script>
+</body>
+</html>

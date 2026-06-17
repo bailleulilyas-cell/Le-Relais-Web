@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Tarifs et prestations coiffure : coupes, colorations, balayage, soins kératine. Exemple site coiffeur par Le Relais Web, Ermont.">
+  <link rel="icon" type="image/png" href="/logo.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://www.lerelaisweb.com/demos/demo-coiffeur-prestations.html">
+  <meta property="og:title" content="Démo Coiffeur v2 — Prestations | Le Relais Web">
+  <meta property="og:description" content="Page prestations de la démo coiffeur v2. Création de sites artisans par Le Relais Web, Ermont.">
+  <meta property="og:image" content="https://www.lerelaisweb.com/logo.webp">
+  <meta property="og:url" content="https://www.lerelaisweb.com/demos/demo-coiffeur-prestations.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <title>Démo Coiffeur v2 — Prestations | Le Relais Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700;1,9..144,900&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --creme:#F7F2E9;
+      --creme2:#EFE7D8;
+      --ivoire:#FBF8F2;
+      --noir:#0A0908;
+      --encre:#1C1916;
+      --bordeaux:#6B1B28;
+      --bordeaux2:#8C2738;
+      --or:#C4933A;
+      --or2:#A67A2A;
+      --gris:#6B5F52;
+      --bord:rgba(10,9,8,.12);
+      --bord-or:#C4933A;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Syne',sans-serif;background:var(--creme);color:var(--noir);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+
+    body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+      opacity:.7}
+
+    /* BARRE RETOUR STICKY */
+    .retour-bar{
+      position:sticky;top:0;left:0;right:0;z-index:9998;
+      display:flex;align-items:center;justify-content:center;gap:.7rem;
+      width:100%;padding:.65rem 1rem;
+      background:#0D0B09;color:#F7F2E9;
+      font-family:'Syne',sans-serif;font-size:.68rem;font-weight:600;
+      letter-spacing:.18em;text-transform:uppercase;text-decoration:none;
+      border-bottom:1px solid #C4933A;
+      transition:background .25s;
+    }
+    .retour-bar:hover{background:#6B1B28}
+    .retour-bar .r-arrow{font-size:.95rem;transition:transform .2s}
+    .retour-bar:hover .r-arrow{transform:translateX(-3px)}
+    .retour-bar .r-badge{background:#C4933A;color:#0D0B09;padding:.15rem .5rem;font-size:.58rem;letter-spacing:.1em;font-weight:700}
+    @media(max-width:480px){
+      .retour-bar{padding:.55rem .8rem;font-size:.6rem;gap:.5rem}
+      .retour-bar .r-text{max-width:55vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    }
+
+    /* HEADER */
+    header{position:sticky;top:2.35rem;left:0;right:0;z-index:200}
+    .hd{padding:1.4rem 3rem;display:flex;align-items:center;justify-content:space-between;
+      transition:background .35s,backdrop-filter .35s,border-color .35s;border-bottom:1px solid transparent}
+    header.scrolled .hd{background:rgba(247,242,233,.92);backdrop-filter:blur(16px);border-bottom-color:var(--bord)}
+    .logo{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;letter-spacing:.06em;color:var(--noir)}
+    .logo em{font-style:italic;font-weight:300;color:var(--bordeaux)}
+    nav{display:flex;gap:2.5rem;align-items:center}
+    nav a{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gris);
+      position:relative;transition:color .2s}
+    nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--bord-or);transition:width .35s ease-out}
+    nav a:hover,nav a.active{color:var(--noir)}
+    nav a:hover::after,nav a.active::after{width:100%}
+    .nav-rdv{background:var(--bordeaux)!important;color:#fff!important;padding:.6rem 1.3rem;border-radius:2px;
+      font-size:.65rem!important;letter-spacing:.16em;transition:background .2s!important}
+    .nav-rdv:hover{background:var(--bordeaux2)!important}
+    .nav-rdv::after{display:none!important}
+    .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:10px;min-width:44px;min-height:44px;align-items:center;justify-content:center}
+    .burger span{width:22px;height:1.5px;background:var(--noir)}
+
+    /* OVERLAY NAV */
+    #nol{display:none;position:fixed;inset:0;z-index:9000;background:var(--noir);
+      flex-direction:column;justify-content:center;padding:4rem 2rem;gap:0}
+    #nol.open{display:flex}
+    #nol a{font-family:'Fraunces',serif;font-size:clamp(2.4rem,8vw,5rem);font-style:italic;font-weight:300;
+      color:rgba(247,242,233,.18);line-height:1.1;transition:color .25s,padding .3s;border-bottom:1px solid rgba(247,242,233,.06);
+      padding:.4rem 0}
+    #nol a:hover{color:var(--creme);padding-left:1.2rem}
+    #ncl{position:absolute;top:1rem;right:1rem;width:48px;height:48px;background:none;border:none;color:var(--creme);
+      font-size:1.6rem;cursor:pointer;font-family:'Syne',sans-serif;display:flex;align-items:center;justify-content:center}
+
+    /* Filet doré signature */
+    .filet{display:block;width:48px;height:1px;background:var(--bord-or);margin:0 0 1.2rem 0}
+    .num-section{font-family:'Fraunces',serif;font-size:.7rem;font-weight:700;letter-spacing:.32em;
+      text-transform:uppercase;color:var(--bordeaux);margin-bottom:.8rem;display:inline-flex;align-items:center;gap:.7rem}
+    .num-section em{font-style:italic;font-weight:300;color:var(--gris)}
+
+    /* HERO OBLIQUE */
+    .phero{min-height:52vh;background:var(--noir);position:relative;overflow:hidden;display:flex;align-items:flex-end;padding-bottom:5rem;clip-path:polygon(0 0,100% 0,100% 88%,0 100%)}
+    .phero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 20% 60%,rgba(107,27,40,.25),transparent)}
+    .phero-bg-txt{position:absolute;right:-2rem;top:50%;transform:translateY(-50%);font-family:'Fraunces',serif;font-size:clamp(10rem,22vw,20rem);font-weight:900;font-style:italic;color:rgba(255,255,255,.03);pointer-events:none;user-select:none;line-height:1;white-space:nowrap}
+    .phero-inner{position:relative;z-index:1;padding:0 3.5rem;max-width:1400px;width:100%;margin:0 auto}
+    .phero-tag{font-size:.6rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:rgba(196,147,58,.7);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem}
+    .phero-tag::before{content:'';width:32px;height:1px;background:var(--or)}
+    .phero-inner h1{font-family:'Fraunces',serif;font-size:clamp(3rem,7vw,6rem);font-weight:900;color:var(--creme);line-height:.92;letter-spacing:-.02em}
+    .phero-inner h1 em{font-style:italic;font-weight:300;color:rgba(196,147,58,.8)}
+    .phero-sub{font-size:.88rem;color:rgba(247,242,233,.42);line-height:1.8;max-width:420px;margin-top:1.5rem}
+
+    /* GRID PRESTATIONS */
+    .presta-main{padding:5rem 3.5rem 7rem;max-width:1400px;margin:0 auto}
+
+    /* Chaque catégorie */
+    .cat-block{margin-bottom:5rem}
+    .cat-label{display:flex;align-items:center;gap:1.5rem;margin-bottom:2.5rem}
+    .cat-name{font-family:'Fraunces',serif;font-size:3rem;font-weight:900;font-style:italic;color:rgba(10,9,8,.06);line-height:1}
+    .cat-txt{font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--bordeaux)}
+    .cat-line{flex:1;height:1px;background:var(--bord)}
+
+    /* CARDS EN GRILLE ASYMÉTRIQUE */
+    .pcard-grid{display:grid;gap:1px;background:var(--bord)}
+    .pcard-grid.femme{grid-template-columns:1.6fr 1fr 1fr;grid-template-rows:auto auto}
+    .pcard-grid.femme .pcard:nth-child(1){grid-row:span 2}
+    .pcard-grid.simple{grid-template-columns:1fr 1fr}
+
+    .pcard{background:var(--creme);padding:2.5rem;position:relative;overflow:hidden;transition:background .25s;cursor:default}
+    .pcard:hover{background:var(--creme2)}
+    .pcard::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--bordeaux);transition:height .4s}
+    .pcard:hover::before{height:100%}
+    .pcard-num{font-family:'Fraunces',serif;font-size:4rem;font-weight:900;font-style:italic;color:rgba(10,9,8,.05);line-height:1;position:absolute;bottom:.5rem;right:1rem;pointer-events:none;user-select:none}
+    .pcard-cat{font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--or2);margin-bottom:.75rem}
+    .pcard-name{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;line-height:1.05;margin-bottom:1rem;letter-spacing:-.01em}
+    .pcard-grid.femme .pcard:nth-child(1) .pcard-name{font-size:2.4rem}
+    .pcard-desc{font-size:.8rem;color:var(--gris);line-height:1.8;margin-bottom:1.5rem}
+    .pcard-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.5rem}
+    .ptag{font-size:.53rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .5rem;border:1px solid var(--bord);color:var(--gris)}
+    .ptag.hot{border-color:rgba(107,27,40,.3);color:var(--bordeaux);background:rgba(107,27,40,.05)}
+    .pcard-footer{display:flex;align-items:flex-end;justify-content:space-between;margin-top:auto}
+    .pcard-price{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:700;color:var(--noir);letter-spacing:-.02em;line-height:1}
+    .pcard-grid.femme .pcard:nth-child(1) .pcard-price{font-size:3rem}
+    .pcard-dur{font-size:.58rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gris);margin-top:.25rem}
+    .pcard-rdv{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--bordeaux);border-bottom:1px solid var(--bord-or);padding-bottom:.1rem;transition:opacity .2s}
+    .pcard-rdv:hover{opacity:.6}
+
+    /* CITATION */
+    .signature-quote{padding:4rem 3.5rem;background:var(--ivoire);text-align:center;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord)}
+    .sq-inner{max-width:680px;margin:0 auto}
+    .sq-mark{font-family:'Fraunces',serif;font-size:4rem;line-height:.5;color:var(--bord-or);font-style:italic;font-weight:300;display:block;margin-bottom:.5rem}
+    .sq-text{font-family:'Fraunces',serif;font-size:clamp(1.1rem,2.2vw,1.6rem);font-style:italic;font-weight:300;line-height:1.5;color:var(--noir);margin-bottom:1.2rem}
+    .sq-text em{color:var(--bordeaux);font-weight:400}
+    .sq-author{font-size:.6rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gris);display:inline-flex;align-items:center;gap:.8rem}
+    .sq-author::before{content:'';width:28px;height:1px;background:var(--bord-or)}
+
+    /* NOTE STRIP */
+    .note-strip{background:var(--encre);padding:2.5rem 3.5rem;display:flex;align-items:center;gap:2rem;max-width:100%}
+    .ns-ico{font-size:1.2rem;flex-shrink:0;color:var(--or)}
+    .ns-txt{font-size:.82rem;color:rgba(247,242,233,.5);line-height:1.75}
+    .ns-txt strong{color:var(--creme)}
+    .ns-cta{flex-shrink:0;background:var(--bordeaux);color:#fff;padding:.75rem 1.5rem;font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:background .2s;border-radius:2px}
+    .ns-cta:hover{background:var(--bordeaux2)}
+
+    /* FOOTER */
+    footer{background:var(--encre);color:var(--creme);padding:5rem 3.5rem 2.5rem;position:relative;overflow:hidden}
+    footer::before{content:'ÉLISE';position:absolute;right:-2rem;bottom:-3rem;
+      font-family:'Fraunces',serif;font-size:clamp(8rem,18vw,16rem);font-weight:900;font-style:italic;
+      color:rgba(255,255,255,.025);pointer-events:none;user-select:none;line-height:1}
+    .ft-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;
+      gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(247,242,233,.08);position:relative;z-index:1}
+    .ft-logo{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;letter-spacing:.04em;
+      display:block;margin-bottom:1rem;color:var(--creme)}
+    .ft-logo em{font-style:italic;font-weight:300;color:var(--or)}
+    .ft-desc{font-size:.82rem;color:rgba(247,242,233,.45);line-height:1.85}
+    .ft-handmade{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.4rem;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--or);font-weight:700}
+    .ft-handmade::before{content:'';width:24px;height:1px;background:var(--or)}
+    .ft-col h4{font-size:.58rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--or);margin-bottom:1.25rem}
+    .ft-col a{display:block;font-size:.82rem;color:rgba(247,242,233,.5);margin-bottom:.6rem;transition:color .2s}
+    .ft-col a:hover{color:var(--creme)}
+    .ft-bot{max-width:1400px;margin:2rem auto 0;display:flex;justify-content:space-between;
+      font-size:.65rem;color:rgba(247,242,233,.3);flex-wrap:wrap;gap:1rem;position:relative;z-index:1}
+    .ft-bot a{color:var(--or);transition:opacity .2s}.ft-bot a:hover{opacity:.7}
+
+    /* REVEAL */
+    .rev{opacity:0;transform:translateY(28px);transition:opacity .8s ease-out,transform .8s ease-out}
+    .rev.in{opacity:1;transform:none}
+    .d1{transition-delay:.12s}.d2{transition-delay:.24s}
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+    }
+
+    @media(max-width:1100px){
+      .pcard-grid.femme{grid-template-columns:1fr 1fr}
+      .pcard-grid.femme .pcard:nth-child(1){grid-row:span 1}
+      .ft-inner{grid-template-columns:1fr 1fr;gap:2.5rem}
+      header{top:2.1rem}
+    }
+    @media(max-width:760px){
+      header .hd{padding:1.2rem 1.2rem}
+      nav{display:none}.burger{display:flex}
+      .phero{padding-bottom:5rem}
+      .phero-inner{padding:0 1.2rem}
+      .presta-main{padding:3rem 1.2rem 5rem}
+      .note-strip{flex-direction:column;align-items:flex-start;padding:2rem 1.2rem}
+      .pcard-grid.femme,.pcard-grid.simple{grid-template-columns:1fr}
+      .signature-quote{padding:3rem 1.2rem}
+      footer{padding:4rem 1.2rem 2.5rem}
+      .ft-inner{grid-template-columns:1fr;gap:2.5rem}
+      .ft-bot{flex-direction:column}
+      header{top:2rem}
+    }
+    @media(max-width:480px){
+      .phero-inner h1{font-size:clamp(2.4rem,11vw,3.5rem)}
+    }
+  </style>
+</head>
+<body>
+
+<a href="/" class="retour-bar">
+  <span class="r-arrow">←</span>
+  <span class="r-text">Retour aux réalisations · Le Relais Web</span>
+  <span class="r-badge">DÉMO</span>
+</a>
+
+<div id="nol">
+  <button id="ncl" aria-label="Fermer le menu">✕</button>
+  <a href="demo-coiffeur.html">Accueil</a>
+  <a href="demo-coiffeur-prestations.html">Prestations</a>
+  <a href="demo-coiffeur-galerie.html">Galerie</a>
+  <a href="demo-coiffeur-equipe.html">L'équipe</a>
+  <a href="demo-coiffeur-rdv.html">Réserver</a>
+</div>
+
+<header id="hdr">
+  <div class="hd">
+    <a href="demo-coiffeur.html" class="logo">Studio <em>Élise</em></a>
+    <nav>
+      <a href="demo-coiffeur.html">Accueil</a>
+      <a href="demo-coiffeur-prestations.html" class="active">Prestations</a>
+      <a href="demo-coiffeur-galerie.html">Galerie</a>
+      <a href="demo-coiffeur-equipe.html">L'équipe</a>
+      <a href="demo-coiffeur-rdv.html" class="nav-rdv">Réserver →</a>
+    </nav>
+    <button class="burger" id="brgr" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="phero">
+  <div class="phero-bg-txt">Prestations</div>
+  <div class="phero-inner">
+    <div class="phero-tag">Tarifs &amp; services</div>
+    <h1>Nos soins<br><em>sur-mesure</em></h1>
+    <p class="phero-sub">De la coupe à la transformation couleur, chaque prestation est portée par 12 ans d'expertise et des produits professionnels de référence.</p>
+  </div>
+</div>
+
+<div class="presta-main">
+  <!-- FEMME -->
+  <div class="cat-block rev">
+    <div class="cat-label">
+      <div class="cat-name">Femme</div>
+      <span class="cat-txt">4 prestations</span>
+      <div class="cat-line"></div>
+    </div>
+    <div class="pcard-grid femme">
+      <div class="pcard">
+        <div class="pcard-cat">Best-seller · Incontournable</div>
+        <div class="pcard-name">Coupe +<br>Brushing</div>
+        <p class="pcard-desc">Consultation approfondie, coupe adaptée à votre morphologie de visage et votre mode de vie. Brushing professionnel pour un résultat impeccable et durable.</p>
+        <div class="pcard-tags"><span class="ptag hot">Best-seller</span><span class="ptag">Consultation incluse</span><span class="ptag">Brushing pro</span></div>
+        <div class="pcard-footer"><div><div class="pcard-price">55 €</div><div class="pcard-dur">1 heure 15</div></div><a href="demo-coiffeur-rdv.html" class="pcard-rdv">Réserver →</a></div>
+        <div class="pcard-num">01</div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-cat">Couleur · Top demande</div>
+        <div class="pcard-name">Balayage &amp; Mèches</div>
+        <p class="pcard-desc">Effet soleil ou contraste marqué. Soin inclus.</p>
+        <div class="pcard-tags"><span class="ptag hot">Top</span><span class="ptag">Soin inclus</span></div>
+        <div class="pcard-footer"><div><div class="pcard-price">95 €</div><div class="pcard-dur">2h30</div></div><a href="demo-coiffeur-rdv.html" class="pcard-rdv">Réserver →</a></div>
+        <div class="pcard-num">02</div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-cat">Couleur</div>
+        <div class="pcard-name">Coloration complète</div>
+        <p class="pcard-desc">Couleurs Wella Professionals, longue durée.</p>
+        <div class="pcard-tags"><span class="ptag">Wella</span><span class="ptag">Longue durée</span></div>
+        <div class="pcard-footer"><div><div class="pcard-price">85 €</div><div class="pcard-dur">2h</div></div><a href="demo-coiffeur-rdv.html" class="pcard-rdv">Réserver →</a></div>
+        <div class="pcard-num">03</div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-cat">Soin · Traitement</div>
+        <div class="pcard-name">Lissage Kératine</div>
+        <p class="pcard-desc">Lissage brésilien anti-frisottis, 3 à 6 mois.</p>
+        <div class="pcard-tags"><span class="ptag">Anti-frisottis</span><span class="ptag">3-6 mois</span></div>
+        <div class="pcard-footer"><div><div class="pcard-price">120 €+</div><div class="pcard-dur">3h</div></div><a href="demo-coiffeur-rdv.html" class="pcard-rdv">Réserver →</a></div>
+        <div class="pcard-num">04</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOMME + SOIN -->
+  <div class="cat-block rev d1">
+    <div class="cat-label">
+      <div class="cat-name">Homme &amp; Soins</div>
+      <span class="cat-txt">2 prestations</span>
+      <div class="cat-line"></div>
+    </div>
+    <div class="pcard-grid simple">
+      <div class="pcard">
+        <div class="pcard-cat">Homme</div>
+        <div class="pcard-name">Coupe Homme</div>
+        <p class="pcard-desc">Coupe classique ou moderne, finitions rasoir, coiffage inclus. Résultat net et soigné à chaque visite.</p>
+        <div class="pcard-tags"><span class="ptag">Rasoir</span><span class="ptag">Coiffage inclus</span></div>
+        <div class="pcard-footer"><div><div class="pcard-price">35 €</div><div class="pcard-dur">45 min</div></div><a href="demo-coiffeur-rdv.html" class="pcard-rdv">Réserver →</a></div>
+        <div class="pcard-num">05</div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-cat">Soin capillaire</div>
+        <div class="pcard-name">Soin &amp; Masque Profond</div>
+        <p class="pcard-desc">Soin Olaplex ou Kérastase selon diagnostic capillaire. Hydratation, réparation, brillance. Résultats visibles dès la 1ère séance.</p>
+        <div class="pcard-tags"><span class="ptag">Olaplex</span><span class="ptag">Kérastase</span><span class="ptag">Diagnostic offert</span></div>
+        <div class="pcard-footer"><div><div class="pcard-price">45 €</div><div class="pcard-dur">45 min</div></div><a href="demo-coiffeur-rdv.html" class="pcard-rdv">Réserver →</a></div>
+        <div class="pcard-num">06</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CITATION SIGNATURE -->
+<section class="signature-quote">
+  <div class="sq-inner rev">
+    <span class="sq-mark">«</span>
+    <p class="sq-text">Chaque prestation est pensée pour révéler votre <em>personnalité</em>. Pas juste une coupe — une signature.</p>
+    <span class="sq-author">Élise — Fait main à Ermont</span>
+  </div>
+</section>
+
+<!-- NOTE STRIP -->
+<div class="note-strip">
+  <span class="ns-ico">✦</span>
+  <p class="ns-txt"><strong>Personnalisation incluse.</strong> Chaque prestation commence par un diagnostic. Décrivez vos envies lors de la réservation — nous adaptons chaque service à votre profil capillaire.</p>
+  <a href="demo-coiffeur-rdv.html" class="ns-cta">Prendre rendez-vous →</a>
+</div>
+
+<footer>
+  <div class="ft-inner">
+    <div>
+      <a href="demo-coiffeur.html" class="ft-logo">Studio <em>Élise</em></a>
+      <p class="ft-desc">Salon de coiffure premium à Ermont (95). Coupes, colorations, soins d'exception. Sur rendez-vous du lundi au samedi.</p>
+      <span class="ft-handmade">Fait main à Ermont</span>
+    </div>
+    <div class="ft-col"><h4>Pages</h4><a href="demo-coiffeur-prestations.html">Prestations</a><a href="demo-coiffeur-galerie.html">Galerie</a><a href="demo-coiffeur-equipe.html">L'équipe</a><a href="demo-coiffeur-rdv.html">Réserver</a></div>
+    <div class="ft-col"><h4>Horaires</h4><a href="#">Lun–Ven · 9h–19h</a><a href="#">Sam · 9h–18h30</a><a href="#">Dim · Fermé</a></div>
+    <div class="ft-col"><h4>Contact</h4><a href="tel:0139000000">01 39 XX XX XX</a><a href="#">8 av. Victor Hugo</a><a href="#">95120 Ermont</a></div>
+  </div>
+  <div class="ft-bot">
+    <span>© 2026 Studio Élise · Ermont</span>
+    <span>Site réalisé par <a href="https://www.lerelaisweb.com" target="_blank" rel="noopener noreferrer">Le Relais Web</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var hdr=document.getElementById('hdr'),brgr=document.getElementById('brgr'),nol=document.getElementById('nol'),ncl=document.getElementById('ncl');
+  window.addEventListener('scroll',function(){hdr.classList.toggle('scrolled',window.scrollY>60);},{passive:true});
+  function closeNav(){nol.classList.remove('open');document.body.style.overflow='';}
+  brgr.onclick=function(){nol.classList.add('open');document.body.style.overflow='hidden';};
+  ncl.onclick=closeNav;
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeNav();});
+  nol.querySelectorAll('a').forEach(function(a){a.onclick=closeNav;});
+  var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}});},{threshold:.06});
+  document.querySelectorAll('.rev').forEach(function(el){obs.observe(el);});
+})();
+</script>
+</body>
+</html>

@@ -22,26 +22,25 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.lerelaisweb.com"),
-  title: "Création Site Web Artisan Ermont & Val-d'Oise | Le Relais Web",
+  title: "Création site web sur-mesure — Ermont, Val-d'Oise | Le Relais Web",
   description:
-    "On crée et on gère votre site web à Ermont et dans le Val-d'Oise. Rapide, trouvé sur Google, livré en 7 jours. Vous gardez votre métier, on s'occupe du reste.",
+    "Vitrine ou site avec back-office : code sur-mesure, 100/100 sur Google, livré en 7 jours. Pour artisans, commerçants et associations — Val-d'Oise.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "fr_FR",
     url: "https://www.lerelaisweb.com/",
-    title: "Création Site Web Artisan Ermont & Val-d'Oise | Le Relais Web",
+    title: "Création site web sur-mesure — Ermont, Val-d'Oise | Le Relais Web",
     description:
-      "On crée et on gère votre site web. Rapide, trouvé sur Google, livré en 7 jours. On s'occupe de tout.",
-    images: ["/logo-relais.webp"],
+      "Code sur-mesure, 100/100 sur Google, livré en 7 jours. On s'occupe de tout.",
+    images: ["/lerelaisweb_logo.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Création Site Web Artisan Ermont & Val-d'Oise | Le Relais Web",
+    title: "Création site web sur-mesure — Ermont, Val-d'Oise | Le Relais Web",
     description:
-      "On crée et on gère votre site web. Rapide, trouvé sur Google, livré en 7 jours. On s'occupe de tout.",
+      "Code sur-mesure, 100/100 sur Google, livré en 7 jours. On s'occupe de tout.",
   },
-  icons: { icon: "/logo-relais.webp", apple: "/logo-relais.webp" },
   manifest: "/manifest.webmanifest",
 };
 

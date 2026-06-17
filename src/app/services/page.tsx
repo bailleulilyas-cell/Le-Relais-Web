@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Nos offres — Création de site web à Ermont, Val-d'Oise | Le Relais Web",
+  title: "Pack Présence & Pack Pro — Quel site pour vous ? | Le Relais Web",
   description:
-    "Pack Présence (on s'occupe de tout) ou Pack Pro (vous gérez vous-même). Sites web rapides livrés en 7 jours, hébergement et maintenance inclus. Ermont & Val-d'Oise.",
+    "Vitrine sur-mesure (Pack Présence, 550€) ou site avec back-office (Pack Pro, 1200€). Livré en 7 jours, hébergement inclus, sans engagement. Val-d'Oise.",
   alternates: { canonical: "/services" },
   openGraph: {
     type: "website",
     locale: "fr_FR",
     url: "https://www.lerelaisweb.com/services",
-    title: "Nos offres — Création de site web | Le Relais Web",
-    description: "Deux formules claires pour votre site web. Livré en 7 jours, tout compris.",
-    images: ["/logo-relais.webp"],
+    title: "Pack Présence & Pack Pro — Quel site pour vous ? | Le Relais Web",
+    description: "Deux formules claires, prix transparents. Livré en 7 jours, tout compris.",
+    images: ["/lerelaisweb_logo.png"],
   },
 };
 
