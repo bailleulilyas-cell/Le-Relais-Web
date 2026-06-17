@@ -439,7 +439,7 @@
 <body>
 
 <!-- RETOUR-BAR sticky noir/or — pattern exact demo-coiffeur.html -->
-<a href="/" class="retour-bar">
+<a href="/#realisations" class="retour-bar" onclick="if(document.referrer&&new URL(document.referrer).origin===location.origin&&new URL(document.referrer).pathname==='/'){history.back();return false}">
   <span class="r-arr">←</span>
   <span class="r-text">Retour aux réalisations · Le Relais Web</span>
   <span class="r-badge">DÉMO</span>

@@ -212,9 +212,28 @@
     .fade.in{opacity:1;transform:none}
     .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
 
+    /* Entrée héro échelonnée */
+    @keyframes bup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+    .hero-left>*{opacity:0;animation:bup .85s cubic-bezier(.22,1,.36,1) forwards}
+    .hero-left>.hero-pretitle{animation-delay:.1s}
+    .hero-left>h1{animation-delay:.22s}
+    .hero-left>.hero-divider{animation-delay:.32s}
+    .hero-left>.hero-text{animation-delay:.4s}
+    .hero-left>.hero-sig{animation-delay:.48s}
+    .hero-left>.hero-hours{animation-delay:.56s}
+    .hero-left>.hero-btns{animation-delay:.64s}
+    .hero-right{opacity:0;animation:bup .95s cubic-bezier(.22,1,.36,1) .38s forwards}
+
+    /* CTA flottant — apparaît au scroll */
+    .fcmd{position:fixed;bottom:1.5rem;right:1.5rem;z-index:480;background:var(--brun);color:var(--creme);padding:.95rem 1.8rem;border-radius:14px;font-family:'Jost',sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.13em;text-transform:uppercase;box-shadow:0 8px 26px rgba(46,26,14,.32);border:1px solid var(--or-soft);opacity:0;transform:translateY(20px) scale(.96);pointer-events:none;transition:opacity .35s,transform .35s,background .25s,box-shadow .25s;display:inline-flex;align-items:center;gap:.5rem}
+    .fcmd.show{opacity:1;transform:none;pointer-events:auto}
+    .fcmd:hover{background:var(--or2);box-shadow:0 12px 32px rgba(184,118,46,.4)}
+    @media(max-width:480px){.fcmd{left:1rem;right:1rem;bottom:1rem;justify-content:center}}
+
     @media(prefers-reduced-motion:reduce){
       *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
       .fade{opacity:1;transform:none}
+      .hero-left>*,.hero-right{opacity:1!important;animation:none}
     }
 
     /* RESPONSIVE */
@@ -253,7 +272,7 @@
       .btn-primary,.btn-secondary{flex:1;text-align:center;padding:1rem 1.2rem}
     }
 
-    .retour-bar{position:sticky;top:0;left:0;right:0;z-index:9998;display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:.6rem 1rem;background:linear-gradient(90deg,var(--brun) 0%,var(--brun2) 100%);color:var(--creme);font-family:"Jost",sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--or-soft);box-shadow:0 2px 12px rgba(46,26,14,.18);transition:background .25s}
+    .retour-bar{position:sticky;top:0;left:0;right:0;z-index:9998;box-sizing:border-box;height:36px;display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:0 1rem;background:linear-gradient(90deg,var(--brun) 0%,var(--brun2) 100%);color:var(--creme);font-family:"Jost",sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--or-soft);box-shadow:0 2px 12px rgba(46,26,14,.18);transition:background .25s}
     .retour-bar:hover{background:var(--or2)}
     .retour-bar .r-arrow{font-size:.95rem;transition:transform .2s}
     .retour-bar:hover .r-arrow{transform:translateX(-3px)}
@@ -262,7 +281,7 @@
   </style>
 </head>
 <body>
-<a href="/" class="retour-bar">
+<a href="/#realisations" class="retour-bar" onclick="if(document.referrer&&new URL(document.referrer).origin===location.origin&&new URL(document.referrer).pathname==='/'){history.back();return false}">
   <span class="r-arrow">←</span>
   <span class="r-text">Retour aux réalisations · Le Relais Web</span>
   <span class="r-badge">DÉMO</span>
@@ -372,9 +391,9 @@
     </div>
     <div class="fade d1">
       <div class="hist-stats">
-        <div class="hstat"><div class="hstat-n">37</div><div class="hstat-l">ans d'expertise</div></div>
-        <div class="hstat"><div class="hstat-n">480</div><div class="hstat-l">pains par jour</div></div>
-        <div class="hstat"><div class="hstat-n">100%</div><div class="hstat-l">farine bio locale</div></div>
+        <div class="hstat"><div class="hstat-n" data-count="37">0</div><div class="hstat-l">ans d'expertise</div></div>
+        <div class="hstat"><div class="hstat-n" data-count="480">0</div><div class="hstat-l">pains par jour</div></div>
+        <div class="hstat"><div class="hstat-n" data-count="100" data-suffix="%">0</div><div class="hstat-l">farine bio locale</div></div>
         <div class="hstat"><div class="hstat-n">4,9★</div><div class="hstat-l">Google · 320 avis</div></div>
       </div>
     </div>
@@ -431,10 +450,16 @@
   </div>
 </footer>
 
+<a href="demo-boulangerie-commande.html" class="fcmd" id="fcmd">🥖 Réserver mon pain</a>
+
 <script>
 (function(){
-  var hdr=document.getElementById('hdr');
-  window.addEventListener('scroll',function(){hdr.classList.toggle('scrolled',window.scrollY>20);});
+  var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var hdr=document.getElementById('hdr'),fc=document.getElementById('fcmd');
+  window.addEventListener('scroll',function(){
+    hdr.classList.toggle('scrolled',window.scrollY>20);
+    if(fc)fc.classList.toggle('show',window.scrollY>700);
+  });
   var brgr=document.getElementById('brgr'),mob=document.getElementById('mob'),mc=document.getElementById('mob-close');
   brgr.onclick=function(){mob.classList.add('open');document.body.style.overflow='hidden';};
   mc.onclick=function(){mob.classList.remove('open');document.body.style.overflow='';};
@@ -443,6 +468,16 @@
   // Staggered reveal — applique d1/d2/d3 automatiquement aux cartes pains/vienn par position dans la grille
   var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.08});
   document.querySelectorAll('.fade').forEach(function(el){io.observe(el);});
+  // Compteurs animés (stats histoire)
+  function countUp(el){
+    var target=parseInt(el.getAttribute('data-count'),10),suf=el.getAttribute('data-suffix')||'';
+    if(reduce){el.textContent=target+suf;return;}
+    var start=null,dur=1500;
+    function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(e*target)+suf;if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+  }
+  var cio=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){countUp(x.target);cio.unobserve(x.target);}});},{threshold:.4});
+  document.querySelectorAll('.hstat-n[data-count]').forEach(function(el){cio.observe(el);});
 })();
 </script>
 </body>

@@ -214,7 +214,7 @@ export default function Home() {
       </section>
 
       {/* ── 3. PREUVES ── */}
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section" id="realisations" style={{ paddingTop: 0, scrollMarginTop: "80px" }}>
         <div className="container">
           <div className="sec-head center">
             <span className="eyebrow">La preuve</span>

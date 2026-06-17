@@ -32,15 +32,6 @@ export default function Footer() {
           </div>
 
           <div className="footer-col">
-            <h4>Zones desservies</h4>
-            {VILLES.map((v) => (
-              <Link key={v.slug} href={`/creation-site-web/${v.slug}`}>
-                Site web {v.nom}
-              </Link>
-            ))}
-          </div>
-
-          <div className="footer-col">
             <h4>Informations</h4>
             <Link href="/cgv">Conditions générales</Link>
             <Link href="/politique-confidentialite">Confidentialité</Link>
@@ -54,6 +45,16 @@ export default function Footer() {
             </a>
           </div>
         </div>
+
+        <p className="footer-zones">
+          Création de sites web à{" "}
+          {VILLES.map((v, i) => (
+            <span key={v.slug}>
+              <Link href={`/creation-site-web/${v.slug}`}>{v.nom}</Link>
+              {i < VILLES.length - 1 ? " · " : ""}
+            </span>
+          ))}
+        </p>
 
         <div className="footer-bottom">
           <span>© {year} Le Relais Web — Ermont, Val-d&apos;Oise</span>

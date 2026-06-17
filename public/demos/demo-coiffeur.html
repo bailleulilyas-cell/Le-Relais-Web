@@ -282,8 +282,30 @@
     .rev.in{opacity:1;transform:none}
     .d1{transition-delay:.15s}.d2{transition-delay:.3s}.d3{transition-delay:.45s}
 
+    /* Entrée héro éditoriale échelonnée */
+    @keyframes cup{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+    .hero-eyebrow,.h1-l1,.h1-l2,.h1-l3,.hero-desc,.hero-ctas{opacity:0;animation:cup .9s cubic-bezier(.22,1,.36,1) forwards}
+    .hero-eyebrow{animation-delay:.1s}
+    .h1-l1{animation-delay:.22s}
+    .h1-l2{animation-delay:.34s}
+    .h1-l3{animation-delay:.46s}
+    .hero-desc{animation-delay:.6s}
+    .hero-ctas{animation-delay:.7s}
+    .hero-right{opacity:0;animation:cup 1s cubic-bezier(.22,1,.36,1) .4s forwards}
+
+    /* CTA flottant — apparaît au scroll */
+    .frdv{position:fixed;bottom:1.5rem;right:1.5rem;z-index:480;background:var(--bordeaux);color:#fff;
+      padding:.95rem 1.8rem;border-radius:2px;font-family:'Syne',sans-serif;font-size:.65rem;font-weight:700;
+      letter-spacing:.18em;text-transform:uppercase;box-shadow:0 10px 30px rgba(107,27,40,.4);
+      opacity:0;transform:translateY(20px) scale(.96);pointer-events:none;
+      transition:opacity .35s,transform .35s,background .25s,box-shadow .25s;display:inline-flex;align-items:center;gap:.5rem}
+    .frdv.show{opacity:1;transform:none;pointer-events:auto}
+    .frdv:hover{background:var(--bordeaux2);box-shadow:0 14px 36px rgba(107,27,40,.5)}
+    @media(max-width:480px){.frdv{left:1rem;right:1rem;bottom:1rem;justify-content:center}}
+
     @media (prefers-reduced-motion: reduce){
       *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+      .hero-eyebrow,.h1-l1,.h1-l2,.h1-l3,.hero-desc,.hero-ctas,.hero-right{opacity:1!important;animation:none}
     }
 
     /* RESPONSIVE */
@@ -329,7 +351,7 @@
 </head>
 <body>
 
-<a href="/" class="retour-bar">
+<a href="/#realisations" class="retour-bar" onclick="if(document.referrer&&new URL(document.referrer).origin===location.origin&&new URL(document.referrer).pathname==='/'){history.back();return false}">
   <span class="r-arr">←</span>
   <span class="r-text">Retour aux réalisations · Le Relais Web</span>
   <span class="r-badge">DÉMO</span>
@@ -395,9 +417,9 @@
         <a href="demo-coiffeur-rdv.html" class="bc-btn">Réserver ce créneau →</a>
       </div>
       <div class="stats-band">
-        <div class="stat"><div class="stat-n">12</div><div class="stat-l">ans d'exp.</div></div>
+        <div class="stat"><div class="stat-n" data-count="12">0</div><div class="stat-l">ans d'exp.</div></div>
         <div class="stat"><div class="stat-n">4,8★</div><div class="stat-l">Google</div></div>
-        <div class="stat"><div class="stat-n">800+</div><div class="stat-l">clientes</div></div>
+        <div class="stat"><div class="stat-n" data-count="800" data-suffix="+">0</div><div class="stat-l">clientes</div></div>
       </div>
     </div>
   </div>
@@ -542,10 +564,16 @@
   </div>
 </footer>
 
+<a href="demo-coiffeur-rdv.html" class="frdv" id="frdv">Prendre rendez-vous →</a>
+
 <script>
 (function(){
-  var hdr=document.getElementById('hdr'),brgr=document.getElementById('brgr'),nol=document.getElementById('nol'),ncl=document.getElementById('ncl');
-  window.addEventListener('scroll',function(){hdr.classList.toggle('scrolled',window.scrollY>80);},{passive:true});
+  var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var hdr=document.getElementById('hdr'),brgr=document.getElementById('brgr'),nol=document.getElementById('nol'),ncl=document.getElementById('ncl'),frdv=document.getElementById('frdv');
+  window.addEventListener('scroll',function(){
+    hdr.classList.toggle('scrolled',window.scrollY>80);
+    if(frdv)frdv.classList.toggle('show',window.scrollY>700);
+  },{passive:true});
   function closeNav(){nol.classList.remove('open');document.body.style.overflow='';}
   brgr.onclick=function(){nol.classList.add('open');document.body.style.overflow='hidden';};
   ncl.onclick=closeNav;
@@ -553,6 +581,16 @@
   nol.querySelectorAll('a').forEach(function(a){a.onclick=closeNav;});
   var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}});},{threshold:.08});
   document.querySelectorAll('.rev').forEach(function(el){obs.observe(el);});
+  // Compteurs animés (stats héro)
+  function countUp(el){
+    var target=parseInt(el.getAttribute('data-count'),10),suf=el.getAttribute('data-suffix')||'';
+    if(reduce){el.textContent=target+suf;return;}
+    var start=null,dur=1500;
+    function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(e*target)+suf;if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+  }
+  var cio=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){countUp(x.target);cio.unobserve(x.target);}});},{threshold:.4});
+  document.querySelectorAll('.stat-n[data-count]').forEach(function(el){cio.observe(el);});
 })();
 </script>
 </body>

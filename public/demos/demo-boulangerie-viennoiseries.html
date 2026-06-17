@@ -48,7 +48,7 @@
     main,header,footer,section,div{position:relative;z-index:1}
 
     /* RETOUR BAR */
-    .retour-bar{position:sticky;top:0;left:0;right:0;z-index:9998;display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:.6rem 1rem;background:linear-gradient(90deg,var(--brun) 0%,var(--brun2) 100%);color:var(--creme);font-family:"Jost",sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--or-soft);box-shadow:0 2px 12px rgba(46,26,14,.18);transition:background .25s}
+    .retour-bar{position:sticky;top:0;left:0;right:0;z-index:9998;box-sizing:border-box;height:36px;display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:0 1rem;background:linear-gradient(90deg,var(--brun) 0%,var(--brun2) 100%);color:var(--creme);font-family:"Jost",sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--or-soft);box-shadow:0 2px 12px rgba(46,26,14,.18);transition:background .25s}
     .retour-bar:hover{background:var(--or2)}
     .retour-bar .r-arrow{font-size:.95rem;transition:transform .2s}
     .retour-bar:hover .r-arrow{transform:translateX(-3px)}
@@ -177,7 +177,7 @@
 </head>
 <body>
 
-<a href="/" class="retour-bar">
+<a href="/#realisations" class="retour-bar" onclick="if(document.referrer&&new URL(document.referrer).origin===location.origin&&new URL(document.referrer).pathname==='/'){history.back();return false}">
   <span class="r-arrow">←</span>
   <span class="r-text">Retour aux réalisations · Le Relais Web</span>
   <span class="r-badge">DÉMO</span>
