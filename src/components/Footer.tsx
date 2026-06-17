@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { VILLES } from "@/lib/villes";
 
 const WA =
   "https://wa.me/33695382157?text=Bonjour%2C%20je%20souhaite%20un%20devis%20pour%20mon%20site%20web.";
@@ -23,10 +24,20 @@ export default function Footer() {
             <h4>Navigation</h4>
             <Link href="/">Accueil</Link>
             <Link href="/services">Services</Link>
+            <Link href="/guides">Guides</Link>
             <Link href="/contact">Demander un devis</Link>
             <a href={WA} target="_blank" rel="noopener noreferrer">
               WhatsApp — par message
             </a>
+          </div>
+
+          <div className="footer-col">
+            <h4>Zones desservies</h4>
+            {VILLES.map((v) => (
+              <Link key={v.slug} href={`/creation-site-web/${v.slug}`}>
+                Site web {v.nom}
+              </Link>
+            ))}
           </div>
 
           <div className="footer-col">

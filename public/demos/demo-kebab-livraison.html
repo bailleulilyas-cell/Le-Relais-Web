@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Livraison à domicile en 28 minutes. Zones desservies autour de Pontoise (95). Démo site restaurant par Le Relais Web, agence web Ermont.">
+  <link rel="icon" type="image/png" href="/logo.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://www.lerelaisweb.com/demos/demo-kebab-livraison.html">
+  <meta property="og:title" content="Livraison — Istanbul Grill · Démo Le Relais Web">
+  <meta property="og:description" content="Livraison à domicile en 28 minutes chrono. Zones de livraison autour de Pontoise. Démo restaurant par Le Relais Web.">
+  <meta property="og:image" content="https://www.lerelaisweb.com/logo.webp">
+  <meta property="og:url" content="https://www.lerelaisweb.com/demos/demo-kebab-livraison.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <title>Livraison — Istanbul Grill · Démo Site Kebab | Le Relais Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#08070A;
+      --bg2:#0E0C10;
+      --bg3:#15121A;
+      --red:#C42818;
+      --red2:#A11F12;
+      --gold:#D4A24C;
+      --gold2:#B98935;
+      --cream:#EDE0C8;
+      --muted:rgba(237,224,200,.55);
+      --bdr:rgba(212,162,76,.14);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Outfit',sans-serif;
+      background:var(--bg);
+      color:var(--cream);
+      overflow-x:hidden;
+      background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(196,40,24,.04), transparent 55%),
+        radial-gradient(ellipse at 85% 90%, rgba(212,162,76,.035), transparent 60%),
+        linear-gradient(180deg, #08070A 0%, #0A0809 100%);
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+
+    /* Grain cuir */
+    body::before{
+      content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      opacity:.045;mix-blend-mode:overlay;
+    }
+
+    /* FLOAT BTN */
+    .fcta{display:none;position:fixed;bottom:2rem;right:2rem;z-index:500;background:var(--red);color:#fff;padding:.95rem 1.85rem;border-radius:8px;font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;box-shadow:0 6px 22px rgba(196,40,24,.35);transition:background .25s,transform .25s,box-shadow .25s;border:1px solid rgba(212,162,76,.25)}
+    .fcta.show{display:inline-flex;align-items:center}
+    .fcta:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(196,40,24,.45)}
+
+    /* RETOUR BAR — sticky dans le flux */
+    .retour-bar{
+      position:sticky;top:0;left:0;right:0;z-index:9998;
+      display:flex;align-items:center;justify-content:center;gap:.7rem;
+      width:100%;padding:.65rem 1rem;
+      background:linear-gradient(90deg,#08070A 0%,#1a0d09 100%);
+      color:#F4ECE0;
+      font-family:'Outfit',sans-serif;font-size:.7rem;font-weight:600;
+      letter-spacing:.16em;text-transform:uppercase;text-decoration:none;
+      border-bottom:1px solid var(--gold);
+      transition:background .25s;
+    }
+    .retour-bar:hover{background:linear-gradient(90deg,#C42818 0%,#08070A 100%)}
+    .retour-bar .r-arrow{font-size:.95rem;color:var(--gold);transition:transform .2s}
+    .retour-bar:hover .r-arrow{transform:translateX(-3px);color:#F4ECE0}
+    .retour-bar .r-badge{background:var(--gold);color:#08070A;padding:.15rem .5rem;border-radius:4px;font-size:.6rem;letter-spacing:.1em}
+    @media(max-width:480px){
+      .retour-bar{padding:.55rem .8rem;font-size:.6rem;gap:.45rem}
+      .retour-bar .r-text{max-width:58vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    }
+
+    /* HEADER */
+    header{position:sticky;top:2.45rem;left:0;right:0;z-index:200;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+    header.scrolled{background:rgba(8,7,10,.94);backdrop-filter:blur(22px);border-bottom-color:var(--bdr)}
+    .hdi{max-width:1380px;margin:0 auto;padding:1.4rem 2.5rem;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase}
+    .logo em{color:var(--gold);font-style:italic;font-weight:500}
+    nav{display:flex;gap:2.5rem;align-items:center}
+    nav a{color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;position:relative;transition:color .25s}
+    nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .35s}
+    nav a:hover,nav a.active{color:var(--cream)}
+    nav a:hover::after,nav a.active::after{width:100%}
+    .ncta{background:var(--red)!important;color:#fff!important;padding:.65rem 1.55rem;border-radius:8px;border:1px solid rgba(212,162,76,.3);transition:background .25s,transform .25s!important}
+    .ncta::after{display:none!important}
+    .ncta:hover{background:var(--red2)!important;transform:translateY(-2px)!important}
+    .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:10px;min-width:44px;min-height:44px;align-items:center;justify-content:center}
+    .burger span{width:22px;height:1.5px;background:var(--cream)}
+
+    /* NAV OVERLAY */
+    #nol{display:none;position:fixed;inset:0;background:var(--bg);z-index:9000;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+    #nol.open{display:flex}
+    #nol a{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5.5vw,3.2rem);font-weight:500;font-style:italic;color:var(--cream);transition:color .25s,transform .3s;min-height:44px;display:inline-flex;align-items:center}
+    #nol a:hover{color:var(--gold);transform:translateX(12px)}
+    #ncl{position:absolute;top:1.5rem;right:1.5rem;background:none;border:1px solid var(--bdr);border-radius:8px;color:var(--cream);font-size:1.4rem;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;line-height:1}
+
+    /* UTILITIES */
+    .wrap{max-width:1380px;margin:0 auto;padding:0 2.5rem}
+    .seye{display:inline-flex;align-items:center;gap:.75rem;margin-bottom:1.4rem}
+    .eyln{width:36px;height:1px;background:var(--gold)}
+    .eylb{font-size:.65rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+    .stit{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4.6vw,3.8rem);font-weight:600;line-height:1.1;margin-bottom:1.2rem;letter-spacing:-.005em}
+    .stit em{font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .ssub{font-size:.95rem;color:var(--muted);line-height:1.85;max-width:540px}
+    .rev{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease}
+    .rev.in{opacity:1;transform:none}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+    /* TICKER */
+    .ticker{overflow:hidden;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:1rem 0;background:var(--bg2)}
+    .ttrack{display:flex;width:max-content;animation:tck 38s linear infinite}
+    .titem{white-space:nowrap;padding:0 2.5rem;font-size:.85rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:2rem;font-family:'Playfair Display',serif;font-style:italic}
+    .tdot{color:var(--gold);font-size:.55rem;font-style:normal}
+    @keyframes tck{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* PAGE HERO — secondaire, pas de canvas */
+    .phero{
+      padding:3rem 0 5rem;
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid var(--bdr);
+    }
+    .phero-glow{
+      position:absolute;inset:0;pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(196,40,24,.07), transparent 65%),
+        radial-gradient(ellipse 30% 50% at 10% 70%, rgba(212,162,76,.04), transparent 55%);
+    }
+    /* Watermark éditorial en fond */
+    .phero-wm{
+      position:absolute;right:-1rem;top:50%;transform:translateY(-50%);
+      font-family:'Playfair Display',serif;font-size:clamp(6rem,15vw,13rem);
+      font-weight:800;font-style:italic;color:rgba(212,162,76,.04);
+      pointer-events:none;user-select:none;line-height:1;white-space:nowrap;
+    }
+    .phero-in{position:relative;z-index:1}
+    .phero-tag{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1.6rem}
+    .phero-dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+    .phero-label{font-size:.65rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
+    .phero h1{
+      font-family:'Playfair Display',serif;
+      line-height:1.05;
+      margin-bottom:1.5rem;
+    }
+    .phero h1 .l1{display:block;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:400;font-style:italic;color:var(--muted)}
+    .phero h1 .l2{
+      display:block;
+      font-size:clamp(3.2rem,7vw,6.5rem);
+      font-weight:800;line-height:1;letter-spacing:-.02em;
+      background:linear-gradient(135deg,var(--red) 0%,#E03A22 40%,var(--gold) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .phero-sub{font-size:1rem;color:var(--muted);line-height:1.85;max-width:480px;margin-bottom:2rem}
+    .phero-badges{display:flex;gap:1.25rem;flex-wrap:wrap}
+    .pbadge{
+      display:inline-flex;align-items:center;gap:.55rem;
+      background:rgba(14,12,16,.8);border:1px solid var(--bdr);border-radius:8px;
+      padding:.65rem 1.1rem;font-size:.72rem;font-weight:600;letter-spacing:.08em;
+    }
+    .pbadge-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+
+    /* SECTION PROMISE — anneau SVG réinterprété en style éditorial */
+    .promise-sec{padding:6rem 0;border-bottom:1px solid var(--bdr);position:relative}
+    .promise-sec::before{
+      content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+      width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);
+    }
+    .promise-grid{display:grid;grid-template-columns:auto 1fr;gap:5rem;align-items:center;max-width:900px}
+    /* Grand chiffre circulaire */
+    .promise-ring{
+      width:200px;height:200px;flex-shrink:0;position:relative;
+      border-radius:50%;
+      background:radial-gradient(circle at 35% 30%, rgba(196,40,24,.12), transparent 60%);
+      border:1px solid var(--bdr);
+      display:flex;align-items:center;justify-content:center;flex-direction:column;
+    }
+    .promise-ring::before{
+      content:'';position:absolute;inset:10px;border-radius:50%;
+      border:1px dashed rgba(212,162,76,.22);
+    }
+    .promise-num{
+      font-family:'Playfair Display',serif;font-size:4rem;font-weight:700;
+      line-height:1;font-style:italic;
+      background:linear-gradient(135deg,var(--red),var(--gold));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .promise-unit{font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+    .promise-text h2{
+      font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);
+      font-weight:600;line-height:1.12;margin-bottom:1rem;letter-spacing:-.005em;
+    }
+    .promise-text h2 em{
+      font-style:italic;font-weight:400;
+      background:linear-gradient(135deg,var(--red),var(--gold));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .promise-text p{font-size:.92rem;color:var(--muted);line-height:1.85}
+
+    /* ÉTAPES — style menu de chef */
+    .steps-sec{padding:6rem 0;border-bottom:1px solid var(--bdr)}
+    .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:3rem}
+    .step-card{
+      background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;
+      padding:2rem 1.8rem;transition:border-color .35s,transform .35s,box-shadow .35s;
+    }
+    .step-card:hover{border-color:rgba(212,162,76,.32);transform:translateY(-4px);box-shadow:0 14px 38px rgba(0,0,0,.45)}
+    .step-num{
+      font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;
+      font-style:italic;line-height:1;margin-bottom:1.2rem;
+      background:linear-gradient(135deg,var(--red),var(--gold));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      opacity:.75;
+    }
+    .step-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;margin-bottom:.6rem;letter-spacing:-.005em}
+    .step-desc{font-size:.82rem;color:var(--muted);line-height:1.75;font-style:italic}
+
+    /* ZONES DE LIVRAISON */
+    .zones-sec{padding:6rem 0;border-bottom:1px solid var(--bdr)}
+    .zones-intro{margin-bottom:3.5rem}
+    .zones-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-bottom:3rem}
+    .zone-card{
+      background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;
+      padding:1.6rem 1.8rem;
+      display:flex;align-items:center;justify-content:space-between;gap:1rem;
+      transition:border-color .35s,box-shadow .35s;
+    }
+    .zone-card:hover{border-color:rgba(212,162,76,.32);box-shadow:0 8px 28px rgba(0,0,0,.35)}
+    .zone-card.zone-main{border-color:rgba(196,40,24,.25);background:linear-gradient(135deg,rgba(196,40,24,.06),var(--bg2))}
+    .zone-left{flex:1}
+    .zone-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;margin-bottom:.3rem}
+    .zone-detail{font-size:.72rem;color:var(--muted);letter-spacing:.06em}
+    .zone-badge{
+      font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;font-style:italic;
+      white-space:nowrap;text-align:right;
+    }
+    .zone-badge.free{background:linear-gradient(135deg,#34D399,#10B981);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .zone-badge.paid{background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .zone-badge-sub{font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-style:normal;font-family:'Outfit',sans-serif;display:block;margin-top:.1rem;text-align:right}
+
+    /* Grille CSS visuelle des zones (carte schématique) */
+    .zone-map{
+      background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;
+      padding:2rem;position:relative;overflow:hidden;
+      margin-bottom:1.5rem;min-height:200px;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .zone-map-inner{position:relative;width:100%;max-width:340px;height:180px}
+    /* Cercles concentriques CSS */
+    .zc{
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      border-radius:50%;border:1px dashed;
+    }
+    .zc1{width:60px;height:60px;border-color:rgba(196,40,24,.55);background:rgba(196,40,24,.08)}
+    .zc2{width:110px;height:110px;border-color:rgba(212,162,76,.38)}
+    .zc3{width:160px;height:160px;border-color:rgba(212,162,76,.22)}
+    .zc4{width:210px;height:210px;border-color:rgba(212,162,76,.12)}
+    .zone-map-center{
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      font-family:'Playfair Display',serif;font-size:.72rem;font-weight:700;
+      color:var(--gold);text-align:center;font-style:italic;line-height:1.3;
+      white-space:nowrap;
+    }
+    .zmap-label{
+      position:absolute;font-size:.58rem;font-weight:700;letter-spacing:.1em;
+      text-transform:uppercase;color:var(--muted);white-space:nowrap;
+    }
+    .zml1{top:10%;left:58%}
+    .zml2{top:28%;right:3%}
+    .zml3{bottom:22%;right:0%}
+
+    /* INFOS PRATIQUES */
+    .infos-sec{padding:6rem 0;border-bottom:1px solid var(--bdr)}
+    .infos-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem}
+    .info-card{
+      background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;
+      padding:1.6rem 1.8rem;display:flex;gap:1.4rem;align-items:flex-start;
+      transition:border-color .35s;
+    }
+    .info-card:hover{border-color:rgba(212,162,76,.32)}
+    .info-ico{font-size:1.3rem;flex-shrink:0;margin-top:.1rem}
+    .info-label{font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+    .info-val{font-size:.88rem;font-weight:600;line-height:1.65;color:var(--cream)}
+    .info-val a{color:var(--cream);transition:color .25s}
+    .info-val a:hover{color:var(--gold)}
+
+    /* CTA FINAL */
+    .ctasec{padding:8rem 0;position:relative;overflow:hidden}
+    .ctabg{position:absolute;inset:0;background:radial-gradient(ellipse 50% 65% at 50% 50%,rgba(196,40,24,.09),transparent 65%)}
+    .ctai{position:relative;text-align:center;max-width:1380px;margin:0 auto;padding:0 2.5rem}
+    .ctat{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5.4vw,5rem);font-weight:600;line-height:1.1;margin-bottom:1.4rem;letter-spacing:-.01em}
+    .ctat em{font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .ctas{font-size:1rem;color:var(--muted);line-height:1.85;max-width:500px;margin:0 auto 2.75rem}
+    .ctar{display:flex;gap:1.25rem;justify-content:center;flex-wrap:wrap}
+    .bfire{display:inline-block;background:var(--red);color:#fff;padding:1.05rem 2.5rem;border-radius:8px;font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;border:1px solid rgba(212,162,76,.28);box-shadow:0 4px 22px rgba(196,40,24,.32);transition:background .25s,transform .25s,box-shadow .25s}
+    .bfire:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 10px 32px rgba(196,40,24,.45)}
+    .bghost{display:inline-flex;align-items:center;gap:.55rem;color:var(--cream);font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid rgba(212,162,76,.35);padding-bottom:3px;transition:border-color .25s,gap .25s,color .25s}
+    .bghost:hover{border-color:var(--gold);color:var(--gold);gap:.85rem}
+
+    /* FOOTER */
+    footer{background:var(--bg2);border-top:1px solid var(--bdr);padding:5rem 0 2.5rem}
+    .fti{max-width:1380px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+    .ftlogo{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;display:block;margin-bottom:1rem}
+    .ftlogo em{color:var(--gold);font-style:italic;font-weight:500}
+    .ftdesc{font-size:.82rem;color:var(--muted);line-height:1.85}
+    .ftcol h4{font-size:.6rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:1.3rem}
+    .ftcol a{display:block;font-size:.82rem;color:var(--muted);margin-bottom:.7rem;transition:color .25s}
+    .ftcol a:hover{color:var(--cream)}
+    .ftbot{max-width:1380px;margin:0 auto;padding:2rem 2.5rem 0;border-top:1px solid var(--bdr);display:flex;justify-content:space-between;font-size:.7rem;color:rgba(237,224,200,.32);letter-spacing:.06em;flex-wrap:wrap;gap:.5rem}
+
+    /* RESPONSIVE */
+    @media(max-width:1024px){
+      nav{display:none}
+      .burger{display:flex}
+      .promise-grid{grid-template-columns:1fr;gap:2.5rem}
+      .promise-ring{margin:0 auto}
+      .zones-grid{grid-template-columns:1fr}
+      .infos-grid{grid-template-columns:1fr}
+      .steps-grid{grid-template-columns:1fr}
+      .fti{grid-template-columns:1fr 1fr;gap:2.5rem}
+    }
+    @media(max-width:600px){
+      .wrap{padding:0 1.25rem}
+      .hdi{padding:1.2rem 1.25rem}
+      .phero{padding:2.5rem 0 3.5rem}
+      .fti{grid-template-columns:1fr}
+      .ftbot{padding-bottom:8rem}
+      .fcta{bottom:1rem;right:1rem;padding:.85rem 1.5rem;font-size:.7rem}
+      .titem{padding:0 1.5rem;gap:1.5rem}
+    }
+    @media(max-width:375px){
+      .phero h1 .l2{font-size:2.8rem}
+      .stit{font-size:1.8rem}
+    }
+
+    /* Reduced motion */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+      .rev{opacity:1;transform:none}
+    }
+  </style>
+</head>
+<body>
+
+<!-- RETOUR BAR — sticky en haut, pattern identique à demo-kebab.html -->
+<a href="/" class="retour-bar">
+  <span class="r-arrow">←</span>
+  <span class="r-text">Retour aux réalisations · Le Relais Web</span>
+  <span class="r-badge">DÉMO</span>
+</a>
+
+<!-- NAV OVERLAY MOBILE -->
+<div id="nol">
+  <button id="ncl" aria-label="Fermer le menu">✕</button>
+  <a href="demo-kebab.html">Accueil</a>
+  <a href="demo-kebab-menu.html">Menu</a>
+  <a href="demo-kebab-formules.html">Formules</a>
+  <a href="demo-kebab-livraison.html">Livraison</a>
+  <a href="demo-kebab-contact.html">Contact</a>
+</div>
+
+<!-- HEADER -->
+<header id="hdr">
+  <div class="hdi">
+    <a href="demo-kebab.html" class="logo">Istanbul <em>Grill</em></a>
+    <nav>
+      <a href="demo-kebab.html">Accueil</a>
+      <a href="demo-kebab-menu.html">Menu</a>
+      <a href="demo-kebab-formules.html">Formules</a>
+      <a href="demo-kebab-livraison.html" class="active">Livraison</a>
+      <a href="demo-kebab-contact.html">Contact</a>
+      <a href="demo-kebab-contact.html" class="ncta">Commander →</a>
+    </nav>
+    <button class="burger" id="brgr" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- FLOAT BTN scroll -->
+<a href="demo-kebab-contact.html" class="fcta" id="fcta">Commander →</a>
+
+<!-- HERO DE PAGE — secondaire, élégant, sans canvas -->
+<section class="phero">
+  <div class="phero-glow"></div>
+  <div class="phero-wm">Livraison</div>
+  <div class="wrap phero-in">
+    <div class="phero-tag rev">
+      <span class="phero-dot"></span>
+      <span class="phero-label">Rapide &amp; fiable</span>
+    </div>
+    <h1 class="rev d1">
+      <span class="l1">Nous vous livrons</span>
+      <span class="l2">chez vous</span>
+    </h1>
+    <p class="phero-sub rev d2">Confirmation SMS en moins de 5 minutes. Livraison en 28 minutes chrono. Paiement à la livraison, espèces ou CB.</p>
+    <div class="phero-badges rev d3">
+      <span class="pbadge"><span class="pbadge-dot"></span>28 min chrono</span>
+      <span class="pbadge"><span class="pbadge-dot"></span>100% Halal</span>
+      <span class="pbadge"><span class="pbadge-dot"></span>7j/7 · 11h – 23h</span>
+      <span class="pbadge"><span class="pbadge-dot"></span>Dès 20€ — livraison offerte</span>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ttrack">
+    <div class="titem">Livraison offerte dès 20€ <span class="tdot">✦</span> 28 minutes chrono <span class="tdot">✦</span> Paiement à la livraison <span class="tdot">✦</span> 7j/7 · 11h–23h <span class="tdot">✦</span> SMS de confirmation <span class="tdot">✦</span> Halal certifié <span class="tdot">✦</span></div>
+    <div class="titem">Livraison offerte dès 20€ <span class="tdot">✦</span> 28 minutes chrono <span class="tdot">✦</span> Paiement à la livraison <span class="tdot">✦</span> 7j/7 · 11h–23h <span class="tdot">✦</span> SMS de confirmation <span class="tdot">✦</span> Halal certifié <span class="tdot">✦</span></div>
+  </div>
+</div>
+
+<!-- SECTION PROMESSE — 28 minutes -->
+<section class="promise-sec">
+  <div class="wrap">
+    <div class="promise-grid rev">
+      <div class="promise-ring" aria-hidden="true">
+        <div class="promise-num">28</div>
+        <div class="promise-unit">minutes</div>
+      </div>
+      <div class="promise-text">
+        <div class="seye"><span class="eyln"></span><span class="eylb">Notre engagement</span></div>
+        <h2>28 minutes, <em>c'est notre promesse</em></h2>
+        <p>Dès réception de votre commande, nos cuisiniers commencent immédiatement. Votre plat est grillé, emballé et entre les mains de notre livreur en un temps record. Pas de batch, pas de réchauffage — préparé à la minute pour vous.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÉTAPES DE COMMANDE -->
+<section class="steps-sec">
+  <div class="wrap">
+    <div class="seye rev"><span class="eyln"></span><span class="eylb">Comment ça marche</span></div>
+    <h2 class="stit rev d1">Trois étapes, <em>c'est tout</em></h2>
+    <div class="steps-grid">
+      <div class="step-card rev d1">
+        <div class="step-num">01</div>
+        <div class="step-title">Passez commande</div>
+        <p class="step-desc">Par téléphone ou via le formulaire en ligne. Précisez votre adresse et vos choix. Confirmation SMS en moins de 5 minutes.</p>
+      </div>
+      <div class="step-card rev d2">
+        <div class="step-num">02</div>
+        <div class="step-title">On prépare tout frais</div>
+        <p class="step-desc">Votre commande est cuisinée à la minute dès réception. Viande grillée au feu de bois, frites fraîches, sauces maison. Rien n'est réchauffé.</p>
+      </div>
+      <div class="step-card rev d3">
+        <div class="step-num">03</div>
+        <div class="step-title">Livraison à votre porte</div>
+        <p class="step-desc">Notre livreur vous prévient à son arrivée. Paiement en espèces ou CB directement sur place. Simple, rapide, sans friction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ZONES DE LIVRAISON -->
+<section class="zones-sec">
+  <div class="wrap">
+    <div class="zones-intro">
+      <div class="seye rev"><span class="eyln"></span><span class="eylb">Zones desservies</span></div>
+      <h2 class="stit rev d1">Zones de <em>livraison</em></h2>
+      <p class="ssub rev d2">Nous livrons dans un rayon de 15 km autour de Pontoise (95). Frais dégressifs selon la zone. Livraison offerte dès 20€ en zone principale.</p>
+    </div>
+
+    <!-- Carte visuelle CSS — cercles concentriques schématiques -->
+    <div class="zone-map rev d1" aria-label="Carte schématique des zones de livraison">
+      <div class="zone-map-inner" aria-hidden="true">
+        <div class="zc zc4"></div>
+        <div class="zc zc3"></div>
+        <div class="zc zc2"></div>
+        <div class="zc zc1"></div>
+        <div class="zone-map-center">Pontoise<br>95</div>
+        <span class="zmap-label zml1">Cergy</span>
+        <span class="zmap-label zml2">Osny · Jouy</span>
+        <span class="zmap-label zml3">Auvers-sur-Oise</span>
+      </div>
+    </div>
+
+    <!-- Grille de zones -->
+    <div class="zones-grid">
+      <div class="zone-card zone-main rev d1">
+        <div class="zone-left">
+          <div class="zone-name">Pontoise (95)</div>
+          <div class="zone-detail">Zone principale · Commande min. 15€</div>
+        </div>
+        <div>
+          <div class="zone-badge free">Gratuit</div>
+          <div class="zone-badge-sub">dès 20€ de commande</div>
+        </div>
+      </div>
+      <div class="zone-card rev d2">
+        <div class="zone-left">
+          <div class="zone-name">Cergy</div>
+          <div class="zone-detail">Zone 2 · Commande min. 18€</div>
+        </div>
+        <div>
+          <div class="zone-badge paid">2,50€</div>
+          <div class="zone-badge-sub">frais de livraison</div>
+        </div>
+      </div>
+      <div class="zone-card rev d1">
+        <div class="zone-left">
+          <div class="zone-name">Osny · Jouy-le-Moutier</div>
+          <div class="zone-detail">Zone 3 · Commande min. 20€</div>
+        </div>
+        <div>
+          <div class="zone-badge paid">3,50€</div>
+          <div class="zone-badge-sub">frais de livraison</div>
+        </div>
+      </div>
+      <div class="zone-card rev d2">
+        <div class="zone-left">
+          <div class="zone-name">Auvers-sur-Oise</div>
+          <div class="zone-detail">Zone 4 · Commande min. 22€</div>
+        </div>
+        <div>
+          <div class="zone-badge paid">4,00€</div>
+          <div class="zone-badge-sub">frais de livraison</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFOS PRATIQUES -->
+<section class="infos-sec">
+  <div class="wrap">
+    <div class="seye rev"><span class="eyln"></span><span class="eylb">Informations pratiques</span></div>
+    <h2 class="stit rev d1">Tout ce qu'il faut <em>savoir</em></h2>
+    <div class="infos-grid">
+      <div class="info-card rev d1">
+        <div class="info-ico" aria-hidden="true">📞</div>
+        <div>
+          <div class="info-label">Commander par téléphone</div>
+          <div class="info-val"><a href="tel:0130000000">01 30 XX XX XX</a></div>
+        </div>
+      </div>
+      <div class="info-card rev d2">
+        <div class="info-ico" aria-hidden="true">🕐</div>
+        <div>
+          <div class="info-label">Horaires de livraison</div>
+          <div class="info-val">Lundi – Samedi : 11h – 23h<br>Dimanche : 12h – 22h30</div>
+        </div>
+      </div>
+      <div class="info-card rev d1">
+        <div class="info-ico" aria-hidden="true">💳</div>
+        <div>
+          <div class="info-label">Modes de paiement</div>
+          <div class="info-val">CB ou espèces — à la livraison uniquement</div>
+        </div>
+      </div>
+      <div class="info-card rev d2">
+        <div class="info-ico" aria-hidden="true">📍</div>
+        <div>
+          <div class="info-label">Notre adresse</div>
+          <div class="info-val">45 rue de la Gare, Pontoise (95300)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="ctasec">
+  <div class="ctabg"></div>
+  <div class="ctai">
+    <h2 class="ctat rev">Prêt à commander<br><em>maintenant ?</em></h2>
+    <p class="ctas rev d1">Confirmation SMS en moins de 5 minutes. Paiement à la livraison, CB ou espèces.</p>
+    <div class="ctar rev d2">
+      <a href="demo-kebab-contact.html" class="bfire">Commander →</a>
+      <a href="demo-kebab-menu.html" class="bghost">Voir le menu →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fti">
+    <div>
+      <a href="demo-kebab.html" class="ftlogo">Istanbul <em>Grill</em></a>
+      <p class="ftdesc">Kebab artisanal à Pontoise (95).<br>Halal, livraison rapide, ouvert 7j/7.</p>
+    </div>
+    <div class="ftcol">
+      <h4>Navigation</h4>
+      <a href="demo-kebab-menu.html">Menu</a>
+      <a href="demo-kebab-formules.html">Formules</a>
+      <a href="demo-kebab-livraison.html">Livraison</a>
+      <a href="demo-kebab-contact.html">Contact</a>
+    </div>
+    <div class="ftcol">
+      <h4>Infos</h4>
+      <a href="tel:0130000000">01 30 XX XX XX</a>
+      <a href="#">45 rue de la Gare, Pontoise</a>
+      <a href="#">Lun–Dim · 11h – 23h</a>
+    </div>
+    <div class="ftcol">
+      <h4>Commander</h4>
+      <a href="demo-kebab-contact.html">Formulaire en ligne</a>
+      <a href="tel:0130000000">Par téléphone</a>
+    </div>
+  </div>
+  <div class="ftbot">
+    <span>© 2026 Istanbul Grill · Pontoise</span>
+    <span>Site réalisé par <a href="https://www.lerelaisweb.com" target="_blank" rel="noopener noreferrer" style="color:rgba(212,162,76,.7);text-decoration:none">Le Relais Web</a></span>
+  </div>
+</footer>
+
+<script>
+(function() {
+  /* --- HEADER + FLOAT BTN --- */
+  var hdr = document.getElementById('hdr');
+  var fb  = document.getElementById('fcta');
+  window.addEventListener('scroll', function() {
+    if (hdr) hdr.classList.toggle('scrolled', window.scrollY > 50);
+    if (fb)  fb.classList.toggle('show',      window.scrollY > 400);
+  }, { passive: true });
+
+  /* --- SCROLL REVEAL --- */
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(x) {
+        if (x.isIntersecting) { x.target.classList.add('in'); obs.unobserve(x.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.rev').forEach(function(el) { obs.observe(el); });
+  } else {
+    document.querySelectorAll('.rev').forEach(function(el) { el.classList.add('in'); });
+  }
+
+  /* --- BURGER MENU --- */
+  var bg = document.getElementById('brgr');
+  var ol = document.getElementById('nol');
+  var cl = document.getElementById('ncl');
+  if (bg) bg.onclick = function() {
+    if (ol) { ol.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  };
+  if (cl) cl.onclick = function() {
+    if (ol) { ol.classList.remove('open'); document.body.style.overflow = ''; }
+  };
+  if (ol) ol.querySelectorAll('a').forEach(function(a) {
+    a.onclick = function() { ol.classList.remove('open'); document.body.style.overflow = ''; };
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && ol && ol.classList.contains('open')) {
+      ol.classList.remove('open'); document.body.style.overflow = '';
+    }
+  });
+})();
+</script>
+</body>
+</html>

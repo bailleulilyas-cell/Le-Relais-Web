@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Exemple de site vitrine restaurant kebab par Le Relais Web, agence web Ermont. Menu, formules, livraison. Score Google 99/100.">
+  <link rel="icon" type="image/png" href="/logo.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://www.lerelaisweb.com/demos/demo-kebab.html">
+  <meta property="og:title" content="Démo Site Kebab v2 — Le Relais Web">
+  <meta property="og:description" content="Exemple de site vitrine restaurant kebab par Le Relais Web. Menu, formules, livraison, commande en ligne.">
+  <meta property="og:image" content="https://www.lerelaisweb.com/logo.webp">
+  <meta property="og:url" content="https://www.lerelaisweb.com/demos/demo-kebab.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <title>Démo Site Kebab v2 — Création Site Restaurant | Le Relais Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#08070A;
+      --bg2:#0E0C10;
+      --bg3:#15121A;
+      --red:#C42818;
+      --red2:#A11F12;
+      --gold:#D4A24C;
+      --gold2:#B98935;
+      --cream:#EDE0C8;
+      --muted:rgba(237,224,200,.55);
+      --bdr:rgba(212,162,76,.14);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Outfit',sans-serif;
+      background:var(--bg);
+      color:var(--cream);
+      overflow-x:hidden;
+      cursor:auto;
+      /* Texture cuir noir : gradient sombre subtil */
+      background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(196,40,24,.04), transparent 55%),
+        radial-gradient(ellipse at 85% 90%, rgba(212,162,76,.035), transparent 60%),
+        linear-gradient(180deg, #08070A 0%, #0A0809 100%);
+    }
+    a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+    /* Grain cuir */
+    body::before{
+      content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      opacity:.045;mix-blend-mode:overlay;
+    }
+
+    /* FLOAT BTN */
+    .fcta{display:none;position:fixed;bottom:2rem;right:2rem;z-index:500;background:var(--red);color:#fff;padding:.95rem 1.85rem;border-radius:8px;font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;box-shadow:0 6px 22px rgba(196,40,24,.35);transition:background .25s,transform .25s,box-shadow .25s;border:1px solid rgba(212,162,76,.25)}
+    .fcta.show{display:inline-flex;align-items:center}
+    .fcta:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(196,40,24,.45)}
+
+    /* RETOUR BAR — sticky, dans le flux du document */
+    .retour-bar{
+      position:sticky;top:0;left:0;right:0;z-index:9998;
+      display:flex;align-items:center;justify-content:center;gap:.7rem;
+      width:100%;padding:.65rem 1rem;
+      background:linear-gradient(90deg,#08070A 0%,#1a0d09 100%);
+      color:#F4ECE0;
+      font-family:'Outfit',sans-serif;font-size:.7rem;font-weight:600;
+      letter-spacing:.16em;text-transform:uppercase;text-decoration:none;
+      border-bottom:1px solid var(--gold);
+      transition:background .25s;
+    }
+    .retour-bar:hover{background:linear-gradient(90deg,#C42818 0%,#08070A 100%)}
+    .retour-bar .r-arrow{font-size:.95rem;color:var(--gold);transition:transform .2s}
+    .retour-bar:hover .r-arrow{transform:translateX(-3px);color:#F4ECE0}
+    .retour-bar .r-badge{background:var(--gold);color:#08070A;padding:.15rem .5rem;border-radius:4px;font-size:.6rem;letter-spacing:.1em}
+    @media(max-width:480px){
+      .retour-bar{padding:.55rem .8rem;font-size:.6rem;gap:.45rem}
+      .retour-bar .r-text{max-width:58vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    }
+
+    /* HEADER */
+    header{position:sticky;top:2.45rem;left:0;right:0;z-index:200;transition:background .3s, border-color .3s;border-bottom:1px solid transparent}
+    header.scrolled{background:rgba(8,7,10,.94);backdrop-filter:blur(22px);border-bottom-color:var(--bdr)}
+    .hdi{max-width:1380px;margin:0 auto;padding:1.4rem 2.5rem;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase}
+    .logo em{color:var(--gold);font-style:italic;font-weight:500}
+    nav{display:flex;gap:2.5rem;align-items:center}
+    nav a{color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;position:relative;transition:color .25s}
+    nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .35s}
+    nav a:hover,nav a.active{color:var(--cream)}
+    nav a:hover::after,nav a.active::after{width:100%}
+    .ncta{background:var(--red)!important;color:#fff!important;padding:.65rem 1.55rem;border-radius:8px;border:1px solid rgba(212,162,76,.3);transition:background .25s,transform .25s!important}
+    .ncta::after{display:none!important}
+    .ncta:hover{background:var(--red2)!important;transform:translateY(-2px)!important}
+    .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:10px;min-width:44px;min-height:44px;align-items:center;justify-content:center}
+    .burger span{width:22px;height:1.5px;background:var(--cream)}
+
+    /* HERO */
+    .hero{min-height:calc(100vh - 7rem);display:flex;align-items:center;position:relative;overflow:hidden;padding:3rem 0 4rem}
+    .hglow{position:absolute;inset:0;background:
+      radial-gradient(ellipse 60% 55% at 75% 50%,rgba(196,40,24,.10),transparent 65%),
+      radial-gradient(ellipse 35% 40% at 12% 80%,rgba(212,162,76,.05),transparent 55%);
+    }
+    #pc{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.7}
+    .h-in{position:relative;z-index:1;max-width:1380px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+    .h-eye{display:inline-flex;align-items:center;gap:.75rem;margin-bottom:2rem}
+    .h-edot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+    .h-etxt{font-size:.7rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+    .h-title{font-family:'Playfair Display',serif;line-height:1.05;margin-bottom:2rem;opacity:0;animation:fup .8s ease .15s forwards}
+    .hl{display:block}
+    .l1{font-size:clamp(2.8rem,5.5vw,5rem);font-weight:400;color:var(--cream);font-style:italic;letter-spacing:-.01em}
+    .l2{font-size:clamp(4rem,8vw,7.6rem);font-weight:800;line-height:1;letter-spacing:-.02em;background:linear-gradient(135deg,var(--red) 0%,#E03A22 40%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .l3{font-size:clamp(1.8rem,3.6vw,3.2rem);font-style:italic;font-weight:400;color:rgba(237,224,200,.4);letter-spacing:.01em;margin-top:.4rem}
+    .h-sub{font-size:1rem;color:var(--muted);line-height:1.85;max-width:440px;margin-bottom:2.5rem;opacity:0;animation:fup .8s ease .35s forwards}
+    .h-act{display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center;margin-bottom:2.5rem;opacity:0;animation:fup .8s ease .5s forwards}
+    .h-tr{display:flex;gap:2rem;flex-wrap:wrap;opacity:0;animation:fup .8s ease .65s forwards}
+    .tri{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:600;color:var(--muted)}
+    .trdot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+    @keyframes fup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .bfire{display:inline-block;background:var(--red);color:#fff;padding:1.05rem 2.5rem;border-radius:8px;font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;border:1px solid rgba(212,162,76,.28);box-shadow:0 4px 22px rgba(196,40,24,.32);transition:background .25s,transform .25s,box-shadow .25s}
+    .bfire:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 10px 32px rgba(196,40,24,.45)}
+    .bghost{display:inline-flex;align-items:center;gap:.55rem;color:var(--cream);font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid rgba(212,162,76,.35);padding-bottom:3px;transition:border-color .25s,gap .25s,color .25s}
+    .bghost:hover{border-color:var(--gold);color:var(--gold);gap:.85rem}
+    .h-right{opacity:0;animation:fup .9s ease .35s forwards;position:relative}
+    .hvis{position:relative}
+    .himg{height:540px;border-radius:8px;overflow:hidden;background:var(--bg3);border:1px solid var(--bdr)}
+    .himg img{width:100%;height:100%;object-fit:cover;transition:transform .9s ease}
+    .hvis:hover .himg img{transform:scale(1.04)}
+    .himg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(8,7,10,.55));pointer-events:none}
+
+    /* Sceau Halal — détail signature */
+    .seal{
+      position:absolute;top:1.5rem;right:1.5rem;
+      width:108px;height:108px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #E5BB6E 0%, var(--gold) 45%, var(--gold2) 100%);
+      display:flex;align-items:center;justify-content:center;flex-direction:column;
+      color:#1a120a;font-family:'Playfair Display',serif;
+      box-shadow:0 8px 24px rgba(0,0,0,.5), inset 0 2px 4px rgba(255,255,255,.3), inset 0 -2px 4px rgba(0,0,0,.25);
+      transform:rotate(-8deg);
+      border:2px solid #1a120a;
+    }
+    .seal::before{
+      content:'';position:absolute;inset:5px;border-radius:50%;
+      border:1px dashed rgba(26,18,10,.55);
+    }
+    .seal-tagline{font-size:.5rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;text-align:center}
+    .seal-main{font-size:1rem;font-weight:800;font-style:italic;letter-spacing:.02em;line-height:1;margin:.15rem 0}
+    .seal-year{font-size:.55rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+
+    .hbadge{position:absolute;background:rgba(14,12,16,.94);backdrop-filter:blur(18px);border:1px solid var(--bdr);border-radius:8px;padding:1rem 1.3rem}
+    .hb1{top:-1.25rem;left:-1.5rem}
+    .hb2{bottom:2.5rem;right:-1.75rem}
+    .hbval{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;color:var(--gold);line-height:1}
+    .hblbl{font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+
+    /* TICKER */
+    .ticker{overflow:hidden;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:1rem 0;background:var(--bg2)}
+    .ttrack{display:flex;width:max-content;animation:tck 38s linear infinite}
+    .titem{white-space:nowrap;padding:0 2.5rem;font-size:.85rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:2rem;font-family:'Playfair Display',serif;font-style:italic}
+    .tdot{color:var(--gold);font-size:.55rem;font-style:normal}
+    @keyframes tck{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* SECTIONS */
+    .sec{padding:7rem 0}
+    .wrap{max-width:1380px;margin:0 auto;padding:0 2.5rem}
+    .seye{display:inline-flex;align-items:center;gap:.75rem;margin-bottom:1.4rem}
+    .eyln{width:36px;height:1px;background:var(--gold)}
+    .eylb{font-size:.65rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+    .stit{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,4.6vw,3.8rem);font-weight:600;line-height:1.1;margin-bottom:1.2rem;letter-spacing:-.005em}
+    .stit em{font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .ssub{font-size:.95rem;color:var(--muted);line-height:1.85;max-width:540px}
+    .rev{opacity:0;transform:translateY(20px);transition:opacity .8s ease, transform .8s ease}
+    .rev.in{opacity:1;transform:none}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+    /* MENU CARDS */
+    .mhdr{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;gap:2rem;flex-wrap:wrap}
+    .sall{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);transition:gap .25s}
+    .sall:hover{gap:.85rem}
+    .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.75rem}
+    .mc{background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;overflow:hidden;transition:border-color .35s,transform .35s,box-shadow .35s}
+    .mc:hover{border-color:rgba(212,162,76,.35);transform:translateY(-4px);box-shadow:0 14px 38px rgba(0,0,0,.45)}
+    .mci{height:215px;overflow:hidden;position:relative;background:var(--bg3)}
+    .mci img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+    .mc:hover .mci img{transform:scale(1.06)}
+    .mci::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,7,10,.6),transparent 55%)}
+    .mcb{padding:1.5rem 1.6rem 1.7rem}
+    .mctags{display:flex;gap:.4rem;margin-bottom:.7rem;flex-wrap:wrap}
+    .tag{font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .6rem;border-radius:8px;border:1px solid transparent}
+    .th{background:rgba(212,162,76,.1);color:var(--gold);border-color:rgba(212,162,76,.25)}
+    .mcn{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;margin-bottom:.45rem;letter-spacing:-.005em}
+    .mcd{font-size:.78rem;color:var(--muted);line-height:1.7;margin-bottom:1.1rem}
+    .mcf{display:flex;align-items:center;justify-content:space-between}
+    .mcp{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--gold);font-style:italic}
+    .mca{width:38px;height:38px;border-radius:8px;border:1px solid rgba(212,162,76,.3);background:var(--red);color:#fff;font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .25s,transform .25s}
+    .mca:hover{background:var(--red2);transform:scale(1.08)}
+
+    /* QUALITY — style menu de chef */
+    .quality{padding:7rem 0;border-top:1px solid var(--bdr);position:relative}
+    .quality::before{
+      content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+      width:1px;height:48px;background:linear-gradient(to bottom, var(--gold), transparent);
+    }
+    .qg{display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;align-items:center}
+    .qiw{position:relative;height:580px;border-radius:8px;overflow:hidden;background:var(--bg3);border:1px solid var(--bdr)}
+    .qiw img{width:100%;height:100%;object-fit:cover}
+    .qbadge{position:absolute;bottom:2rem;right:-1rem;background:rgba(14,12,16,.94);backdrop-filter:blur(18px);border:1px solid var(--bdr);border-radius:8px;padding:1.3rem 1.6rem}
+    .qbn{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:700;color:var(--gold);line-height:1;font-style:italic}
+    .qbl{font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+
+    /* Menu de chef : structure éditoriale */
+    .chef-menu{margin-top:2.6rem;display:flex;flex-direction:column;gap:.4rem;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:1.6rem 0}
+    .chef-row{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:baseline;padding:1rem 0;border-bottom:1px dashed rgba(212,162,76,.12)}
+    .chef-row:last-child{border-bottom:none}
+    .chef-num{font-family:'Playfair Display',serif;font-size:.85rem;font-weight:600;color:var(--gold);font-style:italic;letter-spacing:.05em}
+    .chef-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;color:var(--cream);margin-bottom:.3rem;letter-spacing:-.005em}
+    .chef-desc{font-size:.82rem;color:var(--muted);line-height:1.75;font-style:italic}
+
+    /* STATS */
+    .stats{background:var(--bg2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:4rem 0}
+    .si{max-width:1380px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:repeat(4,1fr)}
+    .st{text-align:center;padding:1.5rem 2rem;border-right:1px solid var(--bdr)}
+    .st:last-child{border-right:none}
+    .stn{font-family:'Playfair Display',serif;font-size:3.6rem;font-weight:700;line-height:1;color:var(--gold);margin-bottom:.6rem;font-style:italic}
+    .stl{font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+
+    /* CTA */
+    .ctasec{padding:8rem 0;position:relative;overflow:hidden}
+    .ctabg{position:absolute;inset:0;background:radial-gradient(ellipse 50% 65% at 50% 50%,rgba(196,40,24,.09),transparent 65%)}
+    .ctai{position:relative;text-align:center;max-width:1380px;margin:0 auto;padding:0 2.5rem}
+    .ctat{font-family:'Playfair Display',serif;font-size:clamp(2.4rem,5.4vw,5rem);font-weight:600;line-height:1.1;margin-bottom:1.4rem;letter-spacing:-.01em}
+    .ctat em{font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .ctas{font-size:1rem;color:var(--muted);line-height:1.85;max-width:500px;margin:0 auto 2.75rem}
+    .ctar{display:flex;gap:1.25rem;justify-content:center;flex-wrap:wrap}
+
+    /* FOOTER */
+    footer{background:var(--bg2);border-top:1px solid var(--bdr);padding:5rem 0 2.5rem}
+    .fti{max-width:1380px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+    .ftlogo{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;display:block;margin-bottom:1rem}
+    .ftlogo em{color:var(--gold);font-style:italic;font-weight:500}
+    .ftdesc{font-size:.82rem;color:var(--muted);line-height:1.85}
+    .ftcol h4{font-size:.6rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:1.3rem}
+    .ftcol a{display:block;font-size:.82rem;color:var(--muted);margin-bottom:.7rem;transition:color .25s}
+    .ftcol a:hover{color:var(--cream)}
+    .ftbot{max-width:1380px;margin:0 auto;padding:2rem 2.5rem 0;border-top:1px solid var(--bdr);display:flex;justify-content:space-between;font-size:.7rem;color:rgba(237,224,200,.32);letter-spacing:.06em;flex-wrap:wrap;gap:.5rem}
+
+    /* NAV OVERLAY */
+    #nol{display:none;position:fixed;inset:0;background:var(--bg);z-index:9000;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+    #nol.open{display:flex}
+    #nol a{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5.5vw,3.2rem);font-weight:500;font-style:italic;color:var(--cream);transition:color .25s,transform .3s;min-height:44px;display:inline-flex;align-items:center}
+    #nol a:hover{color:var(--gold);transform:translateX(12px)}
+    #ncl{position:absolute;top:1.5rem;right:1.5rem;background:none;border:1px solid var(--bdr);border-radius:8px;color:var(--cream);font-size:1.4rem;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;line-height:1}
+
+    /* RESPONSIVE */
+    @media(max-width:1024px){
+      .h-in{grid-template-columns:1fr}
+      .h-right{display:none}
+      nav{display:none}
+      .burger{display:flex}
+      .g3{grid-template-columns:repeat(2,1fr)}
+      .si{grid-template-columns:repeat(2,1fr)}
+      .st{border-bottom:1px solid var(--bdr)}
+      .st:nth-child(2){border-right:none}
+      .fti{grid-template-columns:1fr 1fr;gap:2.5rem}
+      .qg{grid-template-columns:1fr;gap:3rem}
+      .qiw{height:380px}
+    }
+    /* Floating badges & seal cachés sous 768 */
+    @media(max-width:768px){
+      .hbadge,.seal{display:none}
+    }
+    @media(max-width:600px){
+      .ftbot{padding-bottom:8rem}
+      .fcta{bottom:1rem;right:1rem;padding:.85rem 1.5rem;font-size:.7rem}
+      .g3{grid-template-columns:1fr}
+      .fti{grid-template-columns:1fr}
+      .si{grid-template-columns:1fr 1fr}
+      .wrap{padding:0 1.25rem}
+      .hdi{padding:1.2rem 1.25rem}
+      .hero{padding:2.5rem 0 3rem}
+      .titem{padding:0 1.5rem;gap:1.5rem}
+      .chef-row{grid-template-columns:1fr;gap:.4rem}
+    }
+
+    /* Reduced motion */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+      .rev{opacity:1;transform:none}
+    }
+  </style>
+</head>
+<body>
+<a href="/" class="retour-bar">
+  <span class="r-arrow">←</span>
+  <span class="r-text">Retour aux réalisations · Le Relais Web</span>
+  <span class="r-badge">DÉMO</span>
+</a>
+<div id="nol">
+  <button id="ncl" aria-label="Fermer le menu">✕</button>
+  <a href="demo-kebab.html">Accueil</a>
+  <a href="demo-kebab-menu.html">Menu</a>
+  <a href="demo-kebab-formules.html">Formules</a>
+  <a href="demo-kebab-livraison.html">Livraison</a>
+  <a href="demo-kebab-contact.html">Contact</a>
+</div>
+<header id="hdr">
+  <div class="hdi">
+    <a href="demo-kebab.html" class="logo">Istanbul <em>Grill</em></a>
+    <nav>
+      <a href="demo-kebab.html" class="active">Accueil</a>
+      <a href="demo-kebab-menu.html">Menu</a>
+      <a href="demo-kebab-formules.html">Formules</a>
+      <a href="demo-kebab-livraison.html">Livraison</a>
+      <a href="demo-kebab-contact.html">Contact</a>
+      <a href="demo-kebab-contact.html" class="ncta">Commander →</a>
+    </nav>
+    <button class="burger" id="brgr" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<a href="demo-kebab-contact.html" class="fcta" id="fcta">Commander →</a>
+
+<section class="hero">
+  <div class="hglow"></div>
+  <canvas id="pc"></canvas>
+  <div class="h-in">
+    <div>
+      <div class="h-eye"><span class="h-edot"></span><span class="h-etxt">Kebab artisanal · Pontoise 95</span></div>
+      <h1 class="h-title">
+        <span class="hl l1">Le vrai</span>
+        <span class="hl l2">Kebab</span>
+        <span class="hl l3">artisanal</span>
+      </h1>
+      <p class="h-sub">Viande halal marinée 24h, sauce secrète transmise de génération en génération. La différence se sent dès la première bouchée.</p>
+      <div class="h-act">
+        <a href="demo-kebab-contact.html" class="bfire">Commander maintenant</a>
+        <a href="demo-kebab-menu.html" class="bghost">Voir le menu →</a>
+      </div>
+      <div class="h-tr">
+        <span class="tri"><span class="trdot"></span>100% Halal certifié</span>
+        <span class="tri"><span class="trdot"></span>Livraison 30 min</span>
+        <span class="tri"><span class="trdot"></span>4,8/5 · 280 avis</span>
+      </div>
+    </div>
+    <div class="h-right">
+      <div class="hvis">
+        <div class="himg">
+          <img src="kebab-maison.webp" alt="Kebab Maison" width="800" height="500" fetchpriority="high" decoding="async">
+        </div>
+        <div class="seal" aria-label="Halal certifié">
+          <span class="seal-tagline">Certifié</span>
+          <span class="seal-main">Halal</span>
+          <span class="seal-year">Maison</span>
+        </div>
+        <div class="hbadge hb1"><div class="hbval">★ 4,8</div><div class="hblbl">280 avis Google</div></div>
+        <div class="hbadge hb2"><div class="hbval">28'</div><div class="hblbl">Livraison rapide</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ttrack">
+    <div class="titem">Livraison offerte dès 20€ <span class="tdot">✦</span> 100% Halal certifié <span class="tdot">✦</span> Viande marinée 24h <span class="tdot">✦</span> Pontoise & alentours <span class="tdot">✦</span> 7j/7 · 11h–23h <span class="tdot">✦</span> 30 minutes chrono <span class="tdot">✦</span> -10% 1ère commande <span class="tdot">✦</span></div>
+    <div class="titem">Livraison offerte dès 20€ <span class="tdot">✦</span> 100% Halal certifié <span class="tdot">✦</span> Viande marinée 24h <span class="tdot">✦</span> Pontoise & alentours <span class="tdot">✦</span> 7j/7 · 11h–23h <span class="tdot">✦</span> 30 minutes chrono <span class="tdot">✦</span> -10% 1ère commande <span class="tdot">✦</span></div>
+  </div>
+</div>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="mhdr">
+      <div>
+        <div class="seye rev"><span class="eyln"></span><span class="eylb">Notre carte</span></div>
+        <h2 class="stit rev d1">Les <em>incontournables</em></h2>
+        <p class="ssub rev d2">Quelques plats phares. Tous nos produits carnés sont certifiés Halal.</p>
+      </div>
+      <a href="demo-kebab-menu.html" class="sall rev d2">Tout le menu →</a>
+    </div>
+    <div class="g3">
+      <div class="mc rev d1">
+        <div class="mci"><img src="kebab-maison.webp" alt="Kebab Maison" width="400" height="300" loading="lazy" decoding="async"></div>
+        <div class="mcb">
+          <div class="mctags"><span class="tag th">Halal</span></div>
+          <div class="mcn">Kebab Maison</div>
+          <p class="mcd">Agneau & poulet marinés 24h, sauce secrète, tomates, salade, oignons.</p>
+          <div class="mcf"><span class="mcp">7,50€</span><button class="mca" aria-label="Ajouter">+</button></div>
+        </div>
+      </div>
+      <div class="mc rev d2">
+        <div class="mci"><img src="assiette-mixte.webp" alt="Assiette Mixte" width="400" height="300" loading="lazy" decoding="async"></div>
+        <div class="mcb">
+          <div class="mctags"><span class="tag th">Halal</span></div>
+          <div class="mcn">Assiette Mixte Royale</div>
+          <p class="mcd">Kebab + merguez + frites maison + salade fraîche.</p>
+          <div class="mcf"><span class="mcp">13,50€</span><button class="mca" aria-label="Ajouter">+</button></div>
+        </div>
+      </div>
+      <div class="mc rev d3">
+        <div class="mci"><img src="tacos-viande.webp" alt="Tacos" width="400" height="300" loading="lazy" decoding="async"></div>
+        <div class="mcb">
+          <div class="mctags"><span class="tag th">Halal</span></div>
+          <div class="mcn">Tacos Triple Viande</div>
+          <p class="mcd">Poulet, bœuf, merguez, fromage fondu, frites, sauce.</p>
+          <div class="mcf"><span class="mcp">9,00€</span><button class="mca" aria-label="Ajouter">+</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="quality">
+  <div class="wrap">
+    <div class="qg">
+      <div class="rev">
+        <div class="qiw">
+          <img src="assiette-mixte.webp" alt="Qualité Istanbul Grill" width="800" height="500" loading="lazy" decoding="async">
+          <div class="qbadge"><div class="qbn">24h</div><div class="qbl">Marinade maison</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="seye rev"><span class="eyln"></span><span class="eylb">Notre savoir-faire</span></div>
+        <h2 class="stit rev d1">Fait avec <em>passion</em></h2>
+        <p class="ssub rev d2">Chaque plat est préparé à la commande. Rien n'est réchauffé, rien n'est fait à l'avance.</p>
+        <div class="chef-menu rev d3">
+          <div class="chef-row">
+            <span class="chef-num">i.</span>
+            <div>
+              <div class="chef-title">Marinade 24 heures</div>
+              <p class="chef-desc">La viande repose dans nos épices maison une journée entière avant d'être grillée.</p>
+            </div>
+          </div>
+          <div class="chef-row">
+            <span class="chef-num">ii.</span>
+            <div>
+              <div class="chef-title">100% Halal certifié</div>
+              <p class="chef-desc">Certification officielle, renouvelée chaque année. Sans concession.</p>
+            </div>
+          </div>
+          <div class="chef-row">
+            <span class="chef-num">iii.</span>
+            <div>
+              <div class="chef-title">Sauce secrète</div>
+              <p class="chef-desc">Recette familiale transmise depuis trois générations. Jamais copiée.</p>
+            </div>
+          </div>
+          <div class="chef-row">
+            <span class="chef-num">iv.</span>
+            <div>
+              <div class="chef-title">Préparé à la commande</div>
+              <p class="chef-desc">Votre plat est grillé dès réception. Toujours frais, jamais réchauffé.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="si">
+    <div class="st rev"><div class="stn" data-t="10" data-s="%">0</div><div class="stl">Sur 1ère commande</div></div>
+    <div class="st rev d2"><div class="stn" data-t="28" data-s="min">0</div><div class="stl">Livraison garantie</div></div>
+    <div class="st rev d3"><div class="stn" data-t="280">0</div><div class="stl">Avis 5 étoiles</div></div>
+    <div class="st rev d4"><div class="stn" data-t="7" data-s="j/7">0</div><div class="stl">Ouvert</div></div>
+  </div>
+</div>
+
+<section class="ctasec">
+  <div class="ctabg"></div>
+  <div class="ctai">
+    <h2 class="ctat rev">Prêt à commander<br><em>maintenant ?</em></h2>
+    <p class="ctas rev d1">Confirmation par SMS en moins de 5 minutes. Paiement à la livraison, CB ou espèces.</p>
+    <div class="ctar rev d2">
+      <a href="demo-kebab-contact.html" class="bfire">Commander →</a>
+      <a href="demo-kebab-livraison.html" class="bghost">Zones de livraison →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fti">
+    <div>
+      <a href="demo-kebab.html" class="ftlogo">Istanbul <em>Grill</em></a>
+      <p class="ftdesc">Kebab artisanal à Pontoise (95).<br>Halal, livraison rapide, ouvert 7j/7.</p>
+    </div>
+    <div class="ftcol">
+      <h4>Navigation</h4>
+      <a href="demo-kebab-menu.html">Menu</a>
+      <a href="demo-kebab-formules.html">Formules</a>
+      <a href="demo-kebab-livraison.html">Livraison</a>
+      <a href="demo-kebab-contact.html">Contact</a>
+    </div>
+    <div class="ftcol">
+      <h4>Infos</h4>
+      <a href="tel:0130000000">01 30 XX XX XX</a>
+      <a href="#">45 rue de la Gare, Pontoise</a>
+      <a href="#">Lun–Dim · 11h – 23h</a>
+    </div>
+    <div class="ftcol">
+      <h4>Commander</h4>
+      <a href="demo-kebab-contact.html">Formulaire en ligne</a>
+      <a href="tel:0130000000">Par téléphone</a>
+    </div>
+  </div>
+  <div class="ftbot">
+    <span>© 2026 Istanbul Grill · Pontoise</span>
+    <span>Site par <a href="https://www.lerelaisweb.com" target="_blank" rel="noopener noreferrer" style="color:rgba(212,162,76,.7);text-decoration:none">Site réalisé par Le Relais Web</a></span>
+  </div>
+</footer>
+
+<script>
+(function() {
+  /* --- CANVAS EMBERS (réduit + désactivé mobile) --- */
+  var cv = document.getElementById('pc');
+  var isMobile = window.matchMedia('(max-width: 768px)').matches;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (cv && !isMobile && !reduceMotion) {
+    var ctx = cv.getContext('2d');
+    var P = [];
+    function rsz() { cv.width = cv.offsetWidth; cv.height = cv.offsetHeight; }
+    rsz();
+    window.addEventListener('resize', rsz);
+    function mk() {
+      return {
+        x: Math.random() * cv.width,
+        y: cv.height + 10,
+        sz: Math.random() * 2.2 + 0.4,
+        vy: Math.random() * 0.85 + 0.25,
+        vx: (Math.random() - 0.5) * 0.3,
+        op: 0.3,
+        life: 0,
+        max: Math.random() * 240 + 120,
+        col: Math.random() > 0.5 ? '#C42818' : '#D4A24C'
+      };
+    }
+    for (var i = 0; i < 25; i++) {
+      var p = mk();
+      p.y = Math.random() * cv.height;
+      p.life = Math.floor(Math.random() * p.max);
+      P.push(p);
+    }
+    (function ap() {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      P.forEach(function(p) {
+        p.y -= p.vy; p.x += p.vx; p.life++;
+        p.op = (1 - p.life / p.max) * 0.32;
+        if (p.life >= p.max || p.y < -10) { var n = mk(); for (var k in n) p[k] = n[k]; }
+        ctx.save();
+        ctx.globalAlpha = p.op;
+        ctx.fillStyle = p.col;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.sz, 0, 6.28);
+        ctx.fill();
+        ctx.restore();
+      });
+      requestAnimationFrame(ap);
+    })();
+  } else if (cv) {
+    cv.style.display = 'none';
+  }
+
+  /* --- HEADER + FLOAT BTN --- */
+  var hdr = document.getElementById('hdr');
+  var fb = document.getElementById('fcta');
+  window.addEventListener('scroll', function() {
+    if (hdr) hdr.classList.toggle('scrolled', window.scrollY > 50);
+    if (fb) fb.classList.toggle('show', window.scrollY > 500);
+  }, { passive: true });
+
+  /* --- SCROLL REVEAL --- */
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(x) {
+      if (x.isIntersecting) { x.target.classList.add('in'); obs.unobserve(x.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.rev').forEach(function(el) { obs.observe(el); });
+
+  /* --- COUNTERS (trigger lent : 2200ms) --- */
+  var cobs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(x) {
+      if (!x.isIntersecting) return;
+      var el = x.target;
+      var t = parseInt(el.dataset.t || el.dataset.count || 0);
+      var sf = el.dataset.s || el.dataset.suffix || '';
+      var duration = 2200, start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / duration, 1);
+        var v = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+        el.textContent = Math.floor(v * t) + sf;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      cobs.unobserve(el);
+    });
+  }, { threshold: 0 });
+  document.querySelectorAll('.stn[data-t], .stn[data-count]').forEach(function(el) { cobs.observe(el); });
+
+  /* --- BURGER MENU --- */
+  var bg = document.getElementById('brgr');
+  var ol = document.getElementById('nol');
+  var cl = document.getElementById('ncl');
+  if (bg) bg.onclick = function() { if (ol) { ol.classList.add('open'); document.body.style.overflow = 'hidden'; } };
+  if (cl) cl.onclick = function() { if (ol) { ol.classList.remove('open'); document.body.style.overflow = ''; } };
+  if (ol) ol.querySelectorAll('a').forEach(function(a) {
+    a.onclick = function() { ol.classList.remove('open'); document.body.style.overflow = ''; };
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && ol && ol.classList.contains('open')) {
+      ol.classList.remove('open'); document.body.style.overflow = '';
+    }
+  });
+})();
+</script>
+</body>
+</html>

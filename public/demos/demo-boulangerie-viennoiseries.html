@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Croissants, pains au chocolat, tartes maison. Exemple de site vitrine boulangerie-pâtisserie par Le Relais Web, agence web Ermont.">
+  <link rel="icon" type="image/png" href="/logo.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://www.lerelaisweb.com/demos/demo-boulangerie-viennoiseries.html">
+  <meta property="og:title" content="Démo Boulangerie v2 — Viennoiseries | Le Relais Web">
+  <meta property="og:description" content="Page viennoiseries de la démo boulangerie v2. Création de sites artisans par Le Relais Web, Ermont.">
+  <meta property="og:image" content="https://www.lerelaisweb.com/logo.webp">
+  <meta property="og:url" content="https://www.lerelaisweb.com/demos/demo-boulangerie-viennoiseries.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <title>Démo Boulangerie v2 — Viennoiseries | Le Relais Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Crimson+Pro:ital,wght@0,400;1,400;1,500&family=Dancing+Script:wght@400;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --creme:    #FBF6EE;
+      --creme2:   #F0E8D5;
+      --creme3:   #E4D8C0;
+      --ocre:     #C47A2E;
+      --ocre2:    #A5631A;
+      --or:       #C49A4A;
+      --or2:      #B8762E;
+      --or-soft:  rgba(196,154,74,.45);
+      --brun:     #2E1A0E;
+      --brun2:    #4A2C18;
+      --chaud:    #7A6552;
+      --chaud2:   #9E8370;
+      --fond-card:#FFFDF8;
+      --shadow:   rgba(46,26,14,.15);
+      --shadow2:  rgba(46,26,14,.22);
+      --kraft:    rgba(180,140,90,.04);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Crimson Pro',serif;background:var(--creme);color:var(--brun);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:
+      radial-gradient(circle at 18% 22%,var(--kraft) 0%,transparent 38%),
+      radial-gradient(circle at 82% 68%,rgba(196,122,46,.035) 0%,transparent 42%),
+      radial-gradient(circle at 50% 100%,rgba(196,154,74,.04) 0%,transparent 50%);}
+    body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='.032'/%3E%3C/svg%3E")}
+    main,header,footer,section,div{position:relative;z-index:1}
+
+    /* RETOUR BAR */
+    .retour-bar{position:sticky;top:0;left:0;right:0;z-index:9998;display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:.6rem 1rem;background:linear-gradient(90deg,var(--brun) 0%,var(--brun2) 100%);color:var(--creme);font-family:"Jost",sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--or-soft);box-shadow:0 2px 12px rgba(46,26,14,.18);transition:background .25s}
+    .retour-bar:hover{background:var(--or2)}
+    .retour-bar .r-arrow{font-size:.95rem;transition:transform .2s}
+    .retour-bar:hover .r-arrow{transform:translateX(-3px)}
+    .retour-bar .r-badge{background:var(--or);color:var(--brun);padding:.15rem .5rem;border-radius:4px;font-size:.6rem}
+    @media(max-width:480px){.retour-bar{padding:.55rem .8rem;font-size:.62rem;gap:.4rem}.retour-bar .r-text{max-width:60vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+
+    /* ORNEMENT */
+    .ornement{display:flex;align-items:center;justify-content:center;gap:.7rem;color:var(--or);font-size:.85rem;letter-spacing:.4em;margin:.6rem 0 1rem}
+    .ornement::before,.ornement::after{content:'';height:1px;width:54px;background:linear-gradient(90deg,transparent,var(--or-soft),var(--or))}
+    .ornement::after{background:linear-gradient(90deg,var(--or),var(--or-soft),transparent)}
+
+    /* HEADER */
+    header{position:sticky;top:36px;left:0;right:0;z-index:500;background:rgba(251,246,238,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--creme3);transition:box-shadow .3s,border-color .3s}
+    header.scrolled{box-shadow:0 8px 30px var(--shadow);border-bottom-color:var(--or-soft)}
+    .hd{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:74px}
+    .logo{font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:600;letter-spacing:.04em;color:var(--brun);line-height:1}
+    .logo span{color:var(--or2);font-style:italic}
+    .logo-sub{font-family:'Dancing Script',cursive;font-size:.95rem;color:var(--chaud2);display:block;margin-top:.15rem;font-weight:400}
+    nav{display:flex;align-items:center;gap:.15rem}
+    nav a{font-family:'Jost',sans-serif;font-size:.78rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--chaud);padding:.5rem 1rem;transition:color .2s;position:relative}
+    nav a:hover,nav a.act{color:var(--brun)}
+    nav a.act::after{content:'';position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:18px;height:1px;background:var(--or)}
+    .nav-cmd{background:var(--brun)!important;color:var(--creme)!important;font-weight:500;padding:.6rem 1.5rem;border-radius:12px;transition:background .25s,box-shadow .25s!important;box-shadow:0 4px 14px rgba(46,26,14,.15)}
+    .nav-cmd:hover{background:var(--or2)!important;color:var(--creme)!important;box-shadow:0 6px 20px rgba(184,118,46,.3)}
+    .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:10px;width:44px;height:44px;justify-content:center;align-items:center}
+    .burger span{width:24px;height:1.5px;background:var(--brun);display:block}
+    #mob{display:none;position:fixed;inset:0;z-index:498;background:var(--creme);flex-direction:column;justify-content:center;align-items:center;gap:1.7rem}
+    #mob.open{display:flex}
+    #mob a{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:500;color:var(--brun)}
+    #mob a:hover{color:var(--or2)}
+    #mob-close{position:absolute;top:1.2rem;right:1.5rem;font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;background:none;border:none;cursor:pointer;color:var(--chaud);width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+
+    /* PAGE HERO */
+    .page-hero{background:var(--creme2);padding:5.5rem 2.5rem 5rem;text-align:center;border-bottom:1px solid var(--creme3);background-image:radial-gradient(circle at 15% 30%,rgba(196,154,74,.08) 0%,transparent 45%),radial-gradient(circle at 85% 70%,rgba(196,122,46,.05) 0%,transparent 45%)}
+    .ph-pre{font-family:'Dancing Script',cursive;font-size:1.4rem;color:var(--or2);margin-bottom:.75rem}
+    .ph-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,6vw,5rem);font-weight:500;line-height:1.05;color:var(--brun);margin-bottom:1.25rem;word-break:break-word}
+    .ph-h1 em{font-style:italic;color:var(--or2)}
+    .ph-sub{font-size:1.15rem;color:var(--chaud);font-style:italic;max-width:580px;margin:0 auto 1.25rem;line-height:1.85}
+    .ph-note{display:inline-flex;align-items:center;gap:.6rem;background:rgba(196,154,74,.08);border:1px solid var(--or-soft);padding:.45rem 1.1rem;border-radius:10px;font-family:'Jost',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--or2)}
+
+    /* SECTION */
+    .section{padding:5.5rem 0;border-bottom:1px solid var(--creme3)}
+    .section:last-of-type{border-bottom:none}
+    .section-inner{max-width:1280px;margin:0 auto;padding:0 2.5rem}
+    .section-label{display:flex;align-items:center;gap:1.5rem;margin-bottom:3rem;flex-wrap:wrap}
+    .sl-pre{font-family:'Dancing Script',cursive;font-size:1.2rem;color:var(--or2)}
+    .sl-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:500;color:var(--brun)}
+    .sl-title em{font-style:italic;color:var(--or2)}
+    .sl-count{font-family:'Jost',sans-serif;font-size:.65rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--chaud2);margin-left:auto}
+
+    /* CARDS VIENN */
+    .vienn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.85rem}
+    .vc-card{background:var(--fond-card);border-radius:14px;box-shadow:0 8px 30px var(--shadow);overflow:hidden;transition:box-shadow .35s,transform .35s,outline-color .3s;outline:1.5px solid transparent;outline-offset:-1.5px}
+    .vc-card:hover{box-shadow:0 20px 50px var(--shadow2);transform:translateY(-7px);outline-color:var(--or-soft)}
+    .vc-img{height:270px;overflow:hidden;border-radius:14px 14px 0 0}
+    .vc-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+    .vc-card:hover .vc-img img{transform:scale(1.07)}
+    .vc-body{padding:1.7rem}
+    .vc-cat{font-family:'Jost',sans-serif;font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--or2);margin-bottom:.5rem}
+    .vc-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;line-height:1.15;margin-bottom:.6rem;color:var(--brun)}
+    .vc-desc{font-size:1rem;color:var(--chaud);line-height:1.72;margin-bottom:1.1rem;font-style:italic}
+    .vc-foot{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--creme3);position:relative}
+    .vc-foot::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:24px;height:1px;background:var(--or)}
+    .vc-price{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:600;color:var(--brun)}
+    .vc-cmd{font-family:'Jost',sans-serif;font-size:.68rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--or2);border-bottom:1px solid var(--or-soft);padding-bottom:.15rem;transition:border-color .25s,color .25s,gap .25s;display:inline-flex;gap:.3rem}
+    .vc-cmd:hover{border-color:var(--or);color:var(--or);gap:.55rem}
+
+    /* CTA BAND */
+    .cta-band{background:var(--brun);background-image:radial-gradient(circle at 30% 30%,rgba(196,154,74,.12) 0%,transparent 55%),radial-gradient(circle at 70% 70%,rgba(196,122,46,.08) 0%,transparent 55%);padding:6rem 2.5rem;text-align:center;border-top:1px solid rgba(196,154,74,.18);border-bottom:1px solid rgba(196,154,74,.18)}
+    .cta-pre{font-family:'Dancing Script',cursive;font-size:1.55rem;color:var(--or);margin-bottom:.6rem}
+    .cta-orn{display:flex;align-items:center;justify-content:center;gap:.6rem;color:var(--or);font-size:.7rem;letter-spacing:.5em;margin-bottom:1.2rem;opacity:.7}
+    .cta-orn::before,.cta-orn::after{content:'';height:1px;width:50px;background:linear-gradient(90deg,transparent,var(--or-soft),var(--or))}
+    .cta-orn::after{background:linear-gradient(90deg,var(--or),var(--or-soft),transparent)}
+    .cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.6rem);font-weight:500;line-height:1.1;color:var(--creme);margin-bottom:1.25rem}
+    .cta-title em{font-style:italic;color:var(--or)}
+    .cta-text{font-size:1.15rem;color:rgba(251,246,238,.55);font-style:italic;max-width:500px;margin:0 auto 2.75rem;line-height:1.85}
+    .btn-creme{background:var(--creme);color:var(--brun);padding:1.05rem 2.85rem;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:.13em;text-transform:uppercase;transition:all .25s;display:inline-block;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.25);border:1px solid var(--or-soft);min-height:52px}
+    .btn-creme:hover{background:var(--or);color:var(--creme);box-shadow:0 12px 32px rgba(196,154,74,.4);border-color:var(--or)}
+
+    /* FOOTER */
+    footer{background:var(--creme2);border-top:1px solid var(--or-soft);padding:4.5rem 2.5rem 2.5rem;position:relative}
+    footer::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:80px;height:2px;background:linear-gradient(90deg,transparent,var(--or),transparent)}
+    .ft-inner{max-width:1280px;margin:0 auto}
+    .ft-orn{text-align:center;color:var(--or);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;margin-bottom:2.5rem;letter-spacing:.3em}
+    .ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid var(--creme3);margin-bottom:2rem}
+    .ft-brand p{font-size:1rem;color:var(--chaud);font-style:italic;line-height:1.75;margin-top:.85rem;max-width:280px}
+    .ft-col h4{font-family:'Jost',sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--or2);margin-bottom:1.25rem}
+    .ft-col a{display:block;font-size:1rem;color:var(--chaud);margin-bottom:.55rem;transition:color .2s}
+    .ft-col a:hover{color:var(--or2)}
+    .ft-bot{display:flex;justify-content:space-between;font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.1em;color:var(--chaud2);flex-wrap:wrap;gap:1rem}
+    .ft-bot a{color:var(--or2)}
+
+    /* ANIM */
+    .fade{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+    .fade.in{opacity:1;transform:none}
+    .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+      .fade{opacity:1;transform:none}
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1100px){
+      .ft-top{grid-template-columns:1fr 1fr;gap:2.5rem}
+      .vienn-grid{grid-template-columns:repeat(2,1fr)}
+      header{top:34px}
+    }
+    @media(max-width:720px){
+      nav{display:none}.burger{display:flex}
+      .page-hero{padding:4rem 1.25rem 3.5rem}
+      .section-inner{padding:0 1.25rem}
+      .vienn-grid{grid-template-columns:1fr;gap:1.5rem}
+      .vc-card{border-radius:12px}
+      .vc-img{border-radius:12px 12px 0 0}
+      footer{padding:3.5rem 1.25rem 2rem}
+      .ft-top{grid-template-columns:1fr}
+      .cta-band{padding:4.5rem 1.25rem}
+    }
+    @media(max-width:480px){
+      header{top:32px}
+      .ph-h1{font-size:clamp(2rem,9vw,3rem)}
+      .section{padding:4rem 0}
+    }
+  </style>
+</head>
+<body>
+
+<a href="/" class="retour-bar">
+  <span class="r-arrow">←</span>
+  <span class="r-text">Retour aux réalisations · Le Relais Web</span>
+  <span class="r-badge">DÉMO</span>
+</a>
+
+<div id="mob" role="dialog" aria-modal="true" aria-label="Menu de navigation">
+  <button id="mob-close" aria-label="Fermer le menu">Fermer ✕</button>
+  <a href="demo-boulangerie.html">Accueil</a>
+  <a href="demo-boulangerie-pains.html">Nos Pains</a>
+  <a href="demo-boulangerie-viennoiseries.html">Viennoiseries</a>
+  <a href="demo-boulangerie-savoir-faire.html">Notre histoire</a>
+  <a href="demo-boulangerie-commande.html">Commander</a>
+</div>
+
+<header id="hdr">
+  <div class="hd">
+    <a href="demo-boulangerie.html" class="logo">
+      Boulangerie <span>Dumont</span>
+      <span class="logo-sub">Pontoise, depuis 1987</span>
+    </a>
+    <nav>
+      <a href="demo-boulangerie.html">Accueil</a>
+      <a href="demo-boulangerie-pains.html">Nos Pains</a>
+      <a href="demo-boulangerie-viennoiseries.html" class="act">Viennoiseries</a>
+      <a href="demo-boulangerie-savoir-faire.html">Notre histoire</a>
+      <a href="demo-boulangerie-commande.html" class="nav-cmd">Commander</a>
+    </nav>
+    <button class="burger" id="brgr" aria-label="Ouvrir le menu" aria-controls="mob"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="page-hero fade">
+  <p class="ph-pre">Préparées la veille, enfournées à 5h</p>
+  <h1 class="ph-h1">Viennoiseries <em>&amp; Pâtisseries</em></h1>
+  <div class="ornement">·····</div>
+  <p class="ph-sub">Je prépare tout à la main, la veille au soir. Le lendemain à 5h, ça entre dans le four. Disponible jusqu'à épuisement — et ça part vite.</p>
+  <span class="ph-note">⚠ Pensez à commander pour garantir votre part</span>
+</div>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label fade">
+      <span class="sl-pre">Au beurre AOP</span>
+      <span class="sl-title"><em>Viennoiseries</em></span>
+      <span class="sl-count">3 produits</span>
+    </div>
+    <div class="vienn-grid">
+      <div class="vc-card fade">
+        <div class="vc-img"><img src="viennois-croissant.webp" alt="Croissant Grand Beurre" width="400" height="300" loading="lazy" decoding="async"></div>
+        <div class="vc-body">
+          <div class="vc-cat">Best-seller · Beurre AOP</div>
+          <div class="vc-name">Croissant Grand Beurre</div>
+          <p class="vc-desc">Beurre AOP, 27 tours de feuilletage. Croustillant dehors, fondant dedans — le seul, l'unique.</p>
+          <div class="vc-foot"><span class="vc-price">1,50 €</span><a href="demo-boulangerie-commande.html" class="vc-cmd">Commander →</a></div>
+        </div>
+      </div>
+      <div class="vc-card fade d1">
+        <div class="vc-img"><img src="viennois-chocolat.webp" alt="Pain au Chocolat" width="400" height="300" loading="lazy" decoding="async"></div>
+        <div class="vc-body">
+          <div class="vc-cat">Classique</div>
+          <div class="vc-name">Pain au Chocolat</div>
+          <p class="vc-desc">Double barre chocolat noir 70%, feuilletage beurré généreux. Le matin parfait selon mes enfants.</p>
+          <div class="vc-foot"><span class="vc-price">1,60 €</span><a href="demo-boulangerie-commande.html" class="vc-cmd">Commander →</a></div>
+        </div>
+      </div>
+      <div class="vc-card fade d2">
+        <div class="vc-img"><img src="viennois-chausson.webp" alt="Chausson aux Pommes" width="400" height="300" loading="lazy" decoding="async"></div>
+        <div class="vc-body">
+          <div class="vc-cat">Tradition</div>
+          <div class="vc-name">Chausson aux Pommes</div>
+          <p class="vc-desc">Compotée de pommes maison, cannelle, pâte feuilletée croustillante. La recette de mon père.</p>
+          <div class="vc-foot"><span class="vc-price">1,80 €</span><a href="demo-boulangerie-commande.html" class="vc-cmd">Commander →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--creme2)">
+  <div class="section-inner">
+    <div class="section-label fade">
+      <span class="sl-pre">Faites maison</span>
+      <span class="sl-title"><em>Pâtisseries</em></span>
+      <span class="sl-count">3 produits</span>
+    </div>
+    <div class="vienn-grid">
+      <div class="vc-card fade">
+        <div class="vc-img"><img src="viennois-tarte.webp" alt="Tarte aux Pommes" width="400" height="300" loading="lazy" decoding="async"></div>
+        <div class="vc-body">
+          <div class="vc-cat">Signature · Maison</div>
+          <div class="vc-name">Tarte aux Pommes</div>
+          <p class="vc-desc">Pommes Golden, pâte sablée maison, crème pâtissière vanille bourbon. La recette de ma mère — elle vient encore vérifier.</p>
+          <div class="vc-foot"><span class="vc-price">3,80 €</span><a href="demo-boulangerie-commande.html" class="vc-cmd">Commander →</a></div>
+        </div>
+      </div>
+      <div class="vc-card fade d1">
+        <div class="vc-img"><img src="viennois-eclair.webp" alt="Éclair au Chocolat" width="400" height="300" loading="lazy" decoding="async"></div>
+        <div class="vc-body">
+          <div class="vc-cat">Classique</div>
+          <div class="vc-name">Éclair au Chocolat</div>
+          <p class="vc-desc">Pâte à choux légère, crème chocolat noir grand cru, glaçage brillant. Simple, parfait.</p>
+          <div class="vc-foot"><span class="vc-price">2,80 €</span><a href="demo-boulangerie-commande.html" class="vc-cmd">Commander →</a></div>
+        </div>
+      </div>
+      <div class="vc-card fade d2">
+        <div class="vc-img"><img src="viennois-millefeuille.webp" alt="Millefeuille Vanille" width="400" height="300" loading="lazy" decoding="async"></div>
+        <div class="vc-body">
+          <div class="vc-cat">Prestige</div>
+          <div class="vc-name">Millefeuille Vanille</div>
+          <p class="vc-desc">3 étages de feuilletage, crème vanille bourbon, glaçage royal. À réserver à l'avance, il part souvent le matin.</p>
+          <div class="vc-foot"><span class="vc-price">3,50 €</span><a href="demo-boulangerie-commande.html" class="vc-cmd">Commander →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <p class="cta-pre">Ne repartez pas les mains vides</p>
+  <div class="cta-orn">·····</div>
+  <h2 class="cta-title">Commandez<br><em>pour demain matin</em></h2>
+  <p class="cta-text">Avant 18h ce soir, prêt dès 7h demain. Paiement en boutique, annulation gratuite.</p>
+  <a href="demo-boulangerie-commande.html" class="btn-creme">Réserver maintenant</a>
+</div>
+
+<footer>
+  <div class="ft-inner">
+    <div class="ft-orn">·····</div>
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div class="logo">Boulangerie <span>Dumont</span><span class="logo-sub">Pontoise, depuis 1987</span></div>
+        <p>Farine bio locale, levain naturel, four à bois. Une boulangerie de quartier, ouverte 7j/7 dès 7h.</p>
+      </div>
+      <div class="ft-col"><h4>Pages</h4><a href="demo-boulangerie-pains.html">Nos Pains</a><a href="demo-boulangerie-viennoiseries.html">Viennoiseries</a><a href="demo-boulangerie-savoir-faire.html">Notre histoire</a><a href="demo-boulangerie-commande.html">Commander</a></div>
+      <div class="ft-col"><h4>Horaires</h4><a href="#">Lun – Ven · 7h – 19h30</a><a href="#">Samedi · 7h – 13h30</a><a href="#">Dimanche · 7h – 13h</a></div>
+      <div class="ft-col"><h4>Nous trouver</h4><a href="tel:0134000000">01 34 XX XX XX</a><a href="#">12 rue du Marché</a><a href="#">95300 Pontoise</a></div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 Boulangerie Dumont · Pontoise (95)</span>
+      <span>Site réalisé par <a href="https://www.lerelaisweb.com" target="_blank" rel="noopener noreferrer">Le Relais Web</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var hdr=document.getElementById('hdr');
+  window.addEventListener('scroll',function(){hdr.classList.toggle('scrolled',window.scrollY>20);});
+  var brgr=document.getElementById('brgr'),mob=document.getElementById('mob'),mc=document.getElementById('mob-close');
+  brgr.onclick=function(){mob.classList.add('open');document.body.style.overflow='hidden';};
+  mc.onclick=function(){mob.classList.remove('open');document.body.style.overflow='';};
+  mob.querySelectorAll('a').forEach(function(a){a.onclick=function(){mob.classList.remove('open');document.body.style.overflow='';};});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mob.classList.contains('open')){mob.classList.remove('open');document.body.style.overflow='';}});
+  var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.07});
+  document.querySelectorAll('.fade').forEach(function(el){io.observe(el);});
+})();
+</script>
+</body>
+</html>

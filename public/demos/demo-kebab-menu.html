@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Kebabs, tacos, assiettes, burgers : consultez le menu complet. Démo site restaurant par Le Relais Web, agence web Ermont.">
+  <link rel="icon" type="image/png" href="/logo.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://www.lerelaisweb.com/demos/demo-kebab-menu.html">
+  <meta property="og:title" content="Démo Kebab v2 — Menu | Le Relais Web">
+  <meta property="og:description" content="Page menu de la démo kebab v2. Création de sites restaurants par Le Relais Web, Ermont.">
+  <meta property="og:image" content="https://www.lerelaisweb.com/logo.webp">
+  <meta property="og:url" content="https://www.lerelaisweb.com/demos/demo-kebab-menu.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <title>Démo Kebab v2 — Menu | Le Relais Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#08070A;
+      --bg2:#0E0C10;
+      --bg3:#15121A;
+      --red:#C42818;
+      --red2:#A11F12;
+      --gold:#D4A24C;
+      --gold2:#B98935;
+      --cream:#EDE0C8;
+      --muted:rgba(237,224,200,.55);
+      --bdr:rgba(212,162,76,.14);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Outfit',sans-serif;
+      background:var(--bg);
+      color:var(--cream);
+      overflow-x:hidden;
+      background-image:
+        radial-gradient(ellipse at 20% 10%,rgba(196,40,24,.04),transparent 55%),
+        radial-gradient(ellipse at 85% 90%,rgba(212,162,76,.035),transparent 60%),
+        linear-gradient(180deg,#08070A 0%,#0A0809 100%);
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    body::before{
+      content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      opacity:.045;mix-blend-mode:overlay;
+    }
+
+    /* RETOUR BAR */
+    .retour-bar{
+      position:sticky;top:0;left:0;right:0;z-index:9998;
+      display:flex;align-items:center;justify-content:center;gap:.7rem;
+      width:100%;padding:.65rem 1rem;
+      background:linear-gradient(90deg,#08070A 0%,#1a0d09 100%);
+      color:#F4ECE0;
+      font-family:'Outfit',sans-serif;font-size:.7rem;font-weight:600;
+      letter-spacing:.16em;text-transform:uppercase;text-decoration:none;
+      border-bottom:1px solid var(--gold);
+      transition:background .25s;
+    }
+    .retour-bar:hover{background:linear-gradient(90deg,#C42818 0%,#08070A 100%)}
+    .retour-bar .r-arrow{font-size:.95rem;color:var(--gold);transition:transform .2s}
+    .retour-bar:hover .r-arrow{transform:translateX(-3px);color:#F4ECE0}
+    .retour-bar .r-badge{background:var(--gold);color:#08070A;padding:.15rem .5rem;border-radius:4px;font-size:.6rem;letter-spacing:.1em}
+    @media(max-width:480px){
+      .retour-bar{padding:.55rem .8rem;font-size:.6rem;gap:.45rem}
+      .retour-bar .r-text{max-width:58vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    }
+
+    /* FLOAT BTN */
+    .fcta{display:none;position:fixed;bottom:2rem;right:2rem;z-index:500;background:var(--red);color:#fff;padding:.95rem 1.85rem;border-radius:8px;font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;box-shadow:0 6px 22px rgba(196,40,24,.35);transition:background .25s,transform .25s;border:1px solid rgba(212,162,76,.25)}
+    .fcta.show{display:inline-flex;align-items:center}
+    .fcta:hover{background:var(--red2);transform:translateY(-2px)}
+
+    /* HEADER */
+    header{position:sticky;top:2.45rem;left:0;right:0;z-index:200;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+    header.scrolled{background:rgba(8,7,10,.94);backdrop-filter:blur(22px);border-bottom-color:var(--bdr)}
+    .hdi{max-width:1380px;margin:0 auto;padding:1.4rem 2.5rem;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase}
+    .logo em{color:var(--gold);font-style:italic;font-weight:500}
+    nav{display:flex;gap:2.5rem;align-items:center}
+    nav a{color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;position:relative;transition:color .25s}
+    nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .35s}
+    nav a:hover,nav a.active{color:var(--cream)}
+    nav a:hover::after,nav a.active::after{width:100%}
+    .ncta{background:var(--red)!important;color:#fff!important;padding:.65rem 1.55rem;border-radius:8px;border:1px solid rgba(212,162,76,.3);transition:background .25s,transform .25s!important}
+    .ncta::after{display:none!important}
+    .ncta:hover{background:var(--red2)!important;transform:translateY(-2px)!important}
+    .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:10px;min-width:44px;min-height:44px;align-items:center;justify-content:center}
+    .burger span{width:22px;height:1.5px;background:var(--cream)}
+
+    /* NAV OVERLAY */
+    #nol{display:none;position:fixed;inset:0;background:var(--bg);z-index:9000;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+    #nol.open{display:flex}
+    #nol a{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5.5vw,3.2rem);font-weight:500;font-style:italic;color:var(--cream);transition:color .25s,transform .3s;min-height:44px;display:inline-flex;align-items:center}
+    #nol a:hover{color:var(--gold);transform:translateX(12px)}
+    #ncl{position:absolute;top:1.5rem;right:1.5rem;background:none;border:1px solid var(--bdr);border-radius:8px;color:var(--cream);font-size:1.4rem;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;line-height:1}
+
+    /* TICKER */
+    .ticker{overflow:hidden;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:1rem 0;background:var(--bg2)}
+    .ttrack{display:flex;width:max-content;animation:tck 38s linear infinite}
+    .titem{white-space:nowrap;padding:0 2.5rem;font-size:.85rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:2rem;font-family:'Playfair Display',serif;font-style:italic}
+    .tdot{color:var(--gold);font-size:.55rem;font-style:normal}
+    @keyframes tck{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* PAGE HERO */
+    .phero{padding:5rem 0 3.5rem;position:relative;overflow:hidden;border-bottom:1px solid var(--bdr)}
+    .phero-bg{position:absolute;right:-1rem;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-size:clamp(7rem,16vw,14rem);font-weight:800;color:rgba(196,40,24,.04);pointer-events:none;user-select:none;line-height:1;font-style:italic}
+    .wrap{max-width:1380px;margin:0 auto;padding:0 2.5rem}
+    .seye{display:inline-flex;align-items:center;gap:.75rem;margin-bottom:1.4rem}
+    .eyln{width:36px;height:1px;background:var(--gold)}
+    .eylb{font-size:.65rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+    .ptit{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7vw,6rem);font-weight:700;line-height:.95;letter-spacing:-.01em}
+    .ptit em{font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .psub{font-size:.95rem;color:var(--muted);margin-top:1rem;line-height:1.85;max-width:520px}
+
+    /* REVEAL */
+    .rev{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease}
+    .rev.in{opacity:1;transform:none}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+    /* FILTER */
+    .fbar{padding:2rem 0;border-bottom:1px solid var(--bdr)}
+    .finner{display:flex;gap:.75rem;flex-wrap:wrap}
+    .fbtn{padding:.55rem 1.35rem;border-radius:8px;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--bdr);color:var(--muted);background:transparent;cursor:pointer;transition:all .25s;font-family:'Outfit',sans-serif}
+    .fbtn:hover,.fbtn.active{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 4px 20px rgba(196,40,24,.35)}
+
+    /* CATEGORIES */
+    .cat{padding:4rem 0;border-bottom:1px solid var(--bdr)}
+    .cat:last-child{border-bottom:none}
+    .cat-hdr{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+    .cat-tit{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600}
+    .cat-tit em{font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .cat-cnt{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+    /* ITEM GRID */
+    .ig3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.75rem}
+    .icard{background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;overflow:hidden;transition:border-color .35s,transform .35s,box-shadow .35s}
+    .icard:hover{border-color:rgba(212,162,76,.35);transform:translateY(-4px);box-shadow:0 14px 38px rgba(0,0,0,.45)}
+    .iimg{height:210px;overflow:hidden;position:relative;background:var(--bg3)}
+    .iimg img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+    .icard:hover .iimg img{transform:scale(1.06)}
+    .iimg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(8,7,10,.6),transparent 55%)}
+    .itag{position:absolute;top:.85rem;left:.85rem;z-index:1;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .6rem;border-radius:4px}
+    .th{background:rgba(212,162,76,.12);color:var(--gold);border:1px solid rgba(212,162,76,.25)}
+    .tsp{background:rgba(196,40,24,.15);color:#FF7A6A;border:1px solid rgba(196,40,24,.25)}
+    .tv{background:rgba(52,211,153,.1);color:#3DD68C;border:1px solid rgba(52,211,153,.2)}
+    .ibod{padding:1.4rem 1.5rem 1.7rem}
+    .iname{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;margin-bottom:.4rem;letter-spacing:-.005em}
+    .idesc{font-size:.78rem;color:var(--muted);line-height:1.7;margin-bottom:1rem}
+    .ifoot{display:flex;align-items:center;justify-content:space-between}
+    .iprice{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--gold);font-style:italic}
+    .iadd{width:38px;height:38px;border-radius:8px;border:1px solid rgba(212,162,76,.3);background:var(--red);color:#fff;font-size:1.05rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .25s,transform .25s}
+    .iadd:hover{background:var(--red2);transform:scale(1.08)}
+
+    /* SEAL */
+    .seal-inline{
+      display:inline-flex;align-items:center;gap:.9rem;
+      background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;
+      padding:.9rem 1.4rem;margin-bottom:3rem;
+    }
+    .seal-circle{
+      width:52px;height:52px;border-radius:50%;flex-shrink:0;
+      background:radial-gradient(circle at 30% 30%,#E5BB6E 0%,var(--gold) 45%,var(--gold2) 100%);
+      display:flex;align-items:center;justify-content:center;flex-direction:column;
+      color:#1a120a;font-family:'Playfair Display',serif;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+      border:1.5px solid #1a120a;
+    }
+    .seal-circle span{font-size:.42rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1.1;text-align:center}
+    .seal-circle .sm{font-size:.7rem;font-weight:800;font-style:italic}
+    .seal-txt{font-size:.78rem;color:var(--muted);line-height:1.65}
+    .seal-txt strong{color:var(--cream)}
+
+    /* FOOTER */
+    footer{background:var(--bg2);border-top:1px solid var(--bdr);padding:5rem 0 2.5rem}
+    .fti{max-width:1380px;margin:0 auto;padding:0 2.5rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+    .ftlogo{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;display:block;margin-bottom:1rem}
+    .ftlogo em{color:var(--gold);font-style:italic;font-weight:500}
+    .ftdesc{font-size:.82rem;color:var(--muted);line-height:1.85}
+    .ftcol h4{font-size:.6rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:1.3rem}
+    .ftcol a{display:block;font-size:.82rem;color:var(--muted);margin-bottom:.7rem;transition:color .25s}
+    .ftcol a:hover{color:var(--cream)}
+    .ftbot{max-width:1380px;margin:0 auto;padding:2rem 2.5rem 0;border-top:1px solid var(--bdr);display:flex;justify-content:space-between;font-size:.7rem;color:rgba(237,224,200,.32);letter-spacing:.06em;flex-wrap:wrap;gap:.5rem}
+
+    /* RESPONSIVE */
+    @media(max-width:1024px){
+      nav{display:none}
+      .burger{display:flex}
+      .ig3{grid-template-columns:repeat(2,1fr)}
+      .fti{grid-template-columns:1fr 1fr;gap:2.5rem}
+      header{top:2.3rem}
+    }
+    @media(max-width:600px){
+      .ig3{grid-template-columns:1fr}
+      .fti{grid-template-columns:1fr}
+      .wrap{padding:0 1.25rem}
+      .hdi{padding:1.2rem 1.25rem}
+      .ftbot{padding-bottom:6rem}
+      .fcta{bottom:1rem;right:1rem}
+      header{top:2.1rem}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+      .rev{opacity:1;transform:none}
+    }
+  </style>
+</head>
+<body>
+
+<a href="/" class="retour-bar">
+  <span class="r-arrow">←</span>
+  <span class="r-text">Retour aux réalisations · Le Relais Web</span>
+  <span class="r-badge">DÉMO</span>
+</a>
+
+<div id="nol">
+  <button id="ncl" aria-label="Fermer le menu">✕</button>
+  <a href="demo-kebab.html">Accueil</a>
+  <a href="demo-kebab-menu.html">Menu</a>
+  <a href="demo-kebab-formules.html">Formules</a>
+  <a href="demo-kebab-livraison.html">Livraison</a>
+  <a href="demo-kebab-contact.html">Contact</a>
+</div>
+
+<header id="hdr">
+  <div class="hdi">
+    <a href="demo-kebab.html" class="logo">Istanbul <em>Grill</em></a>
+    <nav>
+      <a href="demo-kebab.html">Accueil</a>
+      <a href="demo-kebab-menu.html" class="active">Menu</a>
+      <a href="demo-kebab-formules.html">Formules</a>
+      <a href="demo-kebab-livraison.html">Livraison</a>
+      <a href="demo-kebab-contact.html">Contact</a>
+      <a href="demo-kebab-contact.html" class="ncta">Commander →</a>
+    </nav>
+    <button class="burger" id="brgr" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<a href="demo-kebab-contact.html" class="fcta" id="fcta">Commander →</a>
+
+<div class="phero">
+  <div class="phero-bg">Menu</div>
+  <div class="wrap">
+    <div class="seye rev"><span class="eyln"></span><span class="eylb">Notre carte</span></div>
+    <h1 class="ptit rev d1">Tout notre <em>menu</em></h1>
+    <p class="psub rev d2">100% Halal certifié. Viande marinée 24h, frites maison, sauces secrètes.</p>
+  </div>
+</div>
+
+<div class="ticker">
+  <div class="ttrack">
+    <div class="titem">Livraison offerte dès 20€ <span class="tdot">✦</span> 100% Halal certifié <span class="tdot">✦</span> Viande marinée 24h <span class="tdot">✦</span> 7j/7 · 11h–23h <span class="tdot">✦</span></div>
+    <div class="titem">Livraison offerte dès 20€ <span class="tdot">✦</span> 100% Halal certifié <span class="tdot">✦</span> Viande marinée 24h <span class="tdot">✦</span> 7j/7 · 11h–23h <span class="tdot">✦</span></div>
+  </div>
+</div>
+
+<div class="fbar">
+  <div class="wrap">
+    <div class="finner">
+      <button class="fbtn active" data-filter="all">Tout</button>
+      <button class="fbtn" data-filter="sandwich">Sandwichs</button>
+      <button class="fbtn" data-filter="assiette">Assiettes</button>
+      <button class="fbtn" data-filter="tacos">Tacos &amp; Wraps</button>
+      <button class="fbtn" data-filter="veg">Végétarien</button>
+    </div>
+  </div>
+</div>
+
+<!-- SANDWICHS -->
+<div class="cat" data-cat="sandwich">
+  <div class="wrap">
+    <div class="seal-inline rev">
+      <div class="seal-circle">
+        <span>Cert.</span>
+        <span class="sm">Halal</span>
+        <span>Maison</span>
+      </div>
+      <div class="seal-txt"><strong>100% Halal certifié</strong><br>Certification officielle, renouvelée chaque année. Toutes viandes sans exception.</div>
+    </div>
+    <div class="cat-hdr rev">
+      <div class="cat-tit">Sandwichs <em>kebab</em></div>
+      <span class="cat-cnt">3 références</span>
+    </div>
+    <div class="ig3">
+      <div class="icard rev d1">
+        <div class="iimg">
+          <img src="kebab-maison.webp" alt="Kebab Maison" width="400" height="300" loading="lazy" decoding="async">
+          <span class="itag th">Halal</span>
+        </div>
+        <div class="ibod">
+          <div class="iname">Kebab Maison</div>
+          <p class="idesc">Agneau &amp; poulet marinés 24h, sauce secrète, tomates, salade, oignons.</p>
+          <div class="ifoot"><span class="iprice">7,50€</span><button class="iadd" aria-label="Ajouter">+</button></div>
+        </div>
+      </div>
+      <div class="icard rev d2">
+        <div class="iimg">
+          <img src="kebab-harissa.webp" alt="Kebab Harissa" width="400" height="300" loading="lazy" decoding="async">
+          <span class="itag th">Halal</span>
+          <span class="itag tsp" style="top:2.4rem">Piquant</span>
+        </div>
+        <div class="ibod">
+          <div class="iname">Kebab Harissa</div>
+          <p class="idesc">Même recette + harissa maison, poivrons grillés.</p>
+          <div class="ifoot"><span class="iprice">8,00€</span><button class="iadd" aria-label="Ajouter">+</button></div>
+        </div>
+      </div>
+      <div class="icard rev d3">
+        <div class="iimg">
+          <img src="poulet-grille.webp" alt="Poulet Grillé" width="400" height="300" loading="lazy" decoding="async">
+          <span class="itag th">Halal</span>
+        </div>
+        <div class="ibod">
+          <div class="iname">Sandwich Poulet Grillé</div>
+          <p class="idesc">Filet poulet grillé, fromage fondu, sauce blanche, salade.</p>
+          <div class="ifoot"><span class="iprice">7,00€</span><button class="iadd" aria-label="Ajouter">+</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ASSIETTES -->
+<div class="cat" data-cat="assiette">
+  <div class="wrap">
+    <div class="cat-hdr rev">
+      <div class="cat-tit">Assiettes <em>généreuses</em></div>
+      <span class="cat-cnt">3 références</span>
+    </div>
+    <div class="ig3">
+      <div class="icard rev d1">
+        <div class="iimg">
+          <img src="assiette-mixte.webp" alt="Assiette Mixte" width="400" height="300" loading="lazy" decoding="async">
+          <span class="itag th">Halal</span>
+        </div>
+        <div class="ibod">
+          <div class="iname">Assiette Mixte Royale</div>
+          <p class="idesc">Kebab + merguez + frites maison + salade fraîche.</p>
+          <div class="ifoot"><span class="iprice">13,50€</span><button class="iadd" aria-label="Ajouter">+</button></div>
+        </div>
+      </div>
+      <div class="icard rev d2">
+        <div class="iimg">
+          <img src="poulet-grille.webp" alt="Assiette Poulet" width="400" height="300" loading="lazy" decoding="async">
+          <span class="itag th">Halal</span>
+        </div>
+        <div class="ibod">
+          <div class="iname">Assiette Poulet Grillé</div>
+          <p class="idesc">Poulet grillé, frites, salade, sauce blanche.</p>
+          <div class="ifoot"><span class="iprice">11,00€</span><button class="iadd" aria-label="Ajouter">+</button></div>
+        </div>
+      </div>
+      <div class="icard rev d3">
+        <div class="iimg">
+          <img src="burger-boeuf.webp" alt="Burger Maison" width="400" height="300" loading="lazy" decoding="async">
+          <span class="itag th">Halal</span>
+        </div>
+        <div class="ibod">
+          <div class="iname">Assiette Burger Maison</div>
+          <p class="idesc">Burger bœuf + frites + sauce au choix.</p>
+          <div class="ifoot"><span class="iprice">14,00€</span><button class="iadd" aria-label="Ajouter">+</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TACOS -->
+<div class="cat" data-cat="tacos">
+  <div class="wrap">
+    <div class="cat-hdr rev">
+      <div class="cat-tit">Tacos <em>&amp; wraps</em></div>
+      <span class="cat-cnt">3 références</span>
+    </div>
+    <div class="ig3">
+      <div class="icard rev d1">
+        <div class="iimg">
+          <img src="tacos-viande.webp" alt="Tacos Triple" width="400" height="300" loading="lazy" decoding="async">
+          <span class="itag th">Halal</span>
+        </div>
+        <div class="ibod">
+          <div class="iname">Tacos Triple Viande</div>
+          <p class="idesc">Poulet, bœuf, merguez, fromage fondu, frites, sauce.</p>
+          <div class="ifoot"><span class="iprice">9,00€</span><button class="iadd" aria-label="Ajouter">+</button></div>
+        </div>
+      </div>
+      <div class="icard rev d2">
+        <div class="iimg">
+          <img src="tacos-viande.webp" alt="Tacos Simple" width="400" height="300" loading="lazy" decoding="async">
+          <span class="itag th">Halal</span>
+        </div>
+        <div class="ibod">
+          <div class="iname">Tacos Simple</div>
+          <p class="idesc">Poulet ou bœuf, fromage fondu, sauce, frites.</p>
+          <div class="ifoot"><span class="iprice">7,50€</span><button class="iadd" aria-label="Ajouter">+</button></div>
+        </div>
+      </div>
+      <div class="icard rev d3" data-veg="true">
+        <div class="iimg">
+          <img src="wrap-falafel.webp" alt="Wrap Falafel" width="400" height="300" loading="lazy" decoding="async">
+          <span class="itag tv">Végétarien</span>
+        </div>
+        <div class="ibod">
+          <div class="iname">Wrap Falafel</div>
+          <p class="idesc">Falafel maison, houmous, taboulé, légumes grillés.</p>
+          <div class="ifoot"><span class="iprice">6,50€</span><button class="iadd" aria-label="Ajouter">+</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fti">
+    <div>
+      <a href="demo-kebab.html" class="ftlogo">Istanbul <em>Grill</em></a>
+      <p class="ftdesc">Kebab artisanal à Pontoise (95).<br>Halal, livraison rapide, ouvert 7j/7.</p>
+    </div>
+    <div class="ftcol">
+      <h4>Navigation</h4>
+      <a href="demo-kebab-menu.html">Menu</a>
+      <a href="demo-kebab-formules.html">Formules</a>
+      <a href="demo-kebab-livraison.html">Livraison</a>
+      <a href="demo-kebab-contact.html">Contact</a>
+    </div>
+    <div class="ftcol">
+      <h4>Infos</h4>
+      <a href="tel:0130000000">01 30 XX XX XX</a>
+      <a href="#">45 rue de la Gare, Pontoise</a>
+      <a href="#">Lun–Dim · 11h – 23h</a>
+    </div>
+    <div class="ftcol">
+      <h4>Commander</h4>
+      <a href="demo-kebab-contact.html">Formulaire en ligne</a>
+      <a href="tel:0130000000">Par téléphone</a>
+    </div>
+  </div>
+  <div class="ftbot">
+    <span>© 2026 Istanbul Grill · Pontoise</span>
+    <span>Site réalisé par <a href="https://www.lerelaisweb.com" target="_blank" rel="noopener noreferrer" style="color:rgba(212,162,76,.7);text-decoration:none">Le Relais Web</a></span>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var hdr = document.getElementById('hdr');
+  var fb = document.getElementById('fcta');
+  window.addEventListener('scroll', function() {
+    if (hdr) hdr.classList.toggle('scrolled', window.scrollY > 50);
+    if (fb) fb.classList.toggle('show', window.scrollY > 300);
+  }, { passive: true });
+
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(x) {
+      if (x.isIntersecting) { x.target.classList.add('in'); obs.unobserve(x.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.rev').forEach(function(el) { obs.observe(el); });
+
+  var bg = document.getElementById('brgr');
+  var ol = document.getElementById('nol');
+  var cl = document.getElementById('ncl');
+  if (bg) bg.onclick = function() { ol.classList.add('open'); document.body.style.overflow = 'hidden'; };
+  if (cl) cl.onclick = function() { ol.classList.remove('open'); document.body.style.overflow = ''; };
+  if (ol) ol.querySelectorAll('a').forEach(function(a) {
+    a.onclick = function() { ol.classList.remove('open'); document.body.style.overflow = ''; };
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && ol && ol.classList.contains('open')) {
+      ol.classList.remove('open'); document.body.style.overflow = '';
+    }
+  });
+
+  /* Filter logic */
+  document.querySelectorAll('.fbtn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.fbtn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.dataset.filter;
+      document.querySelectorAll('.cat').forEach(function(cat) {
+        if (f === 'all') { cat.style.display = ''; }
+        else if (f === 'veg') { cat.style.display = cat.querySelector('[data-veg]') ? '' : 'none'; }
+        else { cat.style.display = (cat.dataset.cat === f) ? '' : 'none'; }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

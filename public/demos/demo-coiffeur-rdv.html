@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Prenez rendez-vous en ligne au Studio Élise, salon de coiffure premium à Ermont (95). Démo site artisan par Le Relais Web.">
+  <link rel="icon" type="image/png" href="/logo.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://www.lerelaisweb.com/demos/demo-coiffeur-rdv.html">
+  <meta property="og:title" content="Démo Coiffeur — Rendez-vous | Le Relais Web">
+  <meta property="og:description" content="Page prise de rendez-vous de la démo coiffeur. Création de sites artisans par Le Relais Web, Ermont.">
+  <meta property="og:image" content="https://www.lerelaisweb.com/logo.webp">
+  <meta property="og:url" content="https://www.lerelaisweb.com/demos/demo-coiffeur-rdv.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <title>Rendez-vous — Studio Élise · Démo Coiffeur | Le Relais Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700;1,9..144,900&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════
+       VARIABLES — identiques à demo-coiffeur.html
+    ═══════════════════════════════════════════ */
+    :root{
+      --creme:#F7F2E9;
+      --creme2:#EFE7D8;
+      --ivoire:#FBF8F2;
+      --noir:#0A0908;
+      --encre:#1C1916;
+      --bordeaux:#6B1B28;
+      --bordeaux2:#8C2738;
+      --or:#C4933A;
+      --or2:#A67A2A;
+      --gris:#6B5F52;
+      --bord:rgba(10,9,8,.12);
+      --bord-or:#C4933A;
+    }
+
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Syne',sans-serif;background:var(--creme);color:var(--noir);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+
+    /* Grain subtil clair */
+    body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+      opacity:.7}
+
+    /* ═══════════════════════════════════════════
+       RETOUR-BAR — sticky en haut, pattern exact demo-coiffeur.html
+    ═══════════════════════════════════════════ */
+    .retour-bar{position:sticky;top:0;left:0;right:0;z-index:9998;
+      display:flex;align-items:center;justify-content:center;gap:.7rem;
+      width:100%;padding:.65rem 1rem;
+      background:var(--noir);color:var(--creme);
+      font-family:"Syne",sans-serif;font-size:.68rem;font-weight:600;
+      letter-spacing:.18em;text-transform:uppercase;text-decoration:none;
+      border-bottom:1px solid var(--or);transition:background .25s}
+    .retour-bar:hover{background:var(--bordeaux)}
+    .r-arr{color:var(--or);font-size:.95rem;transition:transform .2s}
+    .retour-bar:hover .r-arr{transform:translateX(-3px)}
+    .r-badge{background:var(--or);color:var(--noir);font-size:.58rem;padding:.15rem .5rem;font-weight:700;letter-spacing:.1em;border-radius:2px}
+
+    /* ═══════════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════════ */
+    header{position:fixed;top:0;left:0;right:0;z-index:200}
+    .hd{padding:1.4rem 3rem;display:flex;align-items:center;justify-content:space-between;
+      transition:background .35s,backdrop-filter .35s,border-color .35s;border-bottom:1px solid transparent}
+    header.scrolled .hd{background:rgba(247,242,233,.92);backdrop-filter:blur(16px);border-bottom-color:var(--bord)}
+    .logo{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;letter-spacing:.06em;color:var(--noir)}
+    .logo em{font-style:italic;font-weight:300;color:var(--bordeaux)}
+    nav{display:flex;gap:2.5rem;align-items:center}
+    nav a{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gris);
+      position:relative;transition:color .2s}
+    nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--bord-or);transition:width .35s ease-out}
+    nav a:hover,nav a.active{color:var(--noir)}
+    nav a:hover::after,nav a.active::after{width:100%}
+    .nav-rdv{background:var(--bordeaux)!important;color:#fff!important;padding:.6rem 1.3rem;border-radius:2px;
+      font-size:.65rem!important;letter-spacing:.16em;transition:background .2s!important}
+    .nav-rdv:hover{background:var(--bordeaux2)!important}
+    .nav-rdv::after{display:none!important}
+    .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;
+      padding:10px;min-width:44px;min-height:44px;align-items:center;justify-content:center}
+    .burger span{width:22px;height:1.5px;background:var(--noir)}
+
+    /* ═══════════════════════════════════════════
+       OVERLAY NAV MOBILE
+    ═══════════════════════════════════════════ */
+    #nol{display:none;position:fixed;inset:0;z-index:9000;background:var(--noir);
+      flex-direction:column;justify-content:center;padding:4rem 2rem;gap:0}
+    #nol.open{display:flex}
+    #nol a{font-family:'Fraunces',serif;font-size:clamp(2.4rem,8vw,5rem);font-style:italic;font-weight:300;
+      color:rgba(247,242,233,.18);line-height:1.1;transition:color .25s,padding .3s;
+      border-bottom:1px solid rgba(247,242,233,.06);padding:.4rem 0}
+    #nol a:hover{color:var(--creme);padding-left:1.2rem}
+    #ncl{position:absolute;top:1rem;right:1rem;width:48px;height:48px;background:none;border:none;
+      color:var(--creme);font-size:1.6rem;cursor:pointer;font-family:'Syne',sans-serif;
+      display:flex;align-items:center;justify-content:center}
+
+    /* ═══════════════════════════════════════════
+       UTILITAIRES ÉDITORIAUX
+    ═══════════════════════════════════════════ */
+    .filet{display:block;width:48px;height:1px;background:var(--bord-or);margin:0 0 1.2rem 0}
+    .num-section{font-family:'Fraunces',serif;font-size:.7rem;font-weight:700;letter-spacing:.32em;
+      text-transform:uppercase;color:var(--bordeaux);margin-bottom:.8rem;display:inline-flex;align-items:center;gap:.7rem}
+    .num-section em{font-style:italic;font-weight:300;color:var(--gris)}
+
+    /* REVEAL */
+    .rev{opacity:0;transform:translateY(36px);transition:opacity .9s ease-out,transform .9s ease-out}
+    .rev.in{opacity:1;transform:none}
+    .d1{transition-delay:.15s}.d2{transition-delay:.3s}.d3{transition-delay:.45s}
+
+    /* ═══════════════════════════════════════════
+       HERO RDV — pleine hauteur éditoriale
+    ═══════════════════════════════════════════ */
+    .rdv-hero{
+      min-height:100svh;
+      display:grid;
+      grid-template-columns:46% 54%;
+      /* la retour-bar est sticky donc pas de padding-top ici */
+    }
+
+    /* Colonne gauche sombre — informations & horaires */
+    .rdv-left{
+      background:var(--encre);
+      position:relative;overflow:hidden;
+      display:flex;flex-direction:column;
+      padding:7rem 3.5rem 3.5rem;
+    }
+    .rdv-left::before{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 80% 60% at 10% 70%,rgba(107,27,40,.2),transparent)}
+    /* Grand mot déco */
+    .rl-deco{
+      position:absolute;right:-2.5rem;top:50%;transform:translateY(-50%);
+      font-family:'Fraunces',serif;font-size:clamp(9rem,18vw,16rem);
+      font-weight:900;font-style:italic;color:rgba(247,242,233,.025);
+      pointer-events:none;user-select:none;line-height:1;white-space:nowrap}
+
+    .rl-top{position:relative;z-index:1;flex:1}
+    .rl-eyebrow{font-size:.6rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+      color:rgba(196,147,58,.65);margin-bottom:1.5rem;
+      display:flex;align-items:center;gap:.9rem}
+    .rl-eyebrow::before{content:'';width:28px;height:1px;background:var(--or)}
+
+    .rl-h1{
+      font-family:'Fraunces',serif;
+      font-size:clamp(2.8rem,5.2vw,5rem);
+      font-weight:900;line-height:.9;
+      letter-spacing:-.025em;
+      color:var(--creme);
+      margin-bottom:1.8rem}
+    .rl-h1 em{display:block;font-style:italic;font-weight:300;color:rgba(196,147,58,.8)}
+
+    .rl-desc{font-size:.85rem;color:rgba(247,242,233,.42);line-height:1.85;
+      max-width:340px;font-style:italic;font-family:'Fraunces',serif;font-weight:300;
+      margin-bottom:2.5rem}
+
+    /* Horaires */
+    .rl-h-label{font-size:.55rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
+      color:rgba(196,147,58,.5);margin-bottom:1rem}
+    .hor-row{display:flex;justify-content:space-between;align-items:center;
+      padding:.65rem 0;border-bottom:1px solid rgba(247,242,233,.06)}
+    .hor-row:first-of-type{border-top:1px solid rgba(247,242,233,.06)}
+    .hor-day{font-size:.78rem;color:rgba(247,242,233,.48)}
+    .hor-time{font-size:.78rem;font-weight:700;color:rgba(247,242,233,.85)}
+    .hor-time.closed{color:rgba(247,242,233,.2);font-weight:400}
+
+    /* Contact bas */
+    .rl-contact{
+      position:relative;z-index:1;
+      margin-top:2.5rem;padding-top:2rem;
+      border-top:1px solid rgba(247,242,233,.07);
+      display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+    .rc-label{font-size:.52rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+      color:rgba(196,147,58,.45);margin-bottom:.4rem}
+    .rc-val{font-size:.8rem;color:rgba(247,242,233,.5);line-height:1.55}
+    .rc-val a{color:rgba(247,242,233,.5);transition:color .2s}
+    .rc-val a:hover{color:var(--or)}
+
+    /* Citation signature au-dessus du contact */
+    .rl-quote{
+      position:relative;z-index:1;
+      margin-top:3rem;margin-bottom:.5rem;
+      font-family:'Fraunces',serif;font-size:clamp(.9rem,1.5vw,1.1rem);
+      font-style:italic;font-weight:300;
+      color:rgba(247,242,233,.28);line-height:1.6;
+      padding-left:1.2rem;
+      border-left:1px solid rgba(196,147,58,.3)}
+    .rl-quote em{color:rgba(196,147,58,.55);font-weight:400}
+
+    /* ═══════════════════════════════════════════
+       COLONNE DROITE — FORMULAIRE
+    ═══════════════════════════════════════════ */
+    .rdv-right{
+      background:var(--ivoire);
+      padding:7rem 4rem 5rem;
+      display:flex;flex-direction:column;
+      position:relative;overflow:hidden}
+    /* Bande latérale bordeaux */
+    .rdv-right::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;
+      background:linear-gradient(to bottom,var(--bordeaux) 0%,transparent 100%)}
+
+    /* Étape numérotée */
+    .form-step{
+      display:flex;align-items:center;gap:.8rem;
+      font-size:.58rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+      color:var(--gris);margin-bottom:.9rem}
+    .form-step::after{content:'';flex:1;height:1px;background:var(--bord)}
+    .step-num{
+      font-family:'Fraunces',serif;font-size:1.2rem;font-weight:900;font-style:italic;
+      color:var(--or);line-height:1;flex-shrink:0}
+
+    .form-block{margin-bottom:3.5rem}
+
+    .fblock-title{
+      font-family:'Fraunces',serif;
+      font-size:clamp(1.4rem,2.8vw,2.1rem);
+      font-weight:700;letter-spacing:-.015em;line-height:1.05;
+      margin-bottom:.6rem}
+    .fblock-title em{font-style:italic;font-weight:300;color:var(--bordeaux)}
+    .fblock-sub{font-size:.82rem;color:var(--gris);line-height:1.75;
+      font-style:italic;font-family:'Fraunces',serif;font-weight:300;margin-bottom:1.8rem}
+
+    /* ═══════════════════════════════════════════
+       CARTES PRESTATIONS (radio)
+    ═══════════════════════════════════════════ */
+    .presta-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;
+      margin-bottom:.5rem}
+    .pp-card{
+      border:1px solid var(--bord);padding:1.1rem 1rem;
+      cursor:pointer;position:relative;overflow:hidden;
+      background:var(--creme);
+      transition:border-color .25s,background .25s}
+    /* Barre dorée en bas qui glisse via scaleX */
+    .pp-card::after{
+      content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;
+      background:var(--bord-or);transform:scaleX(0);transform-origin:left center;
+      transition:transform .45s cubic-bezier(.23,1,.32,1)}
+    .pp-card:hover{border-color:rgba(107,27,40,.28);background:var(--ivoire)}
+    .pp-card:hover::after{transform:scaleX(1)}
+    .pp-card.sel{border-color:var(--bordeaux);background:rgba(107,27,40,.04)}
+    .pp-card.sel::after{transform:scaleX(1)}
+    .pp-check{
+      width:13px;height:13px;border:1.5px solid var(--bord);border-radius:50%;
+      flex-shrink:0;transition:all .2s;
+      display:flex;align-items:center;justify-content:center;margin-bottom:.65rem}
+    .pp-card.sel .pp-check{background:var(--bordeaux);border-color:var(--bordeaux)}
+    .pp-card.sel .pp-check::after{content:'✓';font-size:.48rem;color:#fff;font-weight:700}
+    .pp-name{font-size:.68rem;font-weight:700;color:var(--noir);
+      transition:color .2s;margin-bottom:.3rem;line-height:1.2}
+    .pp-card.sel .pp-name{color:var(--bordeaux)}
+    .pp-price{
+      font-family:'Fraunces',serif;font-size:1rem;font-weight:700;
+      color:var(--gris);letter-spacing:-.01em}
+    .pp-dur{font-size:.55rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+      color:rgba(107,95,82,.45);margin-top:.15rem}
+
+    /* ═══════════════════════════════════════════
+       CRÉNEAUX HORAIRES — grille élégante
+    ═══════════════════════════════════════════ */
+    .creneaux-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;
+      margin-bottom:.5rem}
+    .cr-card{
+      border:1px solid var(--bord);padding:.85rem .5rem;
+      text-align:center;cursor:pointer;
+      background:var(--creme);position:relative;overflow:hidden;
+      transition:border-color .25s,background .25s}
+    .cr-card::after{
+      content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;
+      background:var(--bord-or);transform:scaleX(0);transform-origin:left center;
+      transition:transform .4s cubic-bezier(.23,1,.32,1)}
+    .cr-card:hover{border-color:rgba(107,27,40,.28);background:var(--ivoire)}
+    .cr-card:hover::after{transform:scaleX(1)}
+    .cr-card.sel{border-color:var(--bordeaux);background:rgba(107,27,40,.04)}
+    .cr-card.sel::after{transform:scaleX(1)}
+    .cr-time{
+      font-family:'Fraunces',serif;font-size:1.05rem;font-weight:700;
+      color:var(--noir);letter-spacing:-.01em;display:block;margin-bottom:.2rem}
+    .cr-card.sel .cr-time{color:var(--bordeaux)}
+    .cr-label{font-size:.52rem;font-weight:700;letter-spacing:.14em;
+      text-transform:uppercase;color:var(--gris)}
+
+    /* ═══════════════════════════════════════════
+       CHAMPS FORMULAIRE
+       border-bottom uniquement, focus → or
+    ═══════════════════════════════════════════ */
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 2.5rem}
+    .fg-full{grid-column:span 2}
+    .field{display:flex;flex-direction:column;gap:.45rem}
+    .field label{
+      font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--gris)}
+    .field input,.field select,.field textarea{
+      background:none;border:none;
+      border-bottom:1px solid var(--encre);
+      padding:.75rem 0;
+      font-family:'Syne',sans-serif;font-size:1rem;color:var(--noir);
+      outline:none;width:100%;resize:none;-webkit-appearance:none;
+      transition:border-color .22s,border-width .22s}
+    .field input::placeholder,.field textarea::placeholder{color:rgba(107,95,82,.35);font-size:.88rem}
+    .field input:focus,.field select:focus,.field textarea:focus{
+      border-bottom:2px solid var(--bord-or)}
+    .field select{cursor:pointer}
+    .field select option{background:var(--creme)}
+    /* Date picker — couleur cohérente */
+    .field input[type="date"]{color:var(--noir);font-family:'Syne',sans-serif}
+
+    /* ═══════════════════════════════════════════
+       BOUTON SUBMIT — barre dorée scaleX
+    ═══════════════════════════════════════════ */
+    .submit-row{
+      margin-top:2.5rem;
+      display:flex;align-items:center;gap:2.5rem;flex-wrap:wrap}
+    .f-submit{
+      position:relative;overflow:hidden;
+      background:var(--bordeaux);color:#fff;border:none;cursor:pointer;
+      padding:1.1rem 3rem;
+      font-family:'Syne',sans-serif;font-size:.65rem;font-weight:700;
+      letter-spacing:.2em;text-transform:uppercase;
+      min-height:52px;flex-shrink:0;
+      transition:background .25s}
+    .f-submit::after{
+      content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;
+      background:var(--or);transform:scaleX(0);transform-origin:left center;
+      transition:transform .5s cubic-bezier(.23,1,.32,1)}
+    .f-submit:hover{background:var(--bordeaux2)}
+    .f-submit:hover::after{transform:scaleX(1)}
+    .f-note{font-size:.75rem;color:var(--gris);line-height:1.7;
+      font-style:italic;font-family:'Fraunces',serif;font-weight:300}
+
+    /* ═══════════════════════════════════════════
+       OVERLAY CONFIRMATION
+    ═══════════════════════════════════════════ */
+    .confirm-overlay{
+      display:none;position:absolute;inset:0;
+      background:var(--ivoire);z-index:10;
+      align-items:center;justify-content:center;
+      flex-direction:column;text-align:center;padding:4rem 2rem}
+    .confirm-overlay.show{display:flex}
+    .co-icon{
+      width:64px;height:64px;background:var(--bordeaux);border-radius:2px;
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 2rem;font-size:1.5rem;color:#fff}
+    .co-filet{display:block;width:48px;height:1px;background:var(--bord-or);margin:0 auto 1.5rem}
+    .co-h{
+      font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3rem);
+      font-weight:700;margin-bottom:.75rem;line-height:.9;letter-spacing:-.02em}
+    .co-h em{font-style:italic;font-weight:300;color:var(--bordeaux)}
+    .co-p{font-size:.88rem;color:var(--gris);line-height:1.85;
+      max-width:360px;margin:0 auto 2.5rem;
+      font-style:italic;font-family:'Fraunces',serif;font-weight:300}
+    .co-back{
+      display:inline-block;border:1px solid var(--noir);color:var(--noir);
+      background:transparent;border-radius:2px;
+      padding:.95rem 2rem;font-size:.65rem;font-weight:700;
+      letter-spacing:.18em;text-transform:uppercase;cursor:pointer;
+      font-family:'Syne',sans-serif;transition:all .25s}
+    .co-back:hover{background:var(--bordeaux);color:#fff;border-color:var(--bordeaux)}
+
+    /* ═══════════════════════════════════════════
+       FOOTER — identique demo-coiffeur.html
+    ═══════════════════════════════════════════ */
+    footer{background:var(--encre);color:var(--creme);padding:5rem 3.5rem 2.5rem;
+      position:relative;overflow:hidden}
+    footer::before{content:'ÉLISE';position:absolute;right:-2rem;bottom:-3rem;
+      font-family:'Fraunces',serif;font-size:clamp(8rem,18vw,16rem);
+      font-weight:900;font-style:italic;color:rgba(255,255,255,.025);
+      pointer-events:none;user-select:none;line-height:1}
+    .ft-inner{max-width:1400px;margin:0 auto;
+      display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;
+      gap:4rem;padding-bottom:3rem;
+      border-bottom:1px solid rgba(247,242,233,.08);position:relative;z-index:1}
+    .ft-logo{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;
+      letter-spacing:.04em;display:block;margin-bottom:1rem;color:var(--creme)}
+    .ft-logo em{font-style:italic;font-weight:300;color:var(--or)}
+    .ft-desc{font-size:.82rem;color:rgba(247,242,233,.45);line-height:1.85}
+    .ft-handmade{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.4rem;
+      font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--or);font-weight:700}
+    .ft-handmade::before{content:'';width:24px;height:1px;background:var(--or)}
+    .ft-col h4{font-size:.58rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
+      color:var(--or);margin-bottom:1.25rem}
+    .ft-col a{display:block;font-size:.82rem;color:rgba(247,242,233,.5);
+      margin-bottom:.6rem;transition:color .2s}
+    .ft-col a:hover{color:var(--creme)}
+    .ft-bot{max-width:1400px;margin:2rem auto 0;
+      display:flex;justify-content:space-between;
+      font-size:.65rem;color:rgba(247,242,233,.3);
+      flex-wrap:wrap;gap:1rem;position:relative;z-index:1}
+    .ft-bot a{color:var(--or);transition:opacity .2s}
+    .ft-bot a:hover{opacity:.7}
+
+    /* ═══════════════════════════════════════════
+       PREFERS-REDUCED-MOTION
+    ═══════════════════════════════════════════ */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media(max-width:1100px){
+      .rdv-hero{grid-template-columns:1fr}
+      .rdv-left{padding:7rem 2.5rem 3.5rem}
+      .rdv-right{padding:5rem 2.5rem 4rem}
+      .presta-grid{grid-template-columns:repeat(2,1fr)}
+      .creneaux-grid{grid-template-columns:repeat(3,1fr)}
+      .ft-inner{grid-template-columns:1fr 1fr;gap:2.5rem}
+    }
+    @media(max-width:760px){
+      header .hd{padding:1.1rem 1.2rem}
+      nav{display:none}
+      .burger{display:flex}
+      .rdv-left{padding:6rem 1.2rem 3rem}
+      .rdv-right{padding:3.5rem 1.2rem 3rem}
+      .rl-h1{font-size:clamp(2.4rem,11vw,3.8rem)}
+      .presta-grid{grid-template-columns:1fr 1fr}
+      .creneaux-grid{grid-template-columns:repeat(2,1fr)}
+      .form-grid{grid-template-columns:1fr}
+      .fg-full{grid-column:span 1}
+      /* Inputs mobiles ≥ 16px obligatoire (anti-zoom iOS) */
+      .field input,.field select,.field textarea{font-size:1rem;min-height:48px;padding:.85rem 0}
+      .submit-row{flex-direction:column;align-items:stretch}
+      .f-submit{width:100%;text-align:center}
+      footer{padding:4rem 1.2rem 2.5rem}
+      .ft-inner{grid-template-columns:1fr;gap:2rem}
+      .ft-bot{flex-direction:column;text-align:left}
+      .retour-bar{padding:.55rem .8rem;font-size:.6rem;gap:.5rem}
+      .retour-bar .r-text{max-width:55vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    }
+    @media(max-width:420px){
+      .presta-grid{grid-template-columns:1fr}
+      .creneaux-grid{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- RETOUR-BAR sticky noir/or — pattern exact demo-coiffeur.html -->
+<a href="/" class="retour-bar">
+  <span class="r-arr">←</span>
+  <span class="r-text">Retour aux réalisations · Le Relais Web</span>
+  <span class="r-badge">DÉMO</span>
+</a>
+
+<!-- OVERLAY MOBILE -->
+<div id="nol">
+  <button id="ncl" aria-label="Fermer le menu">✕</button>
+  <a href="demo-coiffeur.html">Accueil</a>
+  <a href="demo-coiffeur-prestations.html">Prestations</a>
+  <a href="demo-coiffeur-galerie.html">Galerie</a>
+  <a href="demo-coiffeur-equipe.html">L'équipe</a>
+  <a href="demo-coiffeur-rdv.html">Réserver</a>
+</div>
+
+<!-- HEADER -->
+<header id="hdr">
+  <div class="hd">
+    <a href="demo-coiffeur.html" class="logo">Studio <em>Élise</em></a>
+    <nav>
+      <a href="demo-coiffeur.html">Accueil</a>
+      <a href="demo-coiffeur-prestations.html">Prestations</a>
+      <a href="demo-coiffeur-galerie.html">Galerie</a>
+      <a href="demo-coiffeur-equipe.html">L'équipe</a>
+      <a href="demo-coiffeur-rdv.html" class="nav-rdv active">Réserver →</a>
+    </nav>
+    <button class="burger" id="brgr" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════
+     LAYOUT PRINCIPAL — 2 colonnes plein écran
+═══════════════════════════════════════════════ -->
+<main class="rdv-hero">
+
+  <!-- ══ GAUCHE : informations & ambiance ══ -->
+  <div class="rdv-left">
+    <div class="rl-deco">RDV</div>
+
+    <div class="rl-top">
+      <div class="rl-eyebrow">Prise de rendez-vous · Ermont 95</div>
+      <h1 class="rl-h1">
+        Réservez<br>votre<br><em>moment</em>
+      </h1>
+      <p class="rl-desc">
+        Confirmez votre demande en remplissant le formulaire. Nous revenons vers vous sous 24h pour valider votre créneau.
+      </p>
+
+      <div class="rl-h-label">Horaires d'ouverture</div>
+      <div class="hor-row">
+        <span class="hor-day">Lundi – Vendredi</span>
+        <span class="hor-time">9h00 – 19h00</span>
+      </div>
+      <div class="hor-row">
+        <span class="hor-day">Samedi</span>
+        <span class="hor-time">9h00 – 18h30</span>
+      </div>
+      <div class="hor-row">
+        <span class="hor-day">Dimanche</span>
+        <span class="hor-time closed">Fermé</span>
+      </div>
+    </div>
+
+    <blockquote class="rl-quote">
+      Couper les cheveux, c'est dessiner un visage.<br>Chaque geste compte, chaque <em>millimètre</em> raconte quelque chose.
+    </blockquote>
+
+    <div class="rl-contact">
+      <div>
+        <div class="rc-label">Téléphone</div>
+        <div class="rc-val"><a href="tel:0139000000">01 39 XX XX XX</a></div>
+      </div>
+      <div>
+        <div class="rc-label">Adresse</div>
+        <div class="rc-val">8 avenue Victor Hugo<br>95120 Ermont</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ DROITE : formulaire ══ -->
+  <div class="rdv-right" id="formWrap">
+
+    <!-- OVERLAY CONFIRMATION -->
+    <div class="confirm-overlay" id="confirmBox" role="alert" aria-live="polite">
+      <div class="co-icon">✓</div>
+      <span class="co-filet"></span>
+      <h2 class="co-h">Demande<br><em>envoyée !</em></h2>
+      <p class="co-p">Nous avons bien reçu votre demande de rendez-vous. Notre équipe vous contactera sous 24h pour confirmer votre créneau.</p>
+      <button class="co-back" onclick="resetForm()">Nouvelle demande</button>
+    </div>
+
+    <!-- ── ÉTAPE 01 : prestation ── -->
+    <div class="form-block rev">
+      <div class="form-step"><span class="step-num">01</span>Choisir votre prestation</div>
+      <span class="filet"></span>
+      <h2 class="fblock-title">Quel soin<br><em>souhaitez-vous ?</em></h2>
+      <p class="fblock-sub">Sélectionnez une prestation — nous adaptons le créneau à la durée.</p>
+
+      <div class="presta-grid" id="prestaPick">
+        <div class="pp-card sel" onclick="selectPresta(this,'Coupe + Brushing')">
+          <div class="pp-check"></div>
+          <div class="pp-name">Coupe + Brushing</div>
+          <div class="pp-price">55 €</div>
+          <div class="pp-dur">1h15</div>
+        </div>
+        <div class="pp-card" onclick="selectPresta(this,'Balayage &amp; Mèches')">
+          <div class="pp-check"></div>
+          <div class="pp-name">Balayage &amp; Mèches</div>
+          <div class="pp-price">95 €</div>
+          <div class="pp-dur">2h30</div>
+        </div>
+        <div class="pp-card" onclick="selectPresta(this,'Coloration complète')">
+          <div class="pp-check"></div>
+          <div class="pp-name">Coloration complète</div>
+          <div class="pp-price">85 €</div>
+          <div class="pp-dur">2h</div>
+        </div>
+        <div class="pp-card" onclick="selectPresta(this,'Lissage Kératine')">
+          <div class="pp-check"></div>
+          <div class="pp-name">Lissage Kératine</div>
+          <div class="pp-price">120 €+</div>
+          <div class="pp-dur">3h</div>
+        </div>
+        <div class="pp-card" onclick="selectPresta(this,'Coupe Homme')">
+          <div class="pp-check"></div>
+          <div class="pp-name">Coupe Homme</div>
+          <div class="pp-price">35 €</div>
+          <div class="pp-dur">45 min</div>
+        </div>
+        <div class="pp-card" onclick="selectPresta(this,'Soin &amp; Masque')">
+          <div class="pp-check"></div>
+          <div class="pp-name">Soin &amp; Masque</div>
+          <div class="pp-price">45 €</div>
+          <div class="pp-dur">1h</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ÉTAPE 02 : créneau horaire ── -->
+    <div class="form-block rev d1">
+      <div class="form-step"><span class="step-num">02</span>Choisir un créneau</div>
+      <span class="filet"></span>
+      <h2 class="fblock-title">Quelle <em>plage horaire</em> ?</h2>
+      <p class="fblock-sub">Indiquez votre préférence — nous confirmons la disponibilité sous 24h.</p>
+
+      <div class="creneaux-grid" id="creneauxPick">
+        <div class="cr-card sel" onclick="selectCreneau(this,'matin')">
+          <span class="cr-time">9h – 12h</span>
+          <span class="cr-label">Matin</span>
+        </div>
+        <div class="cr-card" onclick="selectCreneau(this,'midi')">
+          <span class="cr-time">12h – 14h</span>
+          <span class="cr-label">Midi</span>
+        </div>
+        <div class="cr-card" onclick="selectCreneau(this,'aprem')">
+          <span class="cr-time">14h – 18h</span>
+          <span class="cr-label">Après-midi</span>
+        </div>
+        <div class="cr-card" onclick="selectCreneau(this,'soir')">
+          <span class="cr-time">18h – 19h</span>
+          <span class="cr-label">Fin de journée</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ÉTAPE 03 : coordonnées ── -->
+    <div class="form-block rev d2">
+      <div class="form-step"><span class="step-num">03</span>Vos coordonnées</div>
+      <span class="filet"></span>
+      <h2 class="fblock-title">Comment vous<br><em>contacter ?</em></h2>
+      <p class="fblock-sub">Confirmation par téléphone ou email sous 24h ouvrées.</p>
+
+      <form id="rdvForm" onsubmit="submitForm(event)" novalidate>
+        <input type="hidden" id="hiddenPresta" name="prestation" value="Coupe + Brushing">
+        <input type="hidden" id="hiddenCreneau" name="creneau" value="matin">
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="fname">Prénom *</label>
+            <input type="text" id="fname" name="prenom" placeholder="Marie" required autocomplete="given-name">
+          </div>
+          <div class="field">
+            <label for="lname">Nom *</label>
+            <input type="text" id="lname" name="nom" placeholder="Dupont" required autocomplete="family-name">
+          </div>
+          <div class="field">
+            <label for="phone">Téléphone *</label>
+            <input type="tel" id="phone" name="tel" placeholder="06 00 00 00 00" required autocomplete="tel">
+          </div>
+          <div class="field">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="marie@email.fr" required autocomplete="email">
+          </div>
+          <div class="field fg-full">
+            <label for="fdate">Date souhaitée *</label>
+            <input type="date" id="fdate" name="date" required>
+          </div>
+          <div class="field fg-full">
+            <label for="msg">Informations complémentaires</label>
+            <textarea id="msg" name="message" rows="3"
+              placeholder="Décrivez votre envie, la longueur actuelle de vos cheveux, une inspiration…"
+              autocomplete="off"></textarea>
+          </div>
+        </div>
+
+        <div class="submit-row">
+          <button type="submit" class="f-submit">Envoyer la demande →</button>
+          <p class="f-note">Réponse sous 24h ouvrées.<br>Sans engagement — annulation gratuite.</p>
+        </div>
+      </form>
+    </div>
+
+  </div><!-- /rdv-right -->
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-inner">
+    <div>
+      <a href="demo-coiffeur.html" class="ft-logo">Studio <em>Élise</em></a>
+      <p class="ft-desc">Salon de coiffure premium à Ermont (95). Coupes, colorations, soins d'exception. Sur rendez-vous du lundi au samedi.</p>
+      <span class="ft-handmade">Fait main à Ermont</span>
+    </div>
+    <div class="ft-col">
+      <h4>Pages</h4>
+      <a href="demo-coiffeur-prestations.html">Prestations</a>
+      <a href="demo-coiffeur-galerie.html">Galerie</a>
+      <a href="demo-coiffeur-equipe.html">L'équipe</a>
+      <a href="demo-coiffeur-rdv.html">Réserver</a>
+    </div>
+    <div class="ft-col">
+      <h4>Horaires</h4>
+      <a href="#">Lun–Ven · 9h–19h</a>
+      <a href="#">Sam · 9h–18h30</a>
+      <a href="#">Dim · Fermé</a>
+    </div>
+    <div class="ft-col">
+      <h4>Contact</h4>
+      <a href="tel:0139000000">01 39 XX XX XX</a>
+      <a href="#">8 av. Victor Hugo</a>
+      <a href="#">95120 Ermont</a>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <span>© 2026 Studio Élise · Ermont</span>
+    <span>Site réalisé par <a href="https://www.lerelaisweb.com" target="_blank" rel="noopener noreferrer">Le Relais Web</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var hdr  = document.getElementById('hdr');
+  var brgr = document.getElementById('brgr');
+  var nol  = document.getElementById('nol');
+  var ncl  = document.getElementById('ncl');
+
+  /* Header scroll */
+  window.addEventListener('scroll', function(){
+    hdr.classList.toggle('scrolled', window.scrollY > 80);
+  }, {passive: true});
+
+  /* Burger */
+  function closeNav(){
+    nol.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  brgr.onclick = function(){
+    nol.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  ncl.onclick = closeNav;
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeNav();
+  });
+  nol.querySelectorAll('a').forEach(function(a){ a.onclick = closeNav; });
+
+  /* Date min = demain */
+  var fd = document.getElementById('fdate');
+  if(fd){
+    var d = new Date();
+    d.setDate(d.getDate() + 1);
+    fd.min = d.toISOString().split('T')[0];
+  }
+
+  /* Reveal au scroll */
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(x){
+      if(x.isIntersecting){ x.target.classList.add('in'); obs.unobserve(x.target); }
+    });
+  }, {threshold: .08});
+  document.querySelectorAll('.rev').forEach(function(el){ obs.observe(el); });
+})();
+
+/* Sélection prestation */
+function selectPresta(el, name){
+  document.querySelectorAll('.pp-card').forEach(function(c){ c.classList.remove('sel'); });
+  el.classList.add('sel');
+  document.getElementById('hiddenPresta').value = name;
+}
+
+/* Sélection créneau */
+function selectCreneau(el, val){
+  document.querySelectorAll('.cr-card').forEach(function(c){ c.classList.remove('sel'); });
+  el.classList.add('sel');
+  document.getElementById('hiddenCreneau').value = val;
+}
+
+/* Soumission */
+function submitForm(e){
+  e.preventDefault();
+  var box = document.getElementById('confirmBox');
+  box.classList.add('show');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+/* Reset */
+function resetForm(){
+  document.getElementById('confirmBox').classList.remove('show');
+  document.getElementById('rdvForm').reset();
+  document.querySelectorAll('.pp-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('.cr-card').forEach(function(c){ c.classList.remove('sel'); });
+  document.querySelectorAll('.pp-card')[0].classList.add('sel');
+  document.querySelectorAll('.cr-card')[0].classList.add('sel');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Commandez vos pains et viennoiseries en ligne. Démo de formulaire de commande par Le Relais Web, création site artisan Ermont.">
+  <link rel="icon" type="image/png" href="/logo.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://www.lerelaisweb.com/demos/demo-boulangerie-commande.html">
+  <meta property="og:title" content="Démo Boulangerie — Commande | Le Relais Web">
+  <meta property="og:description" content="Page commande de la démo boulangerie. Création de sites artisans par Le Relais Web, Ermont.">
+  <meta property="og:image" content="https://www.lerelaisweb.com/logo.webp">
+  <meta property="og:url" content="https://www.lerelaisweb.com/demos/demo-boulangerie-commande.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <title>Démo Boulangerie — Commande | Le Relais Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Crimson+Pro:ital,wght@0,400;1,400;1,500&family=Dancing+Script:wght@400;600;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --creme:    #FBF6EE;
+      --creme2:   #F0E8D5;
+      --creme3:   #E4D8C0;
+      --ocre:     #C47A2E;
+      --ocre2:    #A5631A;
+      --or:       #C49A4A;
+      --or2:      #B8762E;
+      --or-soft:  rgba(196,154,74,.45);
+      --brun:     #2E1A0E;
+      --brun2:    #4A2C18;
+      --chaud:    #7A6552;
+      --chaud2:   #9E8370;
+      --fond-card:#FFFDF8;
+      --shadow:   rgba(46,26,14,.15);
+      --shadow2:  rgba(46,26,14,.22);
+      --kraft:    rgba(180,140,90,.04);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Crimson Pro',serif;background:var(--creme);color:var(--brun);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+
+    /* Texture papier kraft globale */
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:
+      radial-gradient(circle at 18% 22%, var(--kraft) 0%, transparent 38%),
+      radial-gradient(circle at 82% 68%, rgba(196,122,46,.035) 0%, transparent 42%),
+      radial-gradient(circle at 50% 100%, rgba(196,154,74,.04) 0%, transparent 50%);}
+    body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='.032'/%3E%3C/svg%3E")}
+    main,header,footer,.cmd-wrap,.retour-bar{position:relative;z-index:1}
+
+    /* Ornement doré */
+    .ornement{display:flex;align-items:center;justify-content:center;gap:.7rem;color:var(--or);font-size:.85rem;letter-spacing:.4em;margin:.6rem 0 1rem}
+    .ornement::before,.ornement::after{content:'';height:1px;width:54px;background:linear-gradient(90deg,transparent,var(--or-soft),var(--or));}
+    .ornement::after{background:linear-gradient(90deg,var(--or),var(--or-soft),transparent)}
+
+    /* RETOUR BAR — sticky, identique à demo-boulangerie.html */
+    .retour-bar{position:sticky;top:0;left:0;right:0;z-index:9998;display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;padding:.6rem 1rem;background:linear-gradient(90deg,var(--brun) 0%,var(--brun2) 100%);color:var(--creme);font-family:'Jost',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--or-soft);box-shadow:0 2px 12px rgba(46,26,14,.18);transition:background .25s}
+    .retour-bar:hover{background:var(--or2)}
+    .retour-bar .r-arrow{font-size:.95rem;transition:transform .2s}
+    .retour-bar:hover .r-arrow{transform:translateX(-3px)}
+    .retour-bar .r-badge{background:var(--or);color:var(--brun);padding:.15rem .5rem;border-radius:4px;font-size:.6rem}
+    @media(max-width:480px){.retour-bar{padding:.55rem .8rem;font-size:.62rem;gap:.4rem}.retour-bar .r-text{max-width:60vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+
+    /* HEADER */
+    header{position:sticky;top:2.55rem;left:0;right:0;z-index:500;background:rgba(251,246,238,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--creme3);transition:box-shadow .3s,border-color .3s}
+    header.scrolled{box-shadow:0 8px 30px var(--shadow);border-bottom-color:var(--or-soft)}
+    .hd{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:74px}
+    .logo{font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:600;letter-spacing:.04em;color:var(--brun);line-height:1}
+    .logo span{color:var(--or2);font-style:italic}
+    .logo-sub{font-family:'Dancing Script',cursive;font-size:.95rem;color:var(--chaud2);display:block;margin-top:.15rem;font-weight:400}
+    nav{display:flex;align-items:center;gap:.15rem}
+    nav a{font-family:'Jost',sans-serif;font-size:.78rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--chaud);padding:.5rem 1rem;transition:color .2s;position:relative}
+    nav a:hover,nav a.act{color:var(--brun)}
+    nav a.act::after{content:'';position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:18px;height:1px;background:var(--or)}
+    .nav-cmd{background:var(--brun)!important;color:var(--creme)!important;font-weight:500;padding:.6rem 1.5rem;border-radius:12px;transition:background .25s,box-shadow .25s!important;box-shadow:0 4px 14px rgba(46,26,14,.15)}
+    .nav-cmd:hover{background:var(--or2)!important;color:var(--creme)!important;box-shadow:0 6px 20px rgba(184,118,46,.3)}
+    .nav-cmd.act::after{display:none}
+    .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:10px;width:44px;height:44px;justify-content:center;align-items:center}
+    .burger span{width:24px;height:1.5px;background:var(--brun);display:block}
+
+    /* OVERLAY MOBILE */
+    #mob{display:none;position:fixed;inset:0;z-index:498;background:var(--creme);flex-direction:column;justify-content:center;align-items:center;gap:1.7rem}
+    #mob.open{display:flex}
+    #mob a{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:500;color:var(--brun)}
+    #mob a:hover{color:var(--or2)}
+    #mob-close{position:absolute;top:1.2rem;right:1.5rem;font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;background:none;border:none;cursor:pointer;color:var(--chaud);width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+
+    /* LAYOUT COMMANDE — grille 2 colonnes */
+    .cmd-wrap{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100svh - 74px - 2.55rem)}
+
+    /* COLONNE GAUCHE — fond sombre, contextuel */
+    .cmd-left{background:var(--brun);background-image:radial-gradient(circle at 20% 30%, rgba(196,154,74,.08) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(196,122,46,.05) 0%, transparent 50%);padding:5.5rem 4.5rem;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+    .cmd-left::before{content:'1987';position:absolute;right:-1rem;bottom:-3rem;font-family:'Cormorant Garamond',serif;font-size:14rem;font-weight:600;color:rgba(251,246,238,.035);line-height:1;user-select:none;pointer-events:none}
+
+    .cl-pre{font-family:'Dancing Script',cursive;font-size:1.4rem;color:rgba(196,154,74,.75);margin-bottom:1.25rem}
+    .cl-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,4.5vw,4.4rem);font-weight:500;line-height:1.05;color:var(--creme);margin-bottom:1.5rem}
+    .cl-h1 em{font-style:italic;color:var(--or)}
+    .cl-divider{display:flex;align-items:center;gap:.5rem;margin:.2rem 0 1.4rem;color:var(--or);letter-spacing:.5em;font-size:.7rem;opacity:.7}
+    .cl-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--or-soft),transparent);max-width:100px}
+    .cl-body{font-size:1.12rem;color:rgba(251,246,238,.5);font-style:italic;line-height:1.9;max-width:400px;margin-bottom:2.5rem}
+
+    /* Badges rassurants */
+    .cl-badges{display:flex;flex-direction:column;gap:.75rem;margin-bottom:3rem}
+    .cl-b{display:flex;align-items:center;gap:.75rem;font-family:'Jost',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(251,246,238,.5)}
+    .cl-b-dot{width:5px;height:5px;background:var(--or);border-radius:50%;flex-shrink:0}
+
+    /* Infos pratiques */
+    .cl-infos{display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(196,154,74,.15)}
+    .cli{display:flex;align-items:flex-start;gap:1rem;padding:.9rem 0;border-bottom:1px solid rgba(196,154,74,.08)}
+    .cli-ico{font-size:1rem;width:22px;flex-shrink:0;margin-top:.1rem}
+    .cli-txt{font-family:'Jost',sans-serif;font-size:.68rem;color:rgba(251,246,238,.42);letter-spacing:.08em;line-height:1.6}
+    .cli-txt strong{display:block;font-size:.7rem;color:rgba(251,246,238,.7);margin-bottom:.1rem;font-weight:500}
+
+    /* COLONNE DROITE — formulaire sur fond crème */
+    .cmd-right{background:var(--creme);padding:5.5rem 4.5rem;display:flex;flex-direction:column;justify-content:center}
+
+    .cr-pre{font-family:'Dancing Script',cursive;font-size:1.4rem;color:var(--or2);margin-bottom:.4rem}
+    .cr-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.2vw,3rem);font-weight:500;line-height:1.05;color:var(--brun);margin-bottom:.5rem}
+    .cr-sub{font-size:1.05rem;color:var(--chaud);font-style:italic;margin-bottom:.5rem;line-height:1.7}
+
+    /* Ornement au-dessus du formulaire */
+    .cr-orn{display:flex;align-items:center;gap:.7rem;color:var(--or);font-size:.8rem;letter-spacing:.4em;margin:.3rem 0 2rem}
+    .cr-orn::before,.cr-orn::after{content:'';height:1px;flex:1;max-width:60px;background:linear-gradient(90deg,transparent,var(--or-soft),var(--or))}
+    .cr-orn::after{background:linear-gradient(90deg,var(--or),var(--or-soft),transparent)}
+
+    /* Inputs style éditorial — barre basse seule, focus doré */
+    .form-row{margin-bottom:1.65rem}
+    .form-label{display:block;font-family:'Jost',sans-serif;font-size:.62rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--chaud);margin-bottom:.65rem}
+    .form-input{width:100%;background:transparent;border:none;border-bottom:1.5px solid var(--creme3);padding:.8rem 0;font-family:'Crimson Pro',serif;font-size:1.12rem;color:var(--brun);outline:none;transition:border-color .25s;min-height:48px}
+    .form-input:focus{border-color:var(--or)}
+    .form-input::placeholder{color:rgba(122,101,82,.35)}
+    .form-select{width:100%;background:transparent;border:none;border-bottom:1.5px solid var(--creme3);padding:.8rem 0;font-family:'Crimson Pro',serif;font-size:1.12rem;color:var(--brun);outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;transition:border-color .25s;min-height:48px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath d='M1 1l6 7 6-7' stroke='%239E8370' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .2rem center}
+    .form-select:focus{border-color:var(--or)}
+    .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:1.65rem}
+
+    /* Bouton submit */
+    .btn-submit{width:100%;background:var(--brun);color:var(--creme);border:none;padding:1.15rem 2rem;font-family:'Jost',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;border-radius:12px;box-shadow:0 6px 22px rgba(46,26,14,.2);transition:background .25s,box-shadow .25s;margin-top:.85rem;min-height:52px;position:relative;overflow:hidden}
+    .btn-submit::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(196,154,74,.22) 50%,transparent 70%);transform:translateX(-100%);transition:transform .6s}
+    .btn-submit:hover{background:var(--or2);box-shadow:0 8px 28px rgba(184,118,46,.35)}
+    .btn-submit:hover::before{transform:translateX(100%)}
+
+    .form-note{font-family:'Crimson Pro',serif;font-style:italic;font-size:.98rem;color:var(--chaud2);text-align:center;margin-top:.9rem;line-height:1.65}
+
+    /* Confirmation */
+    #confirm{display:none;text-align:center;padding:2rem 0}
+    #confirm.show{display:block}
+    .conf-pre{font-family:'Dancing Script',cursive;font-size:3rem;color:var(--or);margin-bottom:.5rem}
+    .conf-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:500;color:var(--brun);margin-bottom:.8rem;line-height:1.1}
+    .conf-orn{display:flex;align-items:center;justify-content:center;gap:.6rem;color:var(--or);font-size:.75rem;letter-spacing:.4em;margin:.5rem 0 1.25rem;opacity:.7}
+    .conf-orn::before,.conf-orn::after{content:'';height:1px;width:40px;background:linear-gradient(90deg,transparent,var(--or-soft),var(--or))}
+    .conf-orn::after{background:linear-gradient(90deg,var(--or),var(--or-soft),transparent)}
+    .conf-p{font-size:1.1rem;color:var(--chaud);font-style:italic;line-height:1.85}
+
+    /* FOOTER — identique à demo-boulangerie.html */
+    footer{background:var(--creme2);border-top:1px solid var(--or-soft);padding:4.5rem 2.5rem 2.5rem;position:relative}
+    footer::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:80px;height:2px;background:linear-gradient(90deg,transparent,var(--or),transparent)}
+    .ft-inner{max-width:1280px;margin:0 auto}
+    .ft-orn{text-align:center;color:var(--or);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;margin-bottom:2.5rem;letter-spacing:.3em}
+    .ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid var(--creme3);margin-bottom:2rem}
+    .ft-brand p{font-size:1rem;color:var(--chaud);font-style:italic;line-height:1.75;margin-top:.85rem;max-width:280px}
+    .ft-col h4{font-family:'Jost',sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--or2);margin-bottom:1.25rem}
+    .ft-col a{display:block;font-size:1rem;color:var(--chaud);margin-bottom:.55rem;transition:color .2s}
+    .ft-col a:hover{color:var(--or2)}
+    .ft-bot{display:flex;justify-content:space-between;font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.1em;color:var(--chaud2);flex-wrap:wrap;gap:1rem}
+    .ft-bot a{color:var(--or2)}
+
+    /* Animations */
+    .fade{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+    .fade.in{opacity:1;transform:none}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+      .fade{opacity:1;transform:none}
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1100px){
+      .cmd-wrap{grid-template-columns:1fr}
+      .cmd-left{min-height:auto}
+      .cmd-left,.cmd-right{padding:4.5rem 3rem}
+      .ft-top{grid-template-columns:1fr 1fr;gap:2.5rem}
+    }
+    @media(max-width:720px){
+      nav{display:none}
+      .burger{display:flex}
+      .cmd-left,.cmd-right{padding:3rem 1.25rem}
+      footer{padding:3.5rem 1.25rem 2rem}
+      .ft-top{grid-template-columns:1fr;gap:2rem}
+      /* header sticky doit coller juste sous la retour-bar */
+      header{top:calc(var(--retour-h,2.45rem))}
+    }
+    @media(max-width:600px){
+      .form-row-2{grid-template-columns:1fr;gap:0}
+      .form-row-2 > .form-row{margin-bottom:1.65rem}
+    }
+    @media(max-width:480px){
+      .cmd-left::before{font-size:8rem;right:0;bottom:-1rem}
+    }
+  </style>
+</head>
+<body>
+
+<!-- RETOUR BAR sticky -->
+<a href="/" class="retour-bar" id="retourBar">
+  <span class="r-arrow">←</span>
+  <span class="r-text">Retour aux réalisations · Le Relais Web</span>
+  <span class="r-badge">DÉMO</span>
+</a>
+
+<!-- OVERLAY MOBILE -->
+<div id="mob" role="dialog" aria-modal="true" aria-label="Menu de navigation">
+  <button id="mob-close" aria-label="Fermer le menu">Fermer ✕</button>
+  <a href="demo-boulangerie.html">Accueil</a>
+  <a href="demo-boulangerie-pains.html">Nos Pains</a>
+  <a href="demo-boulangerie-viennoiseries.html">Viennoiseries</a>
+  <a href="demo-boulangerie-savoir-faire.html">Notre histoire</a>
+  <a href="demo-boulangerie-commande.html">Commander</a>
+</div>
+
+<!-- HEADER -->
+<header id="hdr">
+  <div class="hd">
+    <a href="demo-boulangerie.html" class="logo">
+      Boulangerie <span>Dumont</span>
+      <span class="logo-sub">Pontoise, depuis 1987</span>
+    </a>
+    <nav>
+      <a href="demo-boulangerie.html">Accueil</a>
+      <a href="demo-boulangerie-pains.html">Nos Pains</a>
+      <a href="demo-boulangerie-viennoiseries.html">Viennoiseries</a>
+      <a href="demo-boulangerie-savoir-faire.html">Notre histoire</a>
+      <a href="demo-boulangerie-commande.html" class="nav-cmd act">Commander</a>
+    </nav>
+    <button class="burger" id="brgr" aria-label="Ouvrir le menu" aria-controls="mob">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- CORPS COMMANDE -->
+<div class="cmd-wrap">
+
+  <!-- GAUCHE — contextuel & rassurant -->
+  <div class="cmd-left">
+    <div class="fade">
+      <p class="cl-pre">Simple &amp; sans engagement</p>
+      <h1 class="cl-h1">Votre pain<br><em>pour demain</em></h1>
+      <div class="cl-divider">·····</div>
+      <p class="cl-body">Passez commande avant 18h ce soir. Je prépare tout cette nuit, votre pain est prêt dès 7h demain matin. On se retrouve en boutique !</p>
+      <div class="cl-badges">
+        <span class="cl-b"><span class="cl-b-dot"></span>Aucune avance — paiement à la récupération</span>
+        <span class="cl-b"><span class="cl-b-dot"></span>Annulation gratuite jusqu'à 20h ce soir</span>
+        <span class="cl-b"><span class="cl-b-dot"></span>Confirmation par SMS dès la réservation</span>
+      </div>
+    </div>
+
+    <div class="cl-infos fade d1">
+      <div class="cli">
+        <span class="cli-ico">⏰</span>
+        <span class="cli-txt"><strong>Heure limite</strong>Avant 18h pour le lendemain matin</span>
+      </div>
+      <div class="cli">
+        <span class="cli-ico">🕖</span>
+        <span class="cli-txt"><strong>Retrait disponible</strong>Dès 7h, du lundi au dimanche</span>
+      </div>
+      <div class="cli">
+        <span class="cli-ico">💶</span>
+        <span class="cli-txt"><strong>Paiement</strong>En boutique à la récupération</span>
+      </div>
+      <div class="cli">
+        <span class="cli-ico">✓</span>
+        <span class="cli-txt"><strong>Annulation gratuite</strong>Jusqu'à 20h le soir de la commande</span>
+      </div>
+      <div class="cli">
+        <span class="cli-ico">📍</span>
+        <span class="cli-txt"><strong>12 rue du Marché · 95300 Pontoise</strong>01 34 XX XX XX</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DROITE — formulaire -->
+  <div class="cmd-right">
+    <div id="formBox" class="fade d2">
+      <p class="cr-pre">Formulaire de réservation</p>
+      <h2 class="cr-h2">Réserver ma commande</h2>
+      <p class="cr-sub">Simple, rapide, sans engagement. Je m'occupe du reste.</p>
+      <div class="cr-orn">·····</div>
+
+      <div class="form-row-2">
+        <div class="form-row" style="margin-bottom:0">
+          <label class="form-label" for="cmd-prenom">Prénom</label>
+          <input type="text" id="cmd-prenom" class="form-input" placeholder="Thomas" autocomplete="given-name">
+        </div>
+        <div class="form-row" style="margin-bottom:0">
+          <label class="form-label" for="cmd-tel">Téléphone</label>
+          <input type="tel" id="cmd-tel" class="form-input" placeholder="06 XX XX XX XX" autocomplete="tel">
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-top:1.65rem">
+        <label class="form-label" for="cmd-date">Date de retrait</label>
+        <input type="date" id="cmd-date" class="form-input" autocomplete="off">
+      </div>
+
+      <div class="form-row">
+        <label class="form-label" for="cmd-produit">Produit principal</label>
+        <select id="cmd-produit" class="form-select">
+          <option value="">Choisir un produit...</option>
+          <optgroup label="— Pains">
+            <option>Baguette Tradition × 1 — 1,20 €</option>
+            <option>Baguette Tradition × 2 — 2,40 €</option>
+            <option>Pain de Campagne (500g) — 3,80 €</option>
+            <option>Pain de Seigle — 4,50 €</option>
+            <option>Pain aux Céréales — 4,20 €</option>
+          </optgroup>
+          <optgroup label="— Viennoiseries">
+            <option>Croissant × 4 — 6,00 €</option>
+            <option>Pain au Chocolat × 4 — 6,40 €</option>
+            <option>Chausson aux Pommes × 2 — 3,60 €</option>
+          </optgroup>
+          <optgroup label="— Pâtisseries">
+            <option>Tarte aux Pommes (part) — 3,80 €</option>
+            <option>Éclair au Chocolat — 2,80 €</option>
+            <option>Millefeuille Vanille — 3,50 €</option>
+          </optgroup>
+          <option value="custom">Autre / Commande spéciale</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label class="form-label" for="cmd-precisions">Précisions (optionnel)</label>
+        <input type="text" id="cmd-precisions" class="form-input" placeholder="Bien cuit, sans sel, commande spéciale...">
+      </div>
+
+      <button type="button" class="btn-submit" id="btn-submit">Valider ma réservation →</button>
+      <p class="form-note">Confirmation par SMS · Paiement à la récupération · Annulation gratuite avant 20h</p>
+    </div>
+
+    <!-- Message de confirmation -->
+    <div id="confirm">
+      <p class="conf-pre">Merci !</p>
+      <h2 class="conf-title">Réservation confirmée</h2>
+      <div class="conf-orn">·····</div>
+      <p class="conf-p">Vous recevrez une confirmation par SMS.<br>Votre commande sera prête dès 7h demain matin.<br><br><em>À demain, et bonne dégustation !</em></p>
+    </div>
+  </div>
+
+</div><!-- /.cmd-wrap -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-orn">·····</div>
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div class="logo">Boulangerie <span>Dumont</span><span class="logo-sub">Pontoise, depuis 1987</span></div>
+        <p>Farine bio locale, levain naturel, four à bois. Une boulangerie de quartier, ouverte 7j/7 dès 7h.</p>
+      </div>
+      <div class="ft-col">
+        <h4>Pages</h4>
+        <a href="demo-boulangerie-pains.html">Nos Pains</a>
+        <a href="demo-boulangerie-viennoiseries.html">Viennoiseries</a>
+        <a href="demo-boulangerie-savoir-faire.html">Notre histoire</a>
+        <a href="demo-boulangerie-commande.html">Commander</a>
+      </div>
+      <div class="ft-col">
+        <h4>Horaires</h4>
+        <a href="#">Lun – Ven · 7h – 19h30</a>
+        <a href="#">Samedi · 7h – 13h30</a>
+        <a href="#">Dimanche · 7h – 13h</a>
+      </div>
+      <div class="ft-col">
+        <h4>Nous trouver</h4>
+        <a href="tel:0134000000">01 34 XX XX XX</a>
+        <a href="#">12 rue du Marché</a>
+        <a href="#">95300 Pontoise</a>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 Boulangerie Dumont · Pontoise (95)</span>
+      <span>Site réalisé par <a href="https://www.lerelaisweb.com" target="_blank" rel="noopener noreferrer">Le Relais Web</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Scroll header
+  var hdr = document.getElementById('hdr');
+  window.addEventListener('scroll', function(){
+    hdr.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Burger / overlay mobile
+  var brgr = document.getElementById('brgr');
+  var mob  = document.getElementById('mob');
+  var mc   = document.getElementById('mob-close');
+  brgr.onclick = function(){ mob.classList.add('open'); document.body.style.overflow = 'hidden'; };
+  mc.onclick   = function(){ mob.classList.remove('open'); document.body.style.overflow = ''; };
+  mob.querySelectorAll('a').forEach(function(a){
+    a.onclick = function(){ mob.classList.remove('open'); document.body.style.overflow = ''; };
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && mob.classList.contains('open')){
+      mob.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Confirmation formulaire
+  document.getElementById('btn-submit').onclick = function(){
+    var fb = document.getElementById('formBox');
+    var cf = document.getElementById('confirm');
+    fb.style.opacity = '0';
+    fb.style.transition = 'opacity .3s';
+    setTimeout(function(){ fb.style.display = 'none'; cf.classList.add('show'); }, 300);
+  };
+
+  // IntersectionObserver pour animations .fade
+  if(window.IntersectionObserver){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(x){
+        if(x.isIntersecting){ x.target.classList.add('in'); io.unobserve(x.target); }
+      });
+    }, { threshold: .08 });
+    document.querySelectorAll('.fade').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.fade').forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+</script>
+</body>
+</html>

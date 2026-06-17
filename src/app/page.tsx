@@ -15,8 +15,8 @@ const localBusiness = {
   url: `${SITE}/`,
   telephone: "+33695382157",
   email: "contact@lerelaisweb.com",
-  image: `${SITE}/logo-relais.webp`,
-  logo: `${SITE}/logo-relais.webp`,
+  image: `${SITE}/lerelaisweb_logo.png`,
+  logo: `${SITE}/lerelaisweb_logo.png`,
   priceRange: "€€",
   slogan: "Votre partenaire digital local.",
   address: {
@@ -67,9 +67,9 @@ const scores = [
 ];
 
 const examples = [
-  { img: "/hero-boulangerie.webp", cat: "Boulangerie", name: "La Mie d'Ermont", desc: "Vitrine, pains & viennoiseries, commande." },
-  { img: "/hero-salon.webp", cat: "Coiffeur", name: "Studio Camille", desc: "Prestations, galerie & prise de rendez-vous." },
-  { img: "/hero-kebab.webp", cat: "Restauration", name: "Le Bosphore", desc: "Menu, formules & livraison." },
+  { img: "/hero-boulangerie.webp", cat: "Boulangerie", name: "Boulangerie Dumont", desc: "Pains au levain, viennoiseries, commande en ligne.", href: "/demos/demo-boulangerie.html" },
+  { img: "/hero-salon.webp", cat: "Coiffeur", name: "Studio Élise", desc: "Prestations, équipe, galerie & prise de rendez-vous.", href: "/demos/demo-coiffeur.html" },
+  { img: "/hero-kebab.webp", cat: "Restauration", name: "Istanbul Grill", desc: "Menu, formules & commande pour la livraison.", href: "/demos/demo-kebab.html" },
 ];
 
 export default function Home() {
@@ -222,50 +222,83 @@ export default function Home() {
           </div>
 
           <div className="proof-flagship reveal">
-            <div>
-              <span className="proof-tag"><span className="dot" /> En ligne · Ermont</span>
+            <div className="flag-info">
+              <span className="proof-tag"><span className="dot" /> Réalisation cliente · En ligne</span>
               <h3>AME-JUDO — Arts Martiaux Ermontois</h3>
+              <p className="flag-loc">Club de judo · Ermont (95) · fondé en 1978</p>
               <p>
-                Le club de judo d&apos;Ermont avait besoin d&apos;un vrai site : horaires, inscription en
-                ligne, galerie et actualités. On l&apos;a créé de A à Z — et le club met à jour ses
-                actualités lui-même, sans nous appeler.
+                Le club avait besoin d&apos;un vrai site : horaires, inscription en ligne, galerie et
+                actualités. On l&apos;a conçu de A à Z — et aujourd&apos;hui le bureau publie ses
+                actualités lui-même, sans nous appeler. C&apos;est tout l&apos;intérêt du Pack Pro.
               </p>
+              <ul className="flag-feats">
+                <li>Espace d&apos;administration</li>
+                <li>Inscription en ligne</li>
+                <li>Galerie &amp; actualités</li>
+                <li>9 pages sur-mesure</li>
+              </ul>
               <div className="proof-stats">
                 <div className="proof-stat"><span className="n">99</span><span className="l">note vitesse</span></div>
+                <div className="proof-stat"><span className="n">240</span><span className="l">adhérents</span></div>
                 <div className="proof-stat"><span className="n">7 j</span><span className="l">de création</span></div>
-                <div className="proof-stat"><span className="n">9</span><span className="l">pages sur-mesure</span></div>
               </div>
               <a href="https://ame-judo.fr" target="_blank" rel="noopener noreferrer" className="btn-primary">
                 Voir le site en ligne → ame-judo.fr
               </a>
             </div>
-            <a href="https://ame-judo.fr" target="_blank" rel="noopener noreferrer" className="proof-window" aria-label="Ouvrir ame-judo.fr">
-              <div className="pw-bar">
-                <span className="pw-dot" /><span className="pw-dot" /><span className="pw-dot" />
-                <span className="pw-url">ame-judo.fr</span>
+
+            <a
+              href="https://ame-judo.fr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flag-window"
+              aria-label="Ouvrir le site ame-judo.fr dans un nouvel onglet"
+            >
+              <span className="flag-score"><b>99</b><i>/100 — vitesse Google</i></span>
+              <div className="fw-bar">
+                <span className="fw-dot" /><span className="fw-dot" /><span className="fw-dot" />
+                <span className="fw-url">
+                  <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth={2.4} aria-hidden="true">
+                    <rect x="5" y="11" width="14" height="9" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" />
+                  </svg>
+                  ame-judo.fr
+                </span>
               </div>
-              <img src="/ame-judo.png" alt="Aperçu du site ame-judo.fr réalisé par Le Relais Web" width={1200} height={630} loading="lazy" decoding="async" />
+              <div className="fw-screen" aria-hidden="true">
+                <div className="fw-nav">
+                  <span className="fw-brand">AME-JUDO<i>Arts Martiaux Ermontois</i></span>
+                  <span className="fw-menu"><i /><i /><i /><i /></span>
+                  <span className="fw-cta">S&apos;inscrire</span>
+                </div>
+                <div className="fw-hero">
+                  <span className="fw-eyebrow">礼 · Tout commence par un salut</span>
+                  <span className="fw-place">Ermont · Val-d&apos;Oise</span>
+                  <h4 className="fw-title">Apprendre<br />à <em>saluer</em>,<br />à <em>vaincre</em>.</h4>
+                  <span className="fw-logo">AME</span>
+                </div>
+              </div>
             </a>
           </div>
 
           <p className="proof-examples-head">
-            <b>Et selon votre métier&nbsp;?</b> Voici le style qu&apos;on livre.{" "}
+            <b>Et selon votre métier&nbsp;?</b> Visitez trois sites de démonstration qu&apos;on a conçus —{" "}
+            cliquez pour les parcourir.{" "}
             <span style={{ color: "var(--color-ink-muted)" }}>
-              (Ce sont des exemples de design, pas des sites en ligne.)
+              (Commerces fictifs créés pour l&apos;exemple.)
             </span>
           </p>
           <div className="proof-grid">
             {examples.map((e) => (
-              <Link href="/services" className="ex-card reveal" key={e.name}>
+              <a href={e.href} className="ex-card reveal" key={e.name} aria-label={`Voir la démo ${e.name}`}>
                 <div className="ex-img" style={{ backgroundImage: `url('${e.img}')` }}>
-                  <span className="ex-badge">Exemple de design</span>
+                  <span className="ex-badge">Voir la démo →</span>
                 </div>
                 <div className="ex-body">
                   <span className="ex-cat">{e.cat}</span>
                   <h4>{e.name}</h4>
                   <p>{e.desc}</p>
                 </div>
-              </Link>
+              </a>
             ))}
           </div>
         </div>

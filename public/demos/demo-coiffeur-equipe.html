@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="L'équipe du salon : coiffeuses passionnées et expérimentées. Démo site vitrine salon de coiffure par Le Relais Web.">
+  <link rel="icon" type="image/png" href="/logo.webp">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://www.lerelaisweb.com/demos/demo-coiffeur-equipe.html">
+  <meta property="og:title" content="Démo Coiffeur v2 — L'Équipe | Le Relais Web">
+  <meta property="og:description" content="Page équipe de la démo coiffeur v2. Création de sites artisans par Le Relais Web, Ermont.">
+  <meta property="og:image" content="https://www.lerelaisweb.com/logo.webp">
+  <meta property="og:url" content="https://www.lerelaisweb.com/demos/demo-coiffeur-equipe.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <title>Démo Coiffeur v2 — L'Équipe | Le Relais Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700;1,9..144,900&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --creme:#F7F2E9;
+      --creme2:#EFE7D8;
+      --ivoire:#FBF8F2;
+      --noir:#0A0908;
+      --encre:#1C1916;
+      --bordeaux:#6B1B28;
+      --bordeaux2:#8C2738;
+      --or:#C4933A;
+      --or2:#A67A2A;
+      --gris:#6B5F52;
+      --bord:rgba(10,9,8,.12);
+      --bord-or:#C4933A;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Syne',sans-serif;background:var(--creme);color:var(--noir);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+
+    body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+      opacity:.7}
+
+    /* BARRE RETOUR STICKY */
+    .retour-bar{
+      position:sticky;top:0;left:0;right:0;z-index:9998;
+      display:flex;align-items:center;justify-content:center;gap:.7rem;
+      width:100%;padding:.65rem 1rem;
+      background:#0D0B09;color:#F7F2E9;
+      font-family:'Syne',sans-serif;font-size:.68rem;font-weight:600;
+      letter-spacing:.18em;text-transform:uppercase;text-decoration:none;
+      border-bottom:1px solid #C4933A;
+      transition:background .25s;
+    }
+    .retour-bar:hover{background:#6B1B28}
+    .retour-bar .r-arrow{font-size:.95rem;transition:transform .2s}
+    .retour-bar:hover .r-arrow{transform:translateX(-3px)}
+    .retour-bar .r-badge{background:#C4933A;color:#0D0B09;padding:.15rem .5rem;font-size:.58rem;letter-spacing:.1em;font-weight:700}
+    @media(max-width:480px){
+      .retour-bar{padding:.55rem .8rem;font-size:.6rem;gap:.5rem}
+      .retour-bar .r-text{max-width:55vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    }
+
+    /* HEADER */
+    header{position:sticky;top:2.35rem;left:0;right:0;z-index:200}
+    .hd{padding:1.4rem 3rem;display:flex;align-items:center;justify-content:space-between;
+      transition:background .35s,backdrop-filter .35s,border-color .35s;border-bottom:1px solid transparent}
+    header.scrolled .hd{background:rgba(247,242,233,.92);backdrop-filter:blur(16px);border-bottom-color:var(--bord)}
+    .logo{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;letter-spacing:.06em;color:var(--noir)}
+    .logo em{font-style:italic;font-weight:300;color:var(--bordeaux)}
+    nav{display:flex;gap:2.5rem;align-items:center}
+    nav a{font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gris);
+      position:relative;transition:color .2s}
+    nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--bord-or);transition:width .35s ease-out}
+    nav a:hover,nav a.active{color:var(--noir)}
+    nav a:hover::after,nav a.active::after{width:100%}
+    .nav-rdv{background:var(--bordeaux)!important;color:#fff!important;padding:.6rem 1.3rem;border-radius:2px;
+      font-size:.65rem!important;letter-spacing:.16em;transition:background .2s!important}
+    .nav-rdv:hover{background:var(--bordeaux2)!important}
+    .nav-rdv::after{display:none!important}
+    .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:10px;min-width:44px;min-height:44px;align-items:center;justify-content:center}
+    .burger span{width:22px;height:1.5px;background:var(--noir)}
+
+    /* OVERLAY NAV */
+    #nol{display:none;position:fixed;inset:0;z-index:9000;background:var(--noir);
+      flex-direction:column;justify-content:center;padding:4rem 2rem;gap:0}
+    #nol.open{display:flex}
+    #nol a{font-family:'Fraunces',serif;font-size:clamp(2.4rem,8vw,5rem);font-style:italic;font-weight:300;
+      color:rgba(247,242,233,.18);line-height:1.1;transition:color .25s,padding .3s;border-bottom:1px solid rgba(247,242,233,.06);
+      padding:.4rem 0}
+    #nol a:hover{color:var(--creme);padding-left:1.2rem}
+    #ncl{position:absolute;top:1rem;right:1rem;width:48px;height:48px;background:none;border:none;color:var(--creme);
+      font-size:1.6rem;cursor:pointer;font-family:'Syne',sans-serif;display:flex;align-items:center;justify-content:center}
+
+    /* Filet doré signature */
+    .filet{display:block;width:48px;height:1px;background:var(--bord-or);margin:0 0 1.2rem 0}
+    .num-section{font-family:'Fraunces',serif;font-size:.7rem;font-weight:700;letter-spacing:.32em;
+      text-transform:uppercase;color:var(--bordeaux);margin-bottom:.8rem;display:inline-flex;align-items:center;gap:.7rem}
+    .num-section em{font-style:italic;font-weight:300;color:var(--gris)}
+
+    /* FONDATRICE */
+    .founder-sec{padding:7rem 3.5rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;border-bottom:1px solid var(--bord)}
+    .fc-eyebrow{font-size:.6rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--bordeaux);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem}
+    .fc-eyebrow::before{content:'';width:32px;height:1px;background:var(--bordeaux)}
+    .fc-name{font-family:'Fraunces',serif;font-size:clamp(2.8rem,5.5vw,4.8rem);font-weight:900;line-height:.9;letter-spacing:-.02em;margin-bottom:.5rem}
+    .fc-role{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gris);margin-bottom:2rem}
+    .fc-bio{font-size:.9rem;color:var(--gris);line-height:1.85;max-width:420px;margin-bottom:2.5rem;font-style:italic;font-family:'Fraunces',serif;font-weight:300}
+    /* Specs chiffrées */
+    .fc-specs{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--noir)}
+    .fcs{padding:1.25rem;border-right:1px solid var(--bord);text-align:center}
+    .fcs:last-child{border-right:none}
+    .fcs-n{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:700;color:var(--bordeaux);line-height:1;font-style:italic}
+    .fcs-l{font-size:.58rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gris);margin-top:.35rem}
+    /* Portrait */
+    .founder-right{padding-top:2rem;display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start}
+    .founder-portrait{width:200px;height:250px;background:var(--creme2);overflow:hidden;position:relative;flex-shrink:0;border:1px solid var(--bord)}
+    .founder-portrait img{width:100%;height:100%;object-fit:cover;display:block}
+    .fp-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem}
+    .fp-init{font-family:'Fraunces',serif;font-size:5rem;font-weight:900;font-style:italic;color:rgba(10,9,8,.08);line-height:1;user-select:none}
+    .fp-lbl{font-size:.52rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gris)}
+    .founder-badges{display:flex;flex-direction:column;gap:.4rem}
+    .f-badge{display:inline-block;background:var(--bordeaux);color:#fff;padding:.35rem .75rem;font-size:.55rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:2px}
+    .f-badge.or{background:var(--or);color:var(--noir)}
+
+    /* TITRE DÉFILANT */
+    .typo-sep{padding:2.5rem 3.5rem;background:var(--encre);overflow:hidden;position:relative}
+    .typo-sep-inner{font-family:'Fraunces',serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:300;font-style:italic;color:rgba(247,242,233,.1);white-space:nowrap;letter-spacing:.08em;animation:scrolltxt 22s linear infinite;display:inline-block}
+    @keyframes scrolltxt{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* ÉQUIPE GRID */
+    .team-sec{padding:5rem 3.5rem 7rem;background:var(--ivoire)}
+    .team-sec-head{display:flex;align-items:baseline;gap:2rem;margin-bottom:3.5rem}
+    .tsec-num{font-family:'Fraunces',serif;font-size:5rem;font-weight:900;font-style:italic;color:rgba(107,27,40,.06);line-height:1}
+    .tsec-title{font-family:'Fraunces',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-.01em}
+    .tsec-title em{font-style:italic;font-weight:300;color:var(--bordeaux)}
+    .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--bord)}
+    .tcard{background:var(--ivoire);display:grid;grid-template-columns:120px 1fr;min-height:220px;transition:background .25s}
+    .tcard:hover{background:var(--creme)}
+    .tc-portrait{background:var(--creme2);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:120px}
+    .tc-portrait img{width:100%;height:100%;object-fit:cover}
+    .tc-ph{text-align:center}
+    .tc-ph-init{font-family:'Fraunces',serif;font-size:3.5rem;font-weight:900;font-style:italic;color:rgba(10,9,8,.07);user-select:none;line-height:1}
+    .tc-body{padding:2.5rem;display:flex;flex-direction:column;justify-content:space-between;border-left:1px solid var(--bord)}
+    .tc-role-tag{font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--or2);margin-bottom:.6rem}
+    .tc-name{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;line-height:.95;margin-bottom:.5rem;letter-spacing:-.01em}
+    .tc-spec{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gris);margin-bottom:1rem}
+    .tc-bio{font-size:.8rem;color:var(--gris);line-height:1.8;flex:1}
+    .tc-skills{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1.25rem}
+    .tskill{font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.18rem .5rem;border:1px solid var(--bord);color:var(--gris);border-radius:2px}
+    .tskill.hot{border-color:rgba(107,27,40,.3);color:var(--bordeaux);background:rgba(107,27,40,.05)}
+
+    /* VALEURS */
+    .valeurs{background:var(--encre);padding:6rem 3.5rem;position:relative;overflow:hidden}
+    .valeurs::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--or);opacity:.3}
+    .v-head{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:end;margin-bottom:4rem}
+    .v-head-l .v-tag{font-size:.6rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:rgba(196,147,58,.65);margin-bottom:1rem}
+    .v-head-l h2{font-family:'Fraunces',serif;font-size:clamp(2.2rem,4.5vw,3.8rem);font-weight:900;color:var(--creme);line-height:.9;letter-spacing:-.02em}
+    .v-head-l h2 em{font-style:italic;font-weight:300;color:rgba(196,147,58,.75)}
+    .v-head-r p{font-size:.88rem;color:rgba(247,242,233,.42);line-height:1.85;font-style:italic;font-family:'Fraunces',serif;font-weight:300}
+    .v-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid rgba(247,242,233,.08)}
+    .vcard{padding:2.5rem;border-right:1px solid rgba(247,242,233,.06);border-bottom:1px solid rgba(247,242,233,.06);transition:background .25s;position:relative;overflow:hidden}
+    .vcard:last-child{border-right:none}
+    .vcard::before{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--or);transition:width .4s}
+    .vcard:hover{background:rgba(255,255,255,.02)}.vcard:hover::before{width:100%}
+    .vcard-ico{font-family:'Fraunces',serif;font-size:3.5rem;font-style:italic;font-weight:300;color:rgba(196,147,58,.18);line-height:1;margin-bottom:1.25rem}
+    .vcard-name{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:var(--creme);margin-bottom:.75rem;letter-spacing:-.01em}
+    .vcard-txt{font-size:.8rem;color:rgba(247,242,233,.38);line-height:1.8}
+
+    /* CITATION */
+    .signature-quote{padding:4rem 3.5rem;background:var(--creme);text-align:center;border-top:1px solid var(--bord);border-bottom:1px solid var(--bord)}
+    .sq-inner{max-width:680px;margin:0 auto}
+    .sq-mark{font-family:'Fraunces',serif;font-size:4rem;line-height:.5;color:var(--bord-or);font-style:italic;font-weight:300;display:block;margin-bottom:.5rem}
+    .sq-text{font-family:'Fraunces',serif;font-size:clamp(1.1rem,2.2vw,1.6rem);font-style:italic;font-weight:300;line-height:1.5;color:var(--noir);margin-bottom:1.2rem}
+    .sq-text em{color:var(--bordeaux);font-weight:400}
+    .sq-author{font-size:.6rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gris);display:inline-flex;align-items:center;gap:.8rem}
+    .sq-author::before{content:'';width:28px;height:1px;background:var(--bord-or)}
+
+    /* FOOTER */
+    footer{background:var(--encre);color:var(--creme);padding:5rem 3.5rem 2.5rem;position:relative;overflow:hidden}
+    footer::before{content:'ÉLISE';position:absolute;right:-2rem;bottom:-3rem;
+      font-family:'Fraunces',serif;font-size:clamp(8rem,18vw,16rem);font-weight:900;font-style:italic;
+      color:rgba(255,255,255,.025);pointer-events:none;user-select:none;line-height:1}
+    .ft-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;
+      gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(247,242,233,.08);position:relative;z-index:1}
+    .ft-logo{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;letter-spacing:.04em;
+      display:block;margin-bottom:1rem;color:var(--creme)}
+    .ft-logo em{font-style:italic;font-weight:300;color:var(--or)}
+    .ft-desc{font-size:.82rem;color:rgba(247,242,233,.45);line-height:1.85}
+    .ft-handmade{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.4rem;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--or);font-weight:700}
+    .ft-handmade::before{content:'';width:24px;height:1px;background:var(--or)}
+    .ft-col h4{font-size:.58rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--or);margin-bottom:1.25rem}
+    .ft-col a{display:block;font-size:.82rem;color:rgba(247,242,233,.5);margin-bottom:.6rem;transition:color .2s}
+    .ft-col a:hover{color:var(--creme)}
+    .ft-bot{max-width:1400px;margin:2rem auto 0;display:flex;justify-content:space-between;
+      font-size:.65rem;color:rgba(247,242,233,.3);flex-wrap:wrap;gap:1rem;position:relative;z-index:1}
+    .ft-bot a{color:var(--or);transition:opacity .2s}.ft-bot a:hover{opacity:.7}
+
+    /* REVEAL */
+    .rev{opacity:0;transform:translateY(28px);transition:opacity .8s ease-out,transform .8s ease-out}
+    .rev.in{opacity:1;transform:none}
+    .d1{transition-delay:.12s}.d2{transition-delay:.24s}
+
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+    }
+
+    @media(max-width:1100px){
+      .founder-sec{grid-template-columns:1fr;gap:3rem;padding:6rem 1.5rem 4rem}
+      .team-grid{grid-template-columns:1fr}
+      .v-head{grid-template-columns:1fr;gap:2rem}
+      .v-grid{grid-template-columns:1fr}
+      .vcard,.vcard:last-child{border-right:none}
+      .ft-inner{grid-template-columns:1fr 1fr;gap:2.5rem}
+      header{top:2.1rem}
+    }
+    @media(max-width:760px){
+      header .hd{padding:1.2rem 1.2rem}
+      nav{display:none}.burger{display:flex}
+      .team-sec{padding:3rem 1.2rem 5rem}
+      .tcard{grid-template-columns:1fr}
+      .tc-portrait{width:100%;height:160px}
+      .valeurs{padding:4rem 1.2rem}
+      .signature-quote{padding:3rem 1.2rem}
+      footer{padding:4rem 1.2rem 2.5rem}
+      .ft-inner{grid-template-columns:1fr;gap:2.5rem}
+      .ft-bot{flex-direction:column}
+      header{top:2rem}
+    }
+  </style>
+</head>
+<body>
+
+<a href="/" class="retour-bar">
+  <span class="r-arrow">←</span>
+  <span class="r-text">Retour aux réalisations · Le Relais Web</span>
+  <span class="r-badge">DÉMO</span>
+</a>
+
+<div id="nol">
+  <button id="ncl" aria-label="Fermer le menu">✕</button>
+  <a href="demo-coiffeur.html">Accueil</a>
+  <a href="demo-coiffeur-prestations.html">Prestations</a>
+  <a href="demo-coiffeur-galerie.html">Galerie</a>
+  <a href="demo-coiffeur-equipe.html">L'équipe</a>
+  <a href="demo-coiffeur-rdv.html">Réserver</a>
+</div>
+
+<header id="hdr">
+  <div class="hd">
+    <a href="demo-coiffeur.html" class="logo">Studio <em>Élise</em></a>
+    <nav>
+      <a href="demo-coiffeur.html">Accueil</a>
+      <a href="demo-coiffeur-prestations.html">Prestations</a>
+      <a href="demo-coiffeur-galerie.html">Galerie</a>
+      <a href="demo-coiffeur-equipe.html" class="active">L'équipe</a>
+      <a href="demo-coiffeur-rdv.html" class="nav-rdv">Réserver →</a>
+    </nav>
+    <button class="burger" id="brgr" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- FONDATRICE -->
+<div class="founder-sec">
+  <div class="founder-left rev">
+    <div class="fc-eyebrow">Directrice artistique</div>
+    <div class="fc-name">Élise<br>Moreau</div>
+    <div class="fc-role">Fondatrice · Studio Élise</div>
+    <p class="fc-bio">Après 4 années dans un salon parisien haut de gamme, Élise a fondé Studio Élise avec une conviction : chaque cliente mérite un regard singulier, une coupe pensée, un résultat qui lui ressemble.<br><br>Spécialiste des techniques couleur complexes — balayage, ombré, colorations créatives — elle supervise la formation continue de son équipe et reçoit une clientèle exigeante depuis 2014.</p>
+    <div class="fc-specs">
+      <div class="fcs"><div class="fcs-n">12</div><div class="fcs-l">Ans d'exp.</div></div>
+      <div class="fcs"><div class="fcs-n">800+</div><div class="fcs-l">Clientes</div></div>
+      <div class="fcs"><div class="fcs-n">4,8★</div><div class="fcs-l">Google</div></div>
+    </div>
+  </div>
+  <div class="founder-right rev d1">
+    <div class="founder-portrait">
+      <div class="fp-ph">
+        <div class="fp-init">É</div>
+        <div class="fp-lbl">Portrait</div>
+      </div>
+    </div>
+    <div class="founder-badges">
+      <span class="f-badge">Fondatrice</span>
+      <span class="f-badge or">12 ans d'exp.</span>
+    </div>
+  </div>
+</div>
+
+<!-- SÉPARATEUR DÉFILANT -->
+<div class="typo-sep" aria-hidden="true">
+  <span class="typo-sep-inner">Studio Élise · Ermont · Coupe · Couleur · Kératine · Balayage · Soin · Studio Élise · Ermont · Coupe · Couleur · Kératine · Balayage · Soin · </span>
+</div>
+
+<!-- ÉQUIPE -->
+<div class="team-sec">
+  <div class="team-sec-head rev">
+    <div class="tsec-num">02</div>
+    <h2 class="tsec-title">L'équipe<br><em>au complet</em></h2>
+  </div>
+  <div class="team-grid">
+    <div class="tcard rev">
+      <div class="tc-portrait">
+        <div class="tc-ph"><div class="tc-ph-init">C</div></div>
+      </div>
+      <div class="tc-body">
+        <div>
+          <div class="tc-role-tag">Coiffeuse · Coloriste</div>
+          <div class="tc-name">Camille<br>Bertrand</div>
+          <div class="tc-spec">Wella Color Expert</div>
+          <p class="tc-bio">Certifiée Wella Color Expert, Camille est la spécialiste des colorations tendance. Elle suit chaque évolution saisonnière pour proposer des nuances actuelles et flatteuses.</p>
+        </div>
+        <div class="tc-skills"><span class="tskill hot">Wella Expert</span><span class="tskill">Couleur</span><span class="tskill">Tendances</span><span class="tskill">Balayage</span></div>
+      </div>
+    </div>
+    <div class="tcard rev d1">
+      <div class="tc-portrait">
+        <div class="tc-ph"><div class="tc-ph-init">L</div></div>
+      </div>
+      <div class="tc-body">
+        <div>
+          <div class="tc-role-tag">Coiffeuse · Soins</div>
+          <div class="tc-name">Léa<br>Fontaine</div>
+          <div class="tc-spec">Olaplex · Kérastase</div>
+          <p class="tc-bio">Formée Olaplex et Kérastase, Léa excelle dans le diagnostic capillaire et les traitements intensifs. Experte en lissage brésilien et soins réparateurs longue durée.</p>
+        </div>
+        <div class="tc-skills"><span class="tskill hot">Olaplex</span><span class="tskill">Kérastase</span><span class="tskill">Kératine</span><span class="tskill">Diagnostic</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CITATION SIGNATURE -->
+<section class="signature-quote">
+  <div class="sq-inner rev">
+    <span class="sq-mark">«</span>
+    <p class="sq-text">On ne vend pas des coupes. On offre un <em>regard</em> — et parfois, c'est le début d'une vraie confiance en soi.</p>
+    <span class="sq-author">Élise — Fait main à Ermont</span>
+  </div>
+</section>
+
+<!-- VALEURS -->
+<div class="valeurs">
+  <div class="v-head rev">
+    <div class="v-head-l">
+      <div class="v-tag">Notre philosophie</div>
+      <h2>Ce qui nous<br><em>différencie</em></h2>
+    </div>
+    <div class="v-head-r">
+      <p>Trois engagements fondamentaux qui guident chaque geste, chaque rendez-vous, chaque résultat depuis la création du studio.</p>
+    </div>
+  </div>
+  <div class="v-grid">
+    <div class="vcard rev"><div class="vcard-ico">I</div><div class="vcard-name">Écoute avant tout</div><p class="vcard-txt">Chaque rendez-vous commence par une consultation approfondie. Nous prenons le temps de comprendre vos attentes, votre mode de vie, votre personnalité.</p></div>
+    <div class="vcard rev d1"><div class="vcard-ico">II</div><div class="vcard-name">Technique d'excellence</div><p class="vcard-txt">Formation continue, produits professionnels de référence, gestes précis. Nous refusons les compromis sur la qualité d'exécution.</p></div>
+    <div class="vcard rev d2"><div class="vcard-ico">III</div><div class="vcard-name">Résultats durables</div><p class="vcard-txt">Nous choisissons des techniques et des produits qui respectent votre cheveu sur le long terme, pas des résultats spectaculaires mais éphémères.</p></div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft-inner">
+    <div>
+      <a href="demo-coiffeur.html" class="ft-logo">Studio <em>Élise</em></a>
+      <p class="ft-desc">Salon de coiffure premium à Ermont (95). Coupes, colorations, soins d'exception. Sur rendez-vous du lundi au samedi.</p>
+      <span class="ft-handmade">Fait main à Ermont</span>
+    </div>
+    <div class="ft-col"><h4>Pages</h4><a href="demo-coiffeur-prestations.html">Prestations</a><a href="demo-coiffeur-galerie.html">Galerie</a><a href="demo-coiffeur-equipe.html">L'équipe</a><a href="demo-coiffeur-rdv.html">Réserver</a></div>
+    <div class="ft-col"><h4>Horaires</h4><a href="#">Lun–Ven · 9h–19h</a><a href="#">Sam · 9h–18h30</a><a href="#">Dim · Fermé</a></div>
+    <div class="ft-col"><h4>Contact</h4><a href="tel:0139000000">01 39 XX XX XX</a><a href="#">8 av. Victor Hugo</a><a href="#">95120 Ermont</a></div>
+  </div>
+  <div class="ft-bot">
+    <span>© 2026 Studio Élise · Ermont</span>
+    <span>Site réalisé par <a href="https://www.lerelaisweb.com" target="_blank" rel="noopener noreferrer">Le Relais Web</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var hdr=document.getElementById('hdr'),brgr=document.getElementById('brgr'),nol=document.getElementById('nol'),ncl=document.getElementById('ncl');
+  window.addEventListener('scroll',function(){hdr.classList.toggle('scrolled',window.scrollY>60);},{passive:true});
+  function closeNav(){nol.classList.remove('open');document.body.style.overflow='';}
+  brgr.onclick=function(){nol.classList.add('open');document.body.style.overflow='hidden';};
+  ncl.onclick=closeNav;
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeNav();});
+  nol.querySelectorAll('a').forEach(function(a){a.onclick=closeNav;});
+  var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}});},{threshold:.06});
+  document.querySelectorAll('.rev').forEach(function(el){obs.observe(el);});
+})();
+</script>
+</body>
+</html>
