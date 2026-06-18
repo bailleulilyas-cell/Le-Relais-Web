@@ -90,10 +90,10 @@
     #drclose{width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:none;color:var(--ink);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:background .2s,color .2s}
     #drclose:hover{background:var(--terra);color:#fff;border-color:var(--terra)}
     .dr-links{display:flex;flex-direction:column;gap:.2rem}
-    .dr-links a{font-family:'Fraunces',serif;font-size:1.55rem;font-weight:500;color:var(--ink);padding:.7rem 0;border-bottom:1px solid var(--line2);display:flex;align-items:center;justify-content:space-between;transition:color .2s,padding-left .25s}
-    .dr-links a::after{content:'→';color:var(--terra);opacity:0;transform:translateX(-6px);transition:opacity .2s,transform .2s}
-    .dr-links a:hover{color:var(--terra);padding-left:.4rem}
-    .dr-links a:hover::after{opacity:1;transform:translateX(0)}
+    .dr-links a{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:500;color:var(--ink);padding:.7rem .2rem;border-bottom:1px solid var(--line2);display:flex;align-items:center;transition:color .2s,padding-left .25s}
+    .dr-links a .ar{margin-left:auto;color:var(--terra);font-size:1.05rem;line-height:1;opacity:0;transform:translateX(-8px);transition:opacity .2s,transform .25s}
+    .dr-links a:hover{color:var(--terra);padding-left:.55rem}
+    .dr-links a:hover .ar{opacity:1;transform:translateX(0)}
     .dr-rdv{margin-top:1.6rem;background:var(--terra);color:#fff!important;text-align:center;border-radius:100px;padding:.95rem;font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
     .dr-foot{margin-top:auto;font-size:.78rem;color:var(--ink2);line-height:1.7}
     .dr-foot b{color:var(--ink);display:block;font-weight:600}
@@ -125,9 +125,9 @@
     .hs-l{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-top:.35rem}
 
     .hero-r{position:relative;z-index:1}
-    .hero-img{position:relative;border-radius:200px 200px 16px 16px;overflow:hidden;aspect-ratio:3/4;box-shadow:0 30px 70px var(--shadow);outline:1px solid var(--line)}
-    .hero-img img{width:100%;height:100%;object-fit:cover;animation:slowzoom 16s ease-in-out infinite alternate}
-    @keyframes slowzoom{from{transform:scale(1)}to{transform:scale(1.07)}}
+    .hero-img{position:relative;border-radius:150px 150px 18px 18px;overflow:hidden;aspect-ratio:16/11;box-shadow:0 30px 70px var(--shadow);outline:1px solid var(--line)}
+    .hero-img img{width:100%;height:100%;object-fit:cover;animation:slowzoom 18s ease-in-out infinite alternate}
+    @keyframes slowzoom{from{transform:scale(1)}to{transform:scale(1.04)}}
     @media(prefers-reduced-motion:reduce){.hero-img img{animation:none}}
     .booking{position:absolute;left:-1.5rem;bottom:2rem;background:var(--paper);border-radius:14px;padding:1.1rem 1.3rem;box-shadow:0 18px 44px rgba(44,26,18,.2);border:1px solid var(--line);max-width:215px}
     .booking .b-tag{font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--terra);display:flex;align-items:center;gap:.4rem;margin-bottom:.5rem}
@@ -278,10 +278,10 @@
     <button id="drclose" aria-label="Fermer le menu">✕</button>
   </div>
   <nav class="dr-links">
-    <a href="demo-coiffeur.html">Accueil</a>
-    <a href="demo-coiffeur-prestations.html">Prestations</a>
-    <a href="demo-coiffeur-galerie.html">Galerie</a>
-    <a href="demo-coiffeur-equipe.html">L'équipe</a>
+    <a href="demo-coiffeur.html">Accueil<span class="ar">→</span></a>
+    <a href="demo-coiffeur-prestations.html">Prestations<span class="ar">→</span></a>
+    <a href="demo-coiffeur-galerie.html">Galerie<span class="ar">→</span></a>
+    <a href="demo-coiffeur-equipe.html">L'équipe<span class="ar">→</span></a>
   </nav>
   <a href="demo-coiffeur-rdv.html" class="dr-rdv">Prendre rendez-vous</a>
   <div class="dr-foot">
@@ -326,7 +326,7 @@
     </div>
     <div class="hero-r">
       <div class="hero-img">
-        <img src="hero-salon.webp" alt="Salon Studio Élise à Ermont" width="800" height="1000" fetchpriority="high" decoding="async">
+        <img src="hero-salon.webp" alt="Salon Studio Élise à Ermont" width="1200" height="825" fetchpriority="high" decoding="async">
       </div>
       <div class="booking">
         <div class="b-tag">Créneau disponible</div>
@@ -490,19 +490,18 @@
   drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false);});});
   addEventListener('keydown',function(e){if(e.key==='Escape'&&drawer.classList.contains('open'))setMenu(false);});
 
-  /* Swipe : ouvrir depuis le bord droit, fermer en glissant vers la droite */
-  var tsx=0,tsy=0,tracking=false,fromEdge=false;
+  /* Swipe : ouvrir d'un glissé vers la gauche dans la moitié droite, fermer d'un glissé vers la droite */
+  var tsx=0,tsy=0,fromRight=false;
   addEventListener('touchstart',function(e){
     var t=e.touches[0]; tsx=t.clientX; tsy=t.clientY;
-    fromEdge = tsx > innerWidth-28;          // départ près du bord droit
-    tracking = fromEdge || drawer.classList.contains('open');
+    fromRight = tsx > innerWidth*0.5;        // départ dans la moitié droite de l'écran
   },{passive:true});
   addEventListener('touchend',function(e){
-    if(!tracking)return; tracking=false;
     var t=e.changedTouches[0], dx=t.clientX-tsx, dy=t.clientY-tsy;
-    if(Math.abs(dx)<55 || Math.abs(dy)>Math.abs(dx))return;  // mouvement horizontal franc
-    if(dx<0 && fromEdge && !drawer.classList.contains('open')) setMenu(true);   // swipe ← depuis bord = ouvrir
-    if(dx>0 && drawer.classList.contains('open')) setMenu(false);               // swipe → = fermer
+    if(Math.abs(dx)<45 || Math.abs(dy)>Math.abs(dx))return;   // glissé horizontal franc uniquement
+    var open=drawer.classList.contains('open');
+    if(dx<0 && fromRight && !open) setMenu(true);   // ← ouvrir
+    else if(dx>0 && open) setMenu(false);           // → fermer
   },{passive:true});
 
   /* Reveal au scroll */
