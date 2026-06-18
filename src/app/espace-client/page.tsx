@@ -28,6 +28,7 @@ export default async function EspaceClientPage() {
     user: {
       prenom: data.utilisateur.prenom,
       nomEnseigne: data.utilisateur.nomEnseigne,
+      email: data.utilisateur.email,
       paiementConfirme: data.utilisateur.paiementConfirme,
       descriptionProjet: data.utilisateur.descriptionProjet ?? null,
       packSouhaite: data.utilisateur.packSouhaite,

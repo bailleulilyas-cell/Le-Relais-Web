@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 export type DashUser = {
   prenom: string;
   nomEnseigne: string;
+  email: string;
   paiementConfirme: boolean;
   descriptionProjet: string | null;
   packSouhaite: "presence" | "pro" | "indecis" | null;
@@ -95,6 +96,10 @@ const PACK_PRIX = {
   presence: { setup: "550 €", mois: "25 €" },
   pro: { setup: "1 200 €", mois: "40 €" },
 };
+/* Pré-remplit l'email du client dans le lien Stripe (rattachement automatique du paiement). */
+function payLink(url: string, email: string): string {
+  return email ? `${url}?prefilled_email=${encodeURIComponent(email)}` : url;
+}
 
 function frDate(iso: string | null): string {
   if (!iso) return "—";
@@ -356,10 +361,10 @@ function DashboardTab({
         </div>
       )}
 
-      {!user.paiementConfirme && <PaiementCard pack={pack} />}
+      {!user.paiementConfirme && <PaiementCard pack={pack} email={user.email} />}
 
       {user.paiementConfirme && projet && projet.pretMiseEnLigne && !projet.hasStripe && (
-        <AbonnementCard pack={pack} />
+        <AbonnementCard pack={pack} email={user.email} />
       )}
 
       {!projet ? (
@@ -522,7 +527,7 @@ function NextPayCard({ data }: { data: DashboardData }) {
 }
 
 /* Étape 1 — mise en service (au démarrage). Lien Stripe statique selon le pack. */
-function PaiementCard({ pack }: { pack: "presence" | "pro" | null }) {
+function PaiementCard({ pack, email }: { pack: "presence" | "pro" | null; email: string }) {
   if (!pack) {
     return (
       <div className="dash-pay-cta">
@@ -555,7 +560,7 @@ function PaiementCard({ pack }: { pack: "presence" | "pro" | null }) {
         <br />
         <span>L’abonnement {prix.mois}/mois ne démarre qu’une fois votre site prêt.</span>
       </p>
-      <a href={PAY_LINKS[pack].creation} className="btn-primary dash-pay-btn">
+      <a href={payLink(PAY_LINKS[pack].creation, email)} className="btn-primary dash-pay-btn">
         Payer la mise en service — {prix.setup} →
       </a>
       <p className="dash-pay-note">🔒 Paiement sécurisé par Stripe · Satisfait ou remboursé 30 jours</p>
@@ -564,7 +569,7 @@ function PaiementCard({ pack }: { pack: "presence" | "pro" | null }) {
 }
 
 /* Étape 2 — abonnement : visible UNIQUEMENT quand l'admin a marqué le site « prêt ». */
-function AbonnementCard({ pack }: { pack: "presence" | "pro" | null }) {
+function AbonnementCard({ pack, email }: { pack: "presence" | "pro" | null; email: string }) {
   const p = pack ?? "presence";
   const prix = PACK_PRIX[p];
   return (
@@ -577,7 +582,7 @@ function AbonnementCard({ pack }: { pack: "presence" | "pro" | null }) {
         <br />
         <span>Sans engagement · Résiliable à tout moment.</span>
       </p>
-      <a href={PAY_LINKS[p].abonnement} className="btn-primary dash-pay-btn">
+      <a href={payLink(PAY_LINKS[p].abonnement, email)} className="btn-primary dash-pay-btn">
         Activer mon abonnement & mettre en ligne →
       </a>
       <p className="dash-pay-note">🔒 Paiement sécurisé par Stripe</p>

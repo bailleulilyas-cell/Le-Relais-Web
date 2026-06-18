@@ -21,6 +21,7 @@ export type ClientData = {
     prenom: string;
     nomFamille: string | null;
     nomEnseigne: string;
+    email: string;
     paiementConfirme: boolean;
     descriptionProjet: string | null;
     packSouhaite: "presence" | "pro" | "indecis" | null;
@@ -51,6 +52,7 @@ export async function getClientData(userId: number): Promise<ClientData | null> 
       prenom: utilisateurs.prenom,
       nomFamille: utilisateurs.nomFamille,
       nomEnseigne: utilisateurs.nomEnseigne,
+      email: utilisateurs.email,
       paiementConfirme: utilisateurs.paiementConfirme,
       descriptionProjet: utilisateurs.descriptionProjet,
       packSouhaite: utilisateurs.packSouhaite,
