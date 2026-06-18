@@ -14,6 +14,7 @@ import {
   addFacture,
   delFacture,
   confirmPaiement,
+  setPretMiseEnLigne,
   updateDemande,
   deleteClient,
 } from "@/app/admin/actions";
@@ -421,6 +422,7 @@ function ProjetCard({
   const [debut] = useState(projet.abonnementDebut ?? "");
   const [stripe, setStripe] = useState(projet.stripeSubscriptionId ?? "");
   const [urlAdmin, setUrlAdmin] = useState(projet.urlAdminClient ?? "");
+  const [pret, setPret] = useState(projet.pretMiseEnLigne);
   const isPro = Number(projet.montantMensuel) >= 40;
 
   return (
@@ -497,6 +499,34 @@ function ProjetCard({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Mise en ligne : débloque le bouton « abonnement » côté client */}
+      <div className="adm-mel" style={{ marginTop: "1.2rem", paddingTop: "1.2rem", borderTop: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+        <div className="adm-mel-info">
+          <strong style={{ display: "block", color: "var(--ink)" }}>
+            Site prêt pour la mise en ligne&nbsp;?
+          </strong>
+          <span className="adm-hint">
+            {pret
+              ? "✓ Le client voit le bouton « activer mon abonnement » dans son espace."
+              : "Tant que ce n'est pas activé, le client NE voit PAS le bouton d'abonnement."}
+          </span>
+        </div>
+        <button
+          className={pret ? "adm-btn-ghost" : "adm-btn-dark"}
+          onClick={() =>
+            startTransition(async () => {
+              const r = await setPretMiseEnLigne(userId, !pret);
+              if (r.ok) {
+                setPret(!pret);
+                showToast(!pret ? "Abonnement débloqué pour le client." : "Bouton d'abonnement masqué.");
+              } else showToast(r.error || "Erreur.", false);
+            })
+          }
+        >
+          {pret ? "Annuler la mise en ligne" : "✓ Marquer comme terminé (autoriser l'abonnement)"}
+        </button>
       </div>
     </div>
   );

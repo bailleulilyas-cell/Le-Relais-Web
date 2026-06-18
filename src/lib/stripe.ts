@@ -29,3 +29,16 @@ export const PRIX_MISE_EN_SERVICE = 55000; // 550 €
 export const PRIX_ABONNEMENT_MENSUEL = 2500; // 25 €/mois
 export const PRIX_PRO_MISE_EN_SERVICE = 120000; // 1 200 €
 export const PRIX_PRO_ABONNEMENT_MENSUEL = 4000; // 40 €/mois
+
+/** Liens de paiement Stripe (Payment Links), par pack et par phase.
+ *  Phase 1 = mise en service (au début) · Phase 2 = abonnement (après « terminé »). */
+export const STRIPE_LINKS = {
+  presence: {
+    creation: "https://buy.stripe.com/bJedRa2rfeIFf4G2za1VK02",
+    abonnement: "https://buy.stripe.com/8x29AUgi56c9aOq4Hi1VK03",
+  },
+  pro: {
+    creation: "https://buy.stripe.com/6oU28se9X2ZX09M7Tu1VK04",
+    abonnement: "https://buy.stripe.com/8x2fZic1P4412hUehS1VK05",
+  },
+} as const;

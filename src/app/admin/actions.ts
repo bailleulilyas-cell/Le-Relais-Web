@@ -316,6 +316,20 @@ export async function confirmPaiement(userId: number, valeur: boolean): Promise<
   }
 }
 
+/* ── Mise en ligne : autoriser le client à souscrire l'abonnement ── */
+export async function setPretMiseEnLigne(userId: number, valeur: boolean): Promise<ActionResult> {
+  if (!(await requireAdmin())) return { ok: false, error: "Non autorisé." };
+  try {
+    const db = getDb();
+    await db.update(projets).set({ pretMiseEnLigne: valeur }).where(eq(projets.userId, userId));
+    revalidatePath("/admin", "layout");
+    return { ok: true };
+  } catch (e) {
+    console.error("setPretMiseEnLigne:", e);
+    return { ok: false, error: "Erreur serveur." };
+  }
+}
+
 /* ── Statut d'une demande support ── */
 export async function updateDemande(id: number, statut: string): Promise<ActionResult> {
   if (!(await requireAdmin())) return { ok: false, error: "Non autorisé." };

@@ -46,6 +46,9 @@ export const projets = mysqlTable("projets", {
   urlAdminClient: varchar("url_admin_client", { length: 500 }),
   statut: mysqlEnum("statut", ["en_cours", "en_ligne", "suspendu"]).default("en_cours"),
   progression: int("progression").default(0),
+  // Passé à true par l'admin quand le site est prêt : débloque le bouton
+  // « souscrire à l'abonnement » côté client (mise en ligne).
+  pretMiseEnLigne: boolean("pret_mise_en_ligne").default(false).notNull(),
   abonnementDebut: date("abonnement_debut", { mode: "string" }),
   montantMensuel: decimal("montant_mensuel", { precision: 10, scale: 2 }).default("25.00"),
   montantSetup: decimal("montant_setup", { precision: 10, scale: 2 }).default("550.00"),

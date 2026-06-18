@@ -30,12 +30,14 @@ export default async function EspaceClientPage() {
       nomEnseigne: data.utilisateur.nomEnseigne,
       paiementConfirme: data.utilisateur.paiementConfirme,
       descriptionProjet: data.utilisateur.descriptionProjet ?? null,
+      packSouhaite: data.utilisateur.packSouhaite,
     },
     projet: data.projet
       ? {
           nomSite: data.projet.nomSite,
           urlSite: data.projet.urlSite,
           statut: data.projet.statut,
+          pretMiseEnLigne: !!data.projet.pretMiseEnLigne,
           montantMensuel: String(data.projet.montantMensuel ?? "25.00"),
           abonnementDebut: isoDate(data.projet.abonnementDebut),
           scorePerformance: data.projet.scorePerformance,

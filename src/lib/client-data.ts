@@ -23,6 +23,7 @@ export type ClientData = {
     nomEnseigne: string;
     paiementConfirme: boolean;
     descriptionProjet: string | null;
+    packSouhaite: "presence" | "pro" | "indecis" | null;
   };
   projet: Projet | null;
   etapes: Etape[];
@@ -52,6 +53,7 @@ export async function getClientData(userId: number): Promise<ClientData | null> 
       nomEnseigne: utilisateurs.nomEnseigne,
       paiementConfirme: utilisateurs.paiementConfirme,
       descriptionProjet: utilisateurs.descriptionProjet,
+      packSouhaite: utilisateurs.packSouhaite,
     })
     .from(utilisateurs)
     .where(eq(utilisateurs.id, userId))

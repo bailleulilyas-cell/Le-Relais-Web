@@ -8,11 +8,13 @@ export type DashUser = {
   nomEnseigne: string;
   paiementConfirme: boolean;
   descriptionProjet: string | null;
+  packSouhaite: "presence" | "pro" | "indecis" | null;
 };
 export type DashProjet = {
   nomSite: string | null;
   urlSite: string | null;
   statut: "en_cours" | "en_ligne" | "suspendu" | null;
+  pretMiseEnLigne: boolean;
   montantMensuel: string;
   abonnementDebut: string | null;
   scorePerformance: number | null;
@@ -76,6 +78,22 @@ const DEMANDE_STATUT: Record<string, { label: string; cls: string }> = {
   new: { label: "En attente", cls: "d-new" },
   in_progress: { label: "En cours", cls: "d-prog" },
   done: { label: "Traitée", cls: "d-done" },
+};
+
+/* Liens de paiement Stripe (Payment Links, publics — destinés au partage). */
+const PAY_LINKS = {
+  presence: {
+    creation: "https://buy.stripe.com/bJedRa2rfeIFf4G2za1VK02",
+    abonnement: "https://buy.stripe.com/8x29AUgi56c9aOq4Hi1VK03",
+  },
+  pro: {
+    creation: "https://buy.stripe.com/6oU28se9X2ZX09M7Tu1VK04",
+    abonnement: "https://buy.stripe.com/8x2fZic1P4412hUehS1VK05",
+  },
+};
+const PACK_PRIX = {
+  presence: { setup: "550 €", mois: "25 €" },
+  pro: { setup: "1 200 €", mois: "40 €" },
 };
 
 function frDate(iso: string | null): string {
@@ -303,6 +321,15 @@ function DashboardTab({
   onGo: (t: Tab) => void;
 }) {
   const { user, projet } = data;
+  const pack: "presence" | "pro" | null = projet
+    ? Number(projet.montantMensuel) >= 40
+      ? "pro"
+      : "presence"
+    : user.packSouhaite === "pro"
+      ? "pro"
+      : user.packSouhaite === "presence"
+        ? "presence"
+        : null;
   return (
     <>
       <div className="dash-welcome">
@@ -329,7 +356,11 @@ function DashboardTab({
         </div>
       )}
 
-      {!user.paiementConfirme && <PaiementCard />}
+      {!user.paiementConfirme && <PaiementCard pack={pack} />}
+
+      {user.paiementConfirme && projet && projet.pretMiseEnLigne && !projet.hasStripe && (
+        <AbonnementCard pack={pack} />
+      )}
 
       {!projet ? (
         <PromoBlock onGo={onGo} />
@@ -490,47 +521,66 @@ function NextPayCard({ data }: { data: DashboardData }) {
   );
 }
 
-function PaiementCard() {
-  const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState<string | null>(null);
-
-  async function payer() {
-    setLoading(true);
-    setErr(null);
-    try {
-      const r = await fetch("/api/stripe/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "same-origin",
-        body: JSON.stringify({}),
-      });
-      const d = await r.json();
-      if (d.ok && d.url) {
-        window.location.href = d.url;
-      } else {
-        setErr(d.error || "Erreur, réessayez.");
-        setLoading(false);
-      }
-    } catch {
-      setErr("Erreur réseau. Réessayez.");
-      setLoading(false);
-    }
+/* Étape 1 — mise en service (au démarrage). Lien Stripe statique selon le pack. */
+function PaiementCard({ pack }: { pack: "presence" | "pro" | null }) {
+  if (!pack) {
+    return (
+      <div className="dash-pay-cta">
+        <div className="dash-pay-ic">💳</div>
+        <h2>Finalisons votre formule</h2>
+        <p>
+          On définit ensemble la formule la mieux adaptée à votre projet, puis on vous envoie le
+          lien de paiement de la mise en service.
+        </p>
+        <a
+          href="https://wa.me/33695382157?text=Bonjour%2C%20je%20souhaite%20finaliser%20ma%20commande."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary dash-pay-btn"
+        >
+          En discuter sur WhatsApp →
+        </a>
+        <p className="dash-pay-note">🔒 Paiement sécurisé par Stripe · Garantie 30 jours</p>
+      </div>
+    );
   }
-
+  const prix = PACK_PRIX[pack];
   return (
     <div className="dash-pay-cta">
       <div className="dash-pay-ic">💳</div>
-      <h2>Finaliser votre commande</h2>
+      <h2>Lancer votre projet</h2>
       <p>
-        <strong>550 €</strong> mise en service + <strong>25 €/mois</strong> abonnement.
+        Mise en service <strong>{prix.setup}</strong> — réglée une seule fois pour démarrer la
+        création de votre site.
         <br />
-        <span>Sans engagement · Satisfait ou remboursé 30 jours</span>
+        <span>L’abonnement {prix.mois}/mois ne démarre qu’une fois votre site prêt.</span>
       </p>
-      <button className="btn-primary dash-pay-btn" onClick={payer} disabled={loading}>
-        {loading ? "Redirection vers le paiement…" : "Payer maintenant — 425 € →"}
-      </button>
-      {err && <p className="dash-pay-err">{err}</p>}
-      <p className="dash-pay-note">🔒 Paiement sécurisé par Stripe · Garantie 30 jours</p>
+      <a href={PAY_LINKS[pack].creation} className="btn-primary dash-pay-btn">
+        Payer la mise en service — {prix.setup} →
+      </a>
+      <p className="dash-pay-note">🔒 Paiement sécurisé par Stripe · Satisfait ou remboursé 30 jours</p>
+    </div>
+  );
+}
+
+/* Étape 2 — abonnement : visible UNIQUEMENT quand l'admin a marqué le site « prêt ». */
+function AbonnementCard({ pack }: { pack: "presence" | "pro" | null }) {
+  const p = pack ?? "presence";
+  const prix = PACK_PRIX[p];
+  return (
+    <div className="dash-pay-cta dash-pay-ready">
+      <div className="dash-pay-ic">🚀</div>
+      <h2>Votre site est prêt à être mis en ligne&nbsp;!</h2>
+      <p>
+        Dernière étape : activez votre abonnement <strong>{prix.mois}/mois</strong> (hébergement,
+        nom de domaine, maintenance et support inclus) et on met votre site en ligne.
+        <br />
+        <span>Sans engagement · Résiliable à tout moment.</span>
+      </p>
+      <a href={PAY_LINKS[p].abonnement} className="btn-primary dash-pay-btn">
+        Activer mon abonnement & mettre en ligne →
+      </a>
+      <p className="dash-pay-note">🔒 Paiement sécurisé par Stripe</p>
     </div>
   );
 }
