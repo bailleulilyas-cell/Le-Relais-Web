@@ -3,12 +3,13 @@
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Fab from "@/components/Fab";
-import CookieBar from "@/components/CookieBar";
 
 /**
- * Affiche le chrome public (navbar, footer, FAB, bandeau cookies) sur toutes les
- * pages SAUF l'espace client et l'admin, qui ont leur propre interface plein écran.
+ * Affiche le chrome public (navbar, footer, FAB) sur toutes les pages SAUF
+ * l'espace client et l'admin, qui ont leur propre interface plein écran.
  * Le Footer (server component) est passé en prop pour rester rendu côté serveur.
+ * Pas de bannière cookies : le site ne pose que des cookies strictement
+ * nécessaires (session) — aucun consentement requis (cf. politique de confidentialité).
  */
 export default function PublicChrome({
   children,
@@ -28,7 +29,6 @@ export default function PublicChrome({
       <main id="contenu">{children}</main>
       {footer}
       <Fab />
-      <CookieBar />
     </>
   );
 }

@@ -4,8 +4,17 @@ import { eq, and } from "drizzle-orm";
 import { getDb } from "@/lib/db";
 import { utilisateurs, projets, factures, demandes } from "@/lib/schema";
 import { getStripe, STRIPE_WEBHOOK_SECRET } from "@/lib/stripe";
+import { notifyAdmin, emailLayout } from "@/lib/mail";
 
 export const runtime = "nodejs";
+
+/** Notifie Ilyas par mail d'un événement Stripe (best-effort, ne bloque pas le webhook). */
+function notifyStripe(subject: string, message: string) {
+  notifyAdmin({
+    subject,
+    html: emailLayout(subject, `<p style="font-size:15px;line-height:1.7;color:#5C6470;">${message}</p>`),
+  }).catch(() => {});
+}
 
 function numeroFacture(userId: number): string {
   const now = new Date();
@@ -92,6 +101,11 @@ export async function POST(req: Request) {
             });
             // La facture (avec PDF) est créée par l'événement invoice.paid (mise en service + mensualités).
           });
+          const nom = `${u[0].prenom} ${u[0].nomFamille ?? ""}`.trim();
+          notifyStripe(
+            `💸 Paiement reçu — ${nom}`,
+            `<b>${amount.toFixed(2)} €</b> reçus de ${nom} (${email}). Le compte est marqué payé : pense à initialiser le projet dans l'admin.`
+          );
         } else {
           // Client non trouvé → notifier l'admin (user_id 1 par convention)
           await db.insert(demandes).values({
@@ -101,6 +115,10 @@ export async function POST(req: Request) {
             statut: "new",
             createdAt: new Date(),
           });
+          notifyStripe(
+            `⚠️ Paiement à rattacher — ${email}`,
+            `Paiement de <b>${amount.toFixed(2)} €</b> reçu de ${email}, mais aucun compte ne correspond en base. À traiter manuellement.`
+          );
         }
         break;
       }
@@ -208,6 +226,10 @@ export async function POST(req: Request) {
             statut: "new",
             createdAt: new Date(),
           });
+          notifyStripe(
+            `🔴 Échec de paiement — ${row[0].prenom}`,
+            `Le paiement mensuel de ${row[0].prenom} (${row[0].email}) a échoué (tentative ${inv.attempt_count ?? "?"}). Contacte le client pour vérifier sa carte.`
+          );
         }
         break;
       }
@@ -232,6 +254,10 @@ export async function POST(req: Request) {
             statut: "new",
             createdAt: new Date(),
           });
+          notifyStripe(
+            `⏸ Abonnement résilié — ${row[0].prenom}`,
+            `L'abonnement de ${row[0].prenom} (${row[0].email}) a été résilié. Le projet est passé en « suspendu ».`
+          );
         }
         break;
       }

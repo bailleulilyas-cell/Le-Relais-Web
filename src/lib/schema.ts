@@ -19,6 +19,12 @@ export const utilisateurs = mysqlTable("utilisateurs", {
   email: varchar("email", { length: 190 }).notNull().unique(),
   motDePasse: varchar("mot_de_passe", { length: 255 }).notNull(),
   secteurActivite: varchar("secteur_activite", { length: 120 }),
+  // Coordonnées & contexte recueillis au devis (champs structurés, hors texte libre).
+  telephone: varchar("telephone", { length: 30 }),
+  ville: varchar("ville", { length: 120 }),
+  aDejaSite: boolean("a_deja_site"),
+  urlSiteActuel: varchar("url_site_actuel", { length: 255 }),
+  aLogo: boolean("a_logo"),
   // Formule souhaitée par le prospect à l'inscription (indicatif — le prix réel
   // facturé est celui défini sur le projet par l'admin à l'initialisation).
   packSouhaite: mysqlEnum("pack_souhaite", ["presence", "pro", "indecis"]),
@@ -42,7 +48,7 @@ export const projets = mysqlTable("projets", {
   progression: int("progression").default(0),
   abonnementDebut: date("abonnement_debut", { mode: "string" }),
   montantMensuel: decimal("montant_mensuel", { precision: 10, scale: 2 }).default("25.00"),
-  montantSetup: decimal("montant_setup", { precision: 10, scale: 2 }).default("400.00"),
+  montantSetup: decimal("montant_setup", { precision: 10, scale: 2 }).default("550.00"),
   scorePerformance: int("score_performance"),
   scoreAccessibility: int("score_accessibility"),
   scoreBestPractices: int("score_best_practices"),

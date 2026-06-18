@@ -23,6 +23,7 @@ export default function DevisForm() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [existsEmail, setExistsEmail] = useState(false);
+  const [dejaSite, setDejaSite] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,8 +35,12 @@ export default function DevisForm() {
       prenom: String(f.get("prenom") || ""),
       enseigne: String(f.get("enseigne") || ""),
       ville: String(f.get("ville") || ""),
+      telephone: String(f.get("telephone") || ""),
       secteur: String(f.get("secteur") || ""),
       pack: String(f.get("pack") || ""),
+      dejaSite: String(f.get("dejaSite") || ""),
+      urlActuel: String(f.get("urlActuel") || ""),
+      logo: String(f.get("logo") || ""),
       email: String(f.get("email") || ""),
       password: String(f.get("password") || ""),
       description: String(f.get("description") || ""),
@@ -71,24 +76,28 @@ export default function DevisForm() {
             <input id="prenom" name="prenom" type="text" autoComplete="given-name" required placeholder="Ex : Karim" />
           </div>
           <div className="field">
-            <label htmlFor="enseigne">Nom de votre commerce</label>
-            <input id="enseigne" name="enseigne" type="text" autoComplete="organization" required placeholder="Ex : Boulangerie Martin" />
+            <label htmlFor="enseigne">Nom de votre établissement</label>
+            <input id="enseigne" name="enseigne" type="text" autoComplete="organization" required placeholder="Ex : Boulangerie Martin, Club de judo…" />
           </div>
         </div>
         <div className="field-row">
           <div className="field">
+            <label htmlFor="telephone">Votre téléphone</label>
+            <input id="telephone" name="telephone" type="tel" autoComplete="tel" required placeholder="Ex : 06 12 34 56 78" />
+          </div>
+          <div className="field">
             <label htmlFor="ville">Votre ville</label>
             <input id="ville" name="ville" type="text" required placeholder="Ex : Ermont" />
           </div>
-          <div className="field">
-            <label htmlFor="secteur">Votre activité</label>
-            <select id="secteur" name="secteur" required defaultValue="">
-              <option value="" disabled>Choisissez votre secteur</option>
-              {secteurs.map((s) => (
-                <option key={s} value={s}>{s}</option>
-              ))}
-            </select>
-          </div>
+        </div>
+        <div className="field">
+          <label htmlFor="secteur">Votre activité</label>
+          <select id="secteur" name="secteur" required defaultValue="">
+            <option value="" disabled>Choisissez votre secteur</option>
+            {secteurs.map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
         </div>
         <div className="field">
           <label htmlFor="pack">Quelle formule vous intéresse&nbsp;?</label>
@@ -99,6 +108,36 @@ export default function DevisForm() {
             <option value="indecis">Je ne sais pas encore, on en discute</option>
           </select>
         </div>
+        <div className="field-row">
+          <div className="field">
+            <label htmlFor="dejaSite">Avez-vous déjà un site&nbsp;?</label>
+            <select
+              id="dejaSite"
+              name="dejaSite"
+              required
+              value={dejaSite}
+              onChange={(e) => setDejaSite(e.target.value)}
+            >
+              <option value="" disabled>Choisissez</option>
+              <option value="oui">Oui, j&apos;ai déjà un site</option>
+              <option value="non">Non, pas encore</option>
+            </select>
+          </div>
+          <div className="field">
+            <label htmlFor="logo">Avez-vous un logo&nbsp;?</label>
+            <select id="logo" name="logo" required defaultValue="">
+              <option value="" disabled>Choisissez</option>
+              <option value="oui">Oui, j&apos;ai un logo</option>
+              <option value="non">Non, pas de logo</option>
+            </select>
+          </div>
+        </div>
+        {dejaSite === "oui" && (
+          <div className="field">
+            <label htmlFor="urlActuel">Adresse de votre site actuel</label>
+            <input id="urlActuel" name="urlActuel" type="text" inputMode="url" placeholder="Ex : www.mon-site.fr" />
+          </div>
+        )}
         <div className="field">
           <label htmlFor="email">Votre email</label>
           <input id="email" name="email" type="email" autoComplete="email" required placeholder="vous@exemple.fr" />
@@ -109,7 +148,7 @@ export default function DevisForm() {
         </div>
         <div className="field">
           <label htmlFor="description">Votre projet en quelques mots</label>
-          <textarea id="description" name="description" required placeholder="Vous avez déjà un site ? Que voulez-vous mettre en avant ? Avez-vous des photos, un logo ?" />
+          <textarea id="description" name="description" required placeholder="Que voulez-vous mettre en avant ? Avez-vous des photos ? Une idée de ce que vous aimez ?" />
         </div>
 
         {error && (

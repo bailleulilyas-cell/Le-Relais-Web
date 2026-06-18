@@ -200,6 +200,11 @@ export type ClientDetail = {
     nomFamille: string | null;
     nomEnseigne: string;
     email: string;
+    telephone: string | null;
+    ville: string | null;
+    aDejaSite: boolean | null;
+    urlSiteActuel: string | null;
+    aLogo: boolean | null;
     secteurActivite: string | null;
     packSouhaite: "presence" | "pro" | "indecis" | null;
     descriptionProjet: string | null;
@@ -260,6 +265,11 @@ export async function getClientDetail(userId: number): Promise<ClientDetail | nu
       nomFamille: u.nomFamille,
       nomEnseigne: u.nomEnseigne,
       email: u.email,
+      telephone: u.telephone,
+      ville: u.ville,
+      aDejaSite: u.aDejaSite,
+      urlSiteActuel: u.urlSiteActuel,
+      aLogo: u.aLogo,
       secteurActivite: u.secteurActivite,
       packSouhaite: u.packSouhaite,
       descriptionProjet: u.descriptionProjet,

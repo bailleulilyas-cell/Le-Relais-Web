@@ -36,6 +36,26 @@ export function mailFrom(): string {
   return process.env.SMTP_FROM ?? "Le Relais Web <noreply@lerelaisweb.com>";
 }
 
+/** Boîte personnelle d'Ilyas — reçoit TOUTES les notifications internes. */
+export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "bailleulilyas@gmail.com";
+/** Boîte projet — reçoit en plus les devis et demandes de modification. */
+export const PROJET_EMAIL = "projet@lerelaisweb.com";
+
+/**
+ * Notifie l'équipe d'un événement interne.
+ * Tout part vers ADMIN_EMAIL ; `alsoProjet` ajoute projet@lerelaisweb.com
+ * (réservé aux nouveaux devis et demandes de modification).
+ */
+export async function notifyAdmin(opts: {
+  subject: string;
+  html: string;
+  alsoProjet?: boolean;
+  replyTo?: string;
+}): Promise<boolean> {
+  const to = opts.alsoProjet ? `${ADMIN_EMAIL}, ${PROJET_EMAIL}` : ADMIN_EMAIL;
+  return sendMail({ to, subject: opts.subject, html: opts.html, replyTo: opts.replyTo });
+}
+
 export async function sendMail(opts: {
   to: string;
   subject: string;

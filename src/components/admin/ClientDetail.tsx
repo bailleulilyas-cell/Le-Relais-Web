@@ -32,7 +32,21 @@ const TYPE_DEMANDE_LABEL: Record<string, string> = {
   autre: "Autre",
   systeme: "Notification système",
 };
+const PACK_SOUHAITE_LABEL: Record<string, string> = {
+  presence: "Présence (550 € + 25 €/mois)",
+  pro: "Pro (1 200 € + 40 €/mois)",
+  indecis: "Indécis — à discuter avec le client",
+};
 const today = () => new Date().toISOString().slice(0, 10);
+
+/** "Oui" / "Non" / "—" pour les champs booléens optionnels. */
+function ouiNon(v: boolean | null | undefined): string {
+  return v === true ? "Oui" : v === false ? "Non" : "—";
+}
+/** Ajoute https:// si l'URL saisie par le client n'a pas de protocole. */
+function withHttp(url: string): string {
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+}
 
 function frDate(iso: string): string {
   if (!iso) return "—";
@@ -69,9 +83,71 @@ export default function ClientDetail({ detail }: { detail: ClientDetailData }) {
             <span className={`adm-client-badge ${statutBadge.cls}`}>{statutBadge.txt}</span>
           </h1>
           <div className="adm-client-meta">
-            <span>{u.email}</span>
             <span>Inscrit le {frDate(u.dateInscription)}</span>
             {u.secteurActivite && <span>{u.secteurActivite}</span>}
+          </div>
+        </div>
+      </div>
+
+      {/* Coordonnées & contexte — toujours visibles, séparés des demandes et du texte libre */}
+      <div className="adm-grid2">
+        <div className="adm-card">
+          <div className="adm-card-h">
+            <span className="adm-card-t">Coordonnées</span>
+          </div>
+          <div className="adm-field-static">
+            <span className="adm-field-k">Email</span>
+            <span className="adm-field-v">
+              <a href={`mailto:${u.email}`}>{u.email}</a>
+            </span>
+          </div>
+          <div className="adm-field-static">
+            <span className="adm-field-k">Téléphone</span>
+            <span className="adm-field-v">
+              {u.telephone ? (
+                <a href={`tel:${u.telephone.replace(/\s/g, "")}`}>{u.telephone}</a>
+              ) : (
+                <span className="adm-muted">non renseigné</span>
+              )}
+            </span>
+          </div>
+          <div className="adm-field-static">
+            <span className="adm-field-k">Ville</span>
+            <span className="adm-field-v">{u.ville || "—"}</span>
+          </div>
+        </div>
+
+        <div className="adm-card">
+          <div className="adm-card-h">
+            <span className="adm-card-t">Contexte du projet</span>
+          </div>
+          <div className="adm-field-static">
+            <span className="adm-field-k">Secteur</span>
+            <span className="adm-field-v">{u.secteurActivite || "—"}</span>
+          </div>
+          <div className="adm-field-static">
+            <span className="adm-field-k">Formule souhaitée</span>
+            <span className="adm-field-v">
+              {u.packSouhaite ? PACK_SOUHAITE_LABEL[u.packSouhaite] : "—"}
+            </span>
+          </div>
+          <div className="adm-field-static">
+            <span className="adm-field-k">Déjà un site</span>
+            <span className="adm-field-v">
+              {ouiNon(u.aDejaSite)}
+              {u.aDejaSite && u.urlSiteActuel ? (
+                <>
+                  {" — "}
+                  <a href={withHttp(u.urlSiteActuel)} target="_blank" rel="noopener noreferrer">
+                    {u.urlSiteActuel}
+                  </a>
+                </>
+              ) : null}
+            </span>
+          </div>
+          <div className="adm-field-static">
+            <span className="adm-field-k">Logo</span>
+            <span className="adm-field-v">{ouiNon(u.aLogo)}</span>
           </div>
         </div>
       </div>
@@ -150,36 +226,15 @@ function ProspectView({
   const [debut, setDebut] = useState(today());
   const [pack, setPack] = useState<"presence" | "pro">(u.packSouhaite === "pro" ? "pro" : "presence");
 
-  const PACK_SOUHAITE_LABEL: Record<string, string> = {
-    presence: "Présence (550 € + 25 €/mois)",
-    pro: "Pro (1 200 € + 40 €/mois)",
-    indecis: "Indécis — à discuter avec le client",
-  };
-
   return (
     <>
       <div className="adm-grid2">
         <div className="adm-card">
           <div className="adm-card-h">
-            <span className="adm-card-t">Description à l’inscription</span>
+            <span className="adm-card-t">Projet décrit à l’inscription</span>
           </div>
-          {u.secteurActivite && (
-            <div className="adm-field-static">
-              <span className="adm-field-k">Secteur</span>
-              <span className="adm-field-v">{u.secteurActivite}</span>
-            </div>
-          )}
-          {u.packSouhaite && (
-            <div className="adm-field-static">
-              <span className="adm-field-k">Formule souhaitée</span>
-              <span className="adm-field-v adm-pack-badge">{PACK_SOUHAITE_LABEL[u.packSouhaite]}</span>
-            </div>
-          )}
           {u.descriptionProjet ? (
-            <div className="adm-field-static">
-              <span className="adm-field-k">Projet décrit</span>
-              <div className="adm-desc-box">{u.descriptionProjet}</div>
-            </div>
+            <div className="adm-desc-box">{u.descriptionProjet}</div>
           ) : (
             <p className="adm-empty-mini">Aucune description renseignée.</p>
           )}

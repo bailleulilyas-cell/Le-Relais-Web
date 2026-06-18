@@ -378,6 +378,26 @@ h3{font-size:1.25rem;}
 .doc-sec strong{color:var(--color-ink);}
 .cta-end{margin-top:3rem;text-align:center;}
 
+/* ── Pages légales : encadrés, blocs tarifs, tableau cookies ── */
+.doc-sec .hl{background:#EEF3FF;border:1px solid #DCE6FF;border-left:3px solid var(--color-accent);border-radius:var(--radius-sm);padding:.9rem 1.1rem;margin:1rem 0;font-size:.92rem;color:var(--color-ink);line-height:1.65;}
+.doc-sec .warn{background:#FFF7ED;border:1px solid #FBE3C5;border-left:3px solid #D97706;border-radius:var(--radius-sm);padding:.9rem 1.1rem;margin:1rem 0;font-size:.92rem;color:#7A4A12;line-height:1.65;}
+.doc-sec .hl strong,.doc-sec .warn strong{color:inherit;}
+.doc-sec .price-box{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0 1.2rem;}
+.doc-sec .price-box.three{grid-template-columns:repeat(3,1fr);}
+@media(max-width:560px){.doc-sec .price-box,.doc-sec .price-box.three{grid-template-columns:1fr;}}
+.doc-sec .pi{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.1rem 1rem;text-align:center;}
+.doc-sec .pi-am{font-family:var(--font-display);font-size:1.7rem;font-weight:700;color:var(--color-ink);line-height:1;}
+.doc-sec .pi-lb{font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--color-accent);margin-top:.55rem;}
+.doc-sec .pi-nt{font-size:.8rem;color:var(--color-ink-muted);margin-top:.25rem;}
+.doc-sec .upd{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius);padding:1rem 1.1rem;margin:1rem 0;}
+.doc-sec .upd p{margin:.2rem 0 0;font-size:.88rem;color:var(--color-ink-muted);}
+.doc-sec .upd-date{font-weight:700;color:var(--color-accent);white-space:nowrap;}
+.ck-table-wrap{overflow-x:auto;margin:1rem 0;}
+.ck-table{width:100%;border-collapse:collapse;font-size:.9rem;}
+.ck-table th{text-align:left;font-weight:700;color:var(--color-ink);padding:.6rem .9rem;border-bottom:2px solid var(--color-border);font-size:.8rem;letter-spacing:.02em;}
+.ck-table td{padding:.6rem .9rem;border-bottom:1px solid var(--color-border);color:var(--color-ink-muted);vertical-align:top;}
+.ck-table td strong{color:var(--color-ink);}
+
 /* ═══════════════════════ ESPACE CLIENT — DASHBOARD ═══════════════════════ */
 .dash{--side-w:264px;display:flex;min-height:100vh;background:var(--color-bg);}
 .dash a{color:inherit;}

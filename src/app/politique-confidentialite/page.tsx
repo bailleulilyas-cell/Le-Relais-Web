@@ -35,7 +35,7 @@ const sections: { id: string; num: string; title: string; html: string }[] = [
     title: "Données collectées",
     html: `
       <p><strong>Via le formulaire de contact / devis :</strong></p>
-      <ul><li><strong>Nom de l'enseigne</strong></li><li><strong>Adresse e-mail</strong></li><li><strong>Numéro de téléphone</strong> (facultatif)</li><li><strong>Secteur d'activité</strong></li><li><strong>Description du projet</strong></li></ul>
+      <ul><li><strong>Prénom</strong> et <strong>nom de l'établissement</strong></li><li><strong>Adresse e-mail</strong></li><li><strong>Numéro de téléphone</strong></li><li><strong>Ville</strong> et <strong>secteur d'activité</strong></li><li>Quelques informations sur le projet : présence d'un site existant, d'un logo, et description libre</li></ul>
       <p>Nous ne collectons jamais de données bancaires.</p>
       <p><strong>Via la création de compte (espace client) :</strong></p>
       <ul>
@@ -61,27 +61,26 @@ const sections: { id: string; num: string; title: string; html: string }[] = [
     num: "4",
     title: "Cookies",
     html: `
+      <p>Ce site n'utilise <strong>que des cookies strictement nécessaires</strong> à son fonctionnement. Il n'y a <strong>aucun cookie de mesure d'audience, de publicité ou de traçage</strong>. Les polices d'écriture sont hébergées sur notre propre serveur (elles n'envoient aucune donnée à Google). À ce titre, et conformément aux recommandations de la CNIL, <strong>aucune bannière de consentement n'est nécessaire</strong>.</p>
       <div class="ck-table-wrap">
       <table class="ck-table">
         <thead><tr><th>Cookie</th><th>Source</th><th>Finalité</th><th>Durée</th></tr></thead>
         <tbody>
-          <tr><td><strong>ck</strong></td><td>Le Relais Web</td><td>Mémorise votre choix sur la bannière cookies</td><td>1 an</td></tr>
           <tr><td><strong>session</strong></td><td>Le Relais Web</td><td>Maintient votre connexion à l'espace client</td><td>Session</td></tr>
-          <tr><td><strong>Google Fonts</strong></td><td>Google LLC</td><td>Chargement des polices du site</td><td>Session</td></tr>
-          <tr><td><strong>Stripe</strong></td><td>Stripe Inc.</td><td>Sécurisation du paiement</td><td>30 jours</td></tr>
+          <tr><td><strong>Stripe</strong></td><td>Stripe Inc.</td><td>Sécurisation du paiement (déposé uniquement au moment du règlement)</td><td>30 jours</td></tr>
         </tbody>
       </table>
       </div>
-      <p>Vous pouvez modifier vos préférences à tout moment en effaçant les cookies de votre navigateur.</p>`,
+      <p>Vous pouvez à tout moment effacer ces cookies depuis les réglages de votre navigateur.</p>`,
   },
   {
     id: "s5",
     num: "5",
     title: "Services tiers",
     html: `
+      <p>Les polices d'écriture (Google Fonts) sont <strong>auto-hébergées</strong> sur notre serveur : aucune donnée n'est transmise à Google lors de votre visite.</p>
       <ul>
-        <li><strong>Google Fonts</strong> — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">policies.google.com/privacy</a></li>
-        <li><strong>Stripe Inc.</strong> — <a href="https://stripe.com/fr/privacy" target="_blank" rel="noopener noreferrer">stripe.com/fr/privacy</a></li>
+        <li><strong>Stripe Inc.</strong> (paiement) — <a href="https://stripe.com/fr/privacy" target="_blank" rel="noopener noreferrer">stripe.com/fr/privacy</a></li>
         <li><strong>Vercel Inc.</strong> (hébergement) — <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">vercel.com/legal/privacy-policy</a></li>
       </ul>`,
   },
@@ -119,7 +118,7 @@ const sections: { id: string; num: string; title: string; html: string }[] = [
     title: "Contact & modifications",
     html: `
       <p><strong>Le Relais Web</strong> — <a href="mailto:contact@lerelaisweb.com">contact@lerelaisweb.com</a></p>
-      <div class="hl">Cette politique peut être modifiée. La date de mise à jour est toujours affichée en haut de page. Dernière mise à jour : <strong>Mars 2026</strong>.</div>`,
+      <div class="hl">Cette politique peut être modifiée. La date de mise à jour est toujours affichée en haut de page. Dernière mise à jour : <strong>juin 2026</strong>.</div>`,
   },
   {
     id: "s10",
@@ -141,7 +140,7 @@ export default function PolitiquePage() {
         <div className="container">
           <span className="eyebrow">Vos données</span>
           <h1>Politique de Confidentialité</h1>
-          <p>Dernière mise à jour : mars 2026 · Conforme RGPD (Règlement UE 2016/679)</p>
+          <p>Dernière mise à jour : juin 2026 · Conforme RGPD (Règlement UE 2016/679)</p>
         </div>
       </div>
       <div className="container doc-wrap">
