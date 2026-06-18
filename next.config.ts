@@ -46,6 +46,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   // Ne pas révéler que le site tourne sous Next.js.
   poweredByHeader: false,
+  // Permet l'upload d'un PDF de facture (base64) via les server actions admin.
+  experimental: { serverActions: { bodySizeLimit: "8mb" } },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

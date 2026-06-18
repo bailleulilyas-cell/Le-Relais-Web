@@ -263,7 +263,8 @@ export async function addFacture(
   description: string,
   montant: number,
   dateFacture: string,
-  statut: string
+  statut: string,
+  pdfBase64?: string
 ): Promise<ActionResult> {
   if (!(await requireAdmin())) return { ok: false, error: "Non autorisé." };
   if (!STATUTS_FACTURE.includes(statut as (typeof STATUTS_FACTURE)[number]))
@@ -271,9 +272,27 @@ export async function addFacture(
   const num = numero.trim().slice(0, 50);
   const desc = description.trim().slice(0, 500);
   if (!num || !desc) return { ok: false, error: "Champs requis manquants." };
+
+  // PDF joint (optionnel) : on vérifie que c'est bien un PDF et qu'il n'est pas trop gros.
+  let pdf: string | null = null;
+  if (pdfBase64) {
+    const b64 = pdfBase64.includes(",") ? pdfBase64.split(",").pop()! : pdfBase64;
+    if (b64.length > 8_000_000) return { ok: false, error: "PDF trop volumineux (max ~6 Mo)." };
+    let buf: Buffer;
+    try {
+      buf = Buffer.from(b64, "base64");
+    } catch {
+      return { ok: false, error: "Fichier illisible." };
+    }
+    if (buf.subarray(0, 5).toString("latin1") !== "%PDF-") {
+      return { ok: false, error: "Le fichier doit être un PDF." };
+    }
+    pdf = b64;
+  }
+
   try {
     const db = getDb();
-    await db.insert(factures).values({
+    const res = await db.insert(factures).values({
       userId,
       numero: num,
       description: desc,
@@ -281,6 +300,10 @@ export async function addFacture(
       dateFacture: validDate(dateFacture),
       statut: statut as (typeof STATUTS_FACTURE)[number],
     });
+    if (pdf) {
+      const insertId = Number((res as unknown as [{ insertId: number }])[0].insertId);
+      await db.execute(sql`UPDATE factures SET facture_pdf_data = ${pdf} WHERE id = ${insertId}`);
+    }
     revalidatePath("/admin", "layout");
     return { ok: true };
   } catch (e) {

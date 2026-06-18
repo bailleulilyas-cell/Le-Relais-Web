@@ -846,6 +846,28 @@ function FacturesCard({
   const [date, setDate] = useState(today());
   const [statut, setStatut] = useState("paid");
   const [showForm, setShowForm] = useState(false);
+  const [pdf, setPdf] = useState<string | null>(null);
+  const [pdfName, setPdfName] = useState("");
+
+  function onPdfPick(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) {
+      setPdf(null);
+      setPdfName("");
+      return;
+    }
+    if (file.type !== "application/pdf") {
+      showToast("Le fichier doit être un PDF.", false);
+      e.target.value = "";
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setPdf(String(reader.result).split(",").pop() ?? null);
+      setPdfName(file.name);
+    };
+    reader.readAsDataURL(file);
+  }
 
   return (
     <div className="adm-card">
@@ -889,17 +911,28 @@ function FacturesCard({
             </select>
           </div>
         </div>
+        <div className="adm-field">
+          <label>PDF de la facture (optionnel)</label>
+          <input type="file" accept="application/pdf" onChange={onPdfPick} />
+          <p className="adm-hint" style={{ marginTop: ".3rem" }}>
+            {pdfName
+              ? `📎 ${pdfName} — remplacera le PDF généré automatiquement.`
+              : "Si vide, un PDF est généré automatiquement."}
+          </p>
+        </div>
         <button
           className="adm-btn-dark sm"
           onClick={() => {
             if (!num.trim() || !desc.trim() || !montant) return showToast("Champs requis.", false);
             startTransition(async () => {
-              const r = await addFacture(userId, num, desc, Number(montant), date, statut);
+              const r = await addFacture(userId, num, desc, Number(montant), date, statut, pdf ?? undefined);
               if (r.ok) {
                 showToast("Facture ajoutée.");
                 setNum("");
                 setDesc("");
                 setMontant("");
+                setPdf(null);
+                setPdfName("");
               } else showToast(r.error || "Erreur.", false);
             });
           }}

@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { getDb } from "@/lib/db";
 import { factures, utilisateurs } from "@/lib/schema";
 import { getSession } from "@/lib/session";
@@ -42,6 +42,23 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     return new Response("Accès non autorisé.", { status: 403 });
   }
 
+  const safeNum = f.numero.replace(/[^a-zA-Z0-9_-]/g, "-");
+
+  // PDF joint manuellement par l'admin ? Il a la priorité sur le PDF généré.
+  const stored = await db.execute(
+    sql`SELECT facture_pdf_data AS d FROM factures WHERE id = ${factureId} LIMIT 1`
+  );
+  const joint = (stored[0] as unknown as Array<{ d: string | null }>)?.[0]?.d ?? null;
+  if (joint) {
+    return new Response(Buffer.from(joint, "base64"), {
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `inline; filename="facture-${safeNum}.pdf"`,
+        "Cache-Control": "private, no-store",
+      },
+    });
+  }
+
   const pdf = await generateFacturePdf({
     numero: f.numero,
     description: f.description,
@@ -55,7 +72,6 @@ export async function GET(req: Request, ctx: { params: Promise<{ id: string }> }
     },
   });
 
-  const safeNum = f.numero.replace(/[^a-zA-Z0-9_-]/g, "-");
   return new Response(Buffer.from(pdf), {
     headers: {
       "Content-Type": "application/pdf",
