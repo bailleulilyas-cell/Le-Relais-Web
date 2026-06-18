@@ -348,6 +348,13 @@
       .retour-bar .r-text{max-width:55vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
     }
 
+    /* Particules dorées — effet signature (shine de salon) */
+    #motes{position:fixed;inset:0;z-index:5;pointer-events:none;opacity:.6}
+    @media(prefers-reduced-motion:reduce){#motes{display:none}}
+    /* Survol galerie : halo doré */
+    .gm-item{transition:box-shadow .4s}
+    .gm-item:hover{box-shadow:0 18px 44px rgba(10,9,8,.22),0 0 26px rgba(196,147,58,.22)}
+
     /* ── Correctifs menu / header (LRW) ── */
     #nol{z-index:9999}                       /* couvre la barre retour, rien de caché */
     #nol a{color:rgba(247,242,233,.82)}      /* lisible au toucher (pas de hover sur mobile) */
@@ -367,6 +374,7 @@
   </style>
 </head>
 <body>
+<canvas id="motes" aria-hidden="true"></canvas>
 
 <a href="/#realisations" class="retour-bar" onclick="if(document.referrer&&new URL(document.referrer).origin===location.origin&&new URL(document.referrer).pathname==='/'){history.back();return false}">
   <span class="r-arr">←</span>
@@ -608,6 +616,28 @@
   }
   var cio=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){countUp(x.target);cio.unobserve(x.target);}});},{threshold:.4});
   document.querySelectorAll('.stat-n[data-count]').forEach(function(el){cio.observe(el);});
+})();
+</script>
+<script>
+/* Particules dorées — shine de salon qui scintille doucement */
+(function(){
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cv=document.getElementById('motes'); if(!cv||!cv.getContext) return;
+  var ctx=cv.getContext('2d'), parts=[], W=0, H=0, t=0;
+  function size(){W=cv.width=innerWidth; H=cv.height=innerHeight;}
+  function mk(){return {x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.4+.5, vy:-(Math.random()*.2+.05), vx:(Math.random()-.5)*.12, a:Math.random()*.4+.2, ph:Math.random()*6.28};}
+  function init(){var n=innerWidth<700?12:30; parts=[]; for(var i=0;i<n;i++)parts.push(mk());}
+  function draw(){
+    t+=0.02; ctx.clearRect(0,0,W,H);
+    for(var i=0;i<parts.length;i++){var p=parts[i]; p.y+=p.vy; p.x+=p.vx;
+      if(p.y<-6){p.y=H+6;p.x=Math.random()*W;} if(p.x<-6)p.x=W+6; if(p.x>W+6)p.x=-6;
+      var tw=p.a*(0.55+0.45*Math.sin(t+p.ph));
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.2832); ctx.fillStyle='rgba(196,147,58,'+tw+')'; ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  size(); init(); draw();
+  addEventListener('resize', function(){ size(); init(); });
 })();
 </script>
 </body>

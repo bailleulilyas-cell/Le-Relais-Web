@@ -133,7 +133,7 @@
     /* CARDS PAINS — radius généreux + outline doré au hover */
     .pains-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.85rem}
     .pain-card{background:var(--fond-card);border-radius:14px;box-shadow:0 8px 30px var(--shadow);overflow:hidden;transition:box-shadow .35s,transform .35s,outline-color .3s;outline:1.5px solid transparent;outline-offset:-1.5px;position:relative}
-    .pain-card:hover{box-shadow:0 20px 50px var(--shadow2);transform:translateY(-7px);outline-color:var(--or-soft)}
+    .pain-card:hover{box-shadow:0 24px 54px var(--shadow2),0 0 28px rgba(196,154,74,.18);transform:translateY(-8px);outline-color:var(--or)}
     .pc-img{height:230px;overflow:hidden;border-radius:14px 14px 0 0}
     .pc-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
     .pain-card:hover .pc-img img{transform:scale(1.07)}
@@ -279,6 +279,20 @@
     .retour-bar .r-badge{background:var(--or);color:var(--brun);padding:.15rem .5rem;border-radius:4px;font-size:.6rem}
     @media(max-width:480px){.retour-bar{padding:.55rem .8rem;font-size:.62rem;gap:.4rem}.retour-bar .r-text{max-width:60vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
 
+    /* Poussière de farine — effet signature */
+    #flour{position:fixed;inset:0;z-index:5;pointer-events:none;opacity:.55}
+    @media(prefers-reduced-motion:reduce){#flour{display:none}}
+
+    /* Ticker défilant */
+    .tband{background:var(--creme2);overflow:hidden;border-top:1px solid var(--or-soft);border-bottom:1px solid var(--or-soft);padding:.85rem 0;position:relative;z-index:1}
+    .ttrack{display:flex;width:max-content;animation:tscroll 36s linear infinite}
+    .tband:hover .ttrack{animation-play-state:paused}
+    .titem{display:inline-flex;align-items:center;gap:1.5rem;padding-right:1.5rem;font-family:'Jost',sans-serif;font-size:.74rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--brun);white-space:nowrap}
+    .titem b{color:var(--or2);font-weight:600}
+    .titem .tdot{color:var(--or);font-size:.5rem}
+    @keyframes tscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @media(prefers-reduced-motion:reduce){.ttrack{animation:none}}
+
     /* Burger → croix (LRW fix) */
     .burger span{transition:transform .3s ease,opacity .2s ease}
     .burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
@@ -287,6 +301,7 @@
   </style>
 </head>
 <body>
+<canvas id="flour" aria-hidden="true"></canvas>
 <a href="/#realisations" class="retour-bar" onclick="if(document.referrer&&new URL(document.referrer).origin===location.origin&&new URL(document.referrer).pathname==='/'){history.back();return false}">
   <span class="r-arrow">←</span>
   <span class="r-text">Retour aux réalisations · Le Relais Web</span>
@@ -353,6 +368,13 @@
     </div>
   </div>
 </section>
+
+<div class="tband" aria-hidden="true">
+  <div class="ttrack">
+    <span class="titem"><b>Pain au levain</b><span class="tdot">●</span>Tradition française<span class="tdot">●</span><b>Farine bio locale</b><span class="tdot">●</span>Four à bois 280°<span class="tdot">●</span><b>Pétri à la main</b><span class="tdot">●</span>Fermentation 48h<span class="tdot">●</span><b>Cuit ce matin</b><span class="tdot">●</span></span>
+    <span class="titem"><b>Pain au levain</b><span class="tdot">●</span>Tradition française<span class="tdot">●</span><b>Farine bio locale</b><span class="tdot">●</span>Four à bois 280°<span class="tdot">●</span><b>Pétri à la main</b><span class="tdot">●</span>Fermentation 48h<span class="tdot">●</span><b>Cuit ce matin</b><span class="tdot">●</span></span>
+  </div>
+</div>
 
 <div class="trust">
   <div class="trust-item"><span class="trust-icon">4,9★</span><strong>Google · 320 avis</strong></div>
@@ -494,6 +516,27 @@
   function sync(){var o=mob.classList.contains('open');brgr.classList.toggle('open',o);brgr.setAttribute('aria-label',o?'Fermer le menu':'Ouvrir le menu');}
   brgr.onclick=function(){var o=!mob.classList.contains('open');mob.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';sync();};
   new MutationObserver(sync).observe(mob,{attributes:true,attributeFilter:['class']});
+})();
+</script>
+<script>
+/* Poussière de farine — particules légères qui flottent */
+(function(){
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cv=document.getElementById('flour'); if(!cv||!cv.getContext) return;
+  var ctx=cv.getContext('2d'), parts=[], W=0, H=0;
+  function size(){W=cv.width=innerWidth; H=cv.height=innerHeight;}
+  function mk(){return {x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.5+.4, vy:Math.random()*.22+.05, vx:(Math.random()-.5)*.16, a:Math.random()*.35+.18};}
+  function init(){var n=innerWidth<700?14:34; parts=[]; for(var i=0;i<n;i++)parts.push(mk());}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<parts.length;i++){var p=parts[i]; p.y+=p.vy; p.x+=p.vx;
+      if(p.y>H+6){p.y=-6;p.x=Math.random()*W;} if(p.x<-6)p.x=W+6; if(p.x>W+6)p.x=-6;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.2832); ctx.fillStyle='rgba(255,250,240,'+p.a+')'; ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  size(); init(); draw();
+  addEventListener('resize', function(){ size(); init(); });
 })();
 </script>
 </body>
