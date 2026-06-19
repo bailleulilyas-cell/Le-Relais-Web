@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import Footer from "@/components/Footer";
 import PublicChrome from "@/components/PublicChrome";
 import RevealInit from "@/components/RevealInit";
@@ -59,6 +60,7 @@ export default function RootLayout({
         </a>
         <PublicChrome footer={<Footer />}>{children}</PublicChrome>
         <RevealInit />
+        <Analytics />
       </body>
     </html>
   );
