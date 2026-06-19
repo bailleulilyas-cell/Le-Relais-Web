@@ -223,6 +223,25 @@
     .burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
     .burger.open span:nth-child(2){opacity:0}
     .burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    /* Menu drawer + swipe */
+    #scrim{position:fixed;inset:0;z-index:9000;background:rgba(46,26,14,.45);opacity:0;pointer-events:none;transition:opacity .35s}
+    #scrim.open{opacity:1;pointer-events:auto}
+    #drawer{position:fixed;top:0;right:0;bottom:0;z-index:9001;width:80vw;max-width:330px;background:var(--fond-card);box-shadow:-18px 0 50px rgba(46,26,14,.25);transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.1,1);display:flex;flex-direction:column;padding:1.4rem 1.6rem 2rem;overscroll-behavior:contain}
+    #drawer.open{transform:translateX(0)}
+    .dr-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.2rem}
+    .dr-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--brun)}
+    .dr-logo em{font-style:italic;color:var(--or2)}
+    #drclose{width:42px;height:42px;border:1px solid var(--creme3);border-radius:50%;background:none;color:var(--brun);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:background .2s,color .2s}
+    #drclose:hover{background:var(--or2);color:#fff;border-color:var(--or2)}
+    .dr-links{display:flex;flex-direction:column}
+    .dr-links a{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:500;color:var(--brun);padding:.7rem .2rem;border-bottom:1px solid var(--creme2);display:flex;align-items:center;transition:color .2s,padding-left .25s}
+    .dr-links a .ar{margin-left:auto;color:var(--or2);font-size:1.05rem;opacity:0;transform:translateX(-8px);transition:opacity .2s,transform .25s}
+    .dr-links a:hover{color:var(--or2);padding-left:.55rem}
+    .dr-links a:hover .ar{opacity:1;transform:translateX(0)}
+    .dr-cmd{margin-top:1.6rem;background:var(--brun);color:var(--creme)!important;text-align:center;border-radius:12px;padding:.95rem;font-family:'Jost',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+    .dr-foot{margin-top:auto;font-size:.78rem;color:var(--chaud);line-height:1.7}
+    .dr-foot b{color:var(--brun);display:block;font-weight:600;font-family:'Cormorant Garamond',serif;font-size:1rem}
+    .dr-hint{margin-top:1rem;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--chaud2);opacity:.8}
   </style>
 </head>
 <body>
@@ -235,14 +254,22 @@
 </a>
 
 <!-- OVERLAY MOBILE -->
-<div id="mob" role="dialog" aria-modal="true" aria-label="Menu de navigation">
-  <button id="mob-close" aria-label="Fermer le menu">Fermer ✕</button>
-  <a href="demo-boulangerie.html">Accueil</a>
-  <a href="demo-boulangerie-pains.html">Nos Pains</a>
-  <a href="demo-boulangerie-viennoiseries.html">Viennoiseries</a>
-  <a href="demo-boulangerie-savoir-faire.html">Notre histoire</a>
-  <a href="demo-boulangerie-commande.html">Commander</a>
-</div>
+<div id="scrim" aria-hidden="true"></div>
+<aside id="drawer" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
+  <div class="dr-head">
+    <span class="dr-logo">Boulangerie <em>Dumont</em></span>
+    <button id="drclose" aria-label="Fermer le menu">✕</button>
+  </div>
+  <nav class="dr-links">
+    <a href="demo-boulangerie.html">Accueil<span class="ar">→</span></a>
+    <a href="demo-boulangerie-pains.html">Nos Pains<span class="ar">→</span></a>
+    <a href="demo-boulangerie-viennoiseries.html">Viennoiseries<span class="ar">→</span></a>
+    <a href="demo-boulangerie-savoir-faire.html">Notre histoire<span class="ar">→</span></a>
+  </nav>
+  <a href="demo-boulangerie-commande.html" class="dr-cmd">Commander</a>
+  <div class="dr-foot"><b>Boulangerie Dumont</b>Pontoise, depuis 1987</div>
+  <span class="dr-hint">← Glissez pour fermer</span>
+</aside>
 
 <!-- HEADER -->
 <header id="hdr">
@@ -258,7 +285,7 @@
       <a href="demo-boulangerie-savoir-faire.html">Notre histoire</a>
       <a href="demo-boulangerie-commande.html" class="nav-cmd act">Commander</a>
     </nav>
-    <button class="burger" id="brgr" aria-label="Ouvrir le menu" aria-controls="mob">
+    <button class="burger" id="brgr" aria-label="Ouvrir le menu" aria-controls="drawer">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -416,21 +443,19 @@
     hdr.classList.toggle('scrolled', window.scrollY > 20);
   });
 
-  // Burger / overlay mobile
-  var brgr = document.getElementById('brgr');
-  var mob  = document.getElementById('mob');
-  var mc   = document.getElementById('mob-close');
-  brgr.onclick = function(){ mob.classList.add('open'); document.body.style.overflow = 'hidden'; };
-  mc.onclick   = function(){ mob.classList.remove('open'); document.body.style.overflow = ''; };
-  mob.querySelectorAll('a').forEach(function(a){
-    a.onclick = function(){ mob.classList.remove('open'); document.body.style.overflow = ''; };
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && mob.classList.contains('open')){
-      mob.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-  });
+  // Menu drawer + swipe
+  var brgr=document.getElementById('brgr'),drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim'),drclose=document.getElementById('drclose');
+  if(brgr&&drawer&&scrim){
+    function setMenu(open){drawer.classList.toggle('open',open);scrim.classList.toggle('open',open);brgr.classList.toggle('open',open);brgr.setAttribute('aria-label',open?'Fermer le menu':'Ouvrir le menu');drawer.setAttribute('aria-hidden',open?'false':'true');document.body.style.overflow=open?'hidden':'';}
+    brgr.onclick=function(){setMenu(!drawer.classList.contains('open'));};
+    if(drclose)drclose.onclick=function(){setMenu(false);};
+    scrim.onclick=function(){setMenu(false);};
+    drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false);});});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&drawer.classList.contains('open'))setMenu(false);});
+    var tsx=0,tsy=0,fromRight=false;
+    document.addEventListener('touchstart',function(e){var t=e.touches[0];tsx=t.clientX;tsy=t.clientY;fromRight=tsx>innerWidth*0.5;},{passive:true});
+    document.addEventListener('touchend',function(e){var t=e.changedTouches[0],dx=t.clientX-tsx,dy=t.clientY-tsy;if(Math.abs(dx)<45||Math.abs(dy)>Math.abs(dx))return;var o=drawer.classList.contains('open');if(dx<0&&fromRight&&!o)setMenu(true);else if(dx>0&&o)setMenu(false);},{passive:true});
+  }
 
   // Panier multi-produits
   var menuCart = { count: 0, total: 0, items: [] };
@@ -497,14 +522,5 @@
 })();
 </script>
 
-<script>
-(function(){
-  var brgr=document.getElementById('brgr'),mob=document.getElementById('mob');
-  if(!brgr||!mob)return;
-  function sync(){var o=mob.classList.contains('open');brgr.classList.toggle('open',o);brgr.setAttribute('aria-label',o?'Fermer le menu':'Ouvrir le menu');}
-  brgr.onclick=function(){var o=!mob.classList.contains('open');mob.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';sync();};
-  new MutationObserver(sync).observe(mob,{attributes:true,attributeFilter:['class']});
-})();
-</script>
 </body>
 </html>

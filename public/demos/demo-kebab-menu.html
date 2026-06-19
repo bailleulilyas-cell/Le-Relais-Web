@@ -207,6 +207,29 @@
       *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
       .rev{opacity:1;transform:none}
     }
+    .burger span{transition:transform .3s ease,opacity .2s ease}
+    .burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+    .burger.open span:nth-child(2){opacity:0}
+    .burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+    /* Menu drawer + swipe */
+    #scrim{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .35s}
+    #scrim.open{opacity:1;pointer-events:auto}
+    #drawer{position:fixed;top:0;right:0;bottom:0;z-index:9001;width:80vw;max-width:330px;background:var(--bg2);border-left:1px solid rgba(212,162,76,.22);box-shadow:-18px 0 50px rgba(0,0,0,.55);transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.1,1);display:flex;flex-direction:column;padding:1.4rem 1.6rem 2rem;overscroll-behavior:contain}
+    #drawer.open{transform:translateX(0)}
+    .dr-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.2rem}
+    .dr-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:var(--cream)}
+    .dr-logo em{font-style:italic;color:var(--gold)}
+    #drclose{width:42px;height:42px;border:1px solid rgba(212,162,76,.3);border-radius:50%;background:none;color:var(--cream);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:background .2s,color .2s}
+    #drclose:hover{background:var(--red);color:#fff;border-color:var(--red)}
+    .dr-links{display:flex;flex-direction:column}
+    .dr-links a{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:500;color:var(--cream);padding:.7rem .2rem;border-bottom:1px solid rgba(212,162,76,.12);display:flex;align-items:center;transition:color .2s,padding-left .25s}
+    .dr-links a .ar{margin-left:auto;color:var(--gold);font-size:1.05rem;opacity:0;transform:translateX(-8px);transition:opacity .2s,transform .25s}
+    .dr-links a:hover{color:var(--gold);padding-left:.55rem}
+    .dr-links a:hover .ar{opacity:1;transform:translateX(0)}
+    .dr-cmd{margin-top:1.6rem;background:var(--red);color:#fff!important;text-align:center;border-radius:8px;padding:.95rem;font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(212,162,76,.3)}
+    .dr-foot{margin-top:auto;font-size:.78rem;color:var(--muted);line-height:1.7}
+    .dr-foot b{color:var(--cream);display:block;font-weight:600;font-family:'Playfair Display',serif;font-size:1rem}
+    .dr-hint{margin-top:1rem;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);opacity:.8}
   </style>
 </head>
 <body>
@@ -217,14 +240,22 @@
   <span class="r-badge">DÉMO</span>
 </a>
 
-<div id="nol">
-  <button id="ncl" aria-label="Fermer le menu">✕</button>
-  <a href="demo-kebab.html">Accueil</a>
-  <a href="demo-kebab-menu.html">Menu</a>
-  <a href="demo-kebab-formules.html">Formules</a>
-  <a href="demo-kebab-livraison.html">Livraison</a>
-  <a href="demo-kebab-contact.html">Contact</a>
-</div>
+<div id="scrim" aria-hidden="true"></div>
+<aside id="drawer" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
+  <div class="dr-head">
+    <span class="dr-logo">Istanbul <em>Grill</em></span>
+    <button id="drclose" aria-label="Fermer le menu">✕</button>
+  </div>
+  <nav class="dr-links">
+    <a href="demo-kebab.html">Accueil<span class="ar">→</span></a>
+    <a href="demo-kebab-menu.html">Menu<span class="ar">→</span></a>
+    <a href="demo-kebab-formules.html">Formules<span class="ar">→</span></a>
+    <a href="demo-kebab-livraison.html">Livraison<span class="ar">→</span></a>
+  </nav>
+  <a href="demo-kebab-contact.html" class="dr-cmd">Commander →</a>
+  <div class="dr-foot"><b>Istanbul Grill</b>Kebab &amp; grill · Ermont</div>
+  <span class="dr-hint">← Glissez pour fermer</span>
+</aside>
 
 <header id="hdr">
   <div class="hdi">
@@ -462,19 +493,18 @@
   }, { threshold: 0.08 });
   document.querySelectorAll('.rev').forEach(function(el) { obs.observe(el); });
 
-  var bg = document.getElementById('brgr');
-  var ol = document.getElementById('nol');
-  var cl = document.getElementById('ncl');
-  if (bg) bg.onclick = function() { ol.classList.add('open'); document.body.style.overflow = 'hidden'; };
-  if (cl) cl.onclick = function() { ol.classList.remove('open'); document.body.style.overflow = ''; };
-  if (ol) ol.querySelectorAll('a').forEach(function(a) {
-    a.onclick = function() { ol.classList.remove('open'); document.body.style.overflow = ''; };
-  });
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && ol && ol.classList.contains('open')) {
-      ol.classList.remove('open'); document.body.style.overflow = '';
-    }
-  });
+  var brgr=document.getElementById('brgr'),drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim'),drclose=document.getElementById('drclose');
+  if(brgr&&drawer&&scrim){
+    function setMenu(open){drawer.classList.toggle('open',open);scrim.classList.toggle('open',open);brgr.classList.toggle('open',open);brgr.setAttribute('aria-label',open?'Fermer le menu':'Ouvrir le menu');drawer.setAttribute('aria-hidden',open?'false':'true');document.body.style.overflow=open?'hidden':'';}
+    brgr.onclick=function(){setMenu(!drawer.classList.contains('open'));};
+    if(drclose)drclose.onclick=function(){setMenu(false);};
+    scrim.onclick=function(){setMenu(false);};
+    drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false);});});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&drawer.classList.contains('open'))setMenu(false);});
+    var tsx=0,tsy=0,fromRight=false;
+    document.addEventListener('touchstart',function(e){var t=e.touches[0];tsx=t.clientX;tsy=t.clientY;fromRight=tsx>innerWidth*0.5;},{passive:true});
+    document.addEventListener('touchend',function(e){var t=e.changedTouches[0],dx=t.clientX-tsx,dy=t.clientY-tsy;if(Math.abs(dx)<45||Math.abs(dy)>Math.abs(dx))return;var o=drawer.classList.contains('open');if(dx<0&&fromRight&&!o)setMenu(true);else if(dx>0&&o)setMenu(false);},{passive:true});
+  }
 
   /* Filter logic */
   document.querySelectorAll('.fbtn').forEach(function(btn) {
