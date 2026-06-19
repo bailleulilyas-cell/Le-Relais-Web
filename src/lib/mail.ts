@@ -38,13 +38,13 @@ export function mailFrom(): string {
 
 /** Boîte personnelle d'Ilyas — reçoit TOUTES les notifications internes. */
 export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "bailleulilyas@gmail.com";
-/** Boîte projet — reçoit en plus les devis et demandes de modification. */
-export const PROJET_EMAIL = "projet@lerelaisweb.com";
+/** Boîte de l'agence — reçoit en plus les devis et demandes de modification. */
+export const PROJET_EMAIL = process.env.TEAM_EMAIL ?? "contact@lerelaisweb.com";
 
 /**
  * Notifie l'équipe d'un événement interne.
- * Tout part vers ADMIN_EMAIL ; `alsoProjet` ajoute projet@lerelaisweb.com
- * (réservé aux nouveaux devis et demandes de modification).
+ * Tout part vers ADMIN_EMAIL ; `alsoProjet` ajoute la boîte de l'agence
+ * (contact@lerelaisweb.com) — réservé aux nouveaux devis et demandes de modification.
  */
 export async function notifyAdmin(opts: {
   subject: string;
@@ -52,9 +52,7 @@ export async function notifyAdmin(opts: {
   alsoProjet?: boolean;
   replyTo?: string;
 }): Promise<boolean> {
-  // alsoProjet activé uniquement si la boîte projet@ existe réellement sur Hostinger
-  const projetActive = !!process.env.SMTP_PROJET_ACTIVE;
-  const to = (opts.alsoProjet && projetActive) ? `${ADMIN_EMAIL}, ${PROJET_EMAIL}` : ADMIN_EMAIL;
+  const to = opts.alsoProjet ? `${ADMIN_EMAIL}, ${PROJET_EMAIL}` : ADMIN_EMAIL;
   return sendMail({ to, subject: opts.subject, html: opts.html, replyTo: opts.replyTo });
 }
 
