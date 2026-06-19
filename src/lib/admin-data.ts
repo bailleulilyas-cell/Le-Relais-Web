@@ -210,6 +210,11 @@ export type ClientDetail = {
     descriptionProjet: string | null;
     dateInscription: string;
     paiementConfirme: boolean;
+    formuleDevis: "presence" | "pro" | "custom" | null;
+    montantSetupDevis: string | null;
+    montantMensuelDevis: string | null;
+    lienPaiementSetup: string | null;
+    lienPaiementAbonnement: string | null;
   };
   projet: (Omit<Projet, "abonnementDebut" | "scoreDate" | "montantMensuel" | "montantSetup"> & {
     abonnementDebut: string | null;
@@ -275,6 +280,11 @@ export async function getClientDetail(userId: number): Promise<ClientDetail | nu
       descriptionProjet: u.descriptionProjet,
       dateInscription: isoDay(u.dateInscription),
       paiementConfirme: u.paiementConfirme,
+      formuleDevis: u.formuleDevis,
+      montantSetupDevis: u.montantSetupDevis != null ? String(u.montantSetupDevis) : null,
+      montantMensuelDevis: u.montantMensuelDevis != null ? String(u.montantMensuelDevis) : null,
+      lienPaiementSetup: u.lienPaiementSetup,
+      lienPaiementAbonnement: u.lienPaiementAbonnement,
     },
     projet: p
       ? {

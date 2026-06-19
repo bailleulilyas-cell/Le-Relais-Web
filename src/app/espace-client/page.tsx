@@ -32,6 +32,11 @@ export default async function EspaceClientPage() {
       paiementConfirme: data.utilisateur.paiementConfirme,
       descriptionProjet: data.utilisateur.descriptionProjet ?? null,
       packSouhaite: data.utilisateur.packSouhaite,
+      formuleDevis: data.utilisateur.formuleDevis,
+      montantSetupDevis: data.utilisateur.montantSetupDevis,
+      montantMensuelDevis: data.utilisateur.montantMensuelDevis,
+      lienPaiementSetup: data.utilisateur.lienPaiementSetup,
+      lienPaiementAbonnement: data.utilisateur.lienPaiementAbonnement,
     },
     projet: data.projet
       ? {

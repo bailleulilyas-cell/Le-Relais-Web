@@ -10,6 +10,13 @@ export type DashUser = {
   paiementConfirme: boolean;
   descriptionProjet: string | null;
   packSouhaite: "presence" | "pro" | "indecis" | null;
+  // Formule + liens de paiement assignés par l'admin. Tant que formuleDevis est
+  // null, le client ne voit aucun lien (juste « Finalisons votre formule »).
+  formuleDevis: "presence" | "pro" | "custom" | null;
+  montantSetupDevis: string | null;
+  montantMensuelDevis: string | null;
+  lienPaiementSetup: string | null;
+  lienPaiementAbonnement: string | null;
 };
 export type DashProjet = {
   nomSite: string | null;
@@ -81,24 +88,11 @@ const DEMANDE_STATUT: Record<string, { label: string; cls: string }> = {
   done: { label: "Traitée", cls: "d-done" },
 };
 
-/* Liens de paiement Stripe (Payment Links, publics — destinés au partage). */
-const PAY_LINKS = {
-  presence: {
-    creation: "https://buy.stripe.com/bJedRa2rfeIFf4G2za1VK02",
-    abonnement: "https://buy.stripe.com/8x29AUgi56c9aOq4Hi1VK03",
-  },
-  pro: {
-    creation: "https://buy.stripe.com/6oU28se9X2ZX09M7Tu1VK04",
-    abonnement: "https://buy.stripe.com/8x2fZic1P4412hUehS1VK05",
-  },
-};
-const PACK_PRIX = {
-  presence: { setup: "550 €", mois: "25 €" },
-  pro: { setup: "1 200 €", mois: "40 €" },
-};
 /* Pré-remplit l'email du client dans le lien Stripe (rattachement automatique du paiement). */
 function payLink(url: string, email: string): string {
-  return email ? `${url}?prefilled_email=${encodeURIComponent(email)}` : url;
+  if (!email) return url;
+  const sep = url.includes("?") ? "&" : "?";
+  return `${url}${sep}prefilled_email=${encodeURIComponent(email)}`;
 }
 
 function frDate(iso: string | null): string {
@@ -275,7 +269,7 @@ export default function Dashboard({ data }: { data: DashboardData }) {
 
         <main className="dash-content">
           {tab === "dashboard" && (
-            <DashboardTab data={data} salut={salut} liveStatus={liveStatus} onGo={go} />
+            <DashboardTab data={data} salut={salut} liveStatus={liveStatus} />
           )}
           {tab === "projet" && hasProjet && <ProjetTab data={data} />}
           {tab === "support" && (
@@ -318,23 +312,14 @@ function DashboardTab({
   data,
   salut,
   liveStatus,
-  onGo,
 }: {
   data: DashboardData;
   salut: string;
   liveStatus: string;
-  onGo: (t: Tab) => void;
 }) {
   const { user, projet } = data;
-  const pack: "presence" | "pro" | null = projet
-    ? Number(projet.montantMensuel) >= 40
-      ? "pro"
-      : "presence"
-    : user.packSouhaite === "pro"
-      ? "pro"
-      : user.packSouhaite === "presence"
-        ? "presence"
-        : null;
+  // Montant mensuel affiché pour l'abonnement : projet (client actif) sinon devis.
+  const montantMensuel = projet ? String(projet.montantMensuel) : user.montantMensuelDevis;
   return (
     <>
       <div className="dash-welcome">
@@ -361,15 +346,23 @@ function DashboardTab({
         </div>
       )}
 
-      {!user.paiementConfirme && <PaiementCard pack={pack} email={user.email} />}
-
-      {user.paiementConfirme && projet && projet.pretMiseEnLigne && !projet.hasStripe && (
-        <AbonnementCard pack={pack} email={user.email} />
+      {!user.paiementConfirme && (
+        <PaiementCard
+          montantSetup={user.montantSetupDevis}
+          lienSetup={user.lienPaiementSetup}
+          email={user.email}
+        />
       )}
 
-      {!projet ? (
-        <PromoBlock onGo={onGo} />
-      ) : (
+      {user.paiementConfirme && projet && projet.pretMiseEnLigne && !projet.hasStripe && (
+        <AbonnementCard
+          montantMensuel={montantMensuel}
+          lienAbonnement={user.lienPaiementAbonnement}
+          email={user.email}
+        />
+      )}
+
+      {projet && (
         <>
           <div className="dash-kpis">
             <KpiCard
@@ -526,9 +519,22 @@ function NextPayCard({ data }: { data: DashboardData }) {
   );
 }
 
-/* Étape 1 — mise en service (au démarrage). Lien Stripe statique selon le pack. */
-function PaiementCard({ pack, email }: { pack: "presence" | "pro" | null; email: string }) {
-  if (!pack) {
+function eurOpt(v: string | null): string {
+  return v != null ? eur(v) : "—";
+}
+
+/* Étape 1 — mise en service. Le bouton n'apparaît QUE si l'admin a assigné une
+ * formule (lienPaiementSetup défini). Sinon, état d'attente neutre. */
+function PaiementCard({
+  montantSetup,
+  lienSetup,
+  email,
+}: {
+  montantSetup: string | null;
+  lienSetup: string | null;
+  email: string;
+}) {
+  if (!lienSetup) {
     return (
       <div className="dash-pay-cta">
         <div className="dash-pay-ic">💳</div>
@@ -549,19 +555,18 @@ function PaiementCard({ pack, email }: { pack: "presence" | "pro" | null; email:
       </div>
     );
   }
-  const prix = PACK_PRIX[pack];
   return (
     <div className="dash-pay-cta">
       <div className="dash-pay-ic">💳</div>
       <h2>Lancer votre projet</h2>
       <p>
-        Mise en service <strong>{prix.setup}</strong> — réglée une seule fois pour démarrer la
-        création de votre site.
+        Mise en service <strong>{eurOpt(montantSetup)} €</strong> — réglée une seule fois pour
+        démarrer la création de votre site.
         <br />
-        <span>L’abonnement {prix.mois}/mois ne démarre qu’une fois votre site prêt.</span>
+        <span>L’abonnement mensuel ne démarre qu’une fois votre site prêt.</span>
       </p>
-      <a href={payLink(PAY_LINKS[pack].creation, email)} className="btn-primary dash-pay-btn">
-        Payer la mise en service — {prix.setup} →
+      <a href={payLink(lienSetup, email)} className="btn-primary dash-pay-btn">
+        Payer la mise en service — {eurOpt(montantSetup)} € →
       </a>
       <p className="dash-pay-note">🔒 Paiement sécurisé par Stripe · Satisfait ou remboursé 30 jours</p>
     </div>
@@ -569,75 +574,40 @@ function PaiementCard({ pack, email }: { pack: "presence" | "pro" | null; email:
 }
 
 /* Étape 2 — abonnement : visible UNIQUEMENT quand l'admin a marqué le site « prêt ». */
-function AbonnementCard({ pack, email }: { pack: "presence" | "pro" | null; email: string }) {
-  const p = pack ?? "presence";
-  const prix = PACK_PRIX[p];
+function AbonnementCard({
+  montantMensuel,
+  lienAbonnement,
+  email,
+}: {
+  montantMensuel: string | null;
+  lienAbonnement: string | null;
+  email: string;
+}) {
   return (
     <div className="dash-pay-cta dash-pay-ready">
       <div className="dash-pay-ic">🚀</div>
       <h2>Votre site est prêt à être mis en ligne&nbsp;!</h2>
       <p>
-        Dernière étape : activez votre abonnement <strong>{prix.mois}/mois</strong> (hébergement,
-        nom de domaine, maintenance et support inclus) et on met votre site en ligne.
+        Dernière étape : activez votre abonnement <strong>{eurOpt(montantMensuel)} €/mois</strong>{" "}
+        (hébergement, nom de domaine, maintenance et support inclus) et on met votre site en ligne.
         <br />
         <span>Sans engagement · Résiliable à tout moment.</span>
       </p>
-      <a href={payLink(PAY_LINKS[p].abonnement, email)} className="btn-primary dash-pay-btn">
-        Activer mon abonnement & mettre en ligne →
-      </a>
+      {lienAbonnement ? (
+        <a href={payLink(lienAbonnement, email)} className="btn-primary dash-pay-btn">
+          Activer mon abonnement & mettre en ligne →
+        </a>
+      ) : (
+        <a
+          href="https://wa.me/33695382157?text=Bonjour%2C%20mon%20site%20est%20pr%C3%AAt%2C%20je%20souhaite%20activer%20mon%20abonnement."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-primary dash-pay-btn"
+        >
+          Activer mon abonnement →
+        </a>
+      )}
       <p className="dash-pay-note">🔒 Paiement sécurisé par Stripe</p>
-    </div>
-  );
-}
-
-function PromoBlock({ onGo }: { onGo: (t: Tab) => void }) {
-  return (
-    <div className="dash-promo">
-      <div className="dash-promo-hero">
-        <div>
-          <h2>Votre site professionnel vous attend.</h2>
-          <p>
-            Vous avez créé votre espace — c’est la première étape. Lancez votre projet et nous
-            nous occupons de tout : design, hébergement, SEO et maintenance.
-          </p>
-        </div>
-        <div className="dash-promo-cta">
-          <a href="/contact" className="btn-primary">
-            Démarrer mon projet →
-          </a>
-          <span>À partir de 25 €/mois · 550 € à la mise en service</span>
-        </div>
-      </div>
-      <div className="dash-promo-feats">
-        <div className="dash-promo-feat">
-          <h3>Site ultra-rapide</h3>
-          <p>Code pur, sans WordPress ni Wix. Score Google 99/100. Vos clients restent.</p>
-        </div>
-        <div className="dash-promo-feat">
-          <h3>Cet espace, rempli pour vous</h3>
-          <p>Dès le démarrage, suivez ici l’avancement, vos scores et vos factures en temps réel.</p>
-        </div>
-      </div>
-      <div className="dash-promo-incl">
-        <h3>Tout ce qui est inclus</h3>
-        <div className="dash-promo-list">
-          {[
-            "Site vitrine sur-mesure",
-            "Hébergement & domaine",
-            "Maintenance illimitée",
-            "SEO local Google",
-            "Cet espace client",
-            "Satisfait ou remboursé 30 jours",
-          ].map((f) => (
-            <span className="dash-promo-li" key={f}>
-              {f}
-            </span>
-          ))}
-        </div>
-      </div>
-      <button className="dash-support-link" onClick={() => onGo("support")}>
-        Une question avant de vous lancer ? Écrivez-nous →
-      </button>
     </div>
   );
 }

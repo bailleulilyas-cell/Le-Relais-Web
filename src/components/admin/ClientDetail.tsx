@@ -15,6 +15,7 @@ import {
   delFacture,
   confirmPaiement,
   setPretMiseEnLigne,
+  setFormuleDevis,
   updateDemande,
   deleteClient,
 } from "@/app/admin/actions";
@@ -229,6 +230,8 @@ function ProspectView({
 
   return (
     <>
+      <FormuleCard u={u} showToast={showToast} startTransition={startTransition} />
+
       <div className="adm-grid2">
         <div className="adm-card">
           <div className="adm-card-h">
@@ -263,7 +266,6 @@ function ProspectView({
               >
                 Marquer comme payé
               </button>
-              <PaymentLinkGenerator userId={u.id} showToast={showToast} />
             </>
           ) : (
             <>
@@ -346,61 +348,94 @@ function ProspectView({
   );
 }
 
-/* ── Génération de lien de paiement Stripe (admin) ── */
-function PaymentLinkGenerator({ userId, showToast }: { userId: number; showToast: ToastFn }) {
-  const [state, setState] = useState<"idle" | "loading" | "done" | "error">("idle");
-  const [url, setUrl] = useState("");
-  const [errMsg, setErrMsg] = useState("");
-
-  async function generate() {
-    setState("loading");
-    try {
-      const r = await fetch("/api/stripe/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "same-origin",
-        body: JSON.stringify({ userId }),
-      });
-      const d = await r.json();
-      if (d.ok && d.url) {
-        setUrl(d.url);
-        setState("done");
-        showToast("Lien Stripe généré.");
-      } else {
-        setErrMsg(d.error || "Erreur Stripe.");
-        setState("error");
-      }
-    } catch {
-      setErrMsg("Erreur réseau.");
-      setState("error");
-    }
-  }
-
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(url);
-      showToast("Lien copié.");
-    } catch {
-      showToast("Copie impossible, sélectionnez manuellement.", false);
-    }
-  }
+/* ── Formule & paiement assignés au client ──
+ * Tant qu'aucune formule n'est définie, le client ne voit aucun lien de paiement.
+ * presence/pro : montants + liens Stripe standards (auto). custom : sur-mesure. */
+function FormuleCard({
+  u,
+  showToast,
+  startTransition,
+}: {
+  u: ClientDetailData["utilisateur"];
+  showToast: ToastFn;
+  startTransition: StartT;
+}) {
+  const [formule, setFormule] = useState<"presence" | "pro" | "custom">(u.formuleDevis ?? "presence");
+  const [setup, setSetup] = useState(u.montantSetupDevis ?? "");
+  const [mensuel, setMensuel] = useState(u.montantMensuelDevis ?? "");
+  const [lienSetup, setLienSetup] = useState(u.lienPaiementSetup ?? "");
+  const [lienAbo, setLienAbo] = useState(u.lienPaiementAbonnement ?? "");
+  const isCustom = formule === "custom";
 
   return (
-    <div className="adm-paylink">
-      <div className="adm-paylink-label">Lien de paiement à envoyer</div>
-      {state === "done" ? (
-        <div className="adm-paylink-row">
-          <input type="text" readOnly value={url} onFocus={(e) => e.target.select()} />
-          <button className="adm-btn-dark sm" onClick={copy}>
-            Copier
-          </button>
-        </div>
-      ) : (
-        <button className="adm-btn-ghost full" onClick={generate} disabled={state === "loading"}>
-          {state === "loading" ? "Génération…" : "Générer le lien de paiement →"}
+    <div className="adm-card">
+      <div className="adm-card-h">
+        <span className="adm-card-t">Formule &amp; paiement du client</span>
+        <button
+          className="adm-btn-dark sm"
+          onClick={() =>
+            startTransition(async () => {
+              const r = await setFormuleDevis(u.id, formule, setup || "0", mensuel || "0", lienSetup, lienAbo);
+              r.ok ? showToast("Formule enregistrée.") : showToast(r.error || "Erreur.", false);
+            })
+          }
+        >
+          Enregistrer
         </button>
+      </div>
+      <p className={u.formuleDevis ? "adm-paid-ok" : "adm-muted"} style={{ marginBottom: "1rem" }}>
+        {u.formuleDevis ? (
+          <>
+            <strong>✓ Formule définie</strong>
+            <span>Le client voit son lien de paiement de mise en service dans son espace.</span>
+          </>
+        ) : (
+          "Tant qu'aucune formule n'est enregistrée, le client NE voit PAS de lien de paiement (seulement « Finalisons votre formule »)."
+        )}
+      </p>
+
+      <div className="adm-field">
+        <label>Formule facturée</label>
+        <select value={formule} onChange={(e) => setFormule(e.target.value as typeof formule)}>
+          <option value="presence">Présence — 550 € + 25 €/mois</option>
+          <option value="pro">Pro — 1 200 € + 40 €/mois</option>
+          <option value="custom">Personnalisé (prix sur-mesure)</option>
+        </select>
+      </div>
+
+      {isCustom ? (
+        <>
+          <div className="adm-grid2">
+            <div className="adm-field">
+              <label>Mise en service (€)</label>
+              <input type="number" step="0.01" value={setup} onChange={(e) => setSetup(e.target.value)} placeholder="350.00" />
+            </div>
+            <div className="adm-field">
+              <label>Abonnement (€/mois)</label>
+              <input type="number" step="0.01" value={mensuel} onChange={(e) => setMensuel(e.target.value)} placeholder="20.00" />
+            </div>
+          </div>
+          <div className="adm-field">
+            <label>Lien Stripe — mise en service (paiement unique)</label>
+            <input type="text" value={lienSetup} onChange={(e) => setLienSetup(e.target.value)} placeholder="https://buy.stripe.com/..." />
+          </div>
+          <div className="adm-field">
+            <label>Lien Stripe — abonnement mensuel</label>
+            <input type="text" value={lienAbo} onChange={(e) => setLienAbo(e.target.value)} placeholder="https://buy.stripe.com/..." />
+          </div>
+          <p className="adm-hint" style={{ marginTop: ".3rem" }}>
+            ⚠️ Le montant réellement débité est celui configuré dans le lien Stripe — vérifie qu’il
+            correspond aux montants ci-dessus. Crée tes liens dans Stripe → <strong>Liens de
+            paiement</strong> : un lien « paiement unique » pour la mise en service, un lien
+            « abonnement » mensuel pour l’abonnement.
+          </p>
+        </>
+      ) : (
+        <p className="adm-hint" style={{ marginTop: ".3rem" }}>
+          Montants et liens Stripe standards appliqués automatiquement. Choisis « Personnalisé »
+          pour un tarif sur-mesure (client moins cher).
+        </p>
       )}
-      {state === "error" && <p className="adm-paylink-err">{errMsg}</p>}
     </div>
   );
 }

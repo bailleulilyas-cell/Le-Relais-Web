@@ -1,3 +1,10 @@
+/**
+ * ⚠️ NE PAS LANCER `drizzle-kit push` SUR LA PROD.
+ * Le schéma réel de la BDD a dérivé de ce fichier (tailles varchar, colonne
+ * `factures.facture_pdf_data` en longtext absente d'ici, etc.). Un push
+ * générerait des ALTER destructifs. Pour ajouter une colonne : ALTER TABLE
+ * additif via un script ponctuel, puis refléter le type ici (comme ci-dessous).
+ */
 import {
   mysqlTable,
   int,
@@ -29,6 +36,16 @@ export const utilisateurs = mysqlTable("utilisateurs", {
   // facturé est celui défini sur le projet par l'admin à l'initialisation).
   packSouhaite: mysqlEnum("pack_souhaite", ["presence", "pro", "indecis"]),
   descriptionProjet: text("description_projet"),
+  // Formule + prix + liens de paiement ASSIGNÉS par l'admin (≠ packSouhaite, qui
+  // est ce que le client a coché à l'inscription). Tant que formuleDevis est NULL,
+  // le client ne voit AUCUN lien de paiement (seulement « Finalisons votre formule »).
+  // presence/pro : montants + liens Stripe standards remplis automatiquement.
+  // custom : montants et liens Stripe sur-mesure saisis par l'admin.
+  formuleDevis: mysqlEnum("formule_devis", ["presence", "pro", "custom"]),
+  montantSetupDevis: decimal("montant_setup_devis", { precision: 10, scale: 2 }),
+  montantMensuelDevis: decimal("montant_mensuel_devis", { precision: 10, scale: 2 }),
+  lienPaiementSetup: varchar("lien_paiement_setup", { length: 500 }),
+  lienPaiementAbonnement: varchar("lien_paiement_abonnement", { length: 500 }),
   role: mysqlEnum("role", ["client", "admin"]).default("client").notNull(),
   paiementConfirme: boolean("paiement_confirme").default(false).notNull(),
   resetToken: varchar("reset_token", { length: 64 }),

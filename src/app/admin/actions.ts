@@ -13,6 +13,7 @@ import {
   demandes,
 } from "@/lib/schema";
 import { getSession } from "@/lib/session";
+import { STRIPE_LINKS } from "@/lib/stripe";
 
 type ActionResult = { ok: boolean; error?: string; [k: string]: unknown };
 
@@ -53,6 +54,16 @@ export async function initClient(
   const debut = validDate(abonnementDebut);
   const prix = PACKS_PRIX[pack] ?? PACKS_PRIX.presence;
 
+  // Si l'admin a déjà défini une formule (notamment un prix personnalisé), on
+  // facture ces montants-là. Sinon on retombe sur le tarif standard du pack.
+  const devis = await db
+    .select({ s: utilisateurs.montantSetupDevis, m: utilisateurs.montantMensuelDevis })
+    .from(utilisateurs)
+    .where(eq(utilisateurs.id, userId))
+    .limit(1);
+  const montantSetup = devis[0]?.s ?? prix.setup;
+  const montantMensuel = devis[0]?.m ?? prix.mensuel;
+
   try {
     await db.transaction(async (tx) => {
       await tx.delete(projets).where(eq(projets.userId, userId));
@@ -62,8 +73,8 @@ export async function initClient(
         statut: "en_cours",
         progression: 0,
         abonnementDebut: debut,
-        montantSetup: prix.setup,
-        montantMensuel: prix.mensuel,
+        montantSetup,
+        montantMensuel,
       });
 
       await tx.delete(etapes).where(eq(etapes.userId, userId));
@@ -335,6 +346,62 @@ export async function confirmPaiement(userId: number, valeur: boolean): Promise<
     return { ok: true };
   } catch (e) {
     console.error("confirmPaiement:", e);
+    return { ok: false, error: "Erreur serveur." };
+  }
+}
+
+/* ── Formule & paiement assignés au client (débloque le lien de paiement côté client) ── */
+const FORMULES = ["presence", "pro", "custom"] as const;
+export async function setFormuleDevis(
+  userId: number,
+  formule: string,
+  montantSetup: string,
+  montantMensuel: string,
+  lienSetup: string,
+  lienAbonnement: string
+): Promise<ActionResult> {
+  if (!(await requireAdmin())) return { ok: false, error: "Non autorisé." };
+  if (!FORMULES.includes(formule as (typeof FORMULES)[number]))
+    return { ok: false, error: "Formule invalide." };
+
+  let setup: string, mensuel: string, lSetup: string, lAbo: string;
+  if (formule === "presence" || formule === "pro") {
+    // Pack standard : montants et liens Stripe officiels, jamais saisis à la main.
+    const prix = PACKS_PRIX[formule];
+    setup = prix.setup;
+    mensuel = prix.mensuel;
+    lSetup = STRIPE_LINKS[formule].creation;
+    lAbo = STRIPE_LINKS[formule].abonnement;
+  } else {
+    // Personnalisé : montants + liens Stripe sur-mesure fournis par l'admin.
+    const ns = Number(montantSetup);
+    const nm = Number(montantMensuel);
+    if (!Number.isFinite(ns) || ns < 0 || !Number.isFinite(nm) || nm < 0)
+      return { ok: false, error: "Montants invalides." };
+    setup = ns.toFixed(2);
+    mensuel = nm.toFixed(2);
+    lSetup = lienSetup.trim().slice(0, 500);
+    lAbo = lienAbonnement.trim().slice(0, 500);
+    if (!/^https:\/\//i.test(lSetup) || !/^https:\/\//i.test(lAbo))
+      return { ok: false, error: "Les deux liens de paiement doivent commencer par https://" };
+  }
+
+  try {
+    const db = getDb();
+    await db
+      .update(utilisateurs)
+      .set({
+        formuleDevis: formule as (typeof FORMULES)[number],
+        montantSetupDevis: setup,
+        montantMensuelDevis: mensuel,
+        lienPaiementSetup: lSetup,
+        lienPaiementAbonnement: lAbo,
+      })
+      .where(eq(utilisateurs.id, userId));
+    revalidatePath("/admin", "layout");
+    return { ok: true };
+  } catch (e) {
+    console.error("setFormuleDevis:", e);
     return { ok: false, error: "Erreur serveur." };
   }
 }

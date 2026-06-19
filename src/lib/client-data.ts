@@ -25,6 +25,11 @@ export type ClientData = {
     paiementConfirme: boolean;
     descriptionProjet: string | null;
     packSouhaite: "presence" | "pro" | "indecis" | null;
+    formuleDevis: "presence" | "pro" | "custom" | null;
+    montantSetupDevis: string | null;
+    montantMensuelDevis: string | null;
+    lienPaiementSetup: string | null;
+    lienPaiementAbonnement: string | null;
   };
   projet: Projet | null;
   etapes: Etape[];
@@ -56,6 +61,11 @@ export async function getClientData(userId: number): Promise<ClientData | null> 
       paiementConfirme: utilisateurs.paiementConfirme,
       descriptionProjet: utilisateurs.descriptionProjet,
       packSouhaite: utilisateurs.packSouhaite,
+      formuleDevis: utilisateurs.formuleDevis,
+      montantSetupDevis: utilisateurs.montantSetupDevis,
+      montantMensuelDevis: utilisateurs.montantMensuelDevis,
+      lienPaiementSetup: utilisateurs.lienPaiementSetup,
+      lienPaiementAbonnement: utilisateurs.lienPaiementAbonnement,
     })
     .from(utilisateurs)
     .where(eq(utilisateurs.id, userId))
