@@ -84,42 +84,45 @@ export async function POST(req: Request) {
 
     await createSession({ userId: insertId, role: "client", prenom });
 
-    // Notification équipe (nouvelle demande de devis) → Ilyas + projet@ — best-effort.
+    // Notification équipe (nouvelle demande de devis) → Ilyas + projet@.
+    // ⚠️ Sur Vercel (serverless), il FAUT attendre la fin des envois avant de
+    // répondre : sinon la fonction est gelée et les emails sont abandonnés.
     const row = (k: string, v: string) =>
       `<tr><td style="color:#9b958a;padding:2px 12px 2px 0;vertical-align:top;">${k}</td><td>${v}</td></tr>`;
-    notifyAdmin({
-      alsoProjet: true,
-      replyTo: email,
-      subject: `Nouveau devis + compte — ${nomEnseigne}${ville ? ` (${ville})` : ""}`,
-      html: emailLayout(
-        "Nouveau compte client + demande de devis",
-        `<table style="font-size:14px;line-height:1.7;color:#14243B;">
-          ${row("Prénom", `<b>${esc(prenom)}</b>`)}
-          ${row("Établissement", `<b>${esc(nomEnseigne)}</b>`)}
-          ${row("Téléphone", telephone ? `<a href="tel:${esc(telephone.replace(/\s/g, ""))}"><b>${esc(telephone)}</b></a>` : "—")}
-          ${row("Email", `<a href="mailto:${esc(email)}">${esc(email)}</a>`)}
-          ${row("Ville", esc(ville) || "—")}
-          ${row("Secteur", esc(secteur) || "—")}
-          ${row("Formule souhaitée", `<b>${esc(pack ? PACK_LABEL[pack] : "—")}</b>`)}
-          ${row("Déjà un site&nbsp;?", aDejaSite === true ? `Oui${urlActuel ? ` — ${esc(urlActuel)}` : ""}` : aDejaSite === false ? "Non" : "—")}
-          ${row("A un logo&nbsp;?", aLogo === true ? "Oui" : aLogo === false ? "Non" : "—")}
-        </table>
-        <p style="font-size:14px;line-height:1.7;color:#5C6470;margin-top:16px;"><b>Projet :</b><br>${esc(description || "(non précisé)").replace(/\n/g, "<br>")}</p>`
-      ),
-    }).catch(() => {});
-
-    // Email de bienvenue au client — best-effort.
-    sendMail({
-      to: email,
-      subject: "Votre demande est bien reçue — Le Relais Web",
-      html: emailLayout(
-        `Merci ${prenom} !`,
-        `<p style="font-size:15px;line-height:1.7;color:#5C6470;">Votre espace client est créé et votre demande nous est bien parvenue. On revient vers vous sous 24h.</p>
-         <p style="font-size:15px;line-height:1.7;color:#5C6470;">Vous pouvez suivre l'avancement, vos factures et vos demandes depuis votre espace, à tout moment.</p>
-         <p style="text-align:center;margin:24px 0;"><a href="https://wa.me/33695382157" style="background:#2563EB;color:#fff;text-decoration:none;padding:13px 26px;border-radius:11px;font-weight:bold;display:inline-block;">Nous écrire sur WhatsApp</a></p>
-         <p style="font-size:13px;line-height:1.6;color:#9b958a;">À très vite — l'équipe Le Relais Web, Ermont.</p>`
-      ),
-    }).catch(() => {});
+    await Promise.allSettled([
+      notifyAdmin({
+        alsoProjet: true,
+        replyTo: email,
+        subject: `Nouveau devis + compte — ${nomEnseigne}${ville ? ` (${ville})` : ""}`,
+        html: emailLayout(
+          "Nouveau compte client + demande de devis",
+          `<table style="font-size:14px;line-height:1.7;color:#14243B;">
+            ${row("Prénom", `<b>${esc(prenom)}</b>`)}
+            ${row("Établissement", `<b>${esc(nomEnseigne)}</b>`)}
+            ${row("Téléphone", telephone ? `<a href="tel:${esc(telephone.replace(/\s/g, ""))}"><b>${esc(telephone)}</b></a>` : "—")}
+            ${row("Email", `<a href="mailto:${esc(email)}">${esc(email)}</a>`)}
+            ${row("Ville", esc(ville) || "—")}
+            ${row("Secteur", esc(secteur) || "—")}
+            ${row("Formule souhaitée", `<b>${esc(pack ? PACK_LABEL[pack] : "—")}</b>`)}
+            ${row("Déjà un site&nbsp;?", aDejaSite === true ? `Oui${urlActuel ? ` — ${esc(urlActuel)}` : ""}` : aDejaSite === false ? "Non" : "—")}
+            ${row("A un logo&nbsp;?", aLogo === true ? "Oui" : aLogo === false ? "Non" : "—")}
+          </table>
+          <p style="font-size:14px;line-height:1.7;color:#5C6470;margin-top:16px;"><b>Projet :</b><br>${esc(description || "(non précisé)").replace(/\n/g, "<br>")}</p>`
+        ),
+      }),
+      // Email de bienvenue au client.
+      sendMail({
+        to: email,
+        subject: "Votre demande est bien reçue — Le Relais Web",
+        html: emailLayout(
+          `Merci ${prenom} !`,
+          `<p style="font-size:15px;line-height:1.7;color:#5C6470;">Votre espace client est créé et votre demande nous est bien parvenue. On revient vers vous sous 24h.</p>
+           <p style="font-size:15px;line-height:1.7;color:#5C6470;">Vous pouvez suivre l'avancement, vos factures et vos demandes depuis votre espace, à tout moment.</p>
+           <p style="text-align:center;margin:24px 0;"><a href="https://wa.me/33695382157" style="background:#2563EB;color:#fff;text-decoration:none;padding:13px 26px;border-radius:11px;font-weight:bold;display:inline-block;">Nous écrire sur WhatsApp</a></p>
+           <p style="font-size:13px;line-height:1.6;color:#9b958a;">À très vite — l'équipe Le Relais Web, Ermont.</p>`
+        ),
+      }),
+    ]);
 
     return NextResponse.json({ ok: true, role: "client" });
   } catch (e) {

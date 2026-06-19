@@ -47,7 +47,9 @@ export async function POST(req: Request) {
       createdAt: new Date(),
     });
 
-    // Notification équipe → Ilyas + projet@ — best-effort (ne bloque pas la réponse).
+    // Notification équipe → Ilyas + projet@.
+    // ⚠️ Sur Vercel (serverless), il FAUT attendre la fin de l'envoi avant de
+    // répondre, sinon la fonction est gelée et l'email est abandonné.
     const u = await db
       .select({
         prenom: utilisateurs.prenom,
@@ -60,7 +62,7 @@ export async function POST(req: Request) {
       .limit(1);
     if (u.length > 0) {
       const c = u[0];
-      notifyAdmin({
+      await notifyAdmin({
         alsoProjet: true,
         replyTo: c.email,
         subject: `Demande client (${TYPE_LABEL[type as TypeDemande]}) — ${c.nomEnseigne}`,
@@ -76,6 +78,7 @@ export async function POST(req: Request) {
         ),
       }).catch(() => {});
     }
+
 
     return NextResponse.json({ ok: true });
   } catch (e) {

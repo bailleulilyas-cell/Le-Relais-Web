@@ -8,9 +8,13 @@ import { notifyAdmin, emailLayout } from "@/lib/mail";
 
 export const runtime = "nodejs";
 
-/** Notifie Ilyas par mail d'un événement Stripe (best-effort, ne bloque pas le webhook). */
+/**
+ * Notifie Ilyas par mail d'un événement Stripe.
+ * ⚠️ Renvoie la promesse : sur Vercel (serverless) il FAUT l'attendre (await)
+ * avant de répondre au webhook, sinon la fonction est gelée et l'email abandonné.
+ */
 function notifyStripe(subject: string, message: string) {
-  notifyAdmin({
+  return notifyAdmin({
     subject,
     html: emailLayout(subject, `<p style="font-size:15px;line-height:1.7;color:#5C6470;">${message}</p>`),
   }).catch(() => {});
@@ -102,7 +106,7 @@ export async function POST(req: Request) {
             // La facture (avec PDF) est créée par l'événement invoice.paid (mise en service + mensualités).
           });
           const nom = `${u[0].prenom} ${u[0].nomFamille ?? ""}`.trim();
-          notifyStripe(
+          await notifyStripe(
             `💸 Paiement reçu — ${nom}`,
             `<b>${amount.toFixed(2)} €</b> reçus de ${nom} (${email}). Le compte est marqué payé : pense à initialiser le projet dans l'admin.`
           );
@@ -115,7 +119,7 @@ export async function POST(req: Request) {
             statut: "new",
             createdAt: new Date(),
           });
-          notifyStripe(
+          await notifyStripe(
             `⚠️ Paiement à rattacher — ${email}`,
             `Paiement de <b>${amount.toFixed(2)} €</b> reçu de ${email}, mais aucun compte ne correspond en base. À traiter manuellement.`
           );
@@ -226,7 +230,7 @@ export async function POST(req: Request) {
             statut: "new",
             createdAt: new Date(),
           });
-          notifyStripe(
+          await notifyStripe(
             `🔴 Échec de paiement — ${row[0].prenom}`,
             `Le paiement mensuel de ${row[0].prenom} (${row[0].email}) a échoué (tentative ${inv.attempt_count ?? "?"}). Contacte le client pour vérifier sa carte.`
           );
@@ -254,7 +258,7 @@ export async function POST(req: Request) {
             statut: "new",
             createdAt: new Date(),
           });
-          notifyStripe(
+          await notifyStripe(
             `⏸ Abonnement résilié — ${row[0].prenom}`,
             `L'abonnement de ${row[0].prenom} (${row[0].email}) a été résilié. Le projet est passé en « suspendu ».`
           );
