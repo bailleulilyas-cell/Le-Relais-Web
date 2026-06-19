@@ -45,6 +45,7 @@ export default async function EspaceClientPage() {
           statut: data.projet.statut,
           pretMiseEnLigne: !!data.projet.pretMiseEnLigne,
           montantMensuel: String(data.projet.montantMensuel ?? "25.00"),
+          montantSetup: String(data.projet.montantSetup ?? "550.00"),
           abonnementDebut: isoDate(data.projet.abonnementDebut),
           scorePerformance: data.projet.scorePerformance,
           scoreAccessibility: data.projet.scoreAccessibility,

@@ -24,6 +24,7 @@ export type DashProjet = {
   statut: "en_cours" | "en_ligne" | "suspendu" | null;
   pretMiseEnLigne: boolean;
   montantMensuel: string;
+  montantSetup: string;
   abonnementDebut: string | null;
   scorePerformance: number | null;
   scoreAccessibility: number | null;
@@ -991,32 +992,35 @@ function FacturationTab({
             </div>
           </div>
 
-          <div className="dash-card dash-resil" style={{ marginTop: "1.2rem" }}>
-            <div className="dash-card-h">
-              <span className="dash-card-t danger">Résilier mon abonnement</span>
+          {/* Résiliation : visible UNIQUEMENT si un abonnement Stripe est actif. */}
+          {projet!.hasStripe && (
+            <div className="dash-card dash-resil" style={{ marginTop: "1.2rem" }}>
+              <div className="dash-card-h">
+                <span className="dash-card-t danger">Résilier mon abonnement</span>
+              </div>
+              <p className="dash-resil-text">
+                Vous pouvez résilier à tout moment. Votre site restera en ligne jusqu’à la fin de la
+                période en cours. Seuls les {eur(projet!.montantSetup)} € de mise en service sont
+                remboursables (garantie 30 jours).
+              </p>
+              <button
+                className="dash-resil-btn"
+                onClick={resilier}
+                disabled={resilState !== "idle"}
+              >
+                {resilState === "loading"
+                  ? "Résiliation en cours…"
+                  : resilState === "done"
+                    ? "Résiliation confirmée ✓"
+                    : "Résilier mon abonnement"}
+              </button>
+              <p className="dash-resil-note">
+                Sans engagement · La résiliation prend effet en fin de période mensuelle.
+                <br />
+                Le code source de votre site vous appartient.
+              </p>
             </div>
-            <p className="dash-resil-text">
-              Vous pouvez résilier à tout moment. Votre site restera en ligne jusqu’à la fin de la
-              période en cours. Seuls les 550 € de mise en service sont remboursables (garantie 30
-              jours).
-            </p>
-            <button
-              className="dash-resil-btn"
-              onClick={resilier}
-              disabled={resilState !== "idle"}
-            >
-              {resilState === "loading"
-                ? "Résiliation en cours…"
-                : resilState === "done"
-                  ? "Résiliation confirmée ✓"
-                  : "Résilier mon abonnement"}
-            </button>
-            <p className="dash-resil-note">
-              Sans engagement · La résiliation prend effet en fin de période mensuelle.
-              <br />
-              Le code source de votre site vous appartient.
-            </p>
-          </div>
+          )}
         </div>
       </div>
     </>
