@@ -215,9 +215,9 @@
     .burger.open span:nth-child(2){opacity:0}
     .burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
     /* Menu drawer + swipe */
-    #scrim{position:fixed;inset:0;z-index:9000;background:rgba(46,26,14,.45);opacity:0;pointer-events:none;transition:opacity .35s}
+    #scrim{position:fixed;inset:0;z-index:10000;background:rgba(46,26,14,.45);opacity:0;pointer-events:none;transition:opacity .35s}
     #scrim.open{opacity:1;pointer-events:auto}
-    #drawer{position:fixed;top:0;right:0;bottom:0;z-index:9001;width:80vw;max-width:330px;background:var(--fond-card);box-shadow:-18px 0 50px rgba(46,26,14,.25);transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.1,1);display:flex;flex-direction:column;padding:1.4rem 1.6rem 2rem;overscroll-behavior:contain}
+    #drawer{position:fixed;top:0;right:0;bottom:0;z-index:10001;width:80vw;max-width:330px;background:var(--fond-card);box-shadow:-18px 0 50px rgba(46,26,14,.25);transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.1,1);display:flex;flex-direction:column;padding:1.4rem 1.6rem 2rem;overscroll-behavior:contain}
     #drawer.open{transform:translateX(0)}
     .dr-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.2rem}
     .dr-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--brun)}
