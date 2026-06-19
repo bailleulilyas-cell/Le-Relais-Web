@@ -20,7 +20,7 @@ export default function Footer() {
           </div>
 
           <div className="footer-col">
-            <h4>Navigation</h4>
+            <p className="footer-col-h">Navigation</p>
             <Link href="/">Accueil</Link>
             <Link href="/services">Services</Link>
             <Link href="/guides">Guides</Link>
@@ -31,7 +31,7 @@ export default function Footer() {
           </div>
 
           <div className="footer-col">
-            <h4>Informations</h4>
+            <p className="footer-col-h">Informations</p>
             <Link href="/cgv">Conditions générales</Link>
             <Link href="/politique-confidentialite">Confidentialité</Link>
             <Link href="/compte">Espace client</Link>
