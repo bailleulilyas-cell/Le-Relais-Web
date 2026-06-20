@@ -46,6 +46,8 @@ export const utilisateurs = mysqlTable("utilisateurs", {
   montantMensuelDevis: decimal("montant_mensuel_devis", { precision: 10, scale: 2 }),
   lienPaiementSetup: varchar("lien_paiement_setup", { length: 500 }),
   lienPaiementAbonnement: varchar("lien_paiement_abonnement", { length: 500 }),
+  // true = ce client aura un espace admin (back-office). null = non défini.
+  avecBackofficeDevis: boolean("avec_backoffice_devis"),
   role: mysqlEnum("role", ["client", "admin"]).default("client").notNull(),
   paiementConfirme: boolean("paiement_confirme").default(false).notNull(),
   resetToken: varchar("reset_token", { length: 64 }),

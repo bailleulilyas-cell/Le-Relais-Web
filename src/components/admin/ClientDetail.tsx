@@ -365,7 +365,18 @@ function FormuleCard({
   const [mensuel, setMensuel] = useState(u.montantMensuelDevis ?? "");
   const [lienSetup, setLienSetup] = useState(u.lienPaiementSetup ?? "");
   const [lienAbo, setLienAbo] = useState(u.lienPaiementAbonnement ?? "");
+  // Présence = jamais de back-office. Pro = toujours. Custom = choix.
+  const defaultBackoffice = formule === "pro" ? true : formule === "presence" ? false : (u.avecBackofficeDevis ?? false);
+  const [avecBackoffice, setAvecBackoffice] = useState(defaultBackoffice);
   const isCustom = formule === "custom";
+
+  // Quand la formule change, recalculer la valeur par défaut du back-office.
+  function handleFormuleChange(val: "presence" | "pro" | "custom") {
+    setFormule(val);
+    if (val === "pro") setAvecBackoffice(true);
+    else if (val === "presence") setAvecBackoffice(false);
+    // Pour custom : on laisse la valeur actuelle (ou celle sauvegardée).
+  }
 
   return (
     <div className="adm-card">
@@ -375,7 +386,7 @@ function FormuleCard({
           className="adm-btn-dark sm"
           onClick={() =>
             startTransition(async () => {
-              const r = await setFormuleDevis(u.id, formule, setup || "0", mensuel || "0", lienSetup, lienAbo);
+              const r = await setFormuleDevis(u.id, formule, setup || "0", mensuel || "0", lienSetup, lienAbo, avecBackoffice);
               r.ok ? showToast("Formule enregistrée.") : showToast(r.error || "Erreur.", false);
             })
           }
@@ -390,22 +401,40 @@ function FormuleCard({
             <span>Le client voit son lien de paiement de mise en service dans son espace.</span>
           </>
         ) : (
-          "Tant qu'aucune formule n'est enregistrée, le client NE voit PAS de lien de paiement (seulement « Finalisons votre formule »)."
+          "Tant qu’aucune formule n’est enregistrée, le client NE voit PAS de lien de paiement (seulement « Finalisons votre formule »)."
         )}
       </p>
 
       <div className="adm-field">
         <label>Formule facturée</label>
-        <select value={formule} onChange={(e) => setFormule(e.target.value as typeof formule)}>
+        <select value={formule} onChange={(e) => handleFormuleChange(e.target.value as typeof formule)}>
           <option value="presence">Présence — 550 € + 25 €/mois</option>
           <option value="pro">Pro — 1 200 € + 40 €/mois</option>
           <option value="custom">Personnalisé (prix sur-mesure)</option>
         </select>
       </div>
 
+      {/* Case back-office : lecture seule pour presence/pro, éditable pour custom */}
+      <div className="adm-field" style={{ flexDirection: "row", alignItems: "center", gap: ".6rem", marginTop: ".6rem" }}>
+        <input
+          type="checkbox"
+          id="avec-backoffice"
+          checked={avecBackoffice}
+          disabled={!isCustom}
+          onChange={(e) => setAvecBackoffice(e.target.checked)}
+          style={{ width: "18px", height: "18px", cursor: isCustom ? "pointer" : "default", flexShrink: 0 }}
+        />
+        <label htmlFor="avec-backoffice" style={{ cursor: isCustom ? "pointer" : "default", margin: 0, fontWeight: 500 }}>
+          Ce client aura un espace admin (back-office)
+          {!isCustom && <span className="adm-muted" style={{ fontWeight: 400, marginLeft: ".4rem" }}>
+            {formule === "pro" ? "— inclus dans le Pack Pro" : "— non inclus dans le Pack Présence"}
+          </span>}
+        </label>
+      </div>
+
       {isCustom ? (
         <>
-          <div className="adm-grid2">
+          <div className="adm-grid2" style={{ marginTop: ".8rem" }}>
             <div className="adm-field">
               <label>Mise en service (€)</label>
               <input type="number" step="0.01" value={setup} onChange={(e) => setSetup(e.target.value)} placeholder="350.00" />
@@ -431,7 +460,7 @@ function FormuleCard({
           </p>
         </>
       ) : (
-        <p className="adm-hint" style={{ marginTop: ".3rem" }}>
+        <p className="adm-hint" style={{ marginTop: ".5rem" }}>
           Montants et liens Stripe standards appliqués automatiquement. Choisis « Personnalisé »
           pour un tarif sur-mesure (client moins cher).
         </p>

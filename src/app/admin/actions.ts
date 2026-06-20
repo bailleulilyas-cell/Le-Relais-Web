@@ -358,7 +358,8 @@ export async function setFormuleDevis(
   montantSetup: string,
   montantMensuel: string,
   lienSetup: string,
-  lienAbonnement: string
+  lienAbonnement: string,
+  avecBackoffice: boolean
 ): Promise<ActionResult> {
   if (!(await requireAdmin())) return { ok: false, error: "Non autorisé." };
   if (!FORMULES.includes(formule as (typeof FORMULES)[number]))
@@ -396,6 +397,7 @@ export async function setFormuleDevis(
         montantMensuelDevis: mensuel,
         lienPaiementSetup: lSetup,
         lienPaiementAbonnement: lAbo,
+        avecBackofficeDevis: avecBackoffice,
       })
       .where(eq(utilisateurs.id, userId));
     revalidatePath("/admin", "layout");

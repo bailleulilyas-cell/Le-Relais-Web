@@ -215,6 +215,7 @@ export type ClientDetail = {
     montantMensuelDevis: string | null;
     lienPaiementSetup: string | null;
     lienPaiementAbonnement: string | null;
+    avecBackofficeDevis: boolean | null;
   };
   projet: (Omit<Projet, "abonnementDebut" | "scoreDate" | "montantMensuel" | "montantSetup"> & {
     abonnementDebut: string | null;
@@ -285,6 +286,7 @@ export async function getClientDetail(userId: number): Promise<ClientDetail | nu
       montantMensuelDevis: u.montantMensuelDevis != null ? String(u.montantMensuelDevis) : null,
       lienPaiementSetup: u.lienPaiementSetup,
       lienPaiementAbonnement: u.lienPaiementAbonnement,
+      avecBackofficeDevis: u.avecBackofficeDevis ?? null,
     },
     projet: p
       ? {
