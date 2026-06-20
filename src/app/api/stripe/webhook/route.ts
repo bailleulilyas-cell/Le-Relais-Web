@@ -201,8 +201,11 @@ export async function POST(req: Request) {
         if (existing.length > 0) break;
 
         const moisAnnee = new Date().toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
-        const description =
-          inv.billing_reason === "subscription_create"
+        // Pas d'abonnement rattaché → c'est le paiement unique de mise en service
+        // (lien « Création Pack… » avec facture postpaiement activée dans Stripe).
+        const description = !subId
+          ? "Mise en service du site"
+          : inv.billing_reason === "subscription_create"
             ? `Abonnement — 1er mois (${moisAnnee})`
             : `Abonnement mensuel — ${moisAnnee}`;
 
