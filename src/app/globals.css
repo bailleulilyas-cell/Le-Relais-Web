@@ -612,17 +612,31 @@ h3{font-size:1.25rem;}
 .dash-resil-btn:disabled{opacity:.6;cursor:not-allowed;}
 .dash-resil-note{font-size:.7rem;color:var(--color-ink-muted);margin-top:.6rem;line-height:1.5;}
 
-/* Paiement CTA */
-.dash-pay-cta{background:var(--color-surface);border:1.5px solid var(--color-accent);border-radius:18px;padding:2rem;text-align:center;margin-bottom:1.8rem;}
-.dash-pay-ic{font-size:1.8rem;margin-bottom:.5rem;}
-.dash-pay-cta h2{font-family:var(--font-display);font-weight:600;font-size:1.3rem;margin-bottom:.5rem;}
-.dash-pay-cta p{font-size:.88rem;color:var(--color-ink-muted);line-height:1.7;margin-bottom:1.2rem;}
-.dash-pay-cta p strong{color:var(--color-ink);}
-.dash-pay-cta p span{font-size:.8rem;}
-.dash-pay-btn{justify-content:center;border:none;cursor:pointer;font-family:inherit;width:100%;max-width:340px;}
+/* Paiement CTA — carte premium */
+.dash-pay-cta{position:relative;overflow:hidden;background:linear-gradient(180deg,#fff 0%,#FAFBFF 100%);border:1px solid var(--color-border);border-radius:20px;padding:clamp(1.7rem,5vw,2.4rem) clamp(1.2rem,4vw,2rem) 2rem;text-align:center;margin-bottom:1.8rem;box-shadow:0 1px 2px rgba(15,30,60,.04),0 16px 40px -16px rgba(37,99,235,.22);}
+.dash-pay-cta::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--color-accent),#60A5FA);}
+.dash-pay-ic{width:58px;height:58px;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.6rem;border-radius:17px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.16);}
+.dash-pay-cta h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.3rem,4vw,1.5rem);color:var(--color-ink);margin-bottom:.7rem;}
+.dash-pay-cta p{font-size:.9rem;color:var(--color-ink-muted);line-height:1.7;margin-bottom:1.4rem;}
+.dash-pay-cta p strong{color:var(--color-ink);font-weight:700;}
+.dash-pay-cta p span{font-size:.82rem;}
+/* bloc prix mis en avant */
+.dash-pay-price{display:inline-flex;align-items:baseline;gap:.5rem;background:var(--color-bg);border:1px solid var(--color-border);border-radius:14px;padding:.7rem 1.4rem;margin-bottom:1.3rem;}
+.dash-pay-price b{font-family:var(--font-display);font-size:clamp(1.5rem,5vw,1.85rem);font-weight:600;color:var(--color-ink);line-height:1;}
+.dash-pay-price em{font-style:normal;font-size:.76rem;color:var(--color-ink-muted);font-weight:600;letter-spacing:.01em;}
+.dash-pay-btn{justify-content:center;cursor:pointer;font-family:inherit;width:100%;max-width:360px;background:var(--color-accent);border:1.5px solid var(--color-accent);box-shadow:0 8px 20px -6px rgba(37,99,235,.5);transition:transform .15s ease,box-shadow .15s ease,background .15s ease;}
+.dash-pay-btn:hover:not(:disabled){background:var(--color-accent-ink);border-color:var(--color-accent-ink);transform:translateY(-2px);box-shadow:0 13px 28px -6px rgba(37,99,235,.55);}
 .dash-pay-btn:disabled{opacity:.6;cursor:not-allowed;}
 .dash-pay-err{color:#B91C1C;font-size:.8rem;font-weight:700;margin-top:.7rem;}
-.dash-pay-note{font-size:.74rem!important;margin-top:.9rem!important;margin-bottom:0!important;}
+.dash-pay-note{font-size:.76rem!important;color:var(--color-ink-muted);margin-top:1.1rem!important;margin-bottom:0!important;}
+/* variante « site prêt » (abonnement) → accent vert */
+.dash-pay-ready::before{background:linear-gradient(90deg,#16A34A,#4ADE80);}
+.dash-pay-ready{box-shadow:0 1px 2px rgba(15,30,60,.04),0 16px 40px -16px rgba(22,163,74,.22);}
+.dash-pay-ready .dash-pay-ic{background:rgba(22,163,74,.08);border-color:rgba(22,163,74,.18);}
+.dash-pay-ready .dash-pay-price b{color:#15803D;}
+.dash-pay-ready .dash-pay-btn{background:#16A34A;border-color:#16A34A;box-shadow:0 8px 20px -6px rgba(22,163,74,.5);}
+.dash-pay-ready .dash-pay-btn:hover:not(:disabled){background:#15803D;border-color:#15803D;box-shadow:0 13px 28px -6px rgba(22,163,74,.55);}
+@media (prefers-reduced-motion:reduce){.dash-pay-btn{transition:none;}.dash-pay-btn:hover:not(:disabled){transform:none;}}
 
 /* Promo (pas de projet) */
 .dash-promo{display:flex;flex-direction:column;gap:1.3rem;}

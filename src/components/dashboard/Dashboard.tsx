@@ -560,14 +560,17 @@ function PaiementCard({
     <div className="dash-pay-cta">
       <div className="dash-pay-ic">💳</div>
       <h2>Lancer votre projet</h2>
+      <div className="dash-pay-price">
+        <b>{eurOpt(montantSetup)} €</b>
+        <em>mise en service · une seule fois</em>
+      </div>
       <p>
-        Mise en service <strong>{eurOpt(montantSetup)} €</strong> — réglée une seule fois pour
-        démarrer la création de votre site.
+        Réglée une seule fois pour démarrer la création de votre site.
         <br />
         <span>L’abonnement mensuel ne démarre qu’une fois votre site prêt.</span>
       </p>
       <a href={payLink(lienSetup, email)} className="btn-primary dash-pay-btn">
-        Payer la mise en service — {eurOpt(montantSetup)} € →
+        Payer la mise en service →
       </a>
       <p className="dash-pay-note">🔒 Paiement sécurisé par Stripe · Satisfait ou remboursé 30 jours</p>
     </div>
@@ -588,9 +591,13 @@ function AbonnementCard({
     <div className="dash-pay-cta dash-pay-ready">
       <div className="dash-pay-ic">🚀</div>
       <h2>Votre site est prêt à être mis en ligne&nbsp;!</h2>
+      <div className="dash-pay-price">
+        <b>{eurOpt(montantMensuel)} €</b>
+        <em>par mois · sans engagement</em>
+      </div>
       <p>
-        Dernière étape : activez votre abonnement <strong>{eurOpt(montantMensuel)} €/mois</strong>{" "}
-        (hébergement, nom de domaine, maintenance et support inclus) et on met votre site en ligne.
+        Dernière étape : activez votre abonnement (hébergement, nom de domaine, maintenance et
+        support inclus) et on met votre site en ligne.
         <br />
         <span>Sans engagement · Résiliable à tout moment.</span>
       </p>
