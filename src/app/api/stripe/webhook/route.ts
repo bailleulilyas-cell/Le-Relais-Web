@@ -20,6 +20,10 @@ function notifyStripe(subject: string, message: string) {
   }).catch(() => {});
 }
 
+function dateFromTs(ts: number): string {
+  return new Date(ts * 1000).toISOString().slice(0, 10);
+}
+
 function numeroFacture(userId: number): string {
   const now = new Date();
   const ym = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}`;
@@ -145,7 +149,11 @@ export async function POST(req: Request) {
         if (u.length > 0) {
           await db
             .update(projets)
-            .set({ stripeSubscriptionId: subId })
+            .set({
+              stripeSubscriptionId: subId,
+              // Début de l'abonnement récupéré directement depuis Stripe.
+              abonnementDebut: dateFromTs(sub.start_date),
+            })
             .where(eq(projets.userId, u[0].id));
         }
         break;
