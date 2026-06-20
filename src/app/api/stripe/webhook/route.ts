@@ -107,7 +107,29 @@ export async function POST(req: Request) {
               statut: "new",
               createdAt: new Date(),
             });
-            // La facture (avec PDF) est créée par l'événement invoice.paid (mise en service + mensualités).
+            // Paiement unique (mise en service) = mode "payment" : on crée NOUS-MÊMES
+            // la facture. Le PDF est généré gratuitement par /api/facture/[id]
+            // (pdf-lib, avec SIRET + mention TVA) — pas besoin de la « facture
+            // postpaiement » Stripe qui prélève 0,4 %. L'abonnement (mode
+            // "subscription"), lui, est facturé par l'événement invoice.paid.
+            if (s.mode === "payment" && amount > 0) {
+              const numero = `${numeroFacture(uid)}-MES`;
+              const exists = await tx
+                .select({ id: factures.id })
+                .from(factures)
+                .where(and(eq(factures.userId, uid), eq(factures.numero, numero)))
+                .limit(1);
+              if (exists.length === 0) {
+                await tx.insert(factures).values({
+                  userId: uid,
+                  numero,
+                  description: "Mise en service du site",
+                  montant: amount.toFixed(2),
+                  dateFacture: today(),
+                  statut: "paid",
+                });
+              }
+            }
           });
           const nom = `${u[0].prenom} ${u[0].nomFamille ?? ""}`.trim();
           await notifyStripe(
