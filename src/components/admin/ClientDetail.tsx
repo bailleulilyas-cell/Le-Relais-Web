@@ -158,7 +158,7 @@ export default function ClientDetail({ detail }: { detail: ClientDetailData }) {
         <ProspectView u={u} showToast={showToast} startTransition={startTransition} />
       ) : (
         <>
-          <ProjetCard userId={u.id} projet={projet} showToast={showToast} startTransition={startTransition} />
+          <ProjetCard userId={u.id} projet={projet} avecBackoffice={u.avecBackofficeDevis ?? false} showToast={showToast} startTransition={startTransition} />
           <ScoresCard userId={u.id} projet={projet} showToast={showToast} startTransition={startTransition} />
           <EtapesCard userId={u.id} etapes={detail.etapes} showToast={showToast} startTransition={startTransition} />
           <DocsCard documents={detail.documents} showToast={showToast} startTransition={startTransition} />
@@ -473,11 +473,13 @@ function FormuleCard({
 function ProjetCard({
   userId,
   projet,
+  avecBackoffice,
   showToast,
   startTransition,
 }: {
   userId: number;
   projet: NonNullable<ClientDetailData["projet"]>;
+  avecBackoffice: boolean;
   showToast: ToastFn;
   startTransition: StartT;
 }) {
@@ -487,7 +489,9 @@ function ProjetCard({
   const [stripe, setStripe] = useState(projet.stripeSubscriptionId ?? "");
   const [urlAdmin, setUrlAdmin] = useState(projet.urlAdminClient ?? "");
   const [pret, setPret] = useState(projet.pretMiseEnLigne);
-  const isPro = Number(projet.montantMensuel) >= 40;
+  // Le client a un espace admin si Pack Pro (≥ 40 €/mois) OU si l'admin a coché
+  // « avec back-office » sur une formule personnalisée (prix sur-mesure < 40 €).
+  const aBackoffice = Number(projet.montantMensuel) >= 40 || avecBackoffice;
 
   return (
     <div className="adm-card">
@@ -495,7 +499,7 @@ function ProjetCard({
         <span className="adm-card-t">
           Projet — statut & abonnement
           <span className="adm-pack-badge" style={{ marginLeft: ".6rem" }}>
-            {isPro ? "Pack Pro" : "Pack Présence"} — {projet.montantSetup} € + {projet.montantMensuel} €/mois
+            {Number(projet.montantMensuel) >= 40 ? "Pack Pro" : "Pack Présence"} — {projet.montantSetup} € + {projet.montantMensuel} €/mois
           </span>
         </span>
         <button
@@ -529,9 +533,9 @@ function ProjetCard({
               placeholder="sub_xxxxxxxx"
             />
           </div>
-          {isPro && (
+          {aBackoffice && (
             <div className="adm-field">
-              <label>Lien de l’espace d’administration du client (Pack Pro)</label>
+              <label>Lien de l’espace d’administration du client (back-office)</label>
               <input
                 type="text"
                 value={urlAdmin}

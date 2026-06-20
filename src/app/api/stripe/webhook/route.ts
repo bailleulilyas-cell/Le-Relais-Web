@@ -203,7 +203,7 @@ export async function POST(req: Request) {
         const moisAnnee = new Date().toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
         const description =
           inv.billing_reason === "subscription_create"
-            ? "Mise en service + 1er mois"
+            ? `Abonnement — 1er mois (${moisAnnee})`
             : `Abonnement mensuel — ${moisAnnee}`;
 
         await db.insert(factures).values({

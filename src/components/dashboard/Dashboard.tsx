@@ -675,7 +675,7 @@ function ProjetTab({ data }: { data: DashboardData }) {
             <span className="dash-card-t">Documents requis</span>
           </div>
           <p className="dash-doc-intro">
-            Envoyez les éléments manquants à <strong>projet@lerelaisweb.com</strong> ou par{" "}
+            Envoyez les éléments manquants à <strong>contact@lerelaisweb.com</strong> ou par{" "}
             <a
               href="https://wa.me/33695382157?text=Bonjour%2C%20je%20vous%20envoie%20un%20document%20pour%20mon%20projet."
               target="_blank"
