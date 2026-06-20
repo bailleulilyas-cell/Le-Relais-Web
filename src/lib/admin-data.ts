@@ -40,6 +40,10 @@ export type AdminStats = {
   revenusMois: number;
   revenusTotal: number;
   nbDemandesNew: number;
+  // Sites marqués « prêts » dont le client n'a pas encore activé son abonnement Stripe.
+  abosAActiver: number;
+  // Encaissé par mois sur les 6 derniers mois (pour le mini-graphique).
+  revenusParMois: { mois: string; total: number }[];
   derniersInscrits: { id: number; prenom: string; nomEnseigne: string; date: string }[];
 };
 
@@ -108,13 +112,24 @@ export async function getAdminStats(): Promise<AdminStats> {
   const suspendus = clients.filter((c) => c.statutProjet === "suspendu").length;
   const nbDemandesNew = clients.reduce((s, c) => s + c.nbDemandesNew, 0);
 
-  // MRR = somme des montants mensuels des projets non suspendus
-  const projetsActifs = await db
-    .select({ montant: projets.montantMensuel, statut: projets.statut })
+  // MRR = abonnements Stripe RÉELLEMENT actifs (projet non suspendu + abonnement
+  // souscrit). Un projet juste initialisé, sans abonnement, ne compte pas : le
+  // chiffre reflète l'argent récurrent réel, pas une projection.
+  const projetsRows = await db
+    .select({
+      montant: projets.montantMensuel,
+      statut: projets.statut,
+      stripeSubscriptionId: projets.stripeSubscriptionId,
+      pretMiseEnLigne: projets.pretMiseEnLigne,
+    })
     .from(projets);
-  const mrr = projetsActifs
-    .filter((p) => p.statut !== "suspendu")
+  const mrr = projetsRows
+    .filter((p) => p.statut !== "suspendu" && p.stripeSubscriptionId)
     .reduce((s, p) => s + Number(p.montant ?? 0), 0);
+  // Sites prêts dont le client n'a pas encore activé l'abonnement → à relancer.
+  const abosAActiver = projetsRows.filter(
+    (p) => p.pretMiseEnLigne && !p.stripeSubscriptionId && p.statut !== "suspendu"
+  ).length;
 
   // Revenus : factures payées (mois en cours + total)
   const facturesPaid = await db
@@ -127,6 +142,17 @@ export async function getAdminStats(): Promise<AdminStats> {
     .filter((f) => isoDay(f.date).startsWith(moisCourant))
     .reduce((s, f) => s + Number(f.montant), 0);
   const revenusTotal = facturesPaid.reduce((s, f) => s + Number(f.montant), 0);
+
+  // Encaissé sur les 6 derniers mois (du plus ancien au plus récent).
+  const revenusParMois: { mois: string; total: number }[] = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    const total = facturesPaid
+      .filter((f) => isoDay(f.date).startsWith(key))
+      .reduce((s, f) => s + Number(f.montant), 0);
+    revenusParMois.push({ mois: key, total });
+  }
 
   const derniersInscrits = clients.slice(0, 5).map((c) => ({
     id: c.id,
@@ -146,6 +172,8 @@ export async function getAdminStats(): Promise<AdminStats> {
     revenusMois,
     revenusTotal,
     nbDemandesNew,
+    abosAActiver,
+    revenusParMois,
     derniersInscrits,
   };
 }

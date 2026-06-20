@@ -773,6 +773,40 @@ h3{font-size:1.25rem;}
 .adm-dot.actif{background:var(--color-accent);}
 .adm-dot.suspendu{background:var(--color-ink-muted);}
 
+/* Onboarding (aucun client encore) */
+.adm-onboard{background:linear-gradient(180deg,var(--color-surface),#FAFBFF);border:1px solid var(--color-border);border-radius:18px;padding:2rem;text-align:center;margin-bottom:1.4rem;box-shadow:0 14px 36px -18px rgba(37,99,235,.22);}
+.adm-onboard-ic{width:54px;height:54px;margin:0 auto .8rem;display:flex;align-items:center;justify-content:center;font-size:1.5rem;border-radius:15px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.16);}
+.adm-onboard h2{font-family:var(--font-display);font-weight:600;font-size:1.3rem;color:var(--color-ink);margin-bottom:.5rem;}
+.adm-onboard p{font-size:.88rem;color:var(--color-ink-muted);line-height:1.7;max-width:520px;margin:0 auto 1.3rem;}
+.adm-onboard-actions{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;}
+
+/* À faire en priorité */
+.adm-todo{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-accent);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.4rem;}
+.adm-todo-t{font-family:var(--font-display);font-weight:600;font-size:.92rem;color:var(--color-ink);}
+.adm-todo-list{display:flex;gap:.6rem;flex-wrap:wrap;}
+.adm-todo-item{font-size:.8rem;font-weight:600;color:var(--color-ink);background:var(--color-bg);border:1px solid var(--color-border);border-radius:100px;padding:.35rem .85rem;}
+.adm-todo-item strong{font-weight:800;margin-right:.15rem;}
+.adm-todo-item.red strong{color:#DC2626;}
+.adm-todo-item.amber strong{color:#B45309;}
+.adm-todo-item.blue strong{color:var(--color-accent);}
+
+/* Mini graphique en barres (encaissé 6 mois) */
+.adm-chart{display:flex;align-items:flex-end;gap:.5rem;height:150px;padding-top:.5rem;}
+.adm-chart-col{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;gap:.35rem;}
+.adm-chart-val{font-size:.66rem;font-weight:700;color:var(--color-ink-muted);height:.9rem;white-space:nowrap;}
+.adm-chart-barwrap{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;}
+.adm-chart-bar{width:70%;max-width:38px;min-height:3px;background:linear-gradient(180deg,var(--color-accent),#60A5FA);border-radius:6px 6px 0 0;transition:height .4s ease;}
+.adm-chart-bar.empty{background:var(--color-border);}
+.adm-chart-x{font-size:.7rem;font-weight:600;color:var(--color-ink-muted);text-transform:capitalize;}
+
+/* Barre segmentée (répartition) */
+.adm-segbar{display:flex;height:12px;border-radius:100px;overflow:hidden;background:var(--color-bg);margin-bottom:1rem;gap:2px;}
+.adm-seg{display:block;height:100%;}
+.adm-seg.prospect{background:#EF4444;}
+.adm-seg.paye{background:var(--amber);}
+.adm-seg.actif{background:var(--color-accent);}
+.adm-seg.suspendu{background:var(--color-ink-muted);}
+
 /* Derniers inscrits */
 .adm-recent{display:flex;align-items:center;gap:.7rem;padding:.6rem 0;border-bottom:1px solid var(--color-border);}
 .adm-recent:last-child{border:none;}
@@ -928,6 +962,10 @@ h3{font-size:1.25rem;}
   .adm-main{padding:.75rem;padding-top:4rem;}
   .adm-card{padding:1.2rem;}
   .adm-client-meta{gap:.5rem .9rem;}
+  .adm-chart{height:130px;gap:.3rem;}
+  .adm-chart-val{display:none;}
+  .adm-onboard-actions{flex-direction:column;}
+  .adm-onboard-actions .adm-btn-dark,.adm-onboard-actions .adm-btn-ghost{width:100%;text-align:center;}
 }
 
 /* ── Ajustements lisibilité app (bleu clair sur sidebars navy) + divers ── */
