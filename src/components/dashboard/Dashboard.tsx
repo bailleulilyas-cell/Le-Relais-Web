@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { buildPayLink } from "@/lib/pay-link";
 
 /* ── Types sérialisés (server → client) ── */
 export type DashUser = {
+  id: number;
   prenom: string;
   nomEnseigne: string;
   email: string;
@@ -88,13 +90,6 @@ const DEMANDE_STATUT: Record<string, { label: string; cls: string }> = {
   in_progress: { label: "En cours", cls: "d-prog" },
   done: { label: "Traitée", cls: "d-done" },
 };
-
-/* Pré-remplit l'email du client dans le lien Stripe (rattachement automatique du paiement). */
-function payLink(url: string, email: string): string {
-  if (!email) return url;
-  const sep = url.includes("?") ? "&" : "?";
-  return `${url}${sep}prefilled_email=${encodeURIComponent(email)}`;
-}
 
 function frDate(iso: string | null): string {
   if (!iso) return "—";
@@ -352,6 +347,7 @@ function DashboardTab({
           montantSetup={user.montantSetupDevis}
           lienSetup={user.lienPaiementSetup}
           email={user.email}
+          clientRef={user.id}
         />
       )}
 
@@ -360,6 +356,7 @@ function DashboardTab({
           montantMensuel={montantMensuel}
           lienAbonnement={user.lienPaiementAbonnement}
           email={user.email}
+          clientRef={user.id}
         />
       )}
 
@@ -530,10 +527,12 @@ function PaiementCard({
   montantSetup,
   lienSetup,
   email,
+  clientRef,
 }: {
   montantSetup: string | null;
   lienSetup: string | null;
   email: string;
+  clientRef: number;
 }) {
   if (!lienSetup) {
     return (
@@ -569,7 +568,7 @@ function PaiementCard({
         <br />
         <span>L’abonnement mensuel ne démarre qu’une fois votre site prêt.</span>
       </p>
-      <a href={payLink(lienSetup, email)} className="btn-primary dash-pay-btn">
+      <a href={buildPayLink(lienSetup, email, clientRef)} className="btn-primary dash-pay-btn">
         Payer la mise en service →
       </a>
       <p className="dash-pay-note">🔒 Paiement sécurisé par Stripe · Satisfait ou remboursé 30 jours</p>
@@ -582,10 +581,12 @@ function AbonnementCard({
   montantMensuel,
   lienAbonnement,
   email,
+  clientRef,
 }: {
   montantMensuel: string | null;
   lienAbonnement: string | null;
   email: string;
+  clientRef: number;
 }) {
   return (
     <div className="dash-pay-cta dash-pay-ready">
@@ -602,7 +603,7 @@ function AbonnementCard({
         <span>Sans engagement · Résiliable à tout moment.</span>
       </p>
       {lienAbonnement ? (
-        <a href={payLink(lienAbonnement, email)} className="btn-primary dash-pay-btn">
+        <a href={buildPayLink(lienAbonnement, email, clientRef)} className="btn-primary dash-pay-btn">
           Activer mon abonnement & mettre en ligne →
         </a>
       ) : (

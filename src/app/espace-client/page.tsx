@@ -26,6 +26,7 @@ export default async function EspaceClientPage() {
   // Sérialisation server → client (types simples uniquement)
   const dash: DashboardData = {
     user: {
+      id: session.userId,
       prenom: data.utilisateur.prenom,
       nomEnseigne: data.utilisateur.nomEnseigne,
       email: data.utilisateur.email,

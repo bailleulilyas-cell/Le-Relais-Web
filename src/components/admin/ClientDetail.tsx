@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import type { ClientDetail as ClientDetailData } from "@/lib/admin-data";
+import { buildPayLink } from "@/lib/pay-link";
 import {
   initClient,
   updateProjet,
@@ -348,6 +349,43 @@ function ProspectView({
   );
 }
 
+/* ── Lien de paiement personnalisé à copier (avec client_reference_id) ──
+ * Le lien contient l'ID interne du client : peu importe l'email saisi au
+ * paiement, Stripe attribue le paiement au bon compte. Idéal pour l'envoyer
+ * par WhatsApp ou email sans risque d'erreur d'attribution. */
+function CopyPayLink({
+  label,
+  url,
+  showToast,
+}: {
+  label: string;
+  url: string;
+  showToast: ToastFn;
+}) {
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(url);
+      showToast("Lien copié — prêt à coller dans WhatsApp.");
+    } catch {
+      showToast("Copie impossible — sélectionne le lien à la main.", false);
+    }
+  }
+  return (
+    <div className="adm-field" style={{ marginBottom: "1rem" }}>
+      <label>{label}</label>
+      <div style={{ display: "flex", gap: ".5rem", alignItems: "stretch" }}>
+        <input type="text" value={url} readOnly className="adm-readonly" style={{ flex: 1 }} onFocus={(e) => e.target.select()} />
+        <button type="button" className="adm-btn-dark sm" onClick={copy} style={{ flexShrink: 0 }}>
+          Copier
+        </button>
+      </div>
+      <p className="adm-hint" style={{ marginTop: ".3rem" }}>
+        Rattaché à ce client (paiement attribué au bon compte même si l’email saisi diffère).
+      </p>
+    </div>
+  );
+}
+
 /* ── Formule & paiement assignés au client ──
  * Tant qu'aucune formule n'est définie, le client ne voit aucun lien de paiement.
  * presence/pro : montants + liens Stripe standards (auto). custom : sur-mesure. */
@@ -404,6 +442,14 @@ function FormuleCard({
           "Tant qu’aucune formule n’est enregistrée, le client NE voit PAS de lien de paiement (seulement « Finalisons votre formule »)."
         )}
       </p>
+
+      {u.formuleDevis && u.lienPaiementSetup && (
+        <CopyPayLink
+          label="Lien de mise en service à envoyer (WhatsApp, email…)"
+          url={buildPayLink(u.lienPaiementSetup, u.email, u.id)}
+          showToast={showToast}
+        />
+      )}
 
       <div className="adm-field">
         <label>Formule facturée</label>

@@ -81,13 +81,19 @@ export async function POST(req: Request) {
         const email = (s.customer_details?.email ?? "").toLowerCase().trim();
         const subscriptionId = typeof s.subscription === "string" ? s.subscription : s.subscription?.id ?? "";
         const amount = (s.amount_total ?? 0) / 100;
-        if (!email) break;
 
-        const u = await db
-          .select({ id: utilisateurs.id, prenom: utilisateurs.prenom, nomFamille: utilisateurs.nomFamille })
-          .from(utilisateurs)
-          .where(eq(utilisateurs.email, email))
-          .limit(1);
+        // Identité du client : on lit d'abord client_reference_id (l'ID interne,
+        // collé dans le lien, NON modifiable par le visiteur) ; sinon l'email
+        // saisi au paiement. Garantit l'attribution au bon compte.
+        const refId = Number(s.client_reference_id);
+        const cols = { id: utilisateurs.id, prenom: utilisateurs.prenom, nomFamille: utilisateurs.nomFamille };
+        let u = Number.isInteger(refId) && refId > 0
+          ? await db.select(cols).from(utilisateurs).where(eq(utilisateurs.id, refId)).limit(1)
+          : [];
+        if (u.length === 0 && email) {
+          u = await db.select(cols).from(utilisateurs).where(eq(utilisateurs.email, email)).limit(1);
+        }
+        if (u.length === 0 && !email) break;
 
         if (u.length > 0) {
           const uid = u[0].id;
