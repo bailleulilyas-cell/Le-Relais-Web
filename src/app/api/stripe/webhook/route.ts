@@ -254,7 +254,7 @@ export async function POST(req: Request) {
             ? `Abonnement — 1er mois (${moisAnnee})`
             : `Abonnement mensuel — ${moisAnnee}`;
 
-        await db.insert(factures).values({
+        const insertResult = await db.insert(factures).values({
           userId,
           numero,
           description,
@@ -264,6 +264,35 @@ export async function POST(req: Request) {
           facturePdf: inv.invoice_pdf ?? null,
           factureUrl: inv.hosted_invoice_url ?? null,
         });
+        const factureId = Number((insertResult as unknown as [{ insertId: number }])[0].insertId);
+
+        // Email au client avec lien vers sa facture — uniquement pour les abonnements
+        // (la mise en service est déjà couverte par checkout.session.completed).
+        if (subId && factureId) {
+          const clientRow = await db
+            .select({ prenom: utilisateurs.prenom, email: utilisateurs.email })
+            .from(utilisateurs)
+            .where(eq(utilisateurs.id, userId))
+            .limit(1);
+          if (clientRow.length > 0) {
+            const { prenom, email: clientEmail } = clientRow[0];
+            const appUrl = (process.env.APP_URL ?? "https://lerelaisweb.com").replace(/\/$/, "");
+            const montantFormate = amount.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            await sendMail({
+              to: clientEmail,
+              subject: `Votre facture ${moisAnnee} — Le Relais Web`,
+              html: emailLayout(
+                `Facture ${moisAnnee}`,
+                `<p style="font-size:15px;line-height:1.7;color:#5C6470;">Bonjour ${prenom},</p>
+                 <p style="font-size:15px;line-height:1.7;color:#5C6470;">Votre abonnement du mois de <b style="color:#0F1E3C;">${moisAnnee}</b> a bien été prélevé (<b>${montantFormate} €</b>). Votre facture est disponible ci-dessous.</p>
+                 <p style="text-align:center;margin:24px 0;">
+                   <a href="${appUrl}/api/facture/${factureId}" style="background:#2563EB;color:#fff;text-decoration:none;padding:13px 26px;border-radius:11px;font-weight:bold;display:inline-block;">Télécharger ma facture</a>
+                 </p>
+                 <p style="font-size:13px;line-height:1.6;color:#9b958a;">Vous retrouvez toutes vos factures dans votre espace client à tout moment.<br>À très vite — l'équipe Le Relais Web, Ermont.</p>`
+              ),
+            }).catch(() => {});
+          }
+        }
         break;
       }
 
