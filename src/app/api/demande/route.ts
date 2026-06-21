@@ -62,21 +62,35 @@ export async function POST(req: Request) {
       .limit(1);
     if (u.length > 0) {
       const c = u[0];
-      await notifyAdmin({
-        alsoProjet: true,
-        replyTo: c.email,
-        subject: `Demande client (${TYPE_LABEL[type as TypeDemande]}) — ${c.nomEnseigne}`,
-        html: emailLayout(
-          "Nouvelle demande depuis l'espace client",
-          `<table style="font-size:14px;line-height:1.7;color:#14243B;">
-            <tr><td style="color:#9b958a;padding:2px 12px 2px 0;">Client</td><td><b>${esc(c.prenom)}</b> — ${esc(c.nomEnseigne)}</td></tr>
-            <tr><td style="color:#9b958a;padding:2px 12px 2px 0;">Type</td><td><b>${esc(TYPE_LABEL[type as TypeDemande])}</b></td></tr>
-            <tr><td style="color:#9b958a;padding:2px 12px 2px 0;">Email</td><td><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></td></tr>
-            ${c.telephone ? `<tr><td style="color:#9b958a;padding:2px 12px 2px 0;">Téléphone</td><td><a href="tel:${esc(c.telephone.replace(/\s/g, ""))}">${esc(c.telephone)}</a></td></tr>` : ""}
-          </table>
-          <p style="font-size:14px;line-height:1.7;color:#5C6470;margin-top:16px;"><b>Demande :</b><br>${esc(description).replace(/\n/g, "<br>")}</p>`
-        ),
-      }).catch(() => {});
+      await Promise.allSettled([
+        notifyAdmin({
+          alsoProjet: true,
+          replyTo: c.email,
+          subject: `Demande client (${TYPE_LABEL[type as TypeDemande]}) — ${c.nomEnseigne}`,
+          html: emailLayout(
+            "Nouvelle demande depuis l'espace client",
+            `<table style="font-size:14px;line-height:1.7;color:#14243B;">
+              <tr><td style="color:#9b958a;padding:2px 12px 2px 0;">Client</td><td><b>${esc(c.prenom)}</b> — ${esc(c.nomEnseigne)}</td></tr>
+              <tr><td style="color:#9b958a;padding:2px 12px 2px 0;">Type</td><td><b>${esc(TYPE_LABEL[type as TypeDemande])}</b></td></tr>
+              <tr><td style="color:#9b958a;padding:2px 12px 2px 0;">Email</td><td><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></td></tr>
+              ${c.telephone ? `<tr><td style="color:#9b958a;padding:2px 12px 2px 0;">Téléphone</td><td><a href="tel:${esc(c.telephone.replace(/\s/g, ""))}">${esc(c.telephone)}</a></td></tr>` : ""}
+            </table>
+            <p style="font-size:14px;line-height:1.7;color:#5C6470;margin-top:16px;"><b>Demande :</b><br>${esc(description).replace(/\n/g, "<br>")}</p>`
+          ),
+        }),
+        // Accusé de réception au client.
+        sendMail({
+          to: c.email,
+          subject: `Demande reçue — ${TYPE_LABEL[type as TypeDemande]} — Le Relais Web`,
+          html: emailLayout(
+            `Demande bien reçue, ${c.prenom} !`,
+            `<p style="font-size:15px;line-height:1.7;color:#5C6470;">Votre demande de <b style="color:#0F1E3C;">${TYPE_LABEL[type as TypeDemande].toLowerCase()}</b> est enregistrée. On s'en occupe et on revient vers vous sous 48 h.</p>
+             <p style="font-size:15px;line-height:1.7;color:#5C6470;">Si c'est urgent, écrivez-nous directement sur WhatsApp.</p>
+             <p style="text-align:center;margin:24px 0;"><a href="https://wa.me/33695382157" style="background:#2563EB;color:#fff;text-decoration:none;padding:13px 26px;border-radius:11px;font-weight:bold;display:inline-block;">Nous écrire sur WhatsApp</a></p>
+             <p style="font-size:13px;line-height:1.6;color:#9b958a;">À très vite — l'équipe Le Relais Web, Ermont.</p>`
+          ),
+        }),
+      ]);
     }
 
 

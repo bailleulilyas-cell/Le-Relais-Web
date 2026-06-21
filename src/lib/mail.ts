@@ -82,14 +82,14 @@ export async function sendMail(opts: {
   }
 }
 
-/** Gabarit HTML simple et cohérent avec l'identité (crème + émeraude). */
+/** Gabarit HTML cohérent avec l'identité visuelle actuelle (crème + navy + bleu accent). */
 export function emailLayout(title: string, bodyHtml: string): string {
-  return `<!doctype html><html lang="fr"><body style="margin:0;background:#F6F1E7;font-family:Arial,Helvetica,sans-serif;color:#14243B;">
+  return `<!doctype html><html lang="fr"><body style="margin:0;background:#F8F7F4;font-family:Arial,Helvetica,sans-serif;color:#0F1E3C;">
   <div style="max-width:560px;margin:0 auto;padding:32px 20px;">
-    <div style="font-family:Georgia,serif;font-weight:bold;font-size:20px;color:#0B6E4F;margin-bottom:4px;">Le Relais Web</div>
-    <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#0B6E4F;margin-bottom:24px;">Ermont · Val-d'Oise</div>
-    <div style="background:#fff;border:1px solid #e6e0d4;border-radius:14px;padding:24px;">
-      <h1 style="font-family:Georgia,serif;font-size:20px;margin:0 0 14px;color:#14243B;">${title}</h1>
+    <div style="font-family:Georgia,serif;font-weight:bold;font-size:20px;color:#0F1E3C;margin-bottom:4px;">Le Relais Web</div>
+    <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#6B7280;margin-bottom:24px;">Ermont · Val-d'Oise</div>
+    <div style="background:#fff;border:1px solid #E5E3DF;border-radius:14px;padding:24px;">
+      <h1 style="font-family:Georgia,serif;font-size:20px;margin:0 0 14px;color:#0F1E3C;">${title}</h1>
       ${bodyHtml}
     </div>
     <p style="font-size:12px;color:#9b958a;margin-top:20px;text-align:center;">Le Relais Web — Thierry Bailleul · SIRET 101 586 428 00019<br>contact@lerelaisweb.com</p>

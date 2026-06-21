@@ -4,7 +4,7 @@ import { eq, and } from "drizzle-orm";
 import { getDb } from "@/lib/db";
 import { utilisateurs, projets, factures, demandes } from "@/lib/schema";
 import { getStripe, STRIPE_WEBHOOK_SECRET } from "@/lib/stripe";
-import { notifyAdmin, emailLayout } from "@/lib/mail";
+import { notifyAdmin, sendMail, emailLayout } from "@/lib/mail";
 
 export const runtime = "nodejs";
 
@@ -138,6 +138,23 @@ export async function POST(req: Request) {
             }
           });
           const nom = `${u[0].prenom} ${u[0].nomFamille ?? ""}`.trim();
+          // Email de confirmation au client — critique pour la confiance après un paiement.
+          if (email) {
+            const montantFormate = amount.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            await sendMail({
+              to: email,
+              subject: "Paiement reçu — Le Relais Web",
+              html: emailLayout(
+                `Merci ${u[0].prenom} !`,
+                `<p style="font-size:15px;line-height:1.7;color:#5C6470;">Votre paiement de <b style="color:#0F1E3C;">${montantFormate} €</b> a bien été reçu. Votre facture est disponible dans votre espace client.</p>
+                 <p style="font-size:15px;line-height:1.7;color:#5C6470;">On vous recontacte sous 24 h pour la suite. Si vous avez la moindre question, écrivez-nous sur WhatsApp.</p>
+                 <p style="text-align:center;margin:24px 0;">
+                   <a href="https://lerelaisweb.com/espace-client" style="background:#2563EB;color:#fff;text-decoration:none;padding:13px 26px;border-radius:11px;font-weight:bold;display:inline-block;">Voir mon espace client</a>
+                 </p>
+                 <p style="font-size:13px;line-height:1.6;color:#9b958a;">À très vite — l'équipe Le Relais Web, Ermont.</p>`
+              ),
+            }).catch(() => {});
+          }
           await notifyStripe(
             `💸 Paiement reçu — ${nom}`,
             `<b>${amount.toFixed(2)} €</b> reçus de ${nom} (${email}). Le compte est marqué payé : pense à initialiser le projet dans l'admin.`

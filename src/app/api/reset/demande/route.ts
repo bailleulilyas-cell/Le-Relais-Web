@@ -52,7 +52,7 @@ export async function POST(req: Request) {
         "Réinitialisation de votre mot de passe",
         `<p style="font-size:15px;line-height:1.7;color:#5C6470;">Bonjour ${rows[0].prenom},</p>
          <p style="font-size:15px;line-height:1.7;color:#5C6470;">Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le bouton ci-dessous (valable 1 heure) :</p>
-         <p style="text-align:center;margin:24px 0;"><a href="${link}" style="background:#0B6E4F;color:#fff;text-decoration:none;padding:13px 26px;border-radius:11px;font-weight:bold;display:inline-block;">Choisir un nouveau mot de passe</a></p>
+         <p style="text-align:center;margin:24px 0;"><a href="${link}" style="background:#2563EB;color:#fff;text-decoration:none;padding:13px 26px;border-radius:11px;font-weight:bold;display:inline-block;">Choisir un nouveau mot de passe</a></p>
          <p style="font-size:13px;line-height:1.6;color:#9b958a;">Si vous n'êtes pas à l'origine de cette demande, ignorez cet email — votre mot de passe reste inchangé.</p>`
       ),
     });
