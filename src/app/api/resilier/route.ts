@@ -1,11 +1,34 @@
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { getDb } from "@/lib/db";
-import { projets, demandes, interventions } from "@/lib/schema";
+import { projets, demandes, interventions, utilisateurs } from "@/lib/schema";
 import { getSession } from "@/lib/session";
 import { getStripe } from "@/lib/stripe";
+import { notifyAdmin, emailLayout } from "@/lib/mail";
 
 export const runtime = "nodejs";
+
+/** Alerte Ilyas immédiatement qu'un client veut résilier — moment clé pour le retenir. */
+async function alerteResiliation(userId: number, contexte: string): Promise<void> {
+  const db = getDb();
+  const u = await db
+    .select({ prenom: utilisateurs.prenom, nomEnseigne: utilisateurs.nomEnseigne, email: utilisateurs.email })
+    .from(utilisateurs)
+    .where(eq(utilisateurs.id, userId))
+    .limit(1);
+  if (u.length === 0) return;
+  const c = u[0];
+  await notifyAdmin({
+    subject: `⚠️ Résiliation demandée — ${c.nomEnseigne}`,
+    replyTo: c.email,
+    html: emailLayout(
+      "Un client souhaite résilier",
+      `<p style="font-size:15px;line-height:1.7;color:#5C6470;"><b style="color:#0F1E3C;">${c.prenom}</b> (${c.nomEnseigne}, ${c.email}) vient de demander la résiliation de son abonnement.</p>
+       <p style="font-size:15px;line-height:1.7;color:#5C6470;">${contexte}</p>
+       <p style="font-size:15px;line-height:1.7;color:#5C6470;">C'est le bon moment pour le contacter et comprendre pourquoi.</p>`
+    ),
+  }).catch(() => {});
+}
 
 /**
  * Résiliation d'abonnement.
@@ -49,6 +72,10 @@ export async function POST() {
         statut: "new",
         createdAt: new Date(),
       });
+      await alerteResiliation(
+        session.userId,
+        "Aucun abonnement Stripe n'est rattaché : à traiter manuellement."
+      );
       return NextResponse.json({
         ok: true,
         mode: "manual",
@@ -83,6 +110,12 @@ export async function POST() {
         type: "update",
         dateIntervention: new Date().toISOString().slice(0, 10),
       });
+      await alerteResiliation(
+        session.userId,
+        fin
+          ? `L'abonnement Stripe est annulé pour le ${fin} (le site reste en ligne jusque-là).`
+          : "L'abonnement Stripe est annulé en fin de période en cours."
+      );
       return NextResponse.json({
         ok: true,
         mode: "stripe",
