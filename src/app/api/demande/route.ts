@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { getDb } from "@/lib/db";
 import { demandes, utilisateurs } from "@/lib/schema";
 import { getSession } from "@/lib/session";
-import { notifyAdmin, emailLayout } from "@/lib/mail";
+import { notifyAdmin, sendMail, emailLayout } from "@/lib/mail";
 
 export const runtime = "nodejs";
 

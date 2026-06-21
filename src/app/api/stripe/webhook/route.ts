@@ -138,8 +138,10 @@ export async function POST(req: Request) {
             }
           });
           const nom = `${u[0].prenom} ${u[0].nomFamille ?? ""}`.trim();
-          // Email de confirmation au client — critique pour la confiance après un paiement.
-          if (email) {
+          // Email de confirmation au client — uniquement pour la mise en service
+          // (mode "payment"). L'abonnement (mode "subscription") reçoit déjà sa
+          // facture via invoice.paid : on évite ainsi un doublon d'emails.
+          if (email && s.mode === "payment") {
             const montantFormate = amount.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             await sendMail({
               to: email,
