@@ -103,7 +103,7 @@ export default function DevisForm() {
           <label htmlFor="pack">Quelle formule vous intéresse&nbsp;?</label>
           <select id="pack" name="pack" required defaultValue="">
             <option value="" disabled>Choisissez une option</option>
-            <option value="presence">Présence — 550 € puis 25 €/mois (on s'occupe de tout)</option>
+            <option value="presence">Présence — 550 € puis 25 €/mois (on s&apos;occupe de tout)</option>
             <option value="pro">Pro — 1 200 € puis 40 €/mois (vous gérez vous-même)</option>
             <option value="indecis">Je ne sais pas encore, on en discute</option>
           </select>

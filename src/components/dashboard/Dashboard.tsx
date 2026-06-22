@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { buildPayLink } from "@/lib/pay-link";
 
 /* ── Types sérialisés (server → client) ── */
@@ -238,9 +239,9 @@ export default function Dashboard({ data }: { data: DashboardData }) {
           )}
         </nav>
         <div className="dash-side-foot">
-          <a href="/" className="dash-side-back">
+          <Link href="/" className="dash-side-back">
             ← Retour au site
-          </a>
+          </Link>
           <button type="button" className="dash-side-logout" onClick={logout}>
             Se déconnecter
           </button>
