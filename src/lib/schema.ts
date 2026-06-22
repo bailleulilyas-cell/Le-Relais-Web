@@ -1,9 +1,32 @@
 /**
- * ⚠️ NE PAS LANCER `drizzle-kit push` SUR LA PROD.
- * Le schéma réel de la BDD a dérivé de ce fichier (tailles varchar, colonne
- * `factures.facture_pdf_data` en longtext absente d'ici, etc.). Un push
- * générerait des ALTER destructifs. Pour ajouter une colonne : ALTER TABLE
- * additif via un script ponctuel, puis refléter le type ici (comme ci-dessous).
+ * ┌─────────────────────────────────────────────────────────────────────────┐
+ * │ ⚠️  NE JAMAIS LANCER `drizzle-kit push` / `npm run db:push` SUR LA PROD.  │
+ * └─────────────────────────────────────────────────────────────────────────┘
+ *
+ * POURQUOI : la base de prod (MySQL Hostinger) contient de VRAIES données
+ * clients. `push` compare ce fichier à la base et génère des ALTER pour les
+ * aligner — ce qui peut SUPPRIMER des colonnes ou TRONQUER des données.
+ *
+ * POUR AJOUTER/MODIFIER UNE COLONNE : écrire un script ponctuel avec un
+ * `ALTER TABLE ... ADD COLUMN ...` ADDITIF (jamais DROP), l'exécuter via
+ * `node scripts/...`, PUIS refléter le type ici à la main.
+ * Outils de diagnostic (lecture seule) : scripts/inspect-schema.mjs,
+ * scripts/inspect-indexes.mjs.
+ *
+ * ── DRIFT CONNU au 22/06/2026 (ce fichier ≈ la base, sauf ces points) ──
+ * Les tailles varchar ci-dessous ont été RÉALIGNÉES sur la vraie base.
+ * Différences restantes, VOLONTAIREMENT non répliquées ici (un push voudrait
+ * quand même les « corriger » → raison de plus de ne jamais pousser) :
+ *  • factures.facture_pdf_data (LONGTEXT) : stocke le PDF généré. Existe en
+ *    base et est utilisé via SQL brut (admin/actions.ts, api/facture/[id]),
+ *    mais ABSENT de la table typée ci-dessous EXPRÈS — l'inclure ferait
+ *    remonter ce gros blob dans chaque `select()`. ⚠️ Un push le DROPPERAIT
+ *    → perte de toutes les factures PDF stockées.
+ *  • Nullabilité : en base, email / mot_de_passe sont NULLABLES et nom_famille
+ *    est NOT NULL (def ''). Ici on garde la version plus stricte (l'appli
+ *    garantit ces champs) — ne pas relâcher, ça casserait le typage.
+ *  • date_inscription : DATETIME en base, `timestamp` ici (inoffensif, les
+ *    deux donnent un Date côté TS).
  */
 import {
   mysqlTable,
@@ -20,12 +43,13 @@ import {
 
 export const utilisateurs = mysqlTable("utilisateurs", {
   id: int("id").autoincrement().primaryKey(),
-  prenom: varchar("prenom", { length: 80 }).notNull(),
-  nomFamille: varchar("nom_famille", { length: 80 }),
-  nomEnseigne: varchar("nom_enseigne", { length: 120 }).notNull(),
-  email: varchar("email", { length: 190 }).notNull().unique(),
+  // Tailles alignées sur la vraie base de prod (cf. en-tête « DRIFT CONNU »).
+  prenom: varchar("prenom", { length: 100 }).notNull(),
+  nomFamille: varchar("nom_famille", { length: 100 }),
+  nomEnseigne: varchar("nom_enseigne", { length: 200 }).notNull(),
+  email: varchar("email", { length: 100 }).notNull().unique(),
   motDePasse: varchar("mot_de_passe", { length: 255 }).notNull(),
-  secteurActivite: varchar("secteur_activite", { length: 120 }),
+  secteurActivite: varchar("secteur_activite", { length: 100 }),
   // Coordonnées & contexte recueillis au devis (champs structurés, hors texte libre).
   telephone: varchar("telephone", { length: 30 }),
   ville: varchar("ville", { length: 120 }),

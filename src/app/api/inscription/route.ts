@@ -28,11 +28,12 @@ export async function POST(req: Request) {
     const body = await req.json();
     const prenom = String(body.prenom || "").trim().slice(0, 80);
     const nomEnseigne = String(body.enseigne || "").trim().slice(0, 120);
-    const email = String(body.email || "").trim().toLowerCase().slice(0, 190);
+    // Limites alignées sur les tailles réelles des colonnes (cf. schema.ts).
+    const email = String(body.email || "").trim().toLowerCase().slice(0, 100);
     const password = String(body.password || "");
     const ville = String(body.ville || "").trim().slice(0, 100);
     const telephone = String(body.telephone || "").trim().slice(0, 30);
-    const secteur = String(body.secteur || "").trim().slice(0, 120);
+    const secteur = String(body.secteur || "").trim().slice(0, 100);
     const description = String(body.description || "").trim().slice(0, 2000);
     const urlActuel = String(body.urlActuel || "").trim().slice(0, 255);
     const ouiNon = (v: unknown) =>
