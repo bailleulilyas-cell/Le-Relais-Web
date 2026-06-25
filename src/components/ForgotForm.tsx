@@ -31,7 +31,7 @@ export default function ForgotForm() {
       <div className="form-card" style={{ marginTop: "1.5rem" }}>
         <div className="form-ok">{message}</div>
         <p style={{ marginTop: "1rem", fontSize: ".88rem" }}>
-          <Link href="/compte" style={{ color: "var(--emerald)", fontWeight: 700 }}>
+          <Link href="/compte" style={{ color: "var(--color-accent)", fontWeight: 700 }}>
             ← Retour à la connexion
           </Link>
         </p>
@@ -57,7 +57,7 @@ export default function ForgotForm() {
         {state === "loading" ? "Envoi…" : "Envoyer le lien"}
       </button>
       <p style={{ marginTop: "1rem", fontSize: ".88rem", textAlign: "center" }}>
-        <Link href="/compte" style={{ color: "var(--muted)", fontWeight: 600 }}>
+        <Link href="/compte" style={{ color: "var(--color-ink-muted)", fontWeight: 600 }}>
           ← Retour à la connexion
         </Link>
       </p>

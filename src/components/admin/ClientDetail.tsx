@@ -618,7 +618,7 @@ function ProjetCard({
       {/* Mise en ligne : débloque le bouton « abonnement » côté client */}
       <div className="adm-mel" style={{ marginTop: "1.2rem", paddingTop: "1.2rem", borderTop: "1px solid var(--line)", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
         <div className="adm-mel-info">
-          <strong style={{ display: "block", color: "var(--ink)" }}>
+          <strong style={{ display: "block", color: "var(--color-ink)" }}>
             Site prêt pour la mise en ligne&nbsp;?
           </strong>
           <span className="adm-hint">

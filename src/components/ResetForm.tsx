@@ -48,11 +48,11 @@ export default function ResetForm({ token }: { token: string }) {
   if (!validToken) {
     return (
       <div className="form-card" style={{ marginTop: "1.5rem" }}>
-        <p style={{ color: "var(--muted)", lineHeight: 1.6 }}>
+        <p style={{ color: "var(--color-ink-muted)", lineHeight: 1.6 }}>
           Ce lien est invalide ou incomplet. Refaites une demande de réinitialisation.
         </p>
         <p style={{ marginTop: "1rem" }}>
-          <Link href="/mot-de-passe-oublie" style={{ color: "var(--emerald)", fontWeight: 700 }}>
+          <Link href="/mot-de-passe-oublie" style={{ color: "var(--color-accent)", fontWeight: 700 }}>
             Demander un nouveau lien →
           </Link>
         </p>

@@ -330,14 +330,14 @@ function DashboardTab({
       </div>
 
       {!projet && user.descriptionProjet && (
-        <div className="dash-card" style={{ marginBottom: "1.4rem", borderLeft: "3px solid var(--emerald)" }}>
+        <div className="dash-card" style={{ marginBottom: "1.4rem", borderLeft: "3px solid var(--color-accent)" }}>
           <div className="dash-card-h">
             <span className="dash-card-t">✓ Votre demande a bien été reçue</span>
           </div>
-          <p style={{ fontSize: ".88rem", color: "var(--muted)", lineHeight: 1.7, whiteSpace: "pre-line" }}>
+          <p style={{ fontSize: ".88rem", color: "var(--color-ink-muted)", lineHeight: 1.7, whiteSpace: "pre-line" }}>
             {user.descriptionProjet}
           </p>
-          <p style={{ fontSize: ".8rem", color: "var(--muted)", marginTop: ".8rem" }}>
+          <p style={{ fontSize: ".8rem", color: "var(--color-ink-muted)", marginTop: ".8rem" }}>
             On revient vers vous sous 24h ouvrées. En attendant, vous pouvez tout suivre ici.
           </p>
         </div>
@@ -643,7 +643,7 @@ function ProjetTab({ data }: { data: DashboardData }) {
             <span className="dash-card-t">Avancement général</span>
             <span
               className="dash-card-meta"
-              style={{ color: data.progressionGlobale >= 100 ? "var(--emerald)" : "var(--navy)" }}
+              style={{ color: data.progressionGlobale >= 100 ? "var(--color-accent)" : "var(--color-ink)" }}
             >
               {data.progressionGlobale}%
             </span>
@@ -662,7 +662,7 @@ function ProjetTab({ data }: { data: DashboardData }) {
                   <span className="dash-prog-name">{e.nom}</span>
                   <span
                     className="dash-prog-pct"
-                    style={{ color: e.progression === 100 ? "var(--emerald)" : undefined }}
+                    style={{ color: e.progression === 100 ? "var(--color-accent)" : undefined }}
                   >
                     {e.progression}%
                   </span>
