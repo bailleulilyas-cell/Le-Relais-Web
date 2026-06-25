@@ -247,13 +247,7 @@ export default function Home() {
               </a>
             </div>
 
-            <a
-              href="https://ame-judo.fr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flag-window"
-              aria-label="Ouvrir le site ame-judo.fr dans un nouvel onglet"
-            >
+            <div className="flag-window" aria-hidden="true">
               <span className="flag-score"><b>99</b><i>/100 — vitesse Google</i></span>
               <div className="fw-bar">
                 <span className="fw-dot" /><span className="fw-dot" /><span className="fw-dot" />
@@ -277,7 +271,7 @@ export default function Home() {
                   <span className="fw-logo">AME</span>
                 </div>
               </div>
-            </a>
+            </div>
           </div>
 
           <p className="proof-examples-head">
