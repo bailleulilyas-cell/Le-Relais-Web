@@ -172,7 +172,7 @@ export default function DevisGenerator() {
         <div className="devis-accent" />
         <header className="devis-head">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="devis-logo" src="/lerelaisweb_logo-removebg-preview.png" alt="Le Relais Web" />
+          <img className="devis-logo" src="/logo-relais-nav.webp" alt="Le Relais Web" />
           <div className="devis-titlebox">
             <div className="devis-title">Devis</div>
             <div className="devis-meta">
@@ -263,9 +263,7 @@ export default function DevisGenerator() {
         </div>
 
         <footer className="devis-foot">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="devis-foot-logo" src="/lerelaisweb_logo-removebg-preview.png" alt="Le Relais Web" />
-          <span>Le Relais Web · Ermont, Val-d’Oise · contact@lerelaisweb.com</span>
+          Le Relais Web · Ermont, Val-d’Oise · contact@lerelaisweb.com
         </footer>
       </div>
     </>

@@ -107,7 +107,7 @@ h3{font-size:1.25rem;}
 .footer-grid{display:grid;grid-template-columns:1fr;gap:2rem;}
 @media(min-width:560px){.footer-grid{grid-template-columns:1fr 1fr;}}
 @media(min-width:900px){.footer-grid{grid-template-columns:1.8fr 1fr 1fr;}}
-.footer-logo img{height:36px;width:auto;margin-bottom:1rem;}
+.footer-logo img{height:46px;width:auto;margin-bottom:1rem;}
 .footer-zones{max-width:var(--maxw);margin:36px auto 0;padding:24px 24px 0;border-top:1px solid var(--color-border);font-size:.8rem;line-height:1.9;color:var(--color-ink-muted);}
 @media(min-width:768px){.footer-zones{padding:24px 48px 0;}}
 .footer-zones a{color:var(--color-ink-muted);text-decoration:none;}
@@ -995,50 +995,49 @@ h3{font-size:1.25rem;}
 .devis-print-btn.secondary:hover{background:rgba(37,99,235,.08);color:var(--color-accent-ink);}
 .devis-actions-hint{margin-top:.6rem;font-size:.78rem;color:var(--color-ink-muted);}
 
-/* Feuille A4 */
-.devis-sheet{position:relative;max-width:780px;margin:0 auto;background:#fff;color:var(--color-ink);border:1px solid var(--color-border);border-radius:10px;padding:46px 50px 38px;box-shadow:0 18px 50px rgba(15,30,60,.10);overflow:hidden;font-family:var(--font-body);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-.devis-accent{position:absolute;top:0;left:0;right:0;height:6px;background:var(--color-ink);}
-.devis-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:30px;padding-top:8px;}
-.devis-logo{height:78px;width:auto;}
+/* Feuille A4 — compacte pour tenir sur UNE page */
+.devis-sheet{position:relative;max-width:780px;margin:0 auto;background:#fff;color:var(--color-ink);border:1px solid var(--color-border);border-radius:10px;padding:34px 42px 24px;box-shadow:0 18px 50px rgba(15,30,60,.10);overflow:hidden;font-family:var(--font-body);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.devis-accent{position:absolute;top:0;left:0;right:0;height:5px;background:var(--color-ink);}
+.devis-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:18px;padding-top:4px;}
+.devis-logo{height:60px;width:auto;}
 .devis-titlebox{text-align:right;}
-.devis-title{font-family:var(--font-display);font-size:2rem;font-weight:600;color:var(--color-ink);line-height:1;}
-.devis-meta{display:flex;flex-direction:column;gap:2px;margin-top:8px;font-size:.82rem;color:var(--color-ink-muted);}
-.devis-parties{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-bottom:26px;}
-.devis-bloc{display:flex;flex-direction:column;gap:2px;font-size:.86rem;color:var(--color-ink-muted);}
-.devis-bloc strong{color:var(--color-ink);font-size:.95rem;margin-bottom:1px;}
-.devis-bloc-h{font-size:.7rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--color-accent);margin-bottom:5px;}
-.devis-table{width:100%;border-collapse:collapse;margin-bottom:20px;}
-.devis-table th{text-align:left;font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--color-ink-muted);border-bottom:2px solid var(--color-ink);padding:0 0 8px;}
+.devis-title{font-family:var(--font-display);font-size:1.8rem;font-weight:600;color:var(--color-ink);line-height:1;}
+.devis-meta{display:flex;flex-direction:column;gap:1px;margin-top:6px;font-size:.8rem;color:var(--color-ink-muted);}
+.devis-parties{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:16px;}
+.devis-bloc{display:flex;flex-direction:column;gap:1px;font-size:.84rem;color:var(--color-ink-muted);}
+.devis-bloc strong{color:var(--color-ink);font-size:.92rem;margin-bottom:1px;}
+.devis-bloc-h{font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--color-accent);margin-bottom:4px;}
+.devis-table{width:100%;border-collapse:collapse;margin-bottom:12px;}
+.devis-table th{text-align:left;font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--color-ink-muted);border-bottom:2px solid var(--color-ink);padding:0 0 6px;}
 .devis-table th.devis-amt,.devis-table td.devis-amt{text-align:right;}
-.devis-table td{padding:14px 0;border-bottom:1px solid var(--color-border);vertical-align:top;}
-.devis-table td strong{font-size:.98rem;color:var(--color-ink);}
-.devis-amt-strong{font-size:1.15rem;font-weight:700;white-space:nowrap;}
-.devis-permo{font-size:.78rem;font-weight:500;color:var(--color-ink-muted);}
-.devis-feats{list-style:none;margin:8px 0 6px;padding:0;display:flex;flex-direction:column;gap:3px;}
-.devis-feats li{font-size:.82rem;color:var(--color-ink-muted);padding-left:16px;position:relative;}
+.devis-table td{padding:9px 0;border-bottom:1px solid var(--color-border);vertical-align:top;}
+.devis-table td strong{font-size:.94rem;color:var(--color-ink);}
+.devis-amt-strong{font-size:1.1rem;font-weight:700;white-space:nowrap;}
+.devis-permo{font-size:.76rem;font-weight:500;color:var(--color-ink-muted);}
+.devis-feats{list-style:none;margin:5px 0 3px;padding:0;display:flex;flex-direction:column;gap:2px;}
+.devis-feats li{font-size:.8rem;color:var(--color-ink-muted);padding-left:15px;position:relative;}
 .devis-feats li::before{content:"✓";position:absolute;left:0;color:var(--color-accent);font-weight:700;}
-.devis-once,.devis-sub2{display:block;font-size:.78rem;color:var(--color-ink-muted);margin-top:4px;font-style:italic;}
-.devis-total{background:#F8F7F4;border-radius:8px;padding:16px 20px;margin-bottom:18px;}
+.devis-once,.devis-sub2{display:block;font-size:.76rem;color:var(--color-ink-muted);margin-top:3px;font-style:italic;}
+.devis-total{background:#F8F7F4;border-radius:8px;padding:11px 18px;margin-bottom:12px;}
 .devis-total-row{display:flex;justify-content:space-between;align-items:baseline;}
-.devis-total-row span{font-size:.95rem;font-weight:600;color:var(--color-ink);}
-.devis-total-row strong{font-family:var(--font-display);font-size:1.7rem;color:var(--color-ink);}
-.devis-total-sub{font-size:.82rem;color:var(--color-ink-muted);margin-top:4px;}
-.devis-tva{font-size:.78rem;color:var(--color-ink-muted);margin:0 0 22px;}
-.devis-cond{margin-bottom:26px;}
-.devis-cond ul{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:5px;}
-.devis-cond li{font-size:.82rem;color:var(--color-ink-muted);padding-left:16px;position:relative;}
+.devis-total-row span{font-size:.92rem;font-weight:600;color:var(--color-ink);}
+.devis-total-row strong{font-family:var(--font-display);font-size:1.5rem;color:var(--color-ink);}
+.devis-total-sub{font-size:.8rem;color:var(--color-ink-muted);margin-top:3px;}
+.devis-tva{font-size:.76rem;color:var(--color-ink-muted);margin:0 0 12px;}
+.devis-cond{margin-bottom:12px;}
+.devis-cond ul{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:3px;}
+.devis-cond li{font-size:.8rem;color:var(--color-ink-muted);padding-left:15px;position:relative;}
 .devis-cond li::before{content:"•";position:absolute;left:2px;color:var(--color-accent);}
-.devis-accept{background:#F8F7F4;border:1px solid var(--color-border);border-radius:8px;padding:16px 20px;margin-bottom:24px;}
-.devis-accept p{font-size:.86rem;color:var(--color-ink-muted);margin:6px 0 0;line-height:1.6;}
-.devis-foot{display:flex;flex-direction:column;align-items:center;gap:8px;border-top:1px solid var(--color-border);padding-top:16px;font-size:.74rem;color:var(--color-ink-muted);text-align:center;}
-.devis-foot-logo{height:30px;width:auto;}
-@media (max-width:560px){.devis-parties{grid-template-columns:1fr;}.devis-sheet{padding:30px 22px;}}
+.devis-accept{background:#F8F7F4;border:1px solid var(--color-border);border-radius:8px;padding:11px 16px;margin-bottom:14px;}
+.devis-accept p{font-size:.82rem;color:var(--color-ink-muted);margin:5px 0 0;line-height:1.55;}
+.devis-foot{border-top:1px solid var(--color-border);padding-top:11px;font-size:.74rem;color:var(--color-ink-muted);text-align:center;}
+@media (max-width:560px){.devis-parties{grid-template-columns:1fr;}.devis-sheet{padding:26px 20px;}}
 
 /* Impression : on ne montre QUE la feuille de devis */
 @media print{
   body *{visibility:hidden;}
   .devis-sheet,.devis-sheet *{visibility:visible;}
-  .devis-sheet{position:absolute;left:0;top:0;width:100%;max-width:none;margin:0;border:none;border-radius:0;box-shadow:none;padding:0 4mm;}
+  .devis-sheet{position:absolute;left:0;top:0;width:100%;max-width:none;margin:0;border:none;border-radius:0;box-shadow:none;padding:0 2mm;}
   .devis-tool{display:none !important;}
-  @page{size:A4;margin:14mm;}
+  @page{size:A4;margin:11mm;}
 }

@@ -3,76 +3,96 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Signature Le Relais Web — à copier-coller</title>
+<title>Signature Le Relais Web — modèles de référence</title>
 <style>
-  body{font-family:system-ui,Segoe UI,Roboto,sans-serif;background:#F8F7F4;color:#0F1E3C;max-width:760px;margin:0 auto;padding:32px 20px;line-height:1.6;}
-  h1{font-size:1.5rem;} h2{font-size:1.05rem;margin-top:34px;}
-  p{color:#4b5563;font-size:.95rem;}
-  .demo{background:#fff;border:1px solid #E5E3DF;border-radius:10px;margin:10px 0;}
-  pre{background:#0F1E3C;color:#e7ecf5;padding:14px 16px;border-radius:8px;overflow:auto;font-size:.8rem;}
-  code{font-family:ui-monospace,Menlo,Consolas,monospace;}
-  .tip{background:#E6F1FB;border-left:3px solid #2563EB;padding:10px 14px;border-radius:0 8px 8px 0;font-size:.88rem;color:#0C447C;}
+  :root{--ink:#0F1E3C;--muted:#6B7280;--border:#E5E3DF;--accent:#2563EB;--bg:#F8F7F4;}
+  *{box-sizing:border-box;}
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);max-width:720px;margin:0 auto;padding:40px 20px 60px;line-height:1.6;}
+  h1{font-size:1.6rem;margin:0 0 6px;}
+  .lead{color:var(--muted);margin:0 0 28px;}
+  .note{background:#E6F1FB;border-left:3px solid var(--accent);padding:12px 16px;border-radius:0 8px 8px 0;font-size:.9rem;color:#0C447C;margin-bottom:32px;}
+  .ex{background:#fff;border:1px solid var(--border);border-radius:14px;margin:0 0 22px;overflow:hidden;}
+  .ex-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px;border-bottom:1px solid var(--border);}
+  .ex-h b{font-size:.98rem;}
+  .ex-h span{font-size:.8rem;color:var(--muted);}
+  .ex-demo{padding:30px 18px;background:#fff;display:flex;justify-content:center;}
+  /* zone "fond sombre" pour montrer que ça marche aussi en dark */
+  .ex-demo.dark{background:#0F1E3C;}
+  .ex-code{margin:0;background:#0F1E3C;color:#e7ecf5;padding:14px 16px;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;overflow:auto;}
+
+  /* ── Modèle 1 — Ligne discrète ── */
+  .lrw1{display:inline-flex;align-items:center;gap:7px;font:13px/1 system-ui,sans-serif;color:#6B7280;text-decoration:none;}
+  .lrw1 img{height:20px;width:auto;}
+
+  /* ── Modèle 2 — Logo centré ── */
+  .lrw2{display:inline-flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;}
+  .lrw2 small{font:11px/1 system-ui,sans-serif;letter-spacing:.5px;text-transform:uppercase;color:#9aa1ad;}
+  .lrw2 img{height:26px;width:auto;}
+
+  /* ── Modèle 3 — Badge ── */
+  .lrw3{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border:1px solid #E5E3DF;border-radius:999px;font:13px/1 system-ui,sans-serif;color:#0F1E3C;text-decoration:none;background:#fff;}
+  .lrw3 img{height:20px;width:auto;}
+  .lrw3 b{color:#2563EB;font-weight:600;}
+  .ex-demo.dark .lrw3{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18);color:#fff;}
 </style>
 </head>
 <body>
 
 <h1>Signature « Réalisé par Le Relais Web »</h1>
-<p>À coller en bas de chaque site que tu crées, juste avant la balise <code>&lt;/body&gt;</code>.
-Chaque variante est <strong>autonome</strong> (styles inclus) : copie le bloc, colle-le, c’est tout.</p>
+<p class="lead">3 modèles de référence. <strong>À adapter</strong> au style de chaque site —
+ce ne sont pas des blocs à coller tels quels.</p>
 
-<div class="tip"><strong>Bonus SEO :</strong> chaque site client qui pointe vers <code>lerelaisweb.com</code>
-te fait un <strong>backlink</strong>. Plus tu poses de sites, plus Google te fait confiance —
-exactement ce qui te manque face aux concurrents installés. Garde l’ancre sur ton nom de marque
-(« Le Relais Web »), c’est naturel et sans risque.</p>
+<div class="note"><strong>Bonus SEO :</strong> chaque site qui pointe vers
+<code>lerelaisweb.com</code> te fait un backlink. Plus tu poses de sites, plus Google te
+fait confiance. Garde l'ancre sur le nom de marque « Le Relais Web ».</div>
 
-<!-- ════════════ VARIANTE 1 — Minimale (la plus robuste, aucune image) ════════════ -->
-<h2>Variante 1 — Minimale (recommandée)</h2>
-<p>Texte seul, fonctionne partout, zéro dépendance. Discrète et propre.</p>
-<div class="demo">
-  <div style="text-align:center;padding:16px;font:13px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#6B7280;">
-    Site réalisé par
-    <a href="https://lerelaisweb.com" target="_blank" rel="noopener" style="color:#0F1E3C;font-weight:600;text-decoration:none;">Le&nbsp;Relais&nbsp;Web</a>
-  </div>
-</div>
-<pre><code>&lt;!-- Signature Le Relais Web --&gt;
-&lt;div style="text-align:center;padding:16px;font:13px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#6B7280;"&gt;
-  Site réalisé par
-  &lt;a href="https://lerelaisweb.com" target="_blank" rel="noopener" style="color:#0F1E3C;font-weight:600;text-decoration:none;"&gt;Le&amp;nbsp;Relais&amp;nbsp;Web&lt;/a&gt;
-&lt;/div&gt;</code></pre>
-
-<!-- ════════════ VARIANTE 2 — Avec accent bleu ════════════ -->
-<h2>Variante 2 — Avec ton bleu</h2>
-<p>Le nom en bleu accent, un peu plus visible.</p>
-<div class="demo">
-  <div style="text-align:center;padding:16px;font:13px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#6B7280;">
-    Création &amp; hébergement :
-    <a href="https://lerelaisweb.com" target="_blank" rel="noopener" style="color:#2563EB;font-weight:700;text-decoration:none;">Le&nbsp;Relais&nbsp;Web</a>
-  </div>
-</div>
-<pre><code>&lt;!-- Signature Le Relais Web --&gt;
-&lt;div style="text-align:center;padding:16px;font:13px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#6B7280;"&gt;
-  Création &amp; hébergement :
-  &lt;a href="https://lerelaisweb.com" target="_blank" rel="noopener" style="color:#2563EB;font-weight:700;text-decoration:none;"&gt;Le&amp;nbsp;Relais&amp;nbsp;Web&lt;/a&gt;
-&lt;/div&gt;</code></pre>
-
-<!-- ════════════ VARIANTE 3 — Avec le logo ════════════ -->
-<h2>Variante 3 — Avec ton logo</h2>
-<p>Le logo + le texte. L’image est chargée depuis ton site, donc disponible partout.</p>
-<div class="demo">
-  <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;font:13px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#6B7280;">
-    <a href="https://lerelaisweb.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#0F1E3C;font-weight:600;text-decoration:none;">
-      <img src="https://lerelaisweb.com/lerelaisweb_logo-removebg-preview.png" alt="Le Relais Web" style="height:22px;width:auto;">
-      Réalisé par Le Relais Web
+<!-- ════════ Modèle 1 ════════ -->
+<div class="ex">
+  <div class="ex-h"><b>1 — Ligne discrète</b><span>passe-partout, par défaut</span></div>
+  <div class="ex-demo">
+    <a class="lrw1" href="https://lerelaisweb.com" target="_blank" rel="noopener">
+      Réalisé par
+      <img src="https://lerelaisweb.com/logo-relais-nav.webp" alt="Le Relais Web">
     </a>
   </div>
+  <pre class="ex-code">&lt;a href="https://lerelaisweb.com" target="_blank" rel="noopener"
+   style="display:inline-flex;align-items:center;gap:7px;font:13px/1 system-ui,sans-serif;color:#6B7280;text-decoration:none;"&gt;
+  Réalisé par
+  &lt;img src="https://lerelaisweb.com/logo-relais-nav.webp" alt="Le Relais Web" style="height:20px;width:auto;"&gt;
+&lt;/a&gt;</pre>
 </div>
-<pre><code>&lt;!-- Signature Le Relais Web --&gt;
-&lt;div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;font:13px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#6B7280;"&gt;
-  &lt;a href="https://lerelaisweb.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;color:#0F1E3C;font-weight:600;text-decoration:none;"&gt;
-    &lt;img src="https://lerelaisweb.com/lerelaisweb_logo-removebg-preview.png" alt="Le Relais Web" style="height:22px;width:auto;"&gt;
-    Réalisé par Le Relais Web
-  &lt;/a&gt;
-&lt;/div&gt;</code></pre>
+
+<!-- ════════ Modèle 2 ════════ -->
+<div class="ex">
+  <div class="ex-h"><b>2 — Logo centré</b><span>élégant, en bas de page</span></div>
+  <div class="ex-demo">
+    <a class="lrw2" href="https://lerelaisweb.com" target="_blank" rel="noopener">
+      <small>Site réalisé par</small>
+      <img src="https://lerelaisweb.com/logo-relais-nav.webp" alt="Le Relais Web">
+    </a>
+  </div>
+  <pre class="ex-code">&lt;a href="https://lerelaisweb.com" target="_blank" rel="noopener"
+   style="display:inline-flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;"&gt;
+  &lt;small style="font:11px/1 system-ui;letter-spacing:.5px;text-transform:uppercase;color:#9aa1ad;"&gt;Site réalisé par&lt;/small&gt;
+  &lt;img src="https://lerelaisweb.com/logo-relais-nav.webp" alt="Le Relais Web" style="height:26px;width:auto;"&gt;
+&lt;/a&gt;</pre>
+</div>
+
+<!-- ════════ Modèle 3 ════════ -->
+<div class="ex">
+  <div class="ex-h"><b>3 — Badge</b><span>marqué, sites au design soigné · marche en sombre</span></div>
+  <div class="ex-demo dark">
+    <a class="lrw3" href="https://lerelaisweb.com" target="_blank" rel="noopener">
+      <img src="https://lerelaisweb.com/logo-relais-nav.webp" alt="Le Relais Web">
+      Réalisé par <b>Le&nbsp;Relais&nbsp;Web</b>
+    </a>
+  </div>
+  <pre class="ex-code">&lt;a href="https://lerelaisweb.com" target="_blank" rel="noopener"
+   style="display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border:1px solid #E5E3DF;border-radius:999px;font:13px/1 system-ui;color:#0F1E3C;text-decoration:none;background:#fff;"&gt;
+  &lt;img src="https://lerelaisweb.com/logo-relais-nav.webp" alt="Le Relais Web" style="height:20px;width:auto;"&gt;
+  Réalisé par &lt;b style="color:#2563EB;"&gt;Le Relais Web&lt;/b&gt;
+&lt;/a&gt;</pre>
+</div>
 
 </body>
 </html>

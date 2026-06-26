@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-col">
             <Link href="/" className="footer-logo" aria-label="Le Relais Web — accueil">
-              <img src="/logo-relais.webp" alt="Le Relais Web" width={150} height={96} />
+              <img src="/logo-relais-nav.webp" alt="Le Relais Web" width={144} height={80} />
             </Link>
             <p className="footer-tag">
               Votre partenaire digital local. On crée des sites web rapides pour les commerçants

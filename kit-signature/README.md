@@ -1,43 +1,53 @@
 # Kit signature — « Réalisé par Le Relais Web »
 
-La petite mention à mettre **en bas de chaque site que tu crées** pour signer ton travail.
-
-## À quoi ça sert
-
-1. **Branding** — chaque visiteur d'un site client voit que c'est toi qui l'as fait.
-   Un visiteur impressionné par le site peut devenir ton prochain client.
-2. **SEO (le plus important)** — chaque site qui pointe vers `lerelaisweb.com` te fait
-   un **backlink**. Plus tu poses de sites, plus Google te fait confiance et te remonte
-   dans les résultats. C'est exactement le terrain où les concurrents installés te battent
-   aujourd'hui — chaque client devient une brique de ton référencement.
+Sert à ajouter une signature discrète tout en bas de chaque site que je crée.
 
 ## Comment l'utiliser
 
-1. Ouvre `signature.html` dans ton navigateur → tu vois les **3 variantes** en vrai.
-2. Choisis-en une, copie le bloc de code (dans le cadre noir).
-3. Colle-le dans le site du client, **juste avant `</body>`**.
-4. C'est tout. La signature est autonome (les styles sont dans le bloc).
+Ouvre le site dans Claude Code, puis **copie-colle le bloc d'instructions ci-dessous**.
+Claude Code intégrera la signature **en l'adaptant au style du site** (couleurs, police,
+espacement, mode clair/sombre). Tu n'as rien à coder toi-même.
 
-## Les 3 variantes
+---
 
-| Variante | Pour quoi |
+## ⬇️ Bloc d'instructions à donner à Claude Code (copie-colle tel quel)
+
+> Ajoute une signature discrète **« Réalisé par Le Relais Web »** tout en bas de ce site,
+> dans le pied de page (juste avant la fermeture du `<body>`).
+>
+> Règles :
+> - Lien vers `https://lerelaisweb.com` — `target="_blank"`, `rel="noopener"`, **suivable**
+>   (surtout pas `nofollow`).
+> - **Ancre = le nom de marque « Le Relais Web »** uniquement. Jamais de mots-clés
+>   (pas « création site web Ermont », etc.).
+> - Affiche le logo : `https://lerelaisweb.com/logo-relais-nav.webp` (hauteur ~22 px).
+>   Ce logo contient déjà le nom « Le Relais Web » — ne réécris donc pas le nom en double,
+>   mets juste « Réalisé par » + le logo.
+> - **Adapte le style à CE site** : reprends ses couleurs, sa police, son alignement,
+>   son espacement, son thème clair/sombre. La signature doit sembler **faire partie du
+>   site**, pas être collée par-dessus. Discrète : petite, centrée, gris doux.
+> - **Ne copie aucun exemple tel quel.** Inspire-toi des 3 modèles de `signature.html`
+>   et refais une version cohérente avec ce site précis.
+>
+> But : signer mon travail **et** créer un backlink de marque (bon pour mon référencement).
+
+---
+
+## Les 3 modèles de référence
+
+Ouvre **`signature.html`** dans un navigateur pour les voir en vrai. Ce sont des
+**modèles à adapter**, pas du code à coller à l'identique.
+
+| Modèle | Style |
 |---|---|
-| **1 — Minimale** | La plus sûre. Texte seul, aucune image, marche partout. **Par défaut, prends celle-ci.** |
-| **2 — Avec ton bleu** | Le nom en bleu accent, un peu plus visible. |
-| **3 — Avec logo** | Logo + texte. L'image vient de `lerelaisweb.com`, donc dispo sur n'importe quel site. |
+| **1 — Ligne discrète** | « Réalisé par » + logo, sur une ligne centrée. Le plus passe-partout. |
+| **2 — Logo centré** | Le logo seul, centré, avec une mini-mention au-dessus. |
+| **3 — Badge** | Une pastille bordée, plus marquée, pour les sites au design soigné. |
 
-## Règles à respecter (important)
+## Pourquoi c'est important
 
-- **Garde l'ancre sur ton nom de marque** (« Le Relais Web »), pas sur des mots-clés
-  type « création site web Ermont ». Un lien de marque est naturel et sans risque ;
-  bourrer des mots-clés sur tous les sites clients, Google peut le pénaliser.
-- **Lien normal** (`rel="noopener"`, sans `nofollow`) : c'est ce qui te transmet la
-  valeur SEO. Une signature d'artisan sur son propre travail est parfaitement légitime.
-- **Reste discret** : gris clair, petit, centré en pied de page. Le site appartient au
-  client — ta signature se voit sans déranger.
-
-## Personnaliser
-
-Tu peux changer le texte (« Site réalisé par », « Création & hébergement : », « Réalisé par »),
-la taille (`height` du logo, `font` du texte) ou la couleur. Garde juste le lien vers
-`https://lerelaisweb.com`.
+- **Branding** : un visiteur séduit par le site peut devenir ton prochain client.
+- **SEO (le plus important)** : chaque site qui pointe vers `lerelaisweb.com` = un
+  **backlink**. Plus tu poses de sites, plus Google te fait confiance et te remonte —
+  exactement le terrain où les agences installées te battent aujourd'hui. Ancre de
+  marque = naturel et sans risque.
