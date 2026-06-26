@@ -697,6 +697,7 @@ h3{font-size:1.25rem;}
 .adm-side-name{font-family:var(--font-display);font-weight:600;font-size:.92rem;color:#fff;}
 .adm-side-loc{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--color-accent);font-weight:700;margin-top:1px;}
 .adm-side-dash{display:block;margin:.8rem .9rem .4rem;padding:.7rem .9rem;border-radius:10px;font-size:.85rem;font-weight:700;color:rgba(255,255,255,.6);transition:.15s;}
+.adm-side-dash+.adm-side-dash{margin-top:0;}
 .adm-side-dash:hover{background:rgba(255,255,255,.05);color:#fff;}
 .adm-side-dash.active{background:rgba(37,99,235,.12);color:#fff;}
 .adm-side-label{padding:.6rem 1.3rem .3rem;font-size:.62rem;font-weight:800;color:rgba(255,255,255,.3);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;gap:.5rem;}
