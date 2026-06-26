@@ -63,6 +63,14 @@ export default function AdminShell({
           Tableau de bord
         </Link>
 
+        <Link
+          href="/admin/devis"
+          className={`adm-side-dash${pathname === "/admin/devis" ? " active" : ""}`}
+          onClick={() => setDrawer(false)}
+        >
+          Générer un devis
+        </Link>
+
         <div className="adm-side-label">
           Clients ({clients.length})
           {totalNew > 0 && <span className="adm-side-notif">{totalNew} en attente</span>}
