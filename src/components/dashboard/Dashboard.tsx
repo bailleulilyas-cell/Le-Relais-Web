@@ -572,7 +572,12 @@ function PaiementCard({
       <a href={buildPayLink(lienSetup, email, clientRef)} className="btn-primary dash-pay-btn">
         Payer la mise en service →
       </a>
-      <p className="dash-pay-note">🔒 Paiement sécurisé par Stripe · Satisfait ou remboursé 30 jours</p>
+      <p className="dash-pay-note">
+        🔒 Paiement sécurisé par Stripe · Satisfait ou remboursé 30 jours ·{" "}
+        <a href="/cgv" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "underline" }}>
+          voir conditions
+        </a>
+      </p>
     </div>
   );
 }

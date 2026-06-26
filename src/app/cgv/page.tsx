@@ -81,7 +81,7 @@ const sections: { id: string; num: string; title: string; html: string }[] = [
     title: "Résiliation & Garantie",
     html: `
       <p><strong>Garantie « Satisfait ou remboursé 30 jours » :</strong> Le client dispose de <strong>30 jours calendaires</strong> à compter de la mise en ligne pour demander le remboursement des frais de mise en service, par email à <a href="mailto:contact@lerelaisweb.com">contact@lerelaisweb.com</a>.</p>
-      <p>Le remboursement porte sur les <strong>550 € de mise en service</strong> uniquement. L'éventuel abonnement mensuel déjà prélevé n'est pas concerné par cette garantie. Les frais techniques engagés pour le compte du client et non récupérables (notamment l'achat du nom de domaine auprès de l'hébergeur) seront <strong>déduits du montant remboursé</strong>.</p>
+      <p>Le remboursement porte sur les <strong>frais de mise en service</strong> uniquement (550 € pour le Pack Présence, 1 200 € pour le Pack Pro, ou le montant convenu pour une formule sur-mesure). L'éventuel abonnement mensuel déjà prélevé n'est pas concerné par cette garantie. Les frais techniques engagés pour le compte du client et non récupérables (notamment l'achat du nom de domaine auprès de l'hébergeur) seront <strong>déduits du montant remboursé</strong>.</p>
       <p><strong>Résiliation :</strong> Le client peut résilier à tout moment, soit directement depuis son espace client (bouton « Résilier mon abonnement »), soit par email à <a href="mailto:contact@lerelaisweb.com">contact@lerelaisweb.com</a>. La résiliation prend effet à la fin de la période mensuelle en cours.</p>
       <div class="warn">L'arrêt de l'abonnement entraîne la suppression du site sous 30 jours. Toute période mensuelle entamée est intégralement due, sans remboursement au prorata.</div>`,
   },
@@ -91,7 +91,7 @@ const sections: { id: string; num: string; title: string; html: string }[] = [
     title: "Propriété intellectuelle",
     html: `
       <p><strong>Contenus du client :</strong> Textes, photos et éléments fournis par le client restent sa propriété exclusive.</p>
-      <p><strong>Éléments créés :</strong> Une fois les 550 € réglés, le client acquiert la propriété des éléments créés. Cette propriété est subordonnée à l'absence d'impayé.</p>
+      <p><strong>Éléments créés :</strong> Une fois les frais de mise en service réglés, le client acquiert la propriété des éléments créés. Cette propriété est subordonnée à l'absence d'impayé.</p>
       <div class="hl"><strong>Code source :</strong> Le code source demeure la propriété intellectuelle de Le Relais Web. Le client bénéficie d'une licence d'utilisation exclusive tant qu'il règle l'abonnement. En cas de résiliation, cette licence prend fin.</div>`,
   },
   {
