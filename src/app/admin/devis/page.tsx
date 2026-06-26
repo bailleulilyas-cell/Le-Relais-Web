@@ -153,9 +153,18 @@ export default function DevisGenerator() {
           </label>
         </div>
 
-        <button className="devis-print-btn" onClick={() => window.print()}>
-          Imprimer / Enregistrer en PDF
-        </button>
+        <div className="devis-actions">
+          <button className="devis-print-btn" onClick={() => window.print()}>
+            Enregistrer en PDF
+          </button>
+          <button className="devis-print-btn secondary" onClick={() => window.print()}>
+            Imprimer
+          </button>
+        </div>
+        <p className="devis-actions-hint">
+          Les deux ouvrent la fenêtre d’impression : choisissez « Enregistrer en PDF » (pour le
+          fichier) ou votre imprimante comme <strong>destination</strong>.
+        </p>
       </div>
 
       {/* ── Feuille A4 (seule partie imprimée) ── */}
@@ -254,7 +263,9 @@ export default function DevisGenerator() {
         </div>
 
         <footer className="devis-foot">
-          Le Relais Web — votre partenaire digital local · Ermont, Val-d’Oise · contact@lerelaisweb.com
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="devis-foot-logo" src="/lerelaisweb_logo-removebg-preview.png" alt="Le Relais Web" />
+          <span>Le Relais Web · Ermont, Val-d’Oise · contact@lerelaisweb.com</span>
         </footer>
       </div>
     </>
