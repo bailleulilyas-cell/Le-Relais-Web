@@ -244,15 +244,13 @@ export default function DevisGenerator() {
           </ul>
         </div>
 
-        <div className="devis-sign">
-          <div className="devis-sign-box">
-            <span className="devis-bloc-h">Le Relais Web</span>
-            <span className="devis-sign-name">Thierry Bailleul</span>
-          </div>
-          <div className="devis-sign-box">
-            <span className="devis-bloc-h">Bon pour accord</span>
-            <span className="devis-sign-hint">Date &amp; signature du client</span>
-          </div>
+        <div className="devis-accept">
+          <span className="devis-bloc-h">Pour accepter ce devis</span>
+          <p>
+            Réglez la mise en service via le lien de paiement sécurisé que nous vous transmettons,
+            ou répondez simplement « bon pour accord » par email ou WhatsApp. Aucune signature
+            manuscrite n’est nécessaire — le règlement vaut acceptation.
+          </p>
         </div>
 
         <footer className="devis-foot">
