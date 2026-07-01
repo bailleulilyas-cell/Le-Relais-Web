@@ -1041,3 +1041,13 @@ h3{font-size:1.25rem;}
   .devis-tool{display:none !important;}
   @page{size:A4;margin:11mm;}
 }
+
+/* ═══════════ Carte « laisser un avis » (espace client, site en ligne) ═══════════ */
+.dash-review{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;background:#FFFBEB;border:1px solid #FCE9B8;border-radius:14px;padding:1.1rem 1.3rem;margin-bottom:1.4rem;text-decoration:none;transition:border-color .15s,box-shadow .15s;}
+.dash-review:hover{border-color:#F5B301;box-shadow:0 8px 22px rgba(245,179,1,.16);}
+.dash-review-stars{font-size:1.5rem;letter-spacing:2px;color:#F5B301;line-height:1;}
+.dash-review-body{flex:1;min-width:190px;display:flex;flex-direction:column;gap:2px;}
+.dash-review-body strong{font-size:1rem;color:var(--color-ink);}
+.dash-review-body span{font-size:.85rem;color:#8a763a;line-height:1.5;}
+.dash-review-btn{background:#F5B301;color:#3a2c00;font-weight:700;font-size:.9rem;padding:.7rem 1.2rem;border-radius:10px;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center;}
+.dash-review:hover .dash-review-btn{background:#e0a400;}

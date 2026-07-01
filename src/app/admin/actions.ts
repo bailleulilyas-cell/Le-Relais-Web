@@ -14,6 +14,8 @@ import {
 } from "@/lib/schema";
 import { getSession } from "@/lib/session";
 import { STRIPE_LINKS } from "@/lib/stripe";
+import { sendMail, emailLayout } from "@/lib/mail";
+import { GOOGLE_REVIEW_URL } from "@/lib/links";
 
 type ActionResult = { ok: boolean; error?: string; [k: string]: unknown };
 
@@ -125,22 +127,80 @@ export async function updateProjet(
   if (sub && !/^sub_[a-zA-Z0-9]+$/.test(sub)) sub = "";
   try {
     const db = getDb();
+    const cleanUrl = urlSite.trim().slice(0, 500);
+
+    // Statut précédent : on n'envoie l'email « site en ligne » qu'à la
+    // TRANSITION vers en_ligne, pas à chaque enregistrement (anti-spam client).
+    const before = await db
+      .select({ statut: projets.statut })
+      .from(projets)
+      .where(eq(projets.userId, userId))
+      .limit(1);
+    const etaitEnLigne = before[0]?.statut === "en_ligne";
+
     await db
       .update(projets)
       .set({
         statut: statut as (typeof STATUTS_PROJET)[number],
         progression: clamp100(progression),
-        urlSite: urlSite.trim().slice(0, 500),
+        urlSite: cleanUrl,
         stripeSubscriptionId: sub || null,
         urlAdminClient: urlAdminClient.trim().slice(0, 500) || null,
       })
       .where(eq(projets.userId, userId));
+
+    // Première mise en ligne → email de félicitations + demande d'avis (fer chaud).
+    // Best-effort : un échec SMTP ne doit pas faire échouer l'enregistrement.
+    if (statut === "en_ligne" && !etaitEnLigne) {
+      await sendMiseEnLigneEmail(userId, cleanUrl).catch(() => {});
+    }
+
     revalidatePath("/admin", "layout");
     return { ok: true };
   } catch (e) {
     console.error("updateProjet:", e);
     return { ok: false, error: "Erreur serveur." };
   }
+}
+
+/**
+ * Email envoyé au client quand son site passe « en ligne » : félicitations +
+ * demande d'avis Google au pic de satisfaction. Meilleur moment pour convertir.
+ */
+async function sendMiseEnLigneEmail(userId: number, urlSite: string): Promise<void> {
+  const db = getDb();
+  const u = await db
+    .select({
+      prenom: utilisateurs.prenom,
+      nomEnseigne: utilisateurs.nomEnseigne,
+      email: utilisateurs.email,
+    })
+    .from(utilisateurs)
+    .where(eq(utilisateurs.id, userId))
+    .limit(1);
+  if (u.length === 0) return;
+  const { prenom, nomEnseigne, email } = u[0];
+  const siteLink = urlSite ? (urlSite.startsWith("http") ? urlSite : `https://${urlSite}`) : "";
+  const esc = (s: string) =>
+    s.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" })[c] as string);
+
+  await sendMail({
+    to: email,
+    subject: `Votre site est en ligne — ${nomEnseigne} 🎉`,
+    html: emailLayout(
+      "Votre site est en ligne 🎉",
+      `<p style="font-size:15px;line-height:1.7;color:#5C6470;">Bonjour ${esc(prenom)},</p>
+       <p style="font-size:15px;line-height:1.7;color:#5C6470;">Ça y est — le site de <b style="color:#0F1E3C;">${esc(nomEnseigne)}</b> est <b>en ligne</b> ! Rapide, soigné, et prêt à vous amener des clients. Merci de votre confiance. 🙌</p>
+       ${siteLink ? `<p style="text-align:center;margin:22px 0;"><a href="${esc(siteLink)}" style="background:#0F1E3C;color:#fff;text-decoration:none;padding:12px 24px;border-radius:11px;font-weight:bold;display:inline-block;">Voir mon site en ligne →</a></p>` : ""}
+       <div style="margin-top:24px;background:#FFFBEB;border:1px solid #FCE9B8;border-radius:14px;padding:24px 20px;text-align:center;">
+         <div style="font-size:26px;letter-spacing:4px;color:#F5B301;line-height:1;margin-bottom:8px;">★★★★★</div>
+         <div style="font-family:Georgia,serif;font-size:18px;color:#0F1E3C;margin-bottom:8px;">Votre avis vaut de l'or pour nous</div>
+         <p style="font-size:14px;line-height:1.6;color:#8a763a;margin:0 0 18px;">On débute, et chaque avis nous aide à gagner la confiance des prochains commerçants. Si le résultat vous plaît, ça nous ferait un bien fou — 30 secondes, pas plus. 💛</p>
+         <a href="${GOOGLE_REVIEW_URL}" style="background:#F5B301;color:#3a2c00;text-decoration:none;padding:14px 28px;border-radius:11px;font-weight:bold;display:inline-block;font-size:15px;">⭐ Laisser un avis Google →</a>
+       </div>
+       <p style="font-size:13px;line-height:1.6;color:#9b958a;margin-top:22px;">Une question ou une modification&nbsp;? Répondez à cet email, on s'en occupe. À très vite — l'équipe Le Relais Web, Ermont.</p>`
+    ),
+  });
 }
 
 /* ── Scores PageSpeed ── */

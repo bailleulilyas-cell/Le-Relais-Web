@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { buildPayLink } from "@/lib/pay-link";
+import { GOOGLE_REVIEW_URL } from "@/lib/links";
 
 /* ── Types sérialisés (server → client) ── */
 export type DashUser = {
@@ -419,6 +420,8 @@ function DashboardTab({
             </span>
           </div>
 
+          {projet.statut === "en_ligne" && <ReviewCard />}
+
           <div className="dash-g31">
             <ScorePanel projet={projet} />
             <div>
@@ -466,6 +469,20 @@ function KpiCard({
       <div className="dash-kpi-lbl">{lbl}</div>
       <div className={`dash-kpi-sub ${tone}`}>{sub}</div>
     </div>
+  );
+}
+
+/* Demande d'avis Google — affichée quand le site est en ligne (pic de satisfaction). */
+function ReviewCard() {
+  return (
+    <a className="dash-review" href={GOOGLE_REVIEW_URL} target="_blank" rel="noopener noreferrer">
+      <span className="dash-review-stars">★★★★★</span>
+      <span className="dash-review-body">
+        <strong>Content de votre site&nbsp;?</strong>
+        <span>Votre avis nous aide énormément à grandir. Laissez-en un en 30 secondes — merci&nbsp;! 💛</span>
+      </span>
+      <span className="dash-review-btn">Laisser un avis ⭐</span>
+    </a>
   );
 }
 
