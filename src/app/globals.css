@@ -996,21 +996,21 @@ h3{font-size:1.25rem;}
 .devis-actions-hint{margin-top:.6rem;font-size:.78rem;color:var(--color-ink-muted);}
 
 /* Feuille A4 — compacte pour tenir sur UNE page */
-.devis-sheet{position:relative;max-width:780px;margin:0 auto;background:#fff;color:var(--color-ink);border:1px solid var(--color-border);border-radius:10px;padding:34px 42px 24px;box-shadow:0 18px 50px rgba(15,30,60,.10);overflow:hidden;font-family:var(--font-body);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.devis-sheet{position:relative;display:flex;flex-direction:column;min-height:255mm;max-width:780px;margin:0 auto;background:#fff;color:var(--color-ink);border:1px solid var(--color-border);border-radius:10px;padding:40px 46px 30px;box-shadow:0 18px 50px rgba(15,30,60,.10);overflow:hidden;font-family:var(--font-body);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
 .devis-accent{position:absolute;top:0;left:0;right:0;height:5px;background:var(--color-ink);}
-.devis-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:18px;padding-top:4px;}
+.devis-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:28px;padding-top:6px;}
 .devis-logo{height:60px;width:auto;}
 .devis-titlebox{text-align:right;}
 .devis-title{font-family:var(--font-display);font-size:1.8rem;font-weight:600;color:var(--color-ink);line-height:1;}
 .devis-meta{display:flex;flex-direction:column;gap:1px;margin-top:6px;font-size:.8rem;color:var(--color-ink-muted);}
-.devis-parties{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:16px;}
+.devis-parties{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-bottom:26px;}
 .devis-bloc{display:flex;flex-direction:column;gap:1px;font-size:.84rem;color:var(--color-ink-muted);}
 .devis-bloc strong{color:var(--color-ink);font-size:.92rem;margin-bottom:1px;}
 .devis-bloc-h{font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--color-accent);margin-bottom:4px;}
-.devis-table{width:100%;border-collapse:collapse;margin-bottom:12px;}
+.devis-table{width:100%;border-collapse:collapse;margin-bottom:20px;}
 .devis-table th{text-align:left;font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--color-ink-muted);border-bottom:2px solid var(--color-ink);padding:0 0 6px;}
 .devis-table th.devis-amt,.devis-table td.devis-amt{text-align:right;}
-.devis-table td{padding:9px 0;border-bottom:1px solid var(--color-border);vertical-align:top;}
+.devis-table td{padding:14px 0;border-bottom:1px solid var(--color-border);vertical-align:top;}
 .devis-table td strong{font-size:.94rem;color:var(--color-ink);}
 .devis-amt-strong{font-size:1.1rem;font-weight:700;white-space:nowrap;}
 .devis-permo{font-size:.76rem;font-weight:500;color:var(--color-ink-muted);}
@@ -1018,19 +1018,19 @@ h3{font-size:1.25rem;}
 .devis-feats li{font-size:.8rem;color:var(--color-ink-muted);padding-left:15px;position:relative;}
 .devis-feats li::before{content:"✓";position:absolute;left:0;color:var(--color-accent);font-weight:700;}
 .devis-once,.devis-sub2{display:block;font-size:.76rem;color:var(--color-ink-muted);margin-top:3px;font-style:italic;}
-.devis-total{background:#F8F7F4;border-radius:8px;padding:11px 18px;margin-bottom:12px;}
+.devis-total{background:#F8F7F4;border-radius:8px;padding:15px 20px;margin-bottom:20px;}
 .devis-total-row{display:flex;justify-content:space-between;align-items:baseline;}
 .devis-total-row span{font-size:.92rem;font-weight:600;color:var(--color-ink);}
 .devis-total-row strong{font-family:var(--font-display);font-size:1.5rem;color:var(--color-ink);}
 .devis-total-sub{font-size:.8rem;color:var(--color-ink-muted);margin-top:3px;}
-.devis-tva{font-size:.76rem;color:var(--color-ink-muted);margin:0 0 12px;}
-.devis-cond{margin-bottom:12px;}
+.devis-tva{font-size:.76rem;color:var(--color-ink-muted);margin:0 0 22px;}
+.devis-cond{margin-bottom:24px;}
 .devis-cond ul{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:3px;}
 .devis-cond li{font-size:.8rem;color:var(--color-ink-muted);padding-left:15px;position:relative;}
 .devis-cond li::before{content:"•";position:absolute;left:2px;color:var(--color-accent);}
-.devis-accept{background:#F8F7F4;border:1px solid var(--color-border);border-radius:8px;padding:11px 16px;margin-bottom:14px;}
-.devis-accept p{font-size:.82rem;color:var(--color-ink-muted);margin:5px 0 0;line-height:1.55;}
-.devis-foot{border-top:1px solid var(--color-border);padding-top:11px;font-size:.74rem;color:var(--color-ink-muted);text-align:center;}
+.devis-accept{background:#F8F7F4;border:1px solid var(--color-border);border-radius:8px;padding:15px 18px;margin-bottom:22px;}
+.devis-accept p{font-size:.83rem;color:var(--color-ink-muted);margin:5px 0 0;line-height:1.6;}
+.devis-foot{margin-top:auto;border-top:1px solid var(--color-border);padding-top:16px;font-size:.74rem;color:var(--color-ink-muted);text-align:center;}
 @media (max-width:560px){.devis-parties{grid-template-columns:1fr;}.devis-sheet{padding:26px 20px;}}
 
 /* Impression : on ne montre QUE la feuille de devis */
